@@ -1,0 +1,22 @@
+import Section from "@/components/Section";
+import { messages } from "@/content";
+
+/**
+ * "Networking" (section 6, #networking) — return to calm reading on light
+ * (design-system §7, R16).
+ */
+export default function Networking() {
+  return (
+    <Section id="networking" headingId="networking-heading" tone="paper">
+      <h2
+        id="networking-heading"
+        className="text-h2 font-bold text-balance lg:text-h2-lg"
+      >
+        {messages.networking.h2}
+      </h2>
+      <p className="mt-6 max-w-[65ch] text-body lg:text-lead">
+        {messages.networking.copy}
+      </p>
+    </Section>
+  );
+}
