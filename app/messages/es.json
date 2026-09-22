@@ -1,0 +1,203 @@
+{
+  "meta": {
+    "title": "TechToJob · Comunidad de desarrolladores y empresas tech",
+    "description": "TechToJob es una comunidad de desarrolladores y empresas tech en español. Publica tu perfil, participa en torneos, haz networking y entra al Discord ahora.",
+    "ogImageAlt": "Tarjeta social de TechToJob: logo verde apilado sobre fondo carbón junto al lema «No es un portal de empleo. Es una comunidad.»",
+    "og": {
+      "headline": "No es un portal de empleo. Es una comunidad.",
+      "support": "Comunidad de desarrolladores y empresas tech en español"
+    }
+  },
+  "a11y": {
+    "skipLink": "Saltar al contenido",
+    "mainLabel": "Contenido principal",
+    "navLabel": "Navegación principal",
+    "mobileNavLabel": "Navegación móvil",
+    "menuOpen": "Abrir menú de navegación",
+    "menuClose": "Cerrar menú de navegación",
+    "newTabHint": "Se abre en una pestaña nueva",
+    "logoLabel": "TechToJob — inicio",
+    "footerLogoLabel": "TechToJob — volver al inicio"
+  },
+  "nav": {
+    "links": {
+      "inicio": "Inicio",
+      "comoFunciona": "Cómo funciona",
+      "talento": "Talento",
+      "empresas": "Empresas",
+      "torneos": "Torneos",
+      "networking": "Networking",
+      "testimonios": "Testimonios",
+      "noticias": "Noticias",
+      "newsletter": "Newsletter",
+      "unete": "Únete"
+    }
+  },
+  "discord": {
+    "url": "https://discord.gg/h9FFgKdkRd",
+    "cta": "Entrar al Discord de TechToJob",
+    "ctaShort": "Entrar al Discord"
+  },
+  "hero": {
+    "h1": "No es un portal de empleo. Es una comunidad.",
+    "sub": "TechToJob reúne a desarrolladores y empresas tech en español. Aquí construyes, participas y te conocen antes de que exista una vacante.",
+    "cta": "Entrar al Discord de TechToJob",
+    "apoyo": "Entrar no cuesta nada. Ni un CV en PDF, ni una espera de semanas."
+  },
+  "comoFunciona": {
+    "h2": "Cómo funciona",
+    "intro": "Cuatro pasos. Ninguno es mandar un CV al vacío.",
+    "pasos": [
+      {
+        "titulo": "Entras al Discord",
+        "texto": "Un clic y dentro. Sin formularios de registro eternos."
+      },
+      {
+        "titulo": "Te presentas",
+        "texto": "Tu stack, tu nivel, tu disponibilidad. Las personas del sector lo leen, no un robot."
+      },
+      {
+        "titulo": "Participas",
+        "texto": "Canales por área, torneos, dudas resueltas en minutos. Aquí se nota que existes."
+      },
+      {
+        "titulo": "Llega la oportunidad",
+        "texto": "Cuando alguien busca a alguien, acuerdate de quien ya estaba construyendo."
+      }
+    ],
+    "cierre": "Las oportunidades salen de participar, no de rellenar formularios."
+  },
+  "talento": {
+    "eyebrow": "Para desarrolladores",
+    "h2": "Ofrécete como talento",
+    "copy": "Publica tu perfil con tu stack, tu nivel y qué buscas. Las empresas de la comunidad lo consultan cuando necesitan a alguien y te escriben directamente. Aquí no hay filtro automático que te descarte antes de que una persona te lea. No hace falta ser senior. Y participar no te cuesta nada."
+  },
+  "empresas": {
+    "eyebrow": "Para empresas",
+    "h2": "Publica como empresa",
+    "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real."
+  },
+  "torneos": {
+    "h2": "Torneos",
+    "copy": "De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno."
+  },
+  "networking": {
+    "h2": "Networking",
+    "copy": "Canales por área y gente del sector de verdad. Preguntas que se responden en minutos. Ofertas que alguien comparte porque conoce a quien contrata. Los buenos trabajos muchas veces no se publican: se cuentan. Aquí te enteras."
+  },
+  "testimonios": {
+    "h2": "Lo que se dice dentro",
+    "sub": "Testimonios de muestra. Los reales se recogen en el servidor antes de publicar.",
+    "items": [
+      {
+        "nombre": "Marta Ruiz",
+        "rol": "Frontend en Sevilla",
+        "frase": "Llevaba meses sin respuesta en portales. Aquí me escribieron dos empresas tras un torneo."
+      },
+      {
+        "nombre": "Diego Fuentes",
+        "rol": "Junior backend, Bogotá",
+        "frase": "Entré sin experiencia y sin título. Me leyeron personas, no filtros."
+      },
+      {
+        "nombre": "Lucía Ortega",
+        "rol": "CTO, Valencia",
+        "frase": "Fichamos a dos devs de la comunidad. Las vi resolver en directo antes de hablar con ellas."
+      },
+      {
+        "nombre": "Andrés Salas",
+        "rol": "DevOps, Ciudad de México",
+        "frase": "Conseguí mi trabajo actual por un canal de networking. Ni lo habían publicado."
+      }
+    ],
+    "linkedinSlotTitle": "Perfil verificable próximamente",
+    "linkedinSlotHint": "El enlace al perfil de LinkedIn se añadirá con los testimonios reales."
+  },
+  "noticias": {
+    "h2": "Noticias",
+    "maquetaNota": "Noticias de ejemplo (maqueta): el feed real vive en el canal de anuncios del Discord.",
+    "items": [
+      {
+        "categoria": "Comunidad",
+        "fecha": "15/09/2026",
+        "fechaIso": "2026-09-15",
+        "titulo": "Canales por área: ya puedes hablar solo con gente de tu stack",
+        "resumen": "Frontend, backend, datos, mobile, DevOps… Entra al canal del tuyo desde el Discord.",
+        "cta": "Leer la novedad"
+      },
+      {
+        "categoria": "Torneos",
+        "fecha": "07/09/2026",
+        "fechaIso": "2026-09-07",
+        "titulo": "Torneo #2 abierto: la landing de TechToJob se decide a retos",
+        "resumen": "Cualquiera del servidor puede participar. El jurado publica criterios. La ganadora se convierte en la web oficial.",
+        "cta": "Ver las bases del torneo"
+      },
+      {
+        "categoria": "Empleo",
+        "fecha": "01/09/2026",
+        "fechaIso": "2026-09-01",
+        "titulo": "Cómo leer una oferta antes de que la publiquen",
+        "resumen": "Una guía breve sobre el mercado tech en español y por qué estar dentro cambia las reglas.",
+        "cta": "Leer la guía"
+      }
+    ]
+  },
+  "newsletter": {
+    "h2": "El parte de la semana, los lunes",
+    "copy": "Un correo cada lunes con las ofertas nuevas de la comunidad, los torneos que se abren y lo que merecía la pena leer esta semana. Sin relleno y sin spam: te bajas cuando quieras.",
+    "label": "Tu correo electrónico",
+    "placeholder": "tu@correo.com",
+    "boton": "Quiero el correo de los lunes",
+    "nota": "Solo un correo a la semana. Nada más.",
+    "exito": "Recibido: el parte de los lunes ya cuenta contigo. (Maqueta: esta web aún no envía correos; el destino del formulario se definirá tras el torneo.)"
+  },
+  "cierre": {
+    "h2": "Ya sabes cómo funciona. Lo que falta es que entres.",
+    "copy": "Hay gente del sector al otro lado del enlace, construyendo cosas ahora mismo. La puerta es el Discord.",
+    "cta": "Entrar al Discord de TechToJob"
+  },
+  "footer": {
+    "bloques": {
+      "talento": {
+        "titulo": "Talento",
+        "enlaces": [
+          { "texto": "Cómo funciona", "href": "#como-funciona" },
+          { "texto": "Ofrécete como talento", "href": "#talento" },
+          { "texto": "Torneos", "href": "#torneos" }
+        ]
+      },
+      "empresas": {
+        "titulo": "Empresas",
+        "enlaces": [
+          { "texto": "Publica como empresa", "href": "#empresas" },
+          { "texto": "Torneos", "href": "#torneos" }
+        ]
+      },
+      "comunidad": {
+        "titulo": "Comunidad",
+        "enlaces": [
+          { "texto": "Discord", "href": "https://discord.gg/h9FFgKdkRd" },
+          { "texto": "Networking", "href": "#networking" },
+          { "texto": "Noticias", "href": "#noticias" },
+          { "texto": "Newsletter", "href": "#newsletter" }
+        ]
+      },
+      "legal": {
+        "titulo": "Legal",
+        "enlaces": [
+          { "texto": "Aviso legal", "href": "#legal-nota" },
+          { "texto": "Privacidad", "href": "#legal-nota" }
+        ]
+      }
+    },
+    "redes": {
+      "titulo": "Síguenos",
+      "linkedin": { "texto": "TechToJob en LinkedIn", "href": "https://www.linkedin.com/company/techtojob/" },
+      "x": { "texto": "TechToJob en X", "href": "https://x.com/techtojob" },
+      "instagram": { "texto": "TechToJob en Instagram", "href": "https://www.instagram.com/techtojob" }
+    },
+    "creditos": "© 2026 TechToJob — Web del Torneo #2. Diseño y contenido por Lorena Salas.",
+    "legalNota": "Aviso legal y privacidad: esta web es la entrega del Torneo #2 de la comunidad. Los textos legales definitivos se publicarán en esta misma página cuando la web pase a ser oficial."
+  }
+}
