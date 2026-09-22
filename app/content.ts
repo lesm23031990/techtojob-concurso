@@ -24,7 +24,6 @@ export interface A11y {
   menuClose: string;
   newTabHint: string;
   logoLabel: string;
-  footerLogoLabel: string;
 }
 
 export interface NavLinks {
