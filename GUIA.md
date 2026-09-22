@@ -16,10 +16,10 @@
 | Fase | Qué | Estado |
 |---|---|---|
 | 1. Estructura agéntica | Carpetas, AGENTS.md, opencode.json, agentes, skills, MCPs, git | ✅ HECHA (22/09) |
-| 2. Ingesta Discord → specs | Procesar `material-concurso/`, generar `specs/` + checklist de reglas | ⏳ BLOQUEADA: falta el txt |
-| 3. Sistema de diseño + scaffold | Design tokens, paletas, tipografías, `create-next-app` en `app/` | ⬜ |
-| 4. Implementación | Secciones de la landing, una por una, con auditoría por sección | ⬜ |
-| 5. SEO + QA + entrega | Lighthouse, JSON-LD, sitemap, evidencia en `docs/qa/`, README, deploy | ⬜ |
+| 2. Ingesta Discord → specs | Procesar `material-concurso/`, generar `specs/` + checklist de reglas | ✅ HECHA (22/09) — ⚠️ 3 bloqueantes: brief.md, logo, link Discord (QA-P8/P9/P10) |
+| 3. Sistema de diseño + scaffold | Design tokens, paletas, tipografías, `create-next-app` en `app/` | 🔴 URGENTE — entregar 23/09 23:59 |
+| 4. Implementación | Secciones de la landing, una por una, con auditoría por sección | 🔴 URGENTE — mismo plazo |
+| 5. SEO + QA + entrega | Lighthouse, JSON-LD, sitemap, evidencia en `docs/qa/`, README, deploy | 🔴 URGENTE — mismo plazo |
 
 ## 3. 📥 CHECKLIST: lo que hay que traer del Discord
 
@@ -28,31 +28,28 @@ lo que más convenga es **pegar los mensajes crudos tal cual**, con fechas y aut
 en txt aparte, porque las capturas se ignoran para git pero los txt también).
 
 ### 3.1 Crítico — bloquea el inicio de la Fase 2
-- [ ] **Bases / reglas completas del concurso** → `material-concurso/bases/`
-      (requisitos obligatorios, restricciones, formato de entrega, qué NO se puede hacer)
-- [ ] **Brief exacto de la landing**: de qué trata, a quién apunta, objetivo de conversión
-- [ ] **Fecha límite** de entrega
-- [ ] **Cómo se entrega**: ¿repo público GitHub? ¿deploy (Vercel/otro)? ¿video explicativo? ¿PDF?
+- [x] **Bases / reglas completas del concurso** → `material-concurso/discord.txt` ✅ 22/09
+- [ ] **Brief exacto de la landing**: ⚠️ falta el contenido de `brief-techtojob.md` (QA-P8)
+- [x] **Fecha límite**: 23/09/2026 23:59 ✅
+- [x] **Cómo se entrega**: repo público GitHub + deploy (CF Pages/Vercel) + capturas + Lighthouse, al canal ENTREGAS ✅
 
 ### 3.2 Importante — define el diseño y la estrategia
-- [ ] **Criterios de evaluación y pesos** si los publicaron → `material-concurso/criterios/`
-- [ ] **Marca**: logos, paleta de colores, tipografías, imágenes obligatorias o prohibidas
-      → `material-concurso/marca/`
-- [ ] **Contenido**: textos oficiales que DEBEN ir, secciones exigidas, palabras clave a posicionar
-- [ ] **Requisitos técnicos listados**: Lighthouse mínimo, a11y, i18n, dark mode, formularios,
-      analytics, tests... (transcribir textual, no resumido)
+- [x] **Criterios de evaluación y pesos** (en el propio post de bases, D215-227) ✅
+- [ ] **Marca**: ⚠️ faltan los archivos del logo del canal 🎨 RECURSOS (QA-P9); paleta y Sora ✅
+- [ ] **Contenido**: textos a escribir por nosotras (regla del concurso); falta brief (QA-P8)
+- [x] **Requisitos técnicos**: transcritos textuales en `specs/20` ✅
 
 ### 3.3 Útil — sube el puntaje
-- [ ] Ejemplos/referencias que el organizador haya compartido → `material-concurso/capturas/`
-- [ ] Preguntas ya respondidas en el canal (FAQ) — suelen delinear los puntos de confusión
-- [ ] Nombre exacto del organizador/empresa (para metadata, JSON-LD, footer)
-- [ ] ¿Se puede usar IA/asistentes? ¿Declararlo? (algunos concursos lo exigen)
+- [x] Ejemplos/referencias: 17 capturas en `capturas/` ✅
+- [ ] FAQ del canal CHARLA: nada relevante pegado (opcional)
+- [ ] **Enlace de invitación al Discord** + nombre/handles oficiales para JSON-LD (QA-P10/P11)
+- [x] ¿Se puede usar IA? SÍ, declarándolo (D102) ✅
 
 ### 3.4 Por confirmar (puede cambiar el plan)
-- [ ] ¿El código es propiedad del participante o del organizador tras ganar? (decide LICENSE)
-- [ ] ¿Español, inglés o bilingüe la landing?
-- [ ] ¿Límite de peso/tamaño del bundle o del repo?
-- [ ] ¿Framework de testing requerido (Playwright/Vitest)?
+- [ ] ¿Propiedad del código tras ganar? → sin LICENSE hasta confirmar (D5)
+- [x] ¿Idioma? → ES con i18n-ready; bilingüe opcional descartado (D14)
+- [x] ¿Límite de peso/bundle? → no declarado; gate CWV interno
+- [x] ¿Testing requerido? → no pedido; QA manual + evidencia (specs/20)
 
 ## 4. Cómo se trabaja con el txt del Discord
 

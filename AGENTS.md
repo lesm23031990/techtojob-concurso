@@ -89,5 +89,7 @@ techtojob-concurso/
 ## Estado actual
 
 **FASE 1 completada:** estructura agéntica montada (22/09/2026).
-**Siguiente paso:** Lorena deposita el txt de Discord en `material-concurso/bases/`
-→ ejecutar FASE 2 (ingesta → `specs/`).
+**FASE 2 completada:** ingesta de `material-concurso/` → `specs/00-30` (22/09/2026).
+⚠️ **Plazo de entrega: miércoles 23/09 23:59.** Bloqueantes abiertos para Lorena:
+contenido de `brief-techtojob.md`, archivos del logo (canal 🎨 RECURSOS) y enlace de
+invitación al Discord → ver QA-P8/P9/P10 en `docs/DECISIONES.md`.
