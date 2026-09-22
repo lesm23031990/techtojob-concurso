@@ -16,14 +16,14 @@ function NewsCard({ item }: { item: NewsItem }) {
     <article className="flex h-full flex-col gap-3 rounded-card border border-line bg-paper p-6 transition-shadow duration-150 hover:shadow-raised">
       <div className="flex items-center justify-between gap-4">
         <span className="rounded-full bg-ember px-3 py-1 text-label font-semibold uppercase text-ink">
-          {item.categoria}
+          {item.category}
         </span>
-        <time dateTime={item.fechaIso} className="text-small text-slate">
-          {item.fecha}
+        <time dateTime={item.dateIso} className="text-small text-slate">
+          {item.date}
         </time>
       </div>
-      <h3 className="text-h3 font-bold text-balance lg:text-h3-lg">{item.titulo}</h3>
-      <p className="text-body">{item.resumen}</p>
+      <h3 className="text-h3 font-bold text-balance lg:text-h3-lg">{item.title}</h3>
+      <p className="text-body">{item.summary}</p>
       <a
         href={messages.discord.url}
         target="_blank"
@@ -45,14 +45,14 @@ export default function News() {
         id="noticias-heading"
         className="text-h2 font-bold text-balance lg:text-h2-lg"
       >
-        {messages.noticias.h2}
+        {messages.news.h2}
       </h2>
       <p className="mt-3 max-w-[65ch] text-small text-slate">
-        {messages.noticias.maquetaNota}
+        {messages.news.mockNote}
       </p>
       <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {messages.noticias.items.map((item) => (
-          <NewsCard key={item.titulo} item={item} />
+        {messages.news.items.map((item) => (
+          <NewsCard key={item.title} item={item} />
         ))}
       </div>
     </Section>

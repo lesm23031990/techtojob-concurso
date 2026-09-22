@@ -28,11 +28,11 @@ export default function Closing() {
           id="unete-heading"
           className="max-w-3xl text-h2 font-bold text-balance lg:text-h2-lg"
         >
-          {messages.cierre.h2}
+          {messages.closing.h2}
         </h2>
-        <p className="mt-6 max-w-2xl text-lead text-cloud">{messages.cierre.copy}</p>
+        <p className="mt-6 max-w-2xl text-lead text-cloud">{messages.closing.copy}</p>
         <div className="mt-10">
-          <DiscordCta size="hero" label={messages.cierre.cta} />
+          <DiscordCta size="hero" label={messages.closing.cta} />
         </div>
       </div>
     </section>

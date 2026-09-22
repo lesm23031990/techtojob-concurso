@@ -15,15 +15,15 @@ export default function Talent() {
       className="border-t border-line"
     >
       <p className="text-label font-semibold uppercase text-slate">
-        {messages.talento.eyebrow}
+        {messages.talent.eyebrow}
       </p>
       <h2
         id="talento-heading"
         className="mt-2 text-h2 font-bold text-balance lg:text-h2-lg"
       >
-        {messages.talento.h2}
+        {messages.talent.h2}
       </h2>
-      <p className="mt-6 max-w-[65ch] text-body lg:text-lead">{messages.talento.copy}</p>
+      <p className="mt-6 max-w-[65ch] text-body lg:text-lead">{messages.talent.copy}</p>
     </Section>
   );
 }

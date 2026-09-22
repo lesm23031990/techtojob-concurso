@@ -4,16 +4,16 @@ import type { FooterBlock, SocialLink } from "@/content";
 import { IconArrowUpRight } from "@/components/icons";
 
 const blocks: FooterBlock[] = [
-  messages.footer.bloques.talento,
-  messages.footer.bloques.empresas,
-  messages.footer.bloques.comunidad,
-  messages.footer.bloques.legal,
+  messages.footer.blocks.talent,
+  messages.footer.blocks.companies,
+  messages.footer.blocks.community,
+  messages.footer.blocks.legal,
 ];
 
 const socialLinks: SocialLink[] = [
-  messages.footer.redes.linkedin,
-  messages.footer.redes.x,
-  messages.footer.redes.instagram,
+  messages.footer.social.linkedin,
+  messages.footer.social.x,
+  messages.footer.social.instagram,
 ];
 
 function isExternal(href: string): boolean {
@@ -42,17 +42,17 @@ export default function SiteFooter() {
         />
 
         <nav
-          aria-label={messages.a11y.navLabel}
+          aria-label={messages.a11y.footerNavLabel}
           className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4"
         >
           {blocks.map((block) => (
-            <div key={block.titulo}>
+            <div key={block.title}>
               <h2 className="text-small font-semibold uppercase tracking-label text-paper">
-                {block.titulo}
+                {block.title}
               </h2>
               <ul className="mt-4 space-y-1">
-                {block.enlaces.map((link) => (
-                  <li key={link.texto}>
+                {block.links.map((link) => (
+                  <li key={link.text}>
                     <a
                       href={link.href}
                       {...(isExternal(link.href)
@@ -60,7 +60,7 @@ export default function SiteFooter() {
                         : {})}
                       className="inline-flex min-h-11 items-center gap-1 rounded-full text-body font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
                     >
-                      {link.texto}
+                      {link.text}
                       {isExternal(link.href) && (
                         <>
                           <IconArrowUpRight className="h-4 w-4" />
@@ -77,18 +77,18 @@ export default function SiteFooter() {
 
         <div className="mt-12 border-t border-hairline-dark pt-8">
           <h2 className="text-small font-semibold uppercase tracking-label text-paper">
-            {messages.footer.redes.titulo}
+            {messages.footer.social.title}
           </h2>
           <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
             {socialLinks.map((social) => (
-              <li key={social.texto}>
+              <li key={social.text}>
                 <a
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex min-h-11 items-center gap-1.5 rounded-full text-body font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 >
-                  {social.texto}
+                  {social.text}
                   <IconArrowUpRight className="h-4 w-4" />
                   <span className="sr-only">{messages.a11y.newTabHint}</span>
                 </a>
@@ -98,9 +98,9 @@ export default function SiteFooter() {
         </div>
 
         <div className="mt-12 border-t border-hairline-dark pt-8">
-          <p className="text-small">{messages.footer.creditos}</p>
+          <p className="text-small">{messages.footer.credits}</p>
           <p id="legal-nota" className="mt-3 max-w-[65ch] scroll-mt-24 text-small text-cloud">
-            {messages.footer.legalNota}
+            {messages.footer.legalNote}
           </p>
         </div>
       </div>

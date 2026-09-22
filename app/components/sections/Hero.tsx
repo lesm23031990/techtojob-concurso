@@ -39,7 +39,7 @@ export default function Hero() {
         <div className="mt-10">
           <DiscordCta size="hero" label={messages.hero.cta} />
         </div>
-        <p className="mt-6 text-small text-cloud">{messages.hero.apoyo}</p>
+        <p className="mt-6 text-small text-cloud">{messages.hero.support}</p>
       </div>
     </section>
   );

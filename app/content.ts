@@ -19,6 +19,7 @@ export interface A11y {
   skipLink: string;
   mainLabel: string;
   navLabel: string;
+  footerNavLabel: string;
   mobileNavLabel: string;
   menuOpen: string;
   menuClose: string;
@@ -27,16 +28,16 @@ export interface A11y {
 }
 
 export interface NavLinks {
-  inicio: string;
-  comoFunciona: string;
-  talento: string;
-  empresas: string;
-  torneos: string;
+  home: string;
+  howItWorks: string;
+  talent: string;
+  companies: string;
+  tournaments: string;
   networking: string;
-  testimonios: string;
-  noticias: string;
+  testimonials: string;
+  news: string;
   newsletter: string;
-  unete: string;
+  join: string;
 }
 
 export interface Discord {
@@ -49,19 +50,19 @@ export interface Hero {
   h1: string;
   sub: string;
   cta: string;
-  apoyo: string;
+  support: string;
 }
 
 export interface Step {
-  titulo: string;
-  texto: string;
+  title: string;
+  text: string;
 }
 
-export interface ComoFunciona {
+export interface HowItWorks {
   h2: string;
   intro: string;
-  pasos: Step[];
-  cierre: string;
+  steps: Step[];
+  closing: string;
 }
 
 export interface AudienceSection {
@@ -76,12 +77,12 @@ export interface SimpleSection {
 }
 
 export interface Testimonial {
-  nombre: string;
-  rol: string;
-  frase: string;
+  name: string;
+  role: string;
+  quote: string;
 }
 
-export interface Testimonios {
+export interface Testimonials {
   h2: string;
   sub: string;
   items: Testimonial[];
@@ -90,17 +91,17 @@ export interface Testimonios {
 }
 
 export interface NewsItem {
-  categoria: string;
-  fecha: string;
-  fechaIso: string;
-  titulo: string;
-  resumen: string;
+  category: string;
+  date: string;
+  dateIso: string;
+  title: string;
+  summary: string;
   cta: string;
 }
 
-export interface Noticias {
+export interface News {
   h2: string;
-  maquetaNota: string;
+  mockNote: string;
   items: NewsItem[];
 }
 
@@ -109,41 +110,41 @@ export interface Newsletter {
   copy: string;
   label: string;
   placeholder: string;
-  boton: string;
-  nota: string;
-  exito: string;
+  button: string;
+  note: string;
+  success: string;
 }
 
 export interface FooterLink {
-  texto: string;
+  text: string;
   href: string;
 }
 
 export interface FooterBlock {
-  titulo: string;
-  enlaces: FooterLink[];
+  title: string;
+  links: FooterLink[];
 }
 
 export interface SocialLink {
-  texto: string;
+  text: string;
   href: string;
 }
 
 export interface Footer {
-  bloques: {
-    talento: FooterBlock;
-    empresas: FooterBlock;
-    comunidad: FooterBlock;
+  blocks: {
+    talent: FooterBlock;
+    companies: FooterBlock;
+    community: FooterBlock;
     legal: FooterBlock;
   };
-  redes: {
-    titulo: string;
+  social: {
+    title: string;
     linkedin: SocialLink;
     x: SocialLink;
     instagram: SocialLink;
   };
-  creditos: string;
-  legalNota: string;
+  credits: string;
+  legalNote: string;
 }
 
 export interface Messages {
@@ -152,15 +153,15 @@ export interface Messages {
   nav: { links: NavLinks };
   discord: Discord;
   hero: Hero;
-  comoFunciona: ComoFunciona;
-  talento: AudienceSection;
-  empresas: AudienceSection;
-  torneos: SimpleSection;
+  howItWorks: HowItWorks;
+  talent: AudienceSection;
+  companies: AudienceSection;
+  tournaments: SimpleSection;
   networking: SimpleSection;
-  testimonios: Testimonios;
-  noticias: Noticias;
+  testimonials: Testimonials;
+  news: News;
   newsletter: Newsletter;
-  cierre: SimpleSection & { cta: string };
+  closing: SimpleSection & { cta: string };
   footer: Footer;
 }
 
@@ -180,16 +181,16 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { href: "#inicio", label: messages.nav.links.inicio },
-  { href: "#como-funciona", label: messages.nav.links.comoFunciona },
-  { href: "#talento", label: messages.nav.links.talento },
-  { href: "#empresas", label: messages.nav.links.empresas },
-  { href: "#torneos", label: messages.nav.links.torneos },
+  { href: "#inicio", label: messages.nav.links.home },
+  { href: "#como-funciona", label: messages.nav.links.howItWorks },
+  { href: "#talento", label: messages.nav.links.talent },
+  { href: "#empresas", label: messages.nav.links.companies },
+  { href: "#torneos", label: messages.nav.links.tournaments },
   { href: "#networking", label: messages.nav.links.networking },
-  { href: "#testimonios", label: messages.nav.links.testimonios },
-  { href: "#noticias", label: messages.nav.links.noticias },
+  { href: "#testimonios", label: messages.nav.links.testimonials },
+  { href: "#noticias", label: messages.nav.links.news },
   { href: "#newsletter", label: messages.nav.links.newsletter },
-  { href: "#unete", label: messages.nav.links.unete },
+  { href: "#unete", label: messages.nav.links.join },
 ];
 
 /** Build the Organization JSON-LD object (contest rule R52). */
@@ -201,9 +202,9 @@ export function organizationJsonLd(baseUrl: string) {
     url: baseUrl,
     logo: `${baseUrl}/brand/logo-horizontal.svg`,
     sameAs: [
-      messages.footer.redes.linkedin.href,
-      messages.footer.redes.x.href,
-      messages.footer.redes.instagram.href,
+      messages.footer.social.linkedin.href,
+      messages.footer.social.x.href,
+      messages.footer.social.instagram.href,
     ],
   };
 }

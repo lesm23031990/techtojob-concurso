@@ -43,14 +43,14 @@ export default function NewsletterForm() {
           type="submit"
           className="min-h-12 shrink-0 cursor-pointer rounded-full bg-ink px-6 py-3 text-body font-bold text-paper transition-colors duration-150 hover:bg-coal focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink"
         >
-          {messages.newsletter.boton}
+          {messages.newsletter.button}
         </button>
       </div>
       {/* status region: announced politely to screen readers on submit */}
       <p id="newsletter-status" role="status" aria-live="polite" className="min-h-6 text-small text-ink">
-        {submitted ? messages.newsletter.exito : ""}
+        {submitted ? messages.newsletter.success : ""}
       </p>
-      <p className="text-small text-ink">{messages.newsletter.nota}</p>
+      <p className="text-small text-ink">{messages.newsletter.note}</p>
     </form>
   );
 }

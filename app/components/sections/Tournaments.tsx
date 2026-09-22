@@ -19,7 +19,7 @@ export default function Tournaments() {
         aria-hidden="true"
         width={320}
         height={320}
-        loading="eager"
+        loading="lazy"
         className="pointer-events-none absolute -bottom-28 -right-20 opacity-10"
       />
       <div className="page-container reveal">
@@ -27,10 +27,10 @@ export default function Tournaments() {
           id="torneos-heading"
           className="text-h2 font-bold text-brand text-balance lg:text-h2-lg"
         >
-          {messages.torneos.h2}
+          {messages.tournaments.h2}
         </h2>
         <p className="mt-6 max-w-[65ch] text-body text-cloud lg:text-lead">
-          {messages.torneos.copy}
+          {messages.tournaments.copy}
         </p>
       </div>
     </section>
