@@ -9,92 +9,92 @@
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R01 | "Repo público en GitHub con README" | META | D202 | pendiente |
-| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | pendiente |
-| R03 | "Capturas de escritorio y móvil" | META | D204 | pendiente |
-| R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | pendiente |
-| R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | **en riesgo — queda 1 día** |
-| R06 | "Si vais dos [pareja], decidlo al entregar" | META | D209 | n-a (solitario) |
-| R07 | Uso de IA: "Solo pedimos que lo digas al entregar" | META | D102 | pendiente (declarar en README/entrega) |
-| R08 | "Tienes que entender y poder defender lo que entregas" | OBL | D102-103 | pendiente |
-| R09 | Imágenes/iconos: "Fuente apuntada en el README" | META | D77 | pendiente |
-| R10 | Si se reordena secciones: "hazlo y cuéntalo en el README" | META | D54 | pendiente |
+| R01 | "Repo público en GitHub con README" | META | D202 | pendiente — mañana: repo público GitHub |
+| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | pendiente — mañana: deploy + URL real en site.url |
+| R03 | "Capturas de escritorio y móvil" | META | D204 | pendiente — capturas sobre el deploy mañana |
+| R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | pendiente — Lighthouse final sobre el deploy (control local: SEO 100, A11y 100, Perf 76) |
+| R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | en riesgo — queda 1 día para ENTREGAS |
+| R06 | "Si vais dos [pareja], decidlo al entregar" | META | D209 | n-a (participación solitaria) |
+| R07 | Uso de IA: "Solo pedimos que lo digas al entregar" | META | D102 | cumplida en README (§Declaración de uso de IA); repetir en el mensaje de ENTREGAS |
+| R08 | "Tienes que entender y poder defender lo que entregas" | OBL | D102-103 | pendiente (humana: repasar specs/11 + design-system antes de defender) |
+| R09 | Imágenes/iconos: "Fuente apuntada en el README" | META | D77 | cumplida — README §Fuentes y créditos |
+| R10 | Si se reordena secciones: "hazlo y cuéntalo en el README" | META | D54 | cumplida — orden del brief sin cambios, anotado en README |
 
 ## B. Secciones obligatorias de la landing
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R11 | Hero: "Qué es TechToJob y por qué no es un portal de empleo más. Un solo botón: entrar al Discord" | OBL | D20 | pendiente |
-| R12 | Cómo funciona: "El recorrido desde que llegas hasta que sale una oportunidad" | OBL | D23 | pendiente |
-| R13 | Ofrécete como talento: "Publicar tu perfil: stack, nivel, disponibilidad" | OBL | D26 | pendiente |
-| R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | pendiente |
-| R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | pendiente |
-| R16 | Networking: "Canales por área y gente del sector" | OBL | D35 | pendiente |
-| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | pendiente |
-| R18 | Noticias: "Maqueta tres entradas de ejemplo" | OBL | D41 | pendiente |
-| R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | pendiente |
-| R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | pendiente |
-| R21 | Footer: "Enlaces por bloques, redes y legal" | OBL | D50 | pendiente |
-| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | pendiente |
-| R23 | Objetivo general: "explicar qué somos, a quién le sirve y conseguir que la gente entre al Discord" | EVAL | D3 | pendiente |
+| R11 | Hero: "Qué es TechToJob y por qué no es un portal de empleo más. Un solo botón: entrar al Discord" | OBL | D20 | cumplida (audit 22/09) |
+| R12 | Cómo funciona: "El recorrido desde que llegas hasta que sale una oportunidad" | OBL | D23 | cumplida (audit 22/09) |
+| R13 | Ofrécete como talento: "Publicar tu perfil: stack, nivel, disponibilidad" | OBL | D26 | cumplida (audit 22/09) |
+| R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) |
+| R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | cumplida (audit 22/09) |
+| R16 | Networking: "Canales por área y gente del sector" | OBL | D35 | cumplida (audit 22/09) |
+| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida (audit 22/09) |
+| R18 | Noticias: "Maqueta tres entradas de ejemplo" | OBL | D41 | cumplida (audit 22/09) |
+| R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | cumplida (audit 22/09) |
+| R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | cumplida (audit 22/09) |
+| R21 | Footer: "Enlaces por bloques, redes y legal" | OBL | D50 | cumplida (audit 22/09) |
+| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | cumplida (audit 22/09) |
+| R23 | Objetivo general: "explicar qué somos, a quién le sirve y conseguir que la gente entre al Discord" | EVAL | D3 | cumplida (audit 22/09) |
 
 ## C. Identidad de marca
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R24 | "Los tres colores y la tipografía son fijos y tienen que dominar el diseño" (#2f3436, #84c0bf, #ffffff + Sora) | OBL | D60-66 | pendiente |
-| R25 | Permitidos: "grises intermedios para textos y bordes, y un color de acento… como apoyo y sin sustituir a los base" | OBL | D66 | pendiente |
-| R26 | "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" | OBL | D68 | pendiente |
-| R27 | Logo: "todas sus versiones (color, negro, blanco y SVG)" del canal 🎨 RECURSOS | OBL | D58 | ✅ recibido 22/09 en `marca/TechToJob/` |
-| R28 | Tipografía Sora fija (Google Fonts) | OBL | D64 | pendiente |
+| R24 | "Los tres colores y la tipografía son fijos y tienen que dominar el diseño" (#2f3436, #84c0bf, #ffffff + Sora) | OBL | D60-66 | cumplida (audit 22/09) |
+| R25 | Permitidos: "grises intermedios para textos y bordes, y un color de acento… como apoyo y sin sustituir a los base" | OBL | D66 | cumplida (audit 22/09) |
+| R26 | "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" | OBL | D68 | cumplida (audit 22/09) |
+| R27 | Logo: "todas sus versiones (color, negro, blanco y SVG)" del canal 🎨 RECURSOS | OBL | D58 | cumplida — kit oficial en app/public/brand/ (nombres ASCII) |
+| R28 | Tipografía Sora fija (Google Fonts) | OBL | D64 | cumplida (audit 22/09) |
 
 ## D. Stack y requisitos técnicos
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R29 | "Recomendado: Next.js con TypeScript y Tailwind" (también vale HTML+CSS+JS+Tailwind; misma rúbrica) | OBL | D84-87 | pendiente — decisión: Next.js (D-13) |
-| R30 | "Tailwind obligatorio en las dos vías" | OBL | D92 | pendiente |
-| R31 | "Responsive real en móvil, tablet y escritorio" | OBL/EVAL 15% | D93, D219 | pendiente |
-| R32 | "HTML semántico" | OBL/EVAL 15% | D94, D221 | pendiente |
-| R33 | "Nada de plantillas compradas ni kits de componentes ya montados" | NEG | D95 | pendiente |
-| R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | pendiente |
-| R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | pendiente |
-| R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | pendiente |
-| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | pendiente — decisión: NO por plazo (D-14) |
+| R29 | "Recomendado: Next.js con TypeScript y Tailwind" (también vale HTML+CSS+JS+Tailwind; misma rúbrica) | OBL | D84-87 | cumplida — decisión Next.js (D-13) |
+| R30 | "Tailwind obligatorio en las dos vías" | OBL | D92 | cumplida (audit 22/09) |
+| R31 | "Responsive real en móvil, tablet y escritorio" | OBL/EVAL 15% | D93, D219 | cumplida (audit 22/09) |
+| R32 | "HTML semántico" | OBL/EVAL 15% | D94, D221 | cumplida (audit 22/09) |
+| R33 | "Nada de plantillas compradas ni kits de componentes ya montados" | NEG | D95 | cumplida (audit 22/09) |
+| R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida (audit 22/09) |
+| R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | cumplida — fixes 22/09: commits reworded a inglés (D22) + claves-identificador a inglés (D23) |
+| R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | cumplida (audit 22/09) |
+| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | n-a — bilingüe descartado por plazo (D-14) |
 
 ## E. SEO (contenido y estructura)
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R38 | Contenido que posicione: ✅ "Comunidad de desarrolladores y empresas tech en español" / ❌ "Conectamos talento con oportunidades" | EVAL | D119-120 | pendiente |
-| R39 | "que sea texto de verdad, no metido dentro de una imagen" | OBL | D122 | pendiente |
-| R40 | "Un solo <h1> en toda la página, y que lleve el mensaje principal" | OBL | D127 | pendiente |
-| R41 | "Jerarquía de h2 y h3 sin saltos" | OBL | D128 | pendiente |
-| R42 | "Usa header, nav, main, section, article, footer, button y a donde corresponda" | OBL | D129 | pendiente |
-| R43 | "un div con onClick no es un enlace. Si navega, es <a> o <Link>" | NEG | D133 | pendiente |
-| R44 | Enlaces con "Texto descriptivo siempre" (❌ "haz clic aquí" · "leer más") | OBL | D139-142 | pendiente |
-| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | pendiente |
+| R38 | Contenido que posicione: ✅ "Comunidad de desarrolladores y empresas tech en español" / ❌ "Conectamos talento con oportunidades" | EVAL | D119-120 | cumplida (audit 22/09) |
+| R39 | "que sea texto de verdad, no metido dentro de una imagen" | OBL | D122 | cumplida (audit 22/09) |
+| R40 | "Un solo <h1> en toda la página, y que lleve el mensaje principal" | OBL | D127 | cumplida (audit 22/09) |
+| R41 | "Jerarquía de h2 y h3 sin saltos" | OBL | D128 | cumplida (audit 22/09) |
+| R42 | "Usa header, nav, main, section, article, footer, button y a donde corresponda" | OBL | D129 | cumplida (audit 22/09) |
+| R43 | "un div con onClick no es un enlace. Si navega, es <a> o <Link>" | NEG | D133 | cumplida (audit 22/09) |
+| R44 | Enlaces con "Texto descriptivo siempre" (❌ "haz clic aquí" · "leer más") | OBL | D139-142 | cumplida (audit 22/09) |
+| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | cumplida (audit 22/09) |
 
 ## F. SEO (metadata, imágenes, fuentes)
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R46 | `lang="es"` | OBL | D147 | pendiente |
-| R47 | "<title> de 50 a 60 caracteres" | OBL | D148 | pendiente |
-| R48 | "description de 150 a 160" | OBL | D149 | pendiente |
-| R49 | "canonical y viewport" | OBL | D150 | pendiente |
-| R50 | Next: "Metadata API con title.template (%s \| TechToJob) y metadataBase en el layout" | OBL | D152 | pendiente |
-| R51 | "Open Graph y Twitter Card completos, con imagen de 1200×630… Compruébalo en opengraph.xyz" | OBL | D154 | pendiente |
-| R52 | "JSON-LD de tipo Organization con nombre, logo, URL y redes" | OBL | D156 | pendiente |
-| R53 | Imágenes "WebP o AVIF, nunca un PNG de dos megas" | OBL | D161 | pendiente |
-| R54 | "next/image si vas con Next" | OBL | D162 | pendiente |
-| R55 | "width y height siempre puestos" | OBL | D163 | pendiente |
-| R56 | "loading='lazy' en todo lo que esté por debajo del primer pantallazo, nunca en la imagen del hero" | OBL | D164 | pendiente |
-| R57 | "alt descriptivo de verdad" (❌ genérico, ❌ keyword-stuffing = "spam y penaliza") | OBL | D166-170 | pendiente |
-| R58 | "Sora con next/font" | OBL | D176 | pendiente |
-| R59 | "Una fuente y tres pesos. No ocho variantes" | OBL | D178 | pendiente |
-| R60 | "No escondas texto lleno de keywords con hidden, opacity-0 o tamaño cero" | NEG | D184 | pendiente |
-| R61 | Lighthouse móvil: "SEO en 100 / Accesibilidad y rendimiento por encima de 90" | META/EVAL | D192-193 | pendiente |
+| R46 | `lang="es"` | OBL | D147 | cumplida (audit 22/09) |
+| R47 | "<title> de 50 a 60 caracteres" | OBL | D148 | cumplida (audit 22/09) |
+| R48 | "description de 150 a 160" | OBL | D149 | cumplida (audit 22/09) |
+| R49 | "canonical y viewport" | OBL | D150 | cumplida (audit 22/09) |
+| R50 | Next: "Metadata API con title.template (%s \| TechToJob) y metadataBase en el layout" | OBL | D152 | cumplida (audit 22/09) |
+| R51 | "Open Graph y Twitter Card completos, con imagen de 1200×630… Compruébalo en opengraph.xyz" | OBL | D154 | cumplida (audit 22/09) |
+| R52 | "JSON-LD de tipo Organization con nombre, logo, URL y redes" | OBL | D156 | cumplida (audit 22/09) |
+| R53 | Imágenes "WebP o AVIF, nunca un PNG de dos megas" | OBL | D161 | cumplida (audit 22/09) |
+| R54 | "next/image si vas con Next" | OBL | D162 | cumplida (audit 22/09) |
+| R55 | "width y height siempre puestos" | OBL | D163 | cumplida (audit 22/09) |
+| R56 | "loading='lazy' en todo lo que esté por debajo del primer pantallazo, nunca en la imagen del hero" | OBL | D164 | cumplida — fix loading=lazy en Tournaments 22/09 |
+| R57 | "alt descriptivo de verdad" (❌ genérico, ❌ keyword-stuffing = "spam y penaliza") | OBL | D166-170 | cumplida (audit 22/09) |
+| R58 | "Sora con next/font" | OBL | D176 | cumplida (audit 22/09) |
+| R59 | "Una fuente y tres pesos. No ocho variantes" | OBL | D178 | cumplida (audit 22/09) |
+| R60 | "No escondas texto lleno de keywords con hidden, opacity-0 o tamaño cero" | NEG | D184 | cumplida (audit 22/09) |
+| R61 | Lighthouse móvil: "SEO en 100 / Accesibilidad y rendimiento por encima de 90" | META/EVAL | D192-193 | pendiente — medir sobre el deploy; gate interno AGENTS.md ≥95/95/95 |
 
 ## G. Rúbrica (pesos oficiales)
 
@@ -115,7 +115,7 @@
 | Q1 | Contenido de `brief-techtojob.md` | ✅ resuelto → `material-concurso/bases/brief.md` |
 | Q2 | Archivos del logo | ✅ resuelto → `marca/TechToJob/` (SVG/PNG/PDF completos) |
 | Q3 | Enlace de invitación al Discord | ✅ resuelto → oficial del brief `discord.gg/h9FFgKdkRd` (D18) |
-| Q4 | URL de despliegue final | ⏳ se resuelve al deploy Vercel (hoy) |
+| Q4 | URL de despliegue final | ⏳ se resuelve mañana al deploy Vercel (actualizar site.url + rebuild) |
 | Q5 | Redes sociales | ✅ resuelto → LinkedIn/X/Instagram @techtojob (brief) |
 | Q6 | Enlaces legales del footer | 🟡 maquetados con nota honesta (D19); confirmar en CHARLA |
 | Q7 | Propiedad del código | 🟢 sin LICENSE (D5); bases no declaran cesión |
