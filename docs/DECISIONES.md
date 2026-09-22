@@ -60,7 +60,8 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
 - [x] QA-P9. Logo → **recibido kit completo** en `material-concurso/marca/TechToJob/` (SVG/PNG/PDF ×
       v1/v2/Símbolo × Positivo/Negro/Blanco/Degradado). Al copiar a `app/public/`: nombres ASCII.
 - [x] QA-P10. Discord → **usar el oficial del brief: https://discord.gg/h9FFgKdkRd** ("Datos que no se
-      inventan"). Lorena pasó otro invite ([invite-no-oficial-retirado]) pero el brief es fuente oficial → decisión D18.
+      inventan"). Se recibió además un invite alternativo no oficial que se descarta; el brief es
+      fuente oficial → decisión D18.
 - [x] QA-P11. Redes → **oficiales del brief**: LinkedIn company/techtojob · X @techtojob ·
       Instagram /techtojob. Van en footer + `sameAs` del JSON-LD. Reales, no placeholder.
 - [x] QA-P13. Participación → solitario (Lorena).
@@ -86,6 +87,25 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       hablar de la persona, no de nosotros · "gratis" solo como tranquilizador, nunca titular ·
       PROHIBIDO prometer empleo/plazos/cifras · PROHIBIDO números de miembros/empresas ·
       nombre siempre "TechToJob" sin espacios · no copiar el ejemplo orientativo.
+
+## Decisiones 3ª tanda (22/09 noche — cierre pre-entrega)
+
+- **D22.** R35-commits: los 4 primeros commits del historial tenían mensaje en español. Se reescribieron
+      a inglés con `git rebase -i` LOCAL antes del primer push (sin remote configurado → no es
+      force-push sobre historia pública; árbol verificado idéntico vía `git diff` contra rama backup).
+- **D23.** R35-código: rename completo de claves-identificador de `messages/es.json` a inglés
+      (`titulo`→`title`, `comoFunciona`→`howItWorks`, etc.) en JSON + interfaces + componentes.
+      Los VALORES visibles y los anchors (`#inicio`, `#unete`) siguen en español (R36/R45 intactas).
+      Los 3 comentarios en español en componentes se mantienen: la regla literal enumera
+      "variables, funciones, componentes y commits" — los comentarios no están (veredicto rules-auditor).
+- **D24.** Publicación: `AGENTS.md`, `.opencode/` y `docs/` SÍ van al repo público (proceso
+      multiagente honesto y defendible, refuerza J4 y la declaración de IA). `GUIA.md` se reescribió
+      como doc público de proceso, sin el checklist interno de Discord. `material-concurso/` sigue
+      excluido por `.gitignore`.
+- **D25.** Invite no oficial de Discord retirado de `docs/DECISIONES.md` antes del push (R52: el repo
+      no debe exhibir invites ajenos). El único enlace que queda es el oficial del brief (D18).
+- **D26.** `package.json` name `app` → `techtojob-landing`. Footer `<nav>` con `aria-label` propio
+      ("Navegación del pie de página") para desambiguar los 3 landmarks (J6).
 
 ## Preguntas abiertas (antiguas, contexto histórico)
 

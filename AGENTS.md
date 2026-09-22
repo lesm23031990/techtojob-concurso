@@ -88,8 +88,10 @@ techtojob-concurso/
 
 ## Estado actual
 
-**FASE 1 completada:** estructura agéntica montada (22/09/2026).
-**FASE 2 completada:** ingesta de `material-concurso/` → `specs/00-30` + brief + kit de
-marca completo (22/09/2026). Bloqueantes resueltos: brief en `bases/brief.md`, logos en
-`marca/TechToJob/`, Discord oficial `discord.gg/h9FFgKdkRd` (D18).
-⚠️ **Plazo de entrega: miércoles 23/09 23:59.** En curso: FASE 3 (design system + scaffold).
+**FASES 1–4 completadas (22/09/2026):** specs con 61 reglas trazadas, design system con tokens,
+landing completa en `app/` (11 secciones + SEO técnico), auditoría rules-auditor pasada 1 con
+fixes aplicados (R35 commits+identificadores, R56 lazy, J6 aria-label footer) y evidencia QA
+en `docs/qa/`. Historial reescrito local antes del primer push (D22) — sin remote aún, seguro.
+**Queda FASE 5 (23/09):** repo público GitHub → deploy Vercel con URL real en `content.ts`
+(`site.url`) → Lighthouse + capturas sobre el deploy → mensaje al canal ENTREGAS con
+declaración de IA (R07) → borrar rama `backup/pre-reword`.
