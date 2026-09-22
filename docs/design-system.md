@@ -1,0 +1,291 @@
+# Design System — TechToJob · Landing Torneo #2
+
+> Autor: `design-ux` · 22/09/2026 · Ejecutor: `nextjs-builder` (este doc NO contiene código de componentes, solo tokens y decisiones).
+> Fuentes: `specs/00-checklist-reglas.md` (R24–R28, R34–R36, R59), `specs/10-landing-spec.md`, `specs/11-contenido.md`, `material-concurso/bases/brief.md`, logos inspeccionados en `material-concurso/marca/TechToJob/`.
+> Regla de nomenclatura (R35): TODO token, variable, clase y comentario en inglés. El contenido visible en español vive en `messages/es.json` (R36) — este doc referencia secciones, nunca strings.
+
+---
+
+## 0. Lectura de la marca (qué vimos en los logos)
+
+Inspección visual real de los 12 PNG + medidas:
+
+| Familia | Qué es | Proporción | Variantes cromáticas (verificadas) |
+|---|---|---|---|
+| `v1` | Isotipo + wordmark **horizontal** en una línea | 4619×684 ≈ **6.75:1** (muy apaisado) | Positivo = carbón `#2f3436` · Negro = negro puro · Negativo = **verde `#84c0bf` sólido** (para fondo oscuro) · Degradado = carbón→verde diagonal |
+| `v2` | Isotipo a la izquierda + wordmark **apilado** "Tech / to / Job" en 3 líneas | 2558×1418 ≈ **1.8:1** (casi cuadrado) | mismas 4 variantes |
+| `Símbolo` | **solo isotipo** (nodo/red de 4 brazos redondeados con hueco de conexión central — lee como "conexión entre personas", coherente con el posicionamiento de comunidad) | 1151×1151 = 1:1 | mismas 4 variantes |
+
+Hallazgos que condicionan las decisiones:
+
+1. **"Negativo" NO es blanco**: es la versión en verde `#84c0bf`. Sobre fondo oscuro `#2f3436` el verde da **6.17:1** → es la variante correcta para secciones oscuras. No existe versión blanca del logo: si algún día hiciera falta sobre negro puro, se usa filtro CSS `brightness-0 invert` (no esperado en esta landing).
+2. **v1 es demasiado ancho para móvil**: a 32px de alto mide ~216px de ancho. En 360px deja ~100px para el resto del nav → en móvil se usa el `Símbolo` (ver tabla §2).
+3. **v2 es el lockup natural para formatos casi cuadrados** (OG 1200×630, hero con espacio vertical).
+4. **Problema de nombres de archivo**: `Símbolo*` lleva acento (`í` → `%C3%AD` en URLs, fricción con git/scripts/herramientas de deploy) y **`SVG/SímboloBlack .svg` tiene un espacio antes de la extensión**. Además "Positivo/Negativo/Black/Degradado" son en español y describen el fondo, no el uso → poco legibles en código inglés (R35).
+
+### 2.1 Renombrado ASCII recomendado (builder al copiar a `app/public/`)
+
+| Origen (`material-concurso/marca/TechToJob/SVG/`) | Destino `app/public/brand/` |
+|---|---|
+| `v1Positivo.svg` | `logo-horizontal.svg` |
+| `v1Negativo.svg` | `logo-horizontal-light.svg` |
+| `v1Black.svg` | `logo-horizontal-black.svg` |
+| `v1Degradado.svg` | `logo-horizontal-gradient.svg` |
+| `v2Positivo.svg` | `logo-stacked.svg` |
+| `v2Negativo.svg` | `logo-stacked-light.svg` |
+| `v2Black.svg` | `logo-stacked-black.svg` |
+| `v2Degradado.svg` | `logo-stacked-gradient.svg` |
+| `SímboloPositivo.svg` | `logo-symbol.svg` |
+| `SímboloNegativo.svg` | `logo-symbol-light.svg` |
+| `SímboloBlack .svg` ⚠️ (espacio) | `logo-symbol-black.svg` |
+| `SímboloDegradado.svg` | `logo-symbol-gradient.svg` |
+
+Regla: `-light` = para fondo oscuro (la variante verde). SVG siempre en runtime; PNG/PDF solo como archivo muerto del repo del concurso, NO entran a `app/`.
+
+---
+
+## 2. Tabla de uso de logos por ubicación
+
+| # | Ubicación | Archivo exacto (destino) | Fondo | Justificación |
+|---|---|---|---|---|
+| a | **Navbar desktop (≥768px)** | `brand/logo-horizontal.svg` (v1Positivo) | `paper` claro | Wordmark carbón sobre blanco = 12.6:1. Alto 28px (auto width ≈190px). aria-label/logo con alt "TechToJob — inicio" |
+| a' | **Navbar móvil (<768px)** | `brand/logo-symbol.svg` (SímboloPositivo) | `paper` claro | v1 no cabe con holgura en 360px; el símbolo cuadrado a 32×32px mantiene marca + espacio para hamburguesa de 44px |
+| b | **Hero** | `brand/logo-symbol-light.svg` (SímboloNegativo) como marca de agua decorativa (§6) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). El símbolo verde en grande da identidad sin robar jerarquía |
+| c | **Footer** | `brand/logo-horizontal-light.svg` (v1Negativo) | `ink` oscuro | Verde sobre carbón = 6.17:1 ✅. Alto 32px. Es la única marca del footer |
+| d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); fallback PNG: `logo-symbol.svg` exportado a 180×180 sobre fondo blanco para `apple-touch-icon.png` y a 512×512 con fondo `brand` y símbolo carbón para `icon-512.png` (maskable) | — | El símbolo cuadrado es la única variante legible a 16–32px. Carbón sobre blanco del navegador ✅; nunca Degradado en favicon (las bandas oscuras desaparecen a tamaño miniatura) |
+| e | **Open Graph 1200×630** | Composición estática nueva `app/opengraph-image.png` (builder la exporta, <200 KB): fondo `ink`; `brand/logo-stacked-light.svg` (v2Negativo) a la izquierda ocupando ~45% del alto; a la derecha el H1 del hero en Sora 700 blanco + línea de apoyo; `logo-symbol-gradient.svg` semitransparente como textura en la esquina inferior derecha | `ink` oscuro | v2 (1.8:1) es el único lockup que llena bien el formato OG sin quedar enana; verde sobre carbón legible en miniatura de Facebook/X; verificar en opengraph.xyz (R51) |
+| f | **Marca de agua / fondo** | `brand/logo-symbol-light.svg` al **8% de opacidad** detrás del hero y **`logo-symbol-gradient.svg` al 10%** en la sección de cierre, ambos `aria-hidden`, `pointer-events-none`, decorativos | `ink` oscuro | Refuerza identidad sin texto en imagen (R39) y sin coste de LCP si el builder los prioriza con `priority:false` o los inlinea como SVG decorativo. En secciones claras NO va marca de agua (compite con el texto) |
+
+---
+
+## 3. Tokens de color (Tailwind v4 `@theme`)
+
+Paleta base obligatoria (R24) + grises intermedios y UN acento (R25). Nombres en inglés (R35).
+
+```css
+@theme {
+  /* ── Base (fixed by contest rules R24) ── */
+  --color-ink:    #2f3436;  /* carbon — dark surfaces, primary text on light */
+  --color-brand:  #84c0bf;  /* teal green — buttons, dark-section accents    */
+  --color-paper:  #ffffff;  /* light surfaces                                 */
+
+  /* ── Brand state shade (same hue, hover only — not a new color) ── */
+  --color-brand-deep: #6faeae; /* hover/active fill of brand buttons          */
+
+  /* ── Intermediate grays (allowed by R25) ── */
+  --color-mist:   #f4f7f7;  /* tinted light section background                */
+  --color-line:   #dfe6e6;  /* borders/dividers on light surfaces             */
+  --color-slate:  #5f6a6d;  /* secondary text on light surfaces               */
+  --color-cloud:  #c3cdcd;  /* secondary text on dark surfaces                */
+  --color-coal:   #3a4144;  /* raised card surface on ink background          */
+  --color-hairline-dark: rgba(255,255,255,0.12); /* dividers on ink           */
+
+  /* ── Single accent (allowed by R25, support only) ── */
+  --color-ember:  #f4a261;  /* warm amber: decorative fills, chips, highlights */
+}
+```
+
+**Rol del acento `ember` (criterio propio + R25):** calienta el diseño y da un tercer plano de lectura (categorías de noticias, subrayados de datos, el "hueco" visual del avatar). **Nunca como color de texto sobre `paper`** (ratio 2.06:1 ❌) ni como único indicador de estado. Sus dos usos permitidos: (1) fondo de chip/etiqueta pequeña con texto `ink` encima (6.12:1 ✅), (2) detalle decorativo no informativo (punto de categoría, trazo de icono junto a texto ink).
+
+### 3.1 Tabla de combinaciones texto/fondo (ratios calculados, WCAG 2.1)
+
+| # | Foreground | Background | Ratio | AA normal (≥4.5) | AA grande/UI (≥3.0) | Veredicto de uso |
+|---|---|---|---|---|---|---|
+| 1 | `ink` | `paper` | **12.62** | ✅ | ✅ | Texto de lectura estándar en secciones claras |
+| 2 | `ink` | `mist` | **11.71** | ✅ | ✅ | Texto en secciones tintadas |
+| 3 | `ink` | `brand` | **6.77** | ✅ | ✅ | **Texto sobre botones verdes y sobre la franja newsletter** |
+| 4 | `ink` | `ember` | **6.12** | ✅ | ✅ | Texto sobre chips de categoría |
+| 5 | `slate` | `paper` | **5.57** | ✅ | ✅ | Texto secundario, roles, fechas |
+| 6 | `slate` | `mist` | **5.17** | ✅ | ✅ | Secundario en secciones tintadas |
+| 7 | `paper` | `ink` | **12.62** | ✅ | ✅ | Texto en secciones oscuras |
+| 8 | `cloud` | `ink` | **7.77** | ✅ | ✅ | Secundario en oscuro (no usar blanco puro en párrafos: deslumbra) |
+| 9 | `brand` | `ink` | **6.17** | ✅ | ✅ | **ÚNICO destino del verde como texto**: enlaces/énfasis en secciones oscuras. También UI components ≥3:1 ✅ |
+| 10 | `brand` | `paper` | **2.04** | ❌ | ❌ | **PROHIBIDO**: verde como texto o como único color de un control interactivo sobre fondo claro, a CUALQUIER tamaño (falla incluso grande 3:1). Cita literal de las bases (R26): "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" |
+| 11 | `paper` | `brand` | **2.04** | ❌ | ❌ | **PROHIBIDO**: texto blanco sobre botón/franja verde. El texto sobre verde es SIEMPRE `ink` |
+| 12 | `ember` | `paper` | **2.06** | ❌ | ❌ | Acento nunca como texto; solo fondo o adorno (§3) |
+| 13 | `ink` | `brand-deep` | **5.06** | ✅ | ✅ | Hover de botones primarios |
+| 14 | `paper` | `coal` | **10.9** | ✅ | ✅ | Tarjetas elevadas sobre secciones oscuras |
+
+### 3.2 Veredicto explícito del verde (resumen para rules-auditor)
+
+`#84c0bf` entra a la página solo de tres formas, todas AA:
+1. **Como fondo** (botón primario con texto `ink` 6.77:1; franja newsletter con texto `ink` 6.77:1; círculos de pasos numerados).
+2. **Como texto/énfasis ÚNICAMENTE sobre `ink`** (6.17:1 — enlaces, números grandes, subrayados activos en secciones oscuras).
+3. **Como detalle decorativo** sobre cualquier fondo (trazos, marca de agua, borde de avatar), donde no transmite información por sí solo.
+Sobre `paper`: el verde jamás es texto, jamás es el único estado de un control (focus-ring en claro es `ink`, en oscuro es `brand`).
+
+---
+
+## 4. Tipografía — Sora (fija, R28/R58/R59)
+
+`next/font/google` → `Sora({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap' })`. **Una familia, tres pesos, ni uno más** (R59). Variable `--font-sora` → clases `font-sans` (mapear Sora como sans por defecto).
+
+| Peso | Rol (inglés en código) |
+|---|---|
+| **400** | `body` — párrafos, quotes de testimonios, textos de pasos |
+| **600** | `ui` — nav, botones, labels, roles de testimonio, metadatos de noticia, h3 |
+| **700** | `display` — h1, h2, números grandes de pasos, headlines de tarjeta |
+
+### Escala mobile-first (móvil por defecto → `md:`/`lg:` desktop)
+
+| Token | Móvil (≥360) | Desktop (≥1024) | Line-height | Tracking | Uso |
+|---|---|---|---|---|---|
+| `display` (h1, único en la página, R40) | 2.25rem / 36px | 3.75rem / 60px | 1.08 | −0.02em | Hero. `text-balance` |
+| `h2` | 1.75rem / 28px | 2.5rem / 40px | 1.15 | −0.015em | Título de sección. `text-balance` |
+| `h3` | 1.25rem / 20px | 1.5rem / 24px | 1.3 | −0.01em | Tarjetas, pasos, noticias |
+| `lead` | 1.125rem / 18px | 1.25rem / 20px | 1.55 | 0 | Sub del hero, intros |
+| `body` | 1rem / 16px | 1rem / 16px | 1.65 | 0 | Párrafos; measure máx. 65ch |
+| `small` | 0.875rem / 14px | 0.875rem / 14px | 1.5 | 0 | Notas, footer, roles |
+| `label` (overline) | 0.75rem / 12px | 0.75rem / 12px | 1.4 | +0.08em, `uppercase`, peso 600 | Categorías de noticia, eyebrows de sección |
+
+Nota de rendimiento: 3 pesos = 3 archivos woff2 por subset vía `next/font` (latin); nada de `italic` (no lo usa el contenido) → no pedirlo.
+
+---
+
+## 5. Espaciado, layout, radius y sombras
+
+### Grid y contenedor
+- **Container máximo:** `72rem` (1152px), centrado (`mx-auto`).
+- **Gutters:** móvil `1.25rem` (20px) · `md:` `2rem` · `lg:` `2.5rem`. En 360px el contenido nunca toca el borde.
+- **Breakpoints de verificación (J3):** 360 / 768 / 1024 / 1440 — defaults de Tailwind (`sm 640, md 768, lg 1024, xl 1280`).
+- **Grids por sección:** pasos de "cómo funciona" `grid-cols-1 → md:grid-cols-2 → lg:grid-cols-4` · testimonios `1 → sm:2 → lg:4` (4 tarjetas) · noticias `1 → lg:3` · footer `1 → sm:2 → lg:4` bloques.
+
+### Escala vertical (ritmo entre secciones)
+```css
+@theme {
+  --spacing-section-y: 5rem;    /* py de sección en móvil */
+}
+```
+Desktop (`lg:`): `8rem`. Hero: `min-height: calc(100svh - 4rem)` con contenido verticalmente centrado (no 100vh fijo: evita el salto de la barra de URL en móvil → CLS). Nav sticky de `4rem` (64px).
+
+### Radius
+| Elemento | Token | Valor |
+|---|---|---|
+| Botones (primario y secundario) | `rounded-full` | pill — eco de las esquinas redondeadas del isotipo, friendly (comunidad, no portal) |
+| Tarjetas (testimonio, noticia) | `--radius-card` | 1rem (16px) |
+| Inputs | `--radius-input` | 0.625rem (10px) |
+| Chips / badges | `rounded-full` | pill |
+
+### Sombras (sutiles — R34 "que no estorben")
+```css
+@theme {
+  --shadow-card: 0 1px 2px rgb(47 52 54 / 0.05), 0 8px 24px -12px rgb(47 52 54 / 0.12);
+  --shadow-raised: 0 2px 4px rgb(47 52 54 / 0.06), 0 16px 32px -12px rgb(47 52 54 / 0.18);
+}
+```
+- `card` por defecto en tarjetas sobre `paper`/`mist`; `raised` SOLO en hover de tarjeta con enlace.
+- **En superficies `ink`: cero sombras** (no se ven); separar con `--color-coal` de superficie + borde `hairline-dark`.
+- El botón primario NO lleva sombra (el color ya domina la jerarquía).
+
+---
+
+## 6. Componentes base (patrones, sin código)
+
+### 6.1 `ButtonPrimary` — CTA "Entrar al Discord de TechToJob" (hero, cierre, nav)
+- Fondo `brand` · texto `ink` peso 700 · pill · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
+- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1). Sin cambio de tamaño del layout.
+- **Focus-visible:** anillo `outline: 3px solid` — `ink` con `outline-offset: 3px` sobre superficies claras; `brand` sobre superficies oscuras (6.17 ≥3:1 ✅). Nunca `outline-none`.
+- **On ink background (hero/cierre):** es el elemento más llamativo de la pantalla: tamaño de texto `lead`, icono Lucide `ArrowUpRight` 20px, `target="_blank" rel="noopener noreferrer"` + hint sr-only de "se abre en pestaña nueva" (texto en `messages/es.json`, R36).
+- Contraste verificado: 6.77:1 ✅ AA normal y AAA grande.
+
+### 6.2 `ButtonSecondary` / enlace de apoyo
+- Sobre claro: borde 2px `ink/25`, texto `ink` 600, pill, `min-height: 44px`; hover: borde `ink`, fondo `mist`.
+- Sobre oscuro: borde 2px `white/30`, texto `paper`; hover: borde `brand`, texto `brand` (6.17 ✅).
+- Uso: SOLO donde el brief lo pida (ej. "Ver las bases del torneo" en noticias si se estiliza como botón). **En el hero no existe un segundo botón** (R11: un solo botón).
+
+### 6.3 `TextLink`
+- Sobre claro: `ink` 600 + `underline decoration-brand decoration-2 underline-offset-4` (el verde aquí es adorno de subrayado, el texto legible es `ink` → cumple R26). Hover: `decoration-thickness 3px`.
+- Sobre oscuro: texto `brand` + subrayado a 2px.
+- Siempre texto descriptivo, jamás "clic aquí" (R44).
+
+### 6.4 `TestimonialCard` (×4, sección 7)
+- Fondo `paper` sobre sección `mist` · `radius-card` · `shadow-card` · padding `1.5rem`.
+- Estructura: fila superior → **avatar circular 48px** (hueco: fondo `brand` con iniciales `ink` 700 — placeholder honesto de la maqueta, listo para sustituir por `next/image` circular) + bloque nombre (`ink` 600, 1rem) y rol (`slate`, `small`).
+- Debajo: frase en `body` 400, comillas tipográficas grandes en `brand` como adorno.
+- **Hueco LinkedIn futuro (R17):** icono Lucide `Linkedin` 20px en la esquina inferior derecha del color `line`-dark con `aria-disabled`, `tabindex="-1"` y tooltip/sr-only "perfil próximo" — visible que el slot existe, pero claramente no clicable (no finge enlaces muertos, R43).
+- Nota de maqueta: la sub-copy de la sección (ya redactada en specs/11) declara que son testimonios de muestra — mantener visible en `small` `slate`.
+
+### 6.5 `NewsletterForm` (franja pre-footer sobre fondo `brand`)
+- Fondo de sección `brand` con TODO el texto en `ink` (6.77 ✅) — la franja verde es el protagonismo cromático del que habla R26 ("úsalo en fondos").
+- `label` visible arriba del input: "Tu correo electrónico" (`ink` 600, `small`) — nunca solo placeholder (J6 "etiquetas en el formulario").
+- Input: fondo `paper`, borde 2px `ink/30`, `radius-input`, `min-height: 48px`, placeholder `slate` (5.57 ✅). Foco: borde `ink` + `outline 3px ink/40 offset 2px`.
+- `type="email" required` (validación HTML5, Q8) + `aria-describedby` apuntando a nodo de error/éxito con `aria-live="polite"`. Mensajes de estado en `messages/es.json`.
+- Botón: fondo `ink`, texto `paper` (12.62 ✅), pill, `min-height: 48px`, hover `coal`. Es el único botón oscuro de la página → invierte el patrón del CTA principal y refuerza que esta franja es secundaria al Discord.
+- Alineación móvil: label → input full-width → botón full-width (stack); `sm:` input + botón en fila.
+
+### 6.6 `Nav` / `SiteHeader`
+- `position: sticky; top: 0` · alto 64px · fondo `paper/90` + `backdrop-blur` · `border-b` `line`.
+- Desktop (≥768): `logo-horizontal.svg` h-7 (28px) · enlaces a anclas (`#como-funciona`… R45) en 600 `ink`, hover subrayado `brand` 2px, targets ≥44px de alto · CTA `ButtonPrimary` compacto h-11 a la derecha.
+- Móvil (<768): `logo-symbol.svg` 32px + hamburguesa Lucide `Menu` en botón de 44×44px. Menú desplegable = panel `paper` a ancho completo, enlaces en pila de 48px de alto + CTA Discord full-width. Cierre con `Escape` y foco atrapado mientras esté abierto (criterio propio J6).
+- Enlaces de salto de foco: primer elemento del `body` = "Saltar al contenido" sr-only que se revela al focus (criterio propio de accesibilidad; no es texto oculto con keywords, no viola R60).
+
+### 6.7 `NewsCard` (×3, sección 8)
+- `paper`, borde 1px `line`, `radius-card`, padding `1.5rem`, hover `shadow-raised` (es el único cambio).
+- Chip de categoría: fondo `ember`, texto `ink` `label` pill (6.12 ✅) · fecha `slate` `small` · título `h3` 700 `ink` · resumen `body` · enlace descriptivo como `TextLink`.
+- Sin imágenes de relleno (evita peso y alt cosméticos; R53/R57).
+
+### 6.8 `StepCard` (×4, sección 2)
+- Círculo de 48px fondo `brand` con número `ink` 700 en `h2` size (6.77 ✅) — el verde "en detalles" que autorizan las bases.
+- Título `h3` + texto `body`. Conector: línea horizontal 2px `line` entre círculos solo en `lg:` (en móvil se apila vertical sin conectores → cero riesgo de desalineación en 360px).
+
+---
+
+## 7. Ritmo claro/oscuro + jerarquía visual por sección
+
+Objetivo: que la página "entre por los ojos" (J1 25%) con alternancia controlada — **3 momentos oscuros que enmarcan, 1 franja verde que rompe, lectura siempre en claro**. El verde luce DONDE BRILLA: sobre `ink`.
+
+| # | Sección | Fondo | Énfasis y rol del verde |
+|---|---|---|---|
+| 0 | Nav | `paper` sticky | Neutro y fino: no compite con el hero. CTA verde compacto como ancla de conversión siempre visible |
+| 1 | **Hero** | **`ink`** | **El botón verde `brand` es EL elemento dominante de la primera pantalla** (tamaño `lead`, único botón, R11). H1 `display` en `paper`; la sub en `cloud`; línea de apoyo en `small` `cloud`. Símbolo de agua al 8% en `brand`. Contraste máximo, 3 segundos de lectura (brief §1) |
+| 2 | Cómo funciona | `paper` | 4 pasos horizontales; los círculos numerados en verde son la única saturación → el ojo recorre el recorrido |
+| 3 | Talento | `paper` | H2 `ink` + iconografía Lucide en `brand`/`ink` mixta; copy en una columna de 65ch. (Talento y Cómo Funciona comparten claro: se separan con `label` eyebrow + borde superior `line`) |
+| 4 | Empresas | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
+| 5 | **Torneos** | **`ink`** | Sección "juego": números/headline en `brand` 700 sobre oscuro (6.17 ✅); menciona que esta web salió de un torneo → guiño con el símbolo de agua `gradient` al 10% |
+| 6 | Networking | `paper` | Vuelta a lectura tranquila; iconos de canales en `brand` |
+| 7 | Testimonios | `mist` | 4 `paper` cards flotando sobre tinte con `shadow-card`; avatares con fondo verde |
+| 8 | Noticias | `paper` | 3 cards; el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
+| 9 | **Newsletter** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo de la página → no compite con el CTA (está pre-footer, R19/D44) |
+| 10 | **Cierre** | **`ink`** | Espejo del hero: H2 `paper` grande + el mismo botón verde dominante. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto |
+| 11 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo `horizontal-light`. Legal con la nota honesta de specs/11 |
+
+Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer** (son el mismo bloque visual). Las secciones de lectura larga (copy > 3 líneas) siempre en claro.
+
+---
+
+## 8. Accesibilidad y estados (gate J6, 10%)
+
+- **Foco visible:** todos los interactivos con `focus-visible` de 3px (colores por superficie, §6.1). Prohibido `outline-none` sin reemplazo. Verificación: tab completo por la página en orden DOM lógico.
+- **Targets táctiles:** ≥44×44px en botones, nav móvil, hamburguesa, icono LinkedIn (aunque esté disabled) y cada enlace del footer (padding en el `<a>`, no solo en el texto).
+- **Contraste:** tabla §3.1 como fuente de verdad; cualquier combinación no listada requiere recalcular antes de usarse.
+- **Semántica:** un solo `h1` (R40); `h2` por sección sin saltos (R41); `header/nav/main/section/article/footer/button` (R42); formulario con `label` visible (§6.5); logos decorativos de agua con `aria-hidden="true"`, logos funcionales con nombre accesible "TechToJob".
+- **`prefers-reduced-motion: reduce`:** desactiva transforms y transiciones (§9); los estados hover/focus siguen siendo visibles por color.
+- **Teclado:** menú móvil operable con Enter/Escape; el skip-link es el primer tabbable.
+
+---
+
+## 9. Movimiento — máximo 3 microanimaciones (R34: "que no estorben")
+
+| # | Qué | Spec | Fallback `reduced-motion` |
+|---|---|---|---|
+| 1 | **Reveal de sección** (fade + `translate-y-2` → 0, 300ms `ease-out`, stagger 60ms entre cards hermanas) vía IntersectionObserver + clase CSS | Solo entrada, una vez por elemento; `opacity` parte en 1 si JS no corre (nunca contenido invisible por defecto) | Sin transform ni fade: contenido visible de entrada |
+| 2 | **Hover del CTA primario**: fondo a `brand-deep` + icono `ArrowUpRight` translada 2px en X, 150ms | Feedback de asequibilidad del botón, no decorativo | Cambio de color instantáneo, sin translate |
+| 3 | **Subrayado de nav link**: `decoration` crece de 0→2px en 150ms | Indica interactividad | Subrayado presente estático en hover |
+
+**Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax, autoplay de nada, animaciones en el LCP (el H1 del hero aparece sin animar — protegería el CLS < 0.1 y el gate de Lighthouse ≥95).
+
+---
+
+## 10. Iconografía e imágenes
+
+- **Lucide** como librería única (R33: no es un kit de componentes, son iconos; declarar en README con la fuente, R9). Trazo 2, tamaños 20/24px, siempre `aria-hidden` cuando acompañan texto visible.
+- Fotografía/illustración: **no se usa** en esta landing (decisiones de sección arriba). Si el hero pidiera apoyo visual extra en futuro: solo `next/image` con WebP/AVIF, `width`/`height` explícitos (R55), lazy bajo el primer pantallazo y jamás en el hero (R56), alt descriptivo real (R57).
+- Los logos SVG del repo pesan poco; el builder los optimiza con `svgo` antes de commitear y anota la fuente en README.
+
+---
+
+## 11. Pendientes que tocan a Lorena (⚠️ aprobación humana)
+
+1. **Visto bueno del copy de `specs/11-contenido.md`** antes del build (es su voz ante el jurado — ya marcado allí).
+2. **Créditos del footer**: nombre/handle para la línea final (pendiente en specs/11 §11).
+3. Confirmar el acento `ember #f4a261` (es criterio propio de esta propuesta, no exigencia del concurso; R25 lo permite como "un color de acento de apoyo" — si Lorena prefiere cero acento, los chips de categoría pasan a fondo `mist` con borde `line` y texto `ink`, sin más cambios).
