@@ -1,0 +1,27 @@
+import Section from "@/components/Section";
+import NewsletterForm from "@/components/NewsletterForm";
+import { messages } from "@/content";
+
+/**
+ * "Newsletter" (section 9, #newsletter) — the single solid green band of
+ * the page, pre-footer by design so it never competes with the Discord CTA
+ * (R19/D44). Every piece of text on `brand` is `ink` (6.77:1 ✅, §3.1 #3).
+ */
+export default function Newsletter() {
+  return (
+    <Section id="newsletter" headingId="newsletter-heading" tone="brand">
+      <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <h2
+            id="newsletter-heading"
+            className="text-h2 font-bold text-balance lg:text-h2-lg"
+          >
+            {messages.newsletter.h2}
+          </h2>
+          <p className="mt-6 max-w-[65ch] text-body">{messages.newsletter.copy}</p>
+        </div>
+        <NewsletterForm />
+      </div>
+    </Section>
+  );
+}
