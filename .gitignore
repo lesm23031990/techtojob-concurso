@@ -1,0 +1,28 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+.vercel
+
+# Sistema / temporales
+.DS_Store
+Thumbs.db
+*.log
+
+# Herramientales locales
+.opencode/node_modules/
+.claude/
+
+# ============================================================
+# MATERIAL DEL CONCURSO — NUNCA COMMIT (capturas Discord con
+# datos personales de terceros y material de marca ajeno)
+# ============================================================
+material-concurso/
