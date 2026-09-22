@@ -94,4 +94,6 @@ fixes aplicados (R35 commits+identificadores, R56 lazy, J6 aria-label footer) y 
 en `docs/qa/`. Historial reescrito local antes del primer push (D22) — sin remote aún, seguro.
 **Queda FASE 5 (23/09):** repo público GitHub → deploy Vercel con URL real en `content.ts`
 (`site.url`) → Lighthouse + capturas sobre el deploy → mensaje al canal ENTREGAS con
-declaración de IA (R07) → borrar rama `backup/pre-reword`.
+declaración de IA (R07). Nota: la rama `backup/pre-reword` ya se borró (22/09) porque sus
+blobs contenían el invite no oficial; el historial quedó reescrito con `filter-branch` y
+verificado con `git grep` sobre `rev-list --all` → 0 ocurrencias.
