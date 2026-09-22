@@ -1,6 +1,7 @@
 ---
 description: Unico constructor de codigo. Implementa la landing en Next.js App Router + TypeScript estricto + Tailwind segun specs y design system.
 mode: subagent
+model: opencode-go/kimi-k3
 temperature: 0.2
 ---
 

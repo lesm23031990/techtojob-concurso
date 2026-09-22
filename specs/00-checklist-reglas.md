@@ -45,7 +45,7 @@
 | R24 | "Los tres colores y la tipografía son fijos y tienen que dominar el diseño" (#2f3436, #84c0bf, #ffffff + Sora) | OBL | D60-66 | pendiente |
 | R25 | Permitidos: "grises intermedios para textos y bordes, y un color de acento… como apoyo y sin sustituir a los base" | OBL | D66 | pendiente |
 | R26 | "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" | OBL | D68 | pendiente |
-| R27 | Logo: "todas sus versiones (color, negro, blanco y SVG)" del canal 🎨 RECURSOS | OBL | D58 | **en riesgo — no descargado** (marca/ vacío) |
+| R27 | Logo: "todas sus versiones (color, negro, blanco y SVG)" del canal 🎨 RECURSOS | OBL | D58 | ✅ recibido 22/09 en `marca/TechToJob/` |
 | R28 | Tipografía Sora fija (Google Fonts) | OBL | D64 | pendiente |
 
 ## D. Stack y requisitos técnicos
@@ -108,17 +108,17 @@
 | J6 | Accesibilidad y rendimiento ("Contraste, textos alternativos, navegación con teclado, etiquetas en el formulario, imágenes optimizadas") | 10% | D225 |
 | J7 | "Si hay empate, decide el criterio de diseño" | — | D227 |
 
-## Preguntas abiertas (vacíos del material — NO se inventan)
+## Preguntas abiertas (actualizadas 22/09 tarde)
 
-| # | Pregunta | Bloquea | Prioridad |
-|---|---|---|---|
-| Q1 | **Contenido de `brief-techtojob.md`** (6 KB, adjunto del 07/09): posicionamiento y qué comunicar en cada sección. Solo tenemos la tarjeta del archivo, no su texto. "ahí está el posicionamiento y eso no se cambia" (D13) | J2 (25%) — redacción de copy | 🔴 CRÍTICA |
-| Q2 | **Archivos del logo** (color/negro/blanco/SVG) del canal 🎨 RECURSOS → `material-concurso/marca/` | J1 (25%) | 🔴 CRÍTICA |
-| Q3 | **Enlace de invitación al Discord** (el botón único del hero, R11) | Hero, CTA | 🔴 CRÍTICA |
-| Q4 | **URL de despliegue final** (para `metadataBase` + canonical, R49/R50) | Metadata | 🟡 (se resuelve al desplegar) |
-| Q5 | **Redes sociales de TechToJob** (footer "redes" R21 + JSON-LD R52) | Footer, JSON-LD | 🟡 |
-| Q6 | **Enlaces legales del footer** (¿hay aviso legal/privacidad real o maquetados?) | Footer | 🟢 |
-| Q7 | ¿Propiedad del código tras ganar? (el premio dice "se convierte en la web oficial" + "Crédito visible en la web y en el repo", D232-233 — no declara cesión) | LICENSE | 🟢 (sin LICENSE, D5) |
-| Q8 | Newsletter: sin backend, ¿el formulario se deja como maqueta con validación + feedback (sin envío real)? | Newsletter | 🟢 (asumido maqueta, ver D-15) |
+| # | Pregunta | Estado |
+|---|---|---|
+| Q1 | Contenido de `brief-techtojob.md` | ✅ resuelto → `material-concurso/bases/brief.md` |
+| Q2 | Archivos del logo | ✅ resuelto → `marca/TechToJob/` (SVG/PNG/PDF completos) |
+| Q3 | Enlace de invitación al Discord | ✅ resuelto → oficial del brief `discord.gg/h9FFgKdkRd` (D18) |
+| Q4 | URL de despliegue final | ⏳ se resuelve al deploy Vercel (hoy) |
+| Q5 | Redes sociales | ✅ resuelto → LinkedIn/X/Instagram @techtojob (brief) |
+| Q6 | Enlaces legales del footer | 🟡 maquetados con nota honesta (D19); confirmar en CHARLA |
+| Q7 | Propiedad del código | 🟢 sin LICENSE (D5); bases no declaran cesión |
+| Q8 | Newsletter sin backend | ✅ maqueta con validación cliente (D15) |
 
 **Nota anti-alucinación:** todo lo anterior tracea a línea de `discord.txt` o captura. Los textos de la landing NO están en el material (a propósito: "Los textos los escribes tú", D7) → se escribirán siguiendo el brief (Q1) y nunca copiando el ejemplo orientativo (D248).

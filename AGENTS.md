@@ -89,7 +89,7 @@ techtojob-concurso/
 ## Estado actual
 
 **FASE 1 completada:** estructura agéntica montada (22/09/2026).
-**FASE 2 completada:** ingesta de `material-concurso/` → `specs/00-30` (22/09/2026).
-⚠️ **Plazo de entrega: miércoles 23/09 23:59.** Bloqueantes abiertos para Lorena:
-contenido de `brief-techtojob.md`, archivos del logo (canal 🎨 RECURSOS) y enlace de
-invitación al Discord → ver QA-P8/P9/P10 en `docs/DECISIONES.md`.
+**FASE 2 completada:** ingesta de `material-concurso/` → `specs/00-30` + brief + kit de
+marca completo (22/09/2026). Bloqueantes resueltos: brief en `bases/brief.md`, logos en
+`marca/TechToJob/`, Discord oficial `discord.gg/h9FFgKdkRd` (D18).
+⚠️ **Plazo de entrega: miércoles 23/09 23:59.** En curso: FASE 3 (design system + scaffold).

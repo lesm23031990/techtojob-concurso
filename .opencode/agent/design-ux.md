@@ -1,6 +1,7 @@
 ---
 description: Disenador UX/UI de la landing. Produce y audita el sistema de diseno, la jerarquia visual, el copy y la conversion. No escribe codigo de componentes.
 mode: subagent
+model: opencode-go/glm-5.3
 temperature: 0.4
 permission:
   edit:

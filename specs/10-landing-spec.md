@@ -1,9 +1,9 @@
 # 10 · Spec de la landing — TechToJob Torneo #2
 
-> Fuentes: `discord.txt` (citas D+línea) y checklist `00-checklist-reglas.md` (R#).
-> ⚠️ Pendiente del **brief-techtojob.md** (Q1) para redacción final de copy. El posicionamiento
-> de referencia disponible hoy: "Comunidad de desarrolladores y empresas tech en español" (D120)
-> y "no es un portal de empleo más" (D20).
+> Fuentes: `discord.txt`→`bases/bases-concurso.txt` (citas D+línea), checklist `00-checklist-reglas.md` (R#)
+> y **`bases/brief.md`** (recibido 22/09 — posicionamiento y reglas de tono vinculantes).
+> Posicionamiento oficial: "TechToJob no es un tablón de anuncios, es una comunidad" +
+> "Comunidad de desarrolladores y empresas tech en español" (D120).
 
 ## Objetivo de conversión
 
@@ -49,9 +49,11 @@ al brief → no requiere justificación extra en README (R10).
 
 ## Copy
 
-- **NO existe copy oficial** — es parte de lo que se compite (D7-D9). Los textos los escribe
-  Lorena/redacción del proyecto guiándose por el brief (Q1, pendiente).
+- **NO existe copy oficial** — es parte de lo que se compite (D7-D9). Redacción en
+  `specs/11-contenido.md` siguiendo el brief: tuteo, frases cortas, cero palabras de folleto,
+  hablar de la persona no de nosotros (D21 en DECISIONES).
 - **Prohibido copiar el ejemplo orientativo del brief** ("penaliza en el criterio de contenido", D248).
+- **Prohibido inventar**: cifras de miembros/empresas, garantías de empleo, plazos, "gratis" como titular (brief).
 - Palabras clave semilla del propio material: "comunidad de desarrolladores", "empresas tech",
   "en español", "empleo tech", "torneos", "networking" (R38).
 - Cada sección: encabezado con sustantivo real + párrafo específico; nada de relleno genérico

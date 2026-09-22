@@ -53,18 +53,39 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
 - [x] QA-P4. IA → **permitida, declararla al entregar** (D102, decisión D9).
 - [x] QA-P6. Fecha límite → **miércoles 23/09/2026 23:59, revisión 24, ganador 25** (D207, D241).
 
-## Preguntas abiertas — NUEVAS (bloqueantes, para Lorena HOY)
+## Preguntas abiertas — RESUELTAS (2ª tanda, 22/09 tarde)
 
-- [ ] QA-P8. 🔴 **Pegar el contenido de `brief-techtojob.md`** (adjunto de @pablo 07/09 17:46 en
-      📋│BASES): posicionamiento y qué comunicar por sección. Vale 25% de la nota (J2) y "eso no
-      se cambia" (D13). Descargar el .md y pegarlo en `material-concurso/bases/brief.md`.
-- [ ] QA-P9. 🔴 **Descargar el logo** (versiones color/negro/blanco/SVG) del canal 🎨 RECURSOS →
-      `material-concurso/marca/`. Vale 25% (J1: "Uso del logo y la paleta").
-- [ ] QA-P10. 🔴 **Enlace de invitación permanente al Discord** → lo necesita el CTA único del hero.
-- [ ] QA-P11. 🟡 Redes sociales oficiales de TechToJob (footer + JSON-LD). Si no existen aún, se
-      maquetan placeholders y se quita antes de publicar — decidir.
-- [ ] QA-P12. 🟡 Enlaces legales del footer: ¿reales o maquetados? (pie de web aún no existe).
-- [ ] QA-P13. 🟢 ¿Pareja o solitario? (bases: "Si vais dos, decidlo al entregar" — por defecto solitario).
+- [x] QA-P8. Brief → **recibido completo** en `material-concurso/bases/brief.md` (posicionamiento,
+      reglas de tono, datos oficiales, ejemplo orientativo NO copiable). Alimenta `specs/11-contenido.md`.
+- [x] QA-P9. Logo → **recibido kit completo** en `material-concurso/marca/TechToJob/` (SVG/PNG/PDF ×
+      v1/v2/Símbolo × Positivo/Negro/Blanco/Degradado). Al copiar a `app/public/`: nombres ASCII.
+- [x] QA-P10. Discord → **usar el oficial del brief: https://discord.gg/h9FFgKdkRd** ("Datos que no se
+      inventan"). Lorena pasó otro invite ([invite-no-oficial-retirado]) pero el brief es fuente oficial → decisión D18.
+- [x] QA-P11. Redes → **oficiales del brief**: LinkedIn company/techtojob · X @techtojob ·
+      Instagram /techtojob. Van en footer + `sameAs` del JSON-LD. Reales, no placeholder.
+- [x] QA-P13. Participación → solitario (Lorena).
+
+## Preguntas abiertas — SIGUEN ABIERTAS
+
+- [ ] QA-P12. 🟡 Enlaces legales del footer: el brief exige bloque "legal" pero el proyecto legal no
+      existe aún → **resuelto por D19**: links a anclas/páginas maquetadas honestas ("Aviso legal",
+      "Privacidad") que llevan a una nota "web del Torneo #2 — legal se completa al publicar".
+      Confirmar con organizadores en CHARLA si hay texto legal real.
+- [ ] QA-P14. 🟢 ¿Zona horaria de las 23:59? → irrelevante en la práctica: cerramos todo hoy 22/09.
+
+## Decisiones 2ª tanda (22/09 tarde)
+
+- **D18.** CTA Discord = `https://discord.gg/h9FFgKdkRd` (brief, sección "Datos que no se inventan").
+- **D19.** Bloque legal del footer: maquetado con nota honesta (ver QA-P12). Nunca link roto ni
+      página 404 — el jurado hace clic.
+- **D20.** Modelos por agente (frontmatter `.opencode/agent/`): builder=kimi-k3, design-ux=glm-5.3,
+  seo-perf/qa-access/rules-auditor/spec-architect=qwen3.8-flash. GPT-5.6 Luna no disponible desde
+  la región de Lorena (probado).
+- **D21.** Reglas de copy vinculantes del brief (para `specs/11`): tuteo · frases cortas · cero
+      palabras de folleto (sinergia/ecosistema/revolucionar/solución integral/potenciar/disrupción) ·
+      hablar de la persona, no de nosotros · "gratis" solo como tranquilizador, nunca titular ·
+      PROHIBIDO prometer empleo/plazos/cifras · PROHIBIDO números de miembros/empresas ·
+      nombre siempre "TechToJob" sin espacios · no copiar el ejemplo orientativo.
 
 ## Preguntas abiertas (antiguas, contexto histórico)
 
