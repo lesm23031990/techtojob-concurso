@@ -126,7 +126,7 @@ export default async function Audiences() {
                   the card's top border. Decorative: the order is visual only. */}
               <span
                 aria-hidden="true"
-                className={`absolute -top-5 left-6 grid h-10 w-10 place-items-center rounded-full border-[3px] border-ink text-body font-bold text-ink lg:left-8 ${
+                className={`absolute -top-5 left-6 z-10 grid h-10 w-10 place-items-center rounded-full border-[3px] border-ink text-body font-bold text-ink lg:left-8 ${
                   audience.badgeTone === "ember" ? "bg-ember" : "bg-brand"
                 }`}
               >
