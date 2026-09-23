@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getMessages } from "next-intl/server";
 import { timelineStep } from "@/content";
@@ -60,13 +59,11 @@ export default async function Tournaments() {
           <h2
             id="torneos-heading"
             className="reveal-left text-h2 font-bold text-brand text-balance lg:text-h2-lg"
-            style={{ "--i": 0 } as CSSProperties}
           >
             {h2}
           </h2>
           <p
             className="reveal-left mt-6 max-w-[65ch] text-body text-cloud lg:text-lead"
-            style={{ "--i": 1 } as CSSProperties}
           >
             {copy}
           </p>
@@ -75,7 +72,6 @@ export default async function Tournaments() {
             {/* 1 · The running tournament (real data, D72) */}
             <article
               className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-7"
-              style={{ "--i": 2 } as CSSProperties}
             >
               <p className="text-label font-semibold uppercase text-cloud">
                 {active.label}
@@ -97,7 +93,6 @@ export default async function Tournaments() {
             <div className="flex flex-col gap-10 lg:col-span-5 lg:justify-between">
               <div
                 className="reveal-left border-t border-hairline-dark pt-6"
-                style={{ "--i": 3 } as CSSProperties}
               >
                 <div className="flex flex-wrap items-center gap-3">
                   <p className="text-label font-semibold uppercase text-cloud">
@@ -126,7 +121,6 @@ export default async function Tournaments() {
 
               <div
                 className="reveal-left border-t border-hairline-dark pt-6"
-                style={{ "--i": 4 } as CSSProperties}
               >
                 <div className="flex flex-wrap items-center gap-3">
                   <p className="text-label font-semibold uppercase text-cloud">
@@ -164,7 +158,6 @@ export default async function Tournaments() {
                 (D74): the timezone grid gets room and the time never wraps. */}
             <div
               className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-12"
-              style={{ "--i": 5 } as CSSProperties}
             >
               <p className="text-label font-semibold uppercase text-cloud">
                 {timer.label}

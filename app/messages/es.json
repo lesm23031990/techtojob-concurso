@@ -94,7 +94,8 @@
   },
   "audiences": {
     "h2": "Para quien busca empleo y para quien contrata",
-    "intro": "Dos caminos dentro de la misma comunidad de desarrolladores y empresas tech en español: publica tu perfil si buscas empleo, o encuentra talento si contratas."
+    "intro": "Tanto si buscas empleo en tech como si quieres contratar, este es tu sitio: sin filtros automáticos y sin CVs en el vacío.",
+    "ctaNote": "Se hace dentro del Discord."
   },
   "talent": {
     "eyebrow": "Para desarrolladores",
@@ -108,7 +109,7 @@
     "h2": "Publica como empresa",
     "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real.",
     "highlights": ["Publica lo que buscas", "Accede a los perfiles", "Contexto real, no solo CV"],
-    "cta": "Buscar talento real"
+    "cta": "Publicar vacante"
   },
   "tournaments": {
     "h2": "Torneos",

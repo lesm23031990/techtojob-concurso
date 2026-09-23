@@ -80,13 +80,11 @@ export default async function Testimonials() {
       <h2
         id="testimonios-heading"
         className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
-        style={{ "--i": 0 } as CSSProperties}
       >
         {messages.testimonials.h2}
       </h2>
       <p
         className="reveal mt-3 max-w-[65ch] text-small text-slate"
-        style={{ "--i": 1 } as CSSProperties}
       >
         {messages.testimonials.sub}
       </p>

@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getMessages } from "next-intl/server";
 import DiscordCta from "@/components/DiscordCta";
@@ -40,18 +39,16 @@ export default async function Closing() {
           <h2
             id="unete-heading"
             className="reveal max-w-4xl text-h2 font-bold text-balance lg:text-display"
-            style={{ "--i": 0 } as CSSProperties}
           >
             <span className="block text-cloud">{closing.line1}</span>
             <span className="block">{closing.line2}</span>
           </h2>
           <p
             className="reveal mt-6 max-w-2xl text-lead text-cloud"
-            style={{ "--i": 1 } as CSSProperties}
           >
             {closing.copy}
           </p>
-          <div className="reveal mt-10" style={{ "--i": 2 } as CSSProperties}>
+          <div className="reveal mt-10">
             <DiscordCta size="hero" label={closing.cta} />
           </div>
         </div>

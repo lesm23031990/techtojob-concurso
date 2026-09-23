@@ -71,13 +71,11 @@ export default async function News() {
       <h2
         id="noticias-heading"
         className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
-        style={{ "--i": 0 } as CSSProperties}
       >
         {messages.news.h2}
       </h2>
       <p
         className="reveal mt-3 max-w-[65ch] text-small text-slate"
-        style={{ "--i": 1 } as CSSProperties}
       >
         {messages.news.mockNote}
       </p>

@@ -109,6 +109,9 @@ export interface Audiences {
   h2: string;
   /** On-page intro under the h2 (SEO: carries the seed keywords). */
   intro: string;
+  /** Honest helper under each CTA: states that the action happens in the
+   *  Discord, since the buttons only anchor to `#unete` (D79). */
+  ctaNote: string;
 }
 
 export interface SimpleSection {

@@ -47,13 +47,11 @@ export default async function HowItWorks() {
       <h2
         id="como-funciona-heading"
         className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
-        style={{ "--i": 0 } as CSSProperties}
       >
         {h2}
       </h2>
       <p
         className="reveal-left mt-4 max-w-prose text-lead text-slate"
-        style={{ "--i": 1 } as CSSProperties}
       >
         {intro}
       </p>
@@ -101,7 +99,6 @@ export default async function HowItWorks() {
 
       <p
         className="reveal-left mt-12 border-t border-line pt-6 text-lead font-semibold"
-        style={{ "--i": 2 } as CSSProperties}
       >
         {closing}
       </p>
@@ -110,7 +107,6 @@ export default async function HowItWorks() {
         target="_blank"
         rel="noopener noreferrer"
         className="reveal-left mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
-        style={{ "--i": 3 } as CSSProperties}
       >
         {cta}
         <IconArrowUpRight className="h-4 w-4" aria-hidden="true" />

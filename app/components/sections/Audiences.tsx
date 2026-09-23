@@ -16,24 +16,25 @@ import { getMessages } from "next-intl/server";
  * Layout: `mist` surface (keeps the light rhythm — design-system §7 bans two
  * dark sections in a row) with two `paper` hairline cells. A single rail node
  * (step 3); the section keeps `id="talento"` and the companies cell keeps
- * `id="empresas"` so the nav and footer anchors still resolve (R45) with zero
- * changes to `navItemsFor`.
+ * `id="empresas"` as an optional deep-link. Nav and footer both point at
+ * `#talento` (D76) because it is ONE section, not two destinations.
  *
- * Motion (D75/D76): the cells use the SAME bento language as Testimonios/Noticias
- * (D61) — `.bento-reveal` on the wrapper plus `.bento-lit` on the card, with the
- * `--i` stagger. On top of that, a hard-edged brand sheen crosses each card and
- * a soft brand glow appears on hover (`.sheen-sweep`, `--shadow-glow`). All
- * CSS-only, no islands; the global reduced-motion guard stills everything.
+ * Motion (D61/D77): the cells use the bento language — `.reveal-left` on the
+ * wrapper (symmetric in/out) plus `.bento-lit` on the card (border lighting,
+ * staggered by the inherited `--i`). On top of that, a hard-edged brand sheen
+ * crosses each card and a soft brand glow appears on hover (`.sheen-sweep`,
+ * `--shadow-glow`). CSS-only, no islands; the reduced-motion guard stills it.
  *
- * CTAs: the actions ("crear perfil", "buscar talento") happen inside the Discord
- * and there is no backend, so these two are INERT `<button>`s that navigate
- * nowhere (D76, author's request): no dead link, no 404. The developer CTA keeps
- * the `solid` look (D46); the company CTA is the `outline` hairline variant so
- * the two do not read as twin primaries.
+ * CTAs (D76): the actions ("crear perfil", "publicar vacante") happen inside the
+ * Discord and there is no backend, so each CTA is an in-page anchor to `#unete`
+ * (the real Discord CTA) — it does not leave the page and never fakes a dead
+ * destination (R43). A `ctaNote` under them states where the action happens. The
+ * developer CTA keeps the `solid` look (D46); the company CTA is the `outline`
+ * hairline variant so the two do not read as twin primaries.
  */
 export default async function Audiences() {
   const messages = await getMessages();
-  const { h2, intro } = messages.audiences;
+  const { h2, intro, ctaNote } = messages.audiences;
 
   const audiences = [
     {
@@ -69,14 +70,10 @@ export default async function Audiences() {
       <h2
         id="audiences-heading"
         className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
-        style={{ "--i": 0 } as CSSProperties}
       >
         {h2}
       </h2>
-      <p
-        className="reveal-left mt-3 max-w-[65ch] text-body text-slate lg:text-lead"
-        style={{ "--i": 1 } as CSSProperties}
-      >
+      <p className="reveal-left mt-3 max-w-[65ch] text-body text-slate lg:text-lead">
         {intro}
       </p>
 
@@ -84,8 +81,9 @@ export default async function Audiences() {
         {audiences.map((audience, index) => (
           <div
             key={audience.headingId}
+            /* `--i` feeds the `.bento-lit` border lighting of the card. */
             className="reveal-left"
-            style={{ "--i": index + 2 } as CSSProperties}
+            style={{ "--i": index } as CSSProperties}
           >
             <article
               id={audience.id}
@@ -120,7 +118,11 @@ export default async function Audiences() {
                     {audience.title}
                   </h3>
                 </div>
-                <audience.Icon className="h-9 w-9 shrink-0 text-brand transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none" />
+                {/* Framed tile gives the icon real visual weight (D79): a bare
+                    brand glyph on `paper` sat at 2.04:1 and read as washed out. */}
+                <span className="grid h-12 w-12 shrink-0 place-items-center border border-line bg-mist text-brand-deep">
+                  <audience.Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none" />
+                </span>
               </div>
 
               <p className="relative mt-4 max-w-[65ch] text-body text-slate">
@@ -152,6 +154,9 @@ export default async function Audiences() {
                   label={audience.cta}
                   className="w-full sm:w-auto"
                 />
+                {/* Honest context: the button does not promise an action it
+                    cannot perform; it says where it happens (D79). */}
+                <p className="mt-3 text-small text-slate">{ctaNote}</p>
               </div>
             </article>
           </div>

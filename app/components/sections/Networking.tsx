@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import { getMessages } from "next-intl/server";
 
@@ -13,14 +12,10 @@ export default async function Networking() {
       <h2
         id="networking-heading"
         className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
-        style={{ "--i": 0 } as CSSProperties}
       >
         {messages.networking.h2}
       </h2>
-      <p
-        className="reveal mt-6 max-w-[65ch] text-body lg:text-lead"
-        style={{ "--i": 1 } as CSSProperties}
-      >
+      <p className="reveal mt-6 max-w-[65ch] text-body lg:text-lead">
         {messages.networking.copy}
       </p>
     </Section>
