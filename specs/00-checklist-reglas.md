@@ -29,8 +29,8 @@
 |---|---|---|---|---|
 | R11 | Hero: "Qué es TechToJob y por qué no es un portal de empleo más. Un solo botón: entrar al Discord" | OBL | D20 | cumplida (audit 22/09) |
 | R12 | Cómo funciona: "El recorrido desde que llegas hasta que sale una oportunidad" | OBL | D23 | cumplida (audit 22/09) |
-| R13 | Ofrécete como talento: "Publicar tu perfil: stack, nivel, disponibilidad" | OBL | D26 | cumplida (audit 22/09) |
-| R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) |
+| R13 | Ofrécete como talento: "Publicar tu perfil: stack, nivel, disponibilidad" | OBL | D26 | cumplida (audit 22/09) — desde D75 vive en el bloque izquierdo de la seccion split "Audiencias" (`#talento`), con H3 propio y CTA "Crear perfil de talento" |
+| R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) — desde D75 vive en el bloque derecho de "Audiencias" (celda `id="empresas"`), con H3 propio y CTA "Buscar talento real" |
 | R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | cumplida (audit 22/09) |
 | R16 | Networking: "Canales por área y gente del sector" | OBL | D35 | cumplida (audit 22/09) |
 | R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida (audit 22/09) |

@@ -108,7 +108,7 @@ Paleta base obligatoria (R24) + grises intermedios y UN acento (R25). Nombres en
 }
 ```
 
-**Rol del acento `ember` (criterio propio + R25):** calienta el diseño y da un tercer plano de lectura (categorías de noticias, subrayados de datos, el "hueco" visual del avatar). **Nunca como color de texto sobre `paper`** (ratio 2.06:1 ❌) ni como único indicador de estado. Sus dos usos permitidos: (1) fondo de chip/etiqueta pequeña con texto `ink` encima (6.12:1 ✅), (2) detalle decorativo no informativo (punto de categoría, trazo de icono junto a texto ink).
+**Rol del acento `ember` (criterio propio + R25):** calienta el diseño y da un tercer plano de lectura (categorías de noticias, subrayados de datos, el "hueco" visual del avatar). **Nunca como color de texto sobre `paper`** (ratio 2.06:1 ❌) ni como único indicador de estado. Sus dos usos permitidos: (1) fondo de chip/etiqueta pequeña con texto `ink` encima (6.12:1 ✅), (2) detalle decorativo no informativo (punto de categoría, trazo de icono junto a texto ink). **D78:** también aparece como punto decorativo en la marginalia y el ticker del hero (sobre `ink`), como punto antes de los eyebrows de Audiencias y como fondo del badge `2` de Empresas (`ink`: 6.12:1).
 
 ### 3.1 Tabla de combinaciones texto/fondo (ratios calculados, WCAG 2.1)
 
@@ -191,7 +191,7 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 | Tarjetas (testimonio, noticia) | `--radius-card` | 1rem (16px) |
 | Inputs | `--radius-input` | 0.625rem (10px) |
 | Chips / badges | `rounded-full` | pill |
-| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `rounded-none` (D36/D46). Solo en testimonios y noticias (en "cómo funciona" el bento se retiró, D66) |
+| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `rounded-none` (D36/D46). En testimonios, noticias y la sección de audiencias (dos celdas, D76); en "cómo funciona" el bento se retiró (D66) |
 
 ### Sombras (sutiles — R34 "que no estorben")
 ```css
@@ -202,7 +202,7 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 ```
 - `card` por defecto en tarjetas sobre `paper`/`mist`; `raised` SOLO en hover de tarjeta con enlace.
 - **En superficies `ink`: cero sombras** (no se ven); separar con `--color-coal` de superficie + borde `hairline-dark`.
-- **CTA (D42/D43/D46):** un único estilo en todo el sitio — cuadrado relleno `brand`, texto `ink`, barrido especular de borde duro (`-skew-x-12 bg-white/30`) + micro-elevación `-translate-y-0.5` en hover. Sin halo ni sombra (nunca glow).
+- **CTA (D42/D43/D46):** un único estilo en todo el sitio — cuadrado relleno `brand`, texto `ink`, barrido especular de borde duro (`-skew-x-12 bg-white/30`) + micro-elevación `-translate-y-0.5` en hover. Sin sombra proyectada; desde **D76** el hover añade un **glow sutil** de color `brand` (`--shadow-glow-cta`, una sombra de color de bajo alfa, **sin `blur`**) — revierte el "nunca glow" de D43.
 - El botón primario NO lleva sombra (el color ya domina la jerarquía).
 
 ---
@@ -211,16 +211,18 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 
 ### 6.1 `ButtonPrimary` — CTA "Entrar al Discord de TechToJob" (hero, cierre, nav)
 - Fondo `brand` · texto `ink` peso 700 · rectangular (`rounded-none`, D42) · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
-- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1) + barrido especular de borde duro (`-skew-x-12 bg-white/25`, 500ms) y micro-elevación `-translate-y-0.5` (D43). Sin halo, sin sombra, sin cambio de tamaño del layout.
+- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1) + barrido especular de borde duro (`-skew-x-12 bg-white/25`, 500ms) y micro-elevación `-translate-y-0.5` (D43). Sin cambio de tamaño del layout; el glow (D76) no reflowea.
 - **Un solo estilo de CTA (D46):** hero, header, menú móvil y cierre comparten exactamente las mismas clases salvo el tamaño (`nav`/`hero`/`block`). La antigua variante `line` (rectángulo hairline) se retiró. El hero mantiene UN solo botón (R11). Focus ring: `brand` sobre superficies oscuras, `ink` en el panel móvil (`paper`), por R26.
 - **Focus-visible:** anillo `outline: 3px solid` — `ink` con `outline-offset: 3px` sobre superficies claras; `brand` sobre superficies oscuras (6.17 ≥3:1 ✅). Nunca `outline-none`.
 - **On ink background (hero/cierre):** es el elemento más llamativo de la pantalla: tamaño de texto `lead`, icono Lucide `ArrowUpRight` 20px, `target="_blank" rel="noopener noreferrer"` + hint sr-only de "se abre en pestaña nueva" (texto en `messages/es.json`, R36).
 - Contraste verificado: 6.77:1 ✅ AA normal y AAA grande.
 
-### 6.2 `ButtonSecondary` / enlace de apoyo
-- Sobre claro: borde 2px `ink/25`, texto `ink` 600, pill, `min-height: 44px`; hover: borde `ink`, fondo `mist`.
-- Sobre oscuro: borde 2px `white/30`, texto `paper`; hover: borde `brand`, texto `brand` (6.17 ✅).
-- Uso: SOLO donde el brief lo pida (ej. "Ver las bases del torneo" en noticias si se estiliza como botón). **En el hero no existe un segundo botón** (R11: un solo botón).
+### 6.2 `ButtonSecondary` — `AudienceCta` outline (D76)
+- **Único uso hoy:** CTA "Buscar talento real" del bloque Empresas de "Audiencias" (D75/D76), sobre `paper`.
+- Superficie clara: borde 2px **`ink/60`** (≥3:1, WCAG 1.4.11), texto `ink` 600, **rectangular** (`rounded-none`, D42), `min-height` de 56px (mismo alto que el CTA relleno `hero`). Hover: borde `brand` **y** fondo `mist` a la vez — dos pistas, para que el verde nunca sea el ÚNICO indicador de estado (sobre `paper` un borde `brand` mide 2.04:1; R26). Sin barrido especular.
+- **Destino honesto:** es un ancla **in-page a `#unete`** (el bloque del CTA real al Discord), no un enlace externo ni un botón muerto (R43). La flecha es hacia abajo, nunca la de "abre fuera".
+- El CTA relleno `brand` sigue siendo el único estilo de conversión del sitio (D46); el outline no compite como primario.
+- **En el hero no existe un segundo botón** (R11: un solo botón). Anteriormente esta variante (hairline/pill) había sido retirada en D46; se reintroduce, ya sin píldora, solo para el bloque de empresas.
 
 ### 6.3 `TextLink`
 - Sobre claro: `ink` 600 + `underline decoration-brand decoration-2 underline-offset-4` (el verde aquí es adorno de subrayado, el texto legible es `ink` → cumple R26). Hover: `decoration-thickness 3px`.
@@ -289,14 +291,13 @@ La página se lee como **una línea de tiempo vertical** (D32): el Hero es la pu
 | 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia, marca de agua del símbolo al 10% y CTA relleno `brand` (`DiscordCta size="hero"`, estilo único D46) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
 | 2 | Cómo funciona (**paso 1**) | `paper` | **D66 stepper vertical** que reutiliza el raíl como track: nodos dobles `1.1`–`1.4` en `ember`, título + descripción + **línea de resultado**; el raíl de página la cruza igual que al resto (sin sub-timeline). **D70:** texto a 8 col y resultado como ancla de jerarquía |
 | 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15). **D71–D74:** torneo en curso (7 col) + botín / salón de la fama apilados con **chip `Ejemplo`** (5 col) y **cierre real a todo el ancho** con tabla de husos (Sora `tabular-nums`, estático); esquinas rectas y sin sombras |
-| 4 | Talento (paso 3) | `paper` | H2 `ink` + copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
-| 5 | Empresas (paso 4) | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
-| 6 | Networking (paso 5) | `paper` | Vuelta a lectura tranquila; sin bento (no tiene ítems: D38 lo deja editorial) |
-| 7 | Testimonios (paso 6) | `mist` | **D38 bento 7/5/5/7**: celdas `paper` hairline sin sombra; avatar `brand`, comilla fantasma y slot LinkedIn deshabilitado (R17/R43) |
-| 8 | Noticias (paso 7) | `paper` | **D38 bento 1 destacada + 2** (hairline); el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
-| 9 | **Newsletter (paso 8)** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo → no compite con el CTA (pre-footer, R19/D44). El raíl cruza en `ink/20` para no desaparecer |
-| 10 | **Cierre (meta)** | **`ink`** | Espejo del hero (D35): H2 en dos líneas (`cloud` + `paper`) + el mismo botón verde dominante. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto (R20). **Sin raíl ni nodo (D59)** y bloque centrado |
-| 11 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo: el composite del header en polaridad oscura (D58, §2c). Legal con la nota honesta de specs/11 |
+| 4 | **Audiencias (paso 3)** | `mist` | Sección **split (D75/D76)**: un único H2 (con "empleo", SEO) + intro + **dos celdas `paper` hairline** lado a lado (dev / empresa) separadas por borde `line`, cada una con **badge numerado** (1/2, eco del nodo D67), **icono** decorativo y **lista escaneable** de 3 ítems. Mantiene el ritmo claro (no dos oscuras seguidas) y hace leer las dos audiencias como caminos paralelos, no como un flujo lineal. CTA dev relleno `brand`; CTA empresa outline (§6.2); **ambos anclan a `#unete`** (no hay backend) |
+| 5 | Networking (paso 4) | `paper` | Vuelta a lectura tranquila; sin bento (no tiene ítems: D38 lo deja editorial) |
+| 6 | Testimonios (paso 5) | `mist` | **D38 bento 7/5/5/7**: celdas `paper` hairline sin sombra; avatar `brand`, comilla fantasma y slot LinkedIn deshabilitado (R17/R43) |
+| 7 | Noticias (paso 6) | `paper` | **D38 bento 1 destacada + 2** (hairline); el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
+| 8 | **Newsletter (paso 7)** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo → no compite con el CTA (pre-footer, R19/D44). El raíl cruza en `ink/20` para no desaparecer |
+| 9 | **Cierre (meta)** | **`ink`** | Espejo del hero (D35): H2 en dos líneas (`cloud` + `paper`) + el mismo botón verde dominante. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto (R20). **Sin raíl ni nodo (D59)** y bloque centrado |
+| 10 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo: el composite del header en polaridad oscura (D58, §2c). Legal con la nota honesta de specs/11 |
 
 Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer** (son el mismo bloque visual). Las secciones de lectura larga (copy > 3 líneas) siempre en claro.
 
@@ -321,6 +322,7 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 > layout (CLS 0), ninguno toca el copy ni el CTA, y el guard global `prefers-reduced-motion` los
 > apaga todos. **D36 retiró** el campo de grafos (isla cliente), los glows y el muro de tiles
 > flotantes del hero; **D38** añadió el ticker del hero y la numeración de las celdas bento.
+> **D76 reincorpora un glow muy sutil y de borde duro** (sombras de color, sin `blur`) — ver #14.
 > Todo es CSS puro: cero islas cliente nuevas.
 
 | # | Qué | Spec | Fallback `reduced-motion` |
@@ -328,17 +330,19 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 | 1 | **Entrada del header** (`animate-header-in`, 500ms): baja `-0.75rem` + fundido | Primer beat de la cascada (`transform`/`opacity` → CLS 0). El H1 es el elemento LCP, no el header | Header visible de inmediato |
 | 2 | **Entrada del hero** (H1, sub, CTA, apoyo, meta, nav: escalonado 100→700ms) | El **H1 anima solo `transform`** (`animate-lift-in`), nunca `opacity`: el elemento LCP se pinta opaco en el primer frame | Todo el contenido visible de entrada, en su estado final |
 | 3 | **Línea de tiempo vertical** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | El relleno `brand` crece con el scroll y cada nodo se enciende al entrar en vista. Un segmento por sección → la línea se ve continua de "Cómo funciona" a "Newsletter" (el Cierre queda fuera, D59) | Línea dibujada completa y nodos activos |
-| 4 | **Entrada por elemento** (`.reveal`, D62/D63/D64): cada "beat" de sección (h2, intro, tarjetas, CTA) hace fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()` y easing `cubic-bezier(0.2,0.9,0.2,1)`; `--i` desplaza el `animation-range` para el escalonado. Sustituye al viejo reveal de bloque | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas; el hero NO lo usa (su H1 jamás hace fade: es el LCP) | Contenido estático visible en su estado final |
-| 4b | **Regla anti-bug de `view()`** (D63): el rango usa la fase **`cover`** (relativa al viewport), nunca `entry` (relativa al alto del elemento: un h2 de 40px terminaba el fade en ~11px de scroll); y **ningún ancestro** de un elemento con `view()` puede llevar `overflow: hidden` (crea scroll container y congela el timeline) → se usa `overflow-clip`. Rango corto para un efecto **brusco** (D64) | `cover 0% cover calc(12% + var(--i,0)*4%)` → ~56–96px de scroll con 40px de desplazamiento | — |
+| 4 | **Entrada + salida por elemento** (`.reveal`, D62/D63/D64/**D77**): cada "beat" de sección (h2, intro, tarjetas, CTA) entra con fade-in + `translate(0, 1.75rem) → 0` (0→16% del rango) y **sale por arriba** (90→100%), con `animation-timeline: view()` y easing `cubic-bezier(0.2,0.9,0.2,1)`. Al ir atado al scroll, **se invierte al subir**: las secciones también "cobran vida" hacia arriba | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas; el hero NO lo usa en su H1 (jamás hace fade: es el LCP) | Contenido estático visible en su estado final |
+| 4b | **Regla anti-bug de `view()`** (D63): el rango usa la fase **`cover`** (relativa al viewport), nunca `entry` (relativa al alto del elemento: un h2 de 40px terminaba el fade en ~11px de scroll); y **ningún ancestro** de un elemento con `view()` puede llevar `overflow: hidden` (crea scroll container y congela el timeline) → se usa `overflow-clip` | **D77:** rango `cover` COMPLETO con meseta opaca 16%–90%; a 90% el elemento ya entra bajo la barra fija (~96px), así que el contenido nunca se lee a media tinta (verificado en navegador: opacidad 1.0 en el aterrizaje del ancla) | — |
 | 5 | **Ticker del hero** (`.animate-marquee`, D38): track duplicado, `translateX(0 → −50%)`, 34s lineal infinito | `transform` only; el bloque es `aria-hidden` y no interactivo (R11/R34) | `animation: none` + `transform: none`: el track se estaciona en el origen y se lee solo la primera copia |
 | 6 | **Marcador fantasma bento** (`.bento-index`, D38, `animation-timeline: view()`) | Tras D66 queda **solo en Testimonios** (la comilla editorial sobredimensionada): `opacity`/`transform` en un `<span>` interno, decorativo (`aria-hidden`) | Marcador visible en su estado final |
-| 7 | **Hover del CTA** (todas las instancias de `DiscordCta`, D42/D43/D46): estilo único relleno `brand` con barrido especular de borde duro (`-skew-x-12 bg-white/30`, 500ms) + micro-elevación `-translate-y-0.5` + flecha 2px | Feedback de asequibilidad del botón, no decorativo. Sin halo ni blur | Sin barrido ni translate (`motion-reduce:`); el cambio de color se mantiene |
+| 7 | **Hover del CTA** (todas las instancias de `DiscordCta`/`AudienceCta`, D42/D43/D46/D76): estilo único relleno `brand` con barrido especular de borde duro (`-skew-x-12 bg-white/30`, 500ms, en reposo fuera del recorte) + micro-elevación `-translate-y-0.5` + flecha 2px + glow suave (`--shadow-glow-cta`) | Feedback de asequibilidad del botón, no decorativo. Sin `blur` | Sin barrido ni translate (`motion-reduce:`); el cambio de color se mantiene |
 | 8 | **Subrayado de enlaces de nav** (150ms) + hover de enlaces del nav rápido | Header y nav del hero: hover `decoration-brand` 2px | Subrayado presente en hover |
 | 9 | **Grid del hero vivo** (D44): `.hero-field` panea una celda con el scroll (`animation-timeline: scroll()`) y `.hero-field-drift` añade un drift continuo de una celda (4rem en X e Y) en 28s | Capas anidadas para que ambos `transform` convivan; loop sin costura por la periodicidad del patrón; solo `transform` | Grid quieto y completo (el guard global colapsa ambos) |
 | 10 | **Header adaptativo** (D47/D49): crossfade de la barra `ink`↔`paper` (250ms por `opacity`) + hairline de progreso `.header-progress` (`scaleX` con `animation-timeline: scroll(root)`) + scrollspy `aria-current` | Solo color/opacidad/transform, CLS 0; la hairline es CSS puro | Header `ink` fijo (sin JS) y sin hairline; ningún enlace marcado activo |
-| 11 | **Entrada de celda bento** (`.bento-reveal`, D61/D63/D64): fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()` y rango `cover`; stagger determinista por `--i` desplazando el `animation-range` (con `view()` el `animation-delay` se ignora) | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas | Celda estática visible en su estado final |
+| 11 | **Entrada + salida de celda bento** (`.bento-reveal`, D61/D63/D64/**D77**): comparte el keyframe `step-in-out` de `.reveal` (entra por abajo 0→16%, meseta 16→90%, sale por arriba 90→100%) con `animation-timeline: view()` y rango `cover` completo | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas | Celda estática visible en su estado final |
 | 12 | **Iluminación de celda bento** (`.bento-lit`, D61): borde `line → brand` conforme la celda entra en el viewport, escalonado por `--i`; hover `scale-[1.02]` + `border-brand` (+ `bg-mist` en secciones `paper`) con `duration-300 ease-in-out` | Borde **duro, sin blur ni halo** (D43); `brand` sobre `paper` es decorativo (2.04:1), nunca texto (R26) | Borde en reposo (`line`); el hover conserva el cambio de color (sin escala) |
-| 13 | **Entrada desde el raíl** (`.reveal-left`, D69/D72; `#como-funciona` y `#torneos`): `translateX(-2.5rem) → 0` + fundido con `view()` (rango `cover`, `--i`, easing `cubic-bezier(0.2,0.9,0.2,1)`) — cada bloque parece salir de la línea de tiempo | Solo `transform`/`opacity` (CLS 0); no genera overflow horizontal | Contenido estático visible en su estado final |
+| 13 | **Entrada desde el raíl + salida** (`.reveal-left`, D69/D72/D76/**D77**; `#como-funciona`, `#torneos` y `#talento`): entra `translate(-3.5rem, 0) → 0` (0→16%) y **sale por arriba** (90→100%), con `view()` y rango `cover` completo — cada bloque parece salir de la línea de tiempo y se despide al subir | Solo `transform`/`opacity` (CLS 0); no genera overflow horizontal | Contenido estático visible en su estado final |
+| 15 | **Hero al volver** (`.hero-soft`, D77): el bloque de contenido del hero (sin tocar el H1) se mueve con `animation-timeline: scroll(root)`, `animation-range: 0 80vh`: opacidad 1→0.9 y −0.75rem | Muy sutil y posicional (CSS no distingue la dirección del scroll); a scroll 0 arranca en su estado final, así que **no toca el LCP** | Hero estático en su estado final |
+| 14 | **Brillo sutil** (D76): `.sheen-sweep` (barrido diagonal `brand` de borde duro al hover de las celdas de Audiencias) + `--shadow-glow`/`--shadow-glow-cta` (glow suave en hover de tarjetas y CTA) + `.section-sheen` (hairline luminosa estática en el borde superior de cada sección) | Solo `brand`/`ink` (R24/R25); son **sombras de color y gradientes**, sin `filter: blur` ni blobs (D37.1); el `.sheen-sweep` reposa fuera del recorte (`-translate-x-full`) | El barrido no corre (`motion-reduce: hidden`); el glow se queda en su valor base |
 
 **Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax **de scroll**,
 autoplay de nada y cualquier animación que retrase el LCP (por eso el H1 no hace fade).

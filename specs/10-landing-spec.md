@@ -15,7 +15,9 @@
 
 ## Público
 
-Dos audiencias explícitas con sección propia cada una (reglas R13/R14):
+Dos audiencias explícitas (reglas R13/R14), presentadas en **una sola sección split
+"Audiencias" (D75)** — dos bloques lado a lado, no dos secciones apiladas, para que se lean
+como dos caminos paralelos elegidos según el perfil y no como un flujo lineal:
 1. **Talento dev** — quiere publicar perfil (stack, nivel, disponibilidad) y encontrar oportunidades.
 2. **Empresas tech** — quiere publicar lo que busca y acceder a perfiles.
 Ambas en el mismo ecosistema: comunidad + torneos + networking.
@@ -42,14 +44,13 @@ exista (Fase 5), según exige R10.
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
 | 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **D66 stepper vertical** que reutiliza el raíl de página como track (nodos `1.1`–`1.4`, línea de resultado por paso), `<ol>` intacto | R12 |
 | 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva. **D71–D74:** activo (7 col) + botín y salón de la fama apilados (5 col), y **cierre a todo el ancho** con la tabla de husos (`tabular-nums`, estático); botín y salón marcados con chip `Ejemplo` | R15 |
-| 4 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
-| 5 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
-| 6 | Networking | `#networking` | Canales por área, gente del sector | R16 |
-| 7 | Testimonios | `#testimonios` | 4 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales). **Bento 7/5/5/7 (D38)** | R17 |
-| 8 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo). **Bento 1 destacada alta + 2 (D38)** | R18 |
-| 9 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
-| 10 | Cierre | `#unete` | Último empujón: repetir CTA Discord (nodo "meta" del raíl) | R20 |
-| 11 | Footer | — | Enlaces por bloques (secciones, comunidad, legal), redes (Q5), copyright | R21 |
+| 4 | **Audiencias** (Talento + Empresas) | `#talento` (nav y footer apuntan aquí; `#empresas` queda como deep-link a la celda derecha) | Dos caminos paralelos en una sección split (D75): izquierda "Ofrécete como talento" (perfil: stack, nivel, disponibilidad), derecha "Publica como empresa" (publicar búsqueda, acceder a perfiles). H2 propio + intro SEO y listas escaneables (D76). Cada celda con badge numerado e icono; CTA dev relleno y CTA empresa outline, **ambos anclan a `#unete`** (el CTA real al Discord) | R13 + R14 (ambas en una misma `<section>` con dos `<article>`) |
+| 5 | Networking | `#networking` | Canales por área, gente del sector | R16 |
+| 6 | Testimonios | `#testimonios` | 4 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales). **Bento 7/5/5/7 (D38)** | R17 |
+| 7 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo). **Bento 1 destacada alta + 2 (D38)** | R18 |
+| 8 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
+| 9 | Cierre | `#unete` | Último empujón: repetir CTA Discord (nodo "meta" del raíl) | R20 |
+| 10 | Footer | — | Enlaces por bloques (secciones, comunidad, legal), redes (Q5), copyright | R21 |
 
 ## Línea de tiempo vertical (estructura compartida, D32)
 
@@ -88,7 +89,9 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 | **Iluminación secuencial (D61)** | `.bento-lit`: el borde de cada celda pasa de `line` a `brand` (borde **duro, sin blur ni halo**, D43) conforme entra en el viewport, escalonado por `--i` | R34; borde `brand` sobre `paper` = decorativo (2.04:1, nunca texto ni único indicador: R26) |
 | **Hover de celda (D61)** | `transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out` + `hover:scale-[1.02]` + `hover:border-brand`; en secciones `paper` además `hover:bg-mist`. **Sin `cursor-pointer`**: las celdas no son enlaces, el hover es feedback honesto y no finge clic | R34 (CLS 0: `transform` no reflow); afordancia honesta |
 
-> **Fuera de alcance:** Talento / Empresas / Networking quedan editoriales (no tienen ítems).
+> **Fuera de alcance:** Networking queda editorial (no tiene ítems). **Audiencias
+> (D75)** sí usa el lenguaje de celda para el split de 2 bloques (dos caminos)
+> aunque no sean "ítems" repetidos: dos `<article>` `paper` hairline sobre `mist`.
 
 ## Entrada por elemento en todas las secciones (D62/D63/D64)
 
@@ -101,7 +104,7 @@ pieza**; Lorena pidió que los elementos vayan apareciendo **uno a uno** al scro
 | **`.reveal` (elemento)** | Fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()`; `animation-range: cover 0% cover calc(12% + var(--i,0) * 4%)`; easing `cubic-bezier(0.2, 0.9, 0.2, 1)`. Reutiliza el keyframe `step-in` (D61). Efecto **brusco** (D64) | R34; CLS 0 (`opacity`/`transform`); sin JS ni islas |
 | **Rango en `cover`, no `entry`** (fix D63) | `entry` se mide sobre el **alto del elemento** (un h2 de ~40px terminaba el fade en ~11px de scroll → imperceptible); `cover` es relativo al **viewport** y da ~56–96px de scroll con cualquier tamaño (D64) | Verificado en navegador |
 | **Nada de `overflow: hidden`** (fix D63) | Un ancestro con `overflow: hidden` crea scroll container propio y **congela** el timeline `view()` (pasaba en Torneos y Cierre) → se usa `overflow-clip` (recorta igual, no crea scroll container) | `Tournaments.tsx`, `Closing.tsx` |
-| **Aplicación** | Torneos (h2/copy/bloques), Talento (eyebrow/h2/copy), Empresas (idem), Networking (h2/copy), Testimonios (h2/sub), Noticias (h2/nota), Newsletter (h2/copy/formulario), Cierre (h2/p/CTA). Las celdas bento conservan `.bento-reveal` (D61). **"Cómo funciona" y "Torneos" usan `.reveal-left`** (desde el raíl, D69/D72), no `.reveal` | `--i` para escalonar cuando los elementos van en fila (Newsletter/Cierre); en columna el scroll ya escalona |
+| **Aplicación** | Torneos (h2/copy/bloques), Audiencias (h2 + 2 celdas), Networking (h2/copy), Testimonios (h2/sub), Noticias (h2/nota), Newsletter (h2/copy/formulario), Cierre (h2/p/CTA). Las celdas bento conservan `.bento-reveal` (D61). **"Cómo funciona" y "Torneos" usan `.reveal-left`** (desde el raíl, D69/D72), no `.reveal` | `--i` para escalonar cuando los elementos van en fila (Newsletter/Cierre); en columna el scroll ya escalona |
 | **Hero excluido** | Mantiene su entrada propia; el H1 nunca hace fade (elemento LCP) | R34/R40 |
 | **Fallbacks** | Sin soporte de `animation-timeline` o con `prefers-reduced-motion` → contenido visible y estático | WCAG 2.3.3 |
 

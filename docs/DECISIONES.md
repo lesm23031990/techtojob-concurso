@@ -943,6 +943,107 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
       **Actualizado en:** `sections/Tournaments.tsx`, `specs/10`, `docs/design-system.md` (§7) y `GUIA.md`.
 
+- **D75.** 23/09, Lorena pide rediseñar las audiencias: *"los pasos 'Ofrécete como talento' y
+      'Publica como empresa' estaban uno debajo del otro de forma lineal. Esto confunde al usuario"*.
+      **Problema de UX:** dos secciones apiladas (`#talento` R13 + `#empresas` R14) se leían como un
+      flujo secuencial (primero te ofreces, luego publicas) en vez de como dos caminos paralelos.
+      **Decisión (fusión en una sección split):**
+      (1) **Una sola `<section id="talento">`** con `<h2>` propio y **dos `<article>`** lado a lado
+      (izquierda dev, derecha empresa). Desde D76 **nav y footer apuntan ambos a `#talento`** (la
+      celda derecha conserva `id="empresas"` solo como deep-link opcional), porque ya es UNA sola
+      sección y no dos destinos (R45).
+      (2) **H2 nuevo** «Para quien busca empleo y para quien contrata» (aprobado por Lorena; se eligió
+      sobre «Para quien busca y para quien contrata» por SEO: incluye "empleo").
+      (3) **Ritmo claro** (opción de Lorena): tono `mist` con dos celdas `paper` hairline (lenguaje
+      D61), **sin** dos secciones oscuras seguidas (design-system §7).
+      (4) **CTAs dentro de la sección:** las acciones ("crear perfil", "buscar talento") ocurren
+      dentro del Discord y no hay backend; el destino final es un **ancla in-page a `#unete`** (el
+      bloque con el CTA real al Discord), cerrando el embudo sin fingir un enlace muerto (R43) ni
+      sacar al usuario de la página. El de dev usa el look relleno `brand`; el de empresa, la variante
+      **outline hairline** — el hover enciende borde `brand` + fondo `mist` (dos pistas) para no
+      violar R26 sobre `paper`.
+      (5) **Raíl:** un único nodo (paso 3) → `timelineOrder` pierde `"empresas"` y los pasos
+      posteriores bajan uno (9 → 8 nodos). Cambio declarado en el README (R10).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `components/sections/Audiences.tsx` (nuevo; se eliminan `Talent.tsx` y
+      `Companies.tsx`), `components/DiscordCta.tsx` (variante), `app/[locale]/page.tsx`,
+      `app/content.ts`, `app/messages/{es,en}.json`, `specs/10`, `specs/11`, `specs/00`,
+      `docs/design-system.md` (§6.2/§7) y `app/README.md`.
+
+- **D76.** 23/09, iteración visual sobre la sección Audiencias (D75) y pedido de Lorena: *"le falta
+      algo… inspírate en la imagen… agregar hover, animaciones de entrada, botones llamativos, bordes
+      brillantes… un poco de brillo algo muy sutil en toda la landing"*, más *"usa la misma animación
+      de entrada de las secciones anteriores… un poco más lenta… que se notara más"* y, por último,
+      *"para los botones de esta sección no redirija a ningún lado"*.
+      **Decisión:**
+      (1) **Copy SEO:** H2 «Para quien busca empleo y para quien contrata» + **intro** nueva
+      (`audiences.intro`): *"Dos caminos dentro de la misma comunidad de desarrolladores y empresas
+      tech en español: publica tu perfil si buscas empleo, o encuentra talento si contratas."*
+      (carries the seed keywords; el H1/H2 siguen siendo texto real, R39/R40).
+      (2) **Estructura:** cada celda gana un **badge numerado** (1/2, eco del nodo del raíl D67) y un
+      **icono** propio (Lucide `code` / `building-2`, decorativo, R33/R9).
+      (3) **Entrada:** toda la sección usa `reveal-left` (la MISMA de `#como-funciona`/`#torneos`,
+      desde el raíl) con `--i` 0…3; las tarjetas conservan `bento-lit` para el encendido de borde.
+      **`reveal-left` se hizo más lenta/visible** (rango `12%→24%` y `+6%/paso`, recorrido
+      `2.5rem→3.5rem`) — aplica a las tres secciones que la usan.
+      (4) **Brillo sutil:** `--shadow-glow` / `--shadow-glow-cta` (sombras de color, sin `blur`),
+      `.sheen-sweep` (barrido diagonal brand de borde duro al hover) y `.section-sheen` (hairline
+      luminosa en el borde superior de cada sección). Todo con `brand`/`ink` (R24/R25); el guard
+      `prefers-reduced-motion` lo detiene. **Revierte** el "nunca glow" de design-system §6.1/D43.
+      (5) **CTA que cierra el embudo:** `AudienceCta` (nuevo) es un **ancla in-page a `#unete`** (el
+      bloque del CTA real al Discord). Lorena pidió primero que no redirigieran "a ningún lado"; tras
+      la crítica de jurado (sección = callejón sin salida) se acordó este scroll, que no sale de la
+      página y no finge destino (R43). Los estilos se extraen a `cta-styles.ts` para que `DiscordCta`
+      (enlace real) y este botón no diverjan. Flecha **hacia abajo** (no la de "abre fuera").
+      (6) **Listas escaneables** derivadas del copy aprobado (R13/R14) + divisor interno antes del CTA.
+      (7) **Fix de defectos** detectados en captura: el barrido especular ya no asoma en reposo
+      (`-translate-x-full`), el borde del CTA outline sube a `ink/60` (≥3:1, WCAG 1.4.11) y el
+      `scroll-behavior: smooth` (respetando `prefers-reduced-motion`) hace que el ancla no salte.
+      (8) **Un solo destino en el nav:** como Talento y Empresas son UNA sección, sus dos entradas del
+      nav (y el enlace del footer "Publica como empresa") apuntan a `#talento`, y el scrollspy marca
+      solo la primera coincidencia (`HeaderSurface`) — si no, se subrayarían dos enlaces a la vez. La
+      línea del scrollspy se alinea con el `scroll-padding-top` (104 ≳ 96px) para que la sección
+      quedada como activa al saltar.
+      (9) **Respuesta concreta a la crítica:** verificado en navegador que las animaciones progresan
+      (`view()`), que la sección enlaza solo a `#unete` y que a 360px no hay overflow horizontal.
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde + comprobación en Playwright.
+      **Actualizado en:** `components/sections/Audiences.tsx`, `components/AudienceCta.tsx` (nuevo),
+      `components/cta-styles.ts` (nuevo), `components/DiscordCta.tsx`, `components/icons.tsx`,
+      `components/Section.tsx`, `components/sections/{Tournaments,Closing}.tsx`, `app/globals.css`,
+      `app/messages/{es,en}.json`, `app/content.ts`, `specs/10`, `specs/11`, `docs/design-system.md`.
+
+- **D77.** 23/09, tras la ronda visual, Lorena: *"mientras me desplazo hacia abajo se ve el dinamismo,
+      pero mientras me desplazo hacia arriba se ve muy plano; agrega con sutileza animaciones de salida
+      a todas las secciones ya terminadas"*, y *"al hero también… solo en la subida algo muy sutil"*.
+      **Decisión (entrada Y salida simétricas):**
+      (1) Los tres reveals (`.reveal`, `.reveal-left`, `.bento-reveal`) pasan de un rango corto de
+      entrada (`cover 0%…12–24%`) a la fase **`cover` completa** con cuatro pasos: entra (0→16%),
+      meseta opaca (16%→90%) y **sale por arriba** (90%→100%). Al ir atados al scroll, se invierten al
+      subir: las secciones vuelven a animarse (antes se veían planas). La meseta mantiene el contenido
+      a opacidad 1 durante todo el paso útil (a 90% el elemento ya entra bajo la barra fija ~96px);
+      **verificado en navegador:** en la posición de aterrizaje del ancla el titular mide opacidad 1.0.
+      (2) Se unifica la función `translate(x, y)` en todos los keyframes (evita interpolación por
+      matriz); se elimina el `--i` de los reveals y se retiran los keyframes `step-in`/`step-in-left`.
+      (3) **Hero:** `.hero-soft` en el bloque de contenido, con `animation-timeline: scroll(root)` y
+      `animation-range: 0 80vh` (opacidad 1→0.9, −0.75rem). Muy sutil y perceptible al volver a subir;
+      a scroll 0 arranca en su estado final, así que **no toca el LCP**. CSS puro no distingue la
+      dirección del scroll, por eso el efecto es posicional y deliberadamente leve.
+      **Supera D64** (rango corto y "brusco" solo de entrada) y ajusta D76.
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde + comprobación en Playwright.
+      **Actualizado en:** `app/globals.css`, `components/sections/Hero.tsx`, `docs/design-system.md` (§9).
+
+- **D78.** 23/09, Lorena: *"agrégale algo… de naranjita del que hemos venido usando… en el hero para
+      darle vidito, y en la sección de talentos/empresas"*. **Decisión:** llevar el acento `ember`
+      (R25) a esos dos puntos, siempre en usos permitidos (nunca como texto sobre `paper`, R26):
+      (1) **Hero** (oscuro): los nodos de la marginalia y los separadores del ticker pasan de `brand`
+      a `ember` (decorativos, `aria-hidden`).
+      (2) **Audiencias** (claro): el badge del bloque Empresas pasa a `bg-ember text-ink` (6.12:1 ✅)
+      y se añade un punto `ember` antes de cada eyebrow (adorno). El badge de Desarrolladores sigue en
+      `brand`. Se mantiene la paleta fija y `ember` sigue siendo el único acento (R24/R25/R26).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `components/sections/Hero.tsx`, `components/sections/Audiences.tsx`,
+      `docs/design-system.md` (§3).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

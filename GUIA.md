@@ -19,7 +19,7 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 |---|---|---|
 | 1. Especificación | Bases del concurso → `specs/` (checklist de 61 reglas, landing spec, contenido, requisitos, rúbrica) | ✅ 22/09 |
 | 2. Sistema de diseño | Tokens Tailwind, paleta, tipografía, uso del logo oficial → `docs/design-system.md` | ✅ 22/09 |
-| 3. Construcción | Scaffold + 11 secciones + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 |
+| 3. Construcción | Scaffold + 9 secciones (Audiencias unifica Talento+Empresas, D75) + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 · revisada 23/09 |
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
 | 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 · **sin auditorías (D56)** |
 
@@ -36,9 +36,14 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord) en 7 col con **botín y salón de la
   fama apilados** en 5 (chip `Ejemplo`), y **cierre real a todo el ancho** con tabla de husos (estático,
   Sora `tabular-nums`). Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
-- **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — talento, empresas, networking,
-  testimonios, noticias y newsletter (las tres primeras son editoriales; las dos bento, ya con D61;
-  newsletter, franja `brand`). Punto de partida = commit de D71. Después, la **Fase 5** (repo público,
+- **Audiencias (Talento + Empresas): REDISEÑADA (23/09, D75/D76), a la espera del visto bueno de
+  Lorena.** Las dos secciones apiladas se fusionan en UNA split sobre `mist` (dos celdas `paper` con
+  badge `1`/`2` e icono), con H2 SEO ("empleo"), intro, listas escaneables y entrada `reveal-left`
+  (ahora más marcada). Los CTA anclan a `#unete` (no hay backend) y los enlaces de nav/footer apuntan
+  todos a `#talento`.
+- **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — networking, testimonios, noticias y
+  newsletter (networking es editorial; las dos bento, ya con D61; newsletter, franja `brand`).
+  Punto de partida = commit de D75/D76. Después, la **Fase 5** (repo público,
   deploy con URL real en `content.ts` → `site.url`, y mensaje al canal ENTREGAS con la declaración de IA
   de R07).
 - **Lo que falta:** que Lorena revise el resto de secciones y dé por bueno el conjunto; después, la
