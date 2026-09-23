@@ -97,6 +97,11 @@
 
 @layer base {
   html {
+    /* D99: soft GLOBAL scale (94%). Tailwind v4 is rem-based, so shrinking the
+       root reproduces the "90% browser zoom" the author preferred while keeping
+       overlines (≈11.3px) and tap targets (≈41px, above the 24px WCAG minimum)
+       safe. Typeface (Sora) and the 3 weights are untouched (R24/R28/R58/R59). */
+    font-size: 94%;
     /* sticky 5rem nav + breathing room when jumping to #anchors (R45) */
     scroll-padding-top: 6rem;
     /* Anchors (nav + the Audiences CTAs to #unete, D76) land smoothly; the
@@ -1131,6 +1136,15 @@
   50% {
     opacity: 0.4;
   }
+}
+
+/* Noticias (D98): faint blueprint plate behind the featured brand symbol —
+   the same "plano cinético" language as the hero, contained inside the card
+   banner. Decorative only, `ink` at 4% so it never competes with the copy. */
+.news-field {
+  background-image:
+    repeating-linear-gradient(to right, rgb(47 52 54 / 0.04) 0 1px, transparent 1px 1.5rem),
+    repeating-linear-gradient(to bottom, rgb(47 52 54 / 0.04) 0 1px, transparent 1px 1.5rem);
 }
 
 /* Global reduced-motion guard (R34 + WCAG 2.3.3): kills transitions and
