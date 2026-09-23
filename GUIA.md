@@ -66,19 +66,20 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   `mist` `#f4f7f7`, NO `brand-soft`, que queda reservado sin uso — D87) y brillos idle de líneas y
   bordes (`.line-idle`/`.card-idle`) con acento **`ember`** en Torneos (glints + puntos + pulso en
   "Torneo en curso"). Detalle en `design-system.md` §3/§3.1/§7/§9 y `DECISIONES.md` D82–D87.
-- **PRÓXIMA SESIÓN: revisar con Lorena las secciones que quedan abiertas** — Testimonios (ya con el
-  color final, D87), Noticias, Newsletter y Cierre (bento ya con D61; newsletter, franja `brand`).
-  Punto de partida = D75/D76 + D80–D88. Después, la **Fase 5** (repo público,
-  deploy con URL real en `content.ts` → `site.url`, y mensaje al canal ENTREGAS con la declaración de IA
-  de R07).
-- **Lo que falta:** que Lorena revise el resto de secciones y dé por bueno el conjunto; después, la
-  **Fase 5** (repo público, deploy con URL real en `content.ts` → `site.url`, y mensaje al canal
-  ENTREGAS con la declaración de IA de R07).
+- **PRÓXIMA SESIÓN (handoff):** continuar con las **secciones abiertas** — **Testimonios** (ya con el
+  color final `mist`, D87; falta tu visto bueno de diseño), **Noticias**, **Newsletter** y **Cierre**
+  (bento ya con D61; newsletter, franja `brand`). Punto de partida: `design-system.md` §7/§9 y
+  `docs/DECISIONES.md` D75–D88.
+- **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. El **modo
+  rápido D56** sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
+- **Después, Fase 5:** repo público en GitHub → deploy Vercel con URL real en `content.ts`
+  (`site.url`) → Lighthouse/capturas → mensaje al canal ENTREGAS con la declaración de IA (R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
   `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado.
-- Los commits del 23/09 están **solo en local**: `master` va **20 por delante de `origin/master`**
-  y no se hizo push por decisión de Lorena (D60). Etiqueta `hero-v1` sobre `b18c3e1`; no hay tag para
-  "Cómo funciona" (se ofreció `how-it-works-v1`, pendiente de OK).
+- **Commits (23/09):** las iteraciones de diseño quedaron en **dos commits** — `0ea124c`
+  (`design: networking rebuild, mist rhythm and idle motion`, D81–D87) y `89b83bd`
+  (`docs: record D82-D88 and sync design system, specs and guide`). Working tree **limpio**;
+  **sin push** (`master` va 2 por delante de `origin/master`). Tag `hero-v1` sobre `b18c3e1`.
 
 ### 2.1 Modo de trabajo vigente (D56, 23/09)
 
