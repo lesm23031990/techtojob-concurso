@@ -1,20 +1,7 @@
 import Image from "next/image";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 import type { FooterBlock, SocialLink } from "@/content";
 import { IconArrowUpRight } from "@/components/icons";
-
-const blocks: FooterBlock[] = [
-  messages.footer.blocks.talent,
-  messages.footer.blocks.companies,
-  messages.footer.blocks.community,
-  messages.footer.blocks.legal,
-];
-
-const socialLinks: SocialLink[] = [
-  messages.footer.social.linkedin,
-  messages.footer.social.x,
-  messages.footer.social.instagram,
-];
 
 function isExternal(href: string): boolean {
   return href.startsWith("https://");
@@ -26,7 +13,22 @@ function isExternal(href: string): boolean {
  * profiles with descriptive text (never "here", R44) and the honest legal
  * note (D19): legal links anchor to #legal-nota instead of faking 404s.
  */
-export default function SiteFooter() {
+export default async function SiteFooter() {
+  const messages = await getMessages();
+
+  const blocks: FooterBlock[] = [
+    messages.footer.blocks.talent,
+    messages.footer.blocks.companies,
+    messages.footer.blocks.community,
+    messages.footer.blocks.legal,
+  ];
+
+  const socialLinks: SocialLink[] = [
+    messages.footer.social.linkedin,
+    messages.footer.social.x,
+    messages.footer.social.instagram,
+  ];
+
   return (
     <footer className="border-t border-hairline-dark bg-ink text-cloud">
       <div className="page-container py-16">

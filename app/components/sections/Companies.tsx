@@ -1,12 +1,13 @@
 import Section from "@/components/Section";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 
 /**
  * "Publica como empresa" (section 4, #empresas) — audience: companies
  * (R14). The `mist` tint marks the audience switch without going dark
  * (design-system §7).
  */
-export default function Companies() {
+export default async function Companies() {
+  const messages = await getMessages();
   return (
     <Section id="empresas" headingId="empresas-heading" tone="mist">
       <p className="text-label font-semibold uppercase text-slate">

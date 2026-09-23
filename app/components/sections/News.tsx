@@ -1,5 +1,5 @@
 import Section from "@/components/Section";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 import { IconArrowUpRight } from "@/components/icons";
 import type { NewsItem } from "@/content";
 
@@ -18,7 +18,8 @@ import type { NewsItem } from "@/content";
  * oversized index numeral is added (it would fight the chip and duplicar la
  * fecha).
  */
-function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
+async function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
+  const messages = await getMessages();
   return (
     <article
       className={`flex h-full flex-col gap-3 border border-line bg-paper transition-colors duration-150 hover:border-ink/30 ${
@@ -57,7 +58,8 @@ const CELL_SPANS = [
   "lg:col-span-5",
 ];
 
-export default function News() {
+export default async function News() {
+  const messages = await getMessages();
   return (
     <Section id="noticias" headingId="noticias-heading" tone="paper">
       <h2

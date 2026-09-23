@@ -1,4 +1,4 @@
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 import { IconArrowUpRight } from "@/components/icons";
 
 type DiscordCtaSize = "nav" | "hero" | "block";
@@ -42,7 +42,12 @@ const SIZE_CLASSES: Record<DiscordCtaSize, string> = {
  * plus `shrink-0` on the wrapper keep the button on one line at any viewport
  * width (the header nav trims its own links instead — see SiteHeader).
  */
-export default function DiscordCta({ size, label, className = "" }: DiscordCtaProps) {
+export default async function DiscordCta({
+  size,
+  label,
+  className = "",
+}: DiscordCtaProps) {
+  const messages = await getMessages();
   const focusRing =
     size === "block" ? "focus-visible:outline-ink" : "focus-visible:outline-brand";
   return (

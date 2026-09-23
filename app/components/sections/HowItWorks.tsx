@@ -1,5 +1,5 @@
 import Section from "@/components/Section";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 
 /**
  * "Cómo funciona" (timeline step 1, #como-funciona) — the detailed journey
@@ -14,7 +14,8 @@ import { messages } from "@/content";
  * 2px rule (brand as fill is allowed anywhere). Cells are hairline, square
  * and shadow-free (editorial continuity with the D36 hero CTA).
  */
-export default function HowItWorks() {
+export default async function HowItWorks() {
+  const messages = await getMessages();
   const { steps } = messages.howItWorks;
 
   /* Explicit per-index spans (steps are a fixed four in specs/11). The last

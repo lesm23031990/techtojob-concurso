@@ -1,12 +1,13 @@
 import Section from "@/components/Section";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 
 /**
  * "Ofrécete como talento" (section 3, #talento) — audience: developers
  * (R13). Shares the light rhythm with the previous section; separated with
  * an eyebrow label + top border (design-system §7). Reading measure 65ch.
  */
-export default function Talent() {
+export default async function Talent() {
+  const messages = await getMessages();
   return (
     <Section
       id="talento"

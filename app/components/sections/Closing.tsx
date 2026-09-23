@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 import DiscordCta from "@/components/DiscordCta";
 import TimelineRail from "@/components/TimelineRail";
 
@@ -12,7 +12,8 @@ import TimelineRail from "@/components/TimelineRail";
  * It is the GOAL of the page timeline (D32): the rail closes here with the
  * larger, filled marker.
  */
-export default function Closing() {
+export default async function Closing() {
+  const messages = await getMessages();
   const { closing } = messages;
   return (
     <section

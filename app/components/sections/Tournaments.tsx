@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { messages, timelineStep } from "@/content";
+import { getMessages } from "next-intl/server";
+import { timelineStep } from "@/content";
 import TimelineRail from "@/components/TimelineRail";
 
 /**
@@ -12,7 +13,8 @@ import TimelineRail from "@/components/TimelineRail";
  * funciona" it turns the explanation into proof ("there is a tournament
  * running"). The rail keeps the page-wide line continuous on ink.
  */
-export default function Tournaments() {
+export default async function Tournaments() {
+  const messages = await getMessages();
   return (
     <section
       id="torneos"

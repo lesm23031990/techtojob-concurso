@@ -1,5 +1,6 @@
 import Section from "@/components/Section";
-import { initials, messages } from "@/content";
+import { getMessages } from "next-intl/server";
+import { initials } from "@/content";
 import { IconLinkedin } from "@/components/icons";
 import type { Testimonial } from "@/content";
 
@@ -18,7 +19,8 @@ import type { Testimonial } from "@/content";
  * on `paper`, so the only green left here is the avatar fill (brand as
  * background with `ink` text: 6.77:1).
  */
-function TestimonialCard({ item }: { item: Testimonial }) {
+async function TestimonialCard({ item }: { item: Testimonial }) {
+  const messages = await getMessages();
   return (
     <figure className="relative flex h-full flex-col border border-line bg-paper p-6 lg:p-8">
       <span
@@ -65,7 +67,8 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 /* Asymmetric bento rhythm: 7+5 then 5+7 (fixed four items, specs/11). */
 const CELL_SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
 
-export default function Testimonials() {
+export default async function Testimonials() {
+  const messages = await getMessages();
   return (
     <Section id="testimonios" headingId="testimonios-heading" tone="mist">
       <h2

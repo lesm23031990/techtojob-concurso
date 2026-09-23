@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { messages } from "@/content";
+import { getMessages } from "next-intl/server";
 import DiscordCta from "@/components/DiscordCta";
 
 interface HeroWord {
@@ -78,7 +78,8 @@ function HeroWord({ word, order }: { word: HeroWord; order: number }) {
  *   loop to its final state (R34).
  * - The H1 is real text, never an image (R39/R40).
  */
-export default function Hero() {
+export default async function Hero() {
+  const messages = await getMessages();
   const { hero } = messages;
   const line1Words = splitWords(hero.line1);
   const line2Words = splitWords(hero.line2, hero.highlight);

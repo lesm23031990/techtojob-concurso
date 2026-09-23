@@ -1,3 +1,7 @@
+import { notFound } from "next/navigation";
+import { hasLocale } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 import Hero from "@/components/sections/Hero";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Talent from "@/components/sections/Talent";
@@ -8,7 +12,12 @@ import Testimonials from "@/components/sections/Testimonials";
 import News from "@/components/sections/News";
 import Newsletter from "@/components/sections/Newsletter";
 import Closing from "@/components/sections/Closing";
-import { messages } from "@/content";
+
+/** Same two locales as the layout: `/es` and `/en` are prerendered and the
+ *  middleware serves `/es` at `/` (as-needed, i18n I1/I2). */
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 /**
  * Single landing page, read as one vertical timeline (D32): the hero is the
@@ -21,7 +30,16 @@ import { messages } from "@/content";
  * the README (R10). Section bodies keep their own design; what changed is the
  * order and the shared timeline rail.
  */
-export default function Home() {
+export default async function Home({
+  params,
+}: Readonly<{ params: Promise<{ locale: string }> }>) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+  setRequestLocale(locale);
+  const messages = await getMessages();
+
   return (
     <main id="contenido" aria-label={messages.a11y.mainLabel}>
       <Hero />

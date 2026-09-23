@@ -8,9 +8,10 @@
 
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { messages } from "@/content";
+import { useMessages } from "next-intl";
 
 export default function NewsletterForm() {
+  const messages = useMessages();
   const [submitted, setSubmitted] = useState(false);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {

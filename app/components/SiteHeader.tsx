@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { messages, navItems } from "@/content";
+import { getMessages } from "next-intl/server";
+import { navItemsFor } from "@/content";
 import DiscordCta from "@/components/DiscordCta";
 import HeaderSurface from "@/components/HeaderSurface";
+import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { IconClose, IconMenu } from "@/components/icons";
 
 /** Anchors shown in the desktop bar (the full set lives in the mobile panel;
@@ -16,16 +18,28 @@ const DESKTOP_NAV_HREFS = [
   "#noticias",
 ];
 
-/** Only shown at ≥1280px: at 1024–1279 there is no room for the full set next
- *  to the 216px logo and the CTA, and dropping one anchor from the bar is
- *  cheaper than letting the row overflow (the footer still links it). */
-const DESKTOP_NAV_HREFS_WIDE = ["#noticias"];
+/** Anchors that only fit from 1280px up. Adding the locale selector to the
+ *  right cluster costs ~100px, so at 1024–1279 the bar keeps four anchors;
+ *  dropping one from the bar is cheaper than letting the row overflow and the
+ *  footer/mobile panel still link it (same trade-off D34/D45 already made). */
+const DESKTOP_NAV_HREFS_XL = ["#networking"];
 
-const desktopNavItems = navItems
-  .filter((item) => DESKTOP_NAV_HREFS.includes(item.href))
-  .map((item) => ({ ...item, wideOnly: DESKTOP_NAV_HREFS_WIDE.includes(item.href) }));
+/** Shown only from 1536px: the widest anchor returns when there is room. */
+const DESKTOP_NAV_HREFS_2XL = ["#noticias"];
 
-const mobileNavItems = navItems.filter((item) => item.href !== "#inicio");
+type DesktopNavTier = "base" | "xl" | "2xl";
+
+const TIER_CLASSES: Record<DesktopNavTier, string | undefined> = {
+  base: undefined,
+  xl: "hidden xl:block",
+  "2xl": "hidden 2xl:block",
+};
+
+function desktopTier(href: string): DesktopNavTier {
+  if (DESKTOP_NAV_HREFS_2XL.includes(href)) return "2xl";
+  if (DESKTOP_NAV_HREFS_XL.includes(href)) return "xl";
+  return "base";
+}
 
 /**
  * Sticky site header (design-system §6.6, adaptive per D47). The bar adopts the
@@ -51,8 +65,21 @@ const mobileNavItems = navItems.filter((item) => item.href !== "#inicio");
  * of the page cascade: header → H1 → sub → CTA → support.
  * The mobile menu is a styled <details> element: operable with Enter/Space
  * natively and zero client JS.
+ *
+ * The locale selector joins the right cluster, before the CTA, from 640px up
+ * (i18n I5); below that it lives in the menu panel. Because the row is tight,
+ * the two widest anchors tier up (`#networking` from xl, `#noticias` from 2xl)
+ * so the bar never overflows or eats the CTA's gutter (D53) — the footer and
+ * the mobile panel still link every section.
  */
-export default function SiteHeader() {
+export default async function SiteHeader() {
+  const messages = await getMessages();
+  const navItems = navItemsFor(messages);
+  const desktopNavItems = navItems
+    .filter((item) => DESKTOP_NAV_HREFS.includes(item.href))
+    .map((item) => ({ ...item, tier: desktopTier(item.href) }));
+  const mobileNavItems = navItems.filter((item) => item.href !== "#inicio");
+
   return (
     <header id="site-header" className="animate-header-in sticky top-0 z-50">
       <HeaderSurface />
@@ -60,12 +87,13 @@ export default function SiteHeader() {
       <div aria-hidden="true" className="header-veil-layer header-veil-light" />
       <div aria-hidden="true" className="header-fade-layer header-fade-dark" />
       <div aria-hidden="true" className="header-fade-layer header-fade-light" />
-      <div className="relative flex h-20 items-center justify-between gap-6 px-5 md:px-8 lg:px-10">
+      <div className="relative flex h-20 items-center justify-between gap-2 px-5 md:gap-6 md:px-8 lg:gap-3 lg:px-10 xl:gap-6">
         <Link
           href="#inicio"
           aria-label={messages.a11y.logoLabel}
           className="flex min-h-11 shrink-0 items-center gap-2.5 rounded-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand"
         >
+          {/* TODO(D55): sustituir el lockup light por el composite tipo tile+wordmark, pendiente del criterio de design-ux */}
           {/* Dark-surface lockup: composite built from OFFICIAL assets (D31) —
               green `Negativo` symbol (§0.1: 6.17:1 on ink) in a square tile
               plus the two-tone wordmark. Swapped for the official charcoal
@@ -110,7 +138,7 @@ export default function SiteHeader() {
         <nav aria-label={messages.a11y.navLabel} className="hidden lg:block">
           <ul className="flex items-center gap-2">
             {desktopNavItems.map((item) => (
-              <li key={item.href} className={item.wideOnly ? "hidden xl:block" : undefined}>
+              <li key={item.href} className={TIER_CLASSES[item.tier]}>
                 <Link
                   href={item.href}
                   className="header-nav-link inline-flex min-h-10 items-center rounded-none px-2 text-small font-semibold whitespace-nowrap text-paper underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand xl:px-3 xl:text-body"
@@ -121,6 +149,12 @@ export default function SiteHeader() {
             ))}
           </ul>
         </nav>
+
+        {/* Language selector: real links, visible from 640px up (i18n I5).
+            Below that it moves into the menu panel with the CTA row. */}
+        <div className="hidden shrink-0 sm:block">
+          <LocaleSwitcher />
+        </div>
 
         {/* The conversion action stays in the bar from 640px up; below that it
             lives in the menu panel (there is no room for it at 360px). */}
@@ -140,6 +174,11 @@ export default function SiteHeader() {
             aria-label={messages.a11y.mobileNavLabel}
             className="absolute right-0 top-full z-50 mt-2 w-screen max-w-[calc(100vw-2.5rem)] rounded-none border border-line bg-paper p-3 shadow-raised"
           >
+            {/* Below 640px the bar has no room for the selector (360px:
+                logo + hamburger already fill the row), so it lives here. */}
+            <div className="mb-2 flex justify-end border-b border-line pb-2 sm:hidden">
+              <LocaleSwitcher tone="panel" />
+            </div>
             <ul>
               {mobileNavItems.map((item) => (
                 <li key={item.href}>

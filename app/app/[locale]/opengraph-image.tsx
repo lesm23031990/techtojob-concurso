@@ -3,11 +3,13 @@
    element ImageResponse understands (next/image would never resolve here). */
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
-import { messages } from "@/content";
+import { hasLocale } from "next-intl";
+import { messagesByLocale } from "@/content";
+import { routing } from "@/i18n/routing";
 
 /**
- * Open Graph card 1200×630 (contest rule R51), generated at build time —
- * no static PNG dead weight in the repo. Composition per
+ * Open Graph card 1200×630 (contest rule R51), generated per locale at build
+ * time — no static PNG dead weight in the repo. Composition per
  * docs/design-system.md §2e: ink background, stacked light lockup on the
  * left, hero H1 in Sora 700 on the right with a green support line, and
  * the gradient symbol as a translucent texture in the bottom-right corner.
@@ -16,7 +18,7 @@ import { messages } from "@/content";
  * and the SVGs are the same brand files served from /public — one source
  * of truth for the whole visual identity.
  */
-export const alt = messages.meta.ogImageAlt;
+export const alt = "TechToJob";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -28,15 +30,23 @@ async function loadFile(url: URL): Promise<ArrayBuffer> {
   return Uint8Array.from(bytes).buffer;
 }
 
-export default async function OpengraphImage() {
+export default async function OpengraphImage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const resolved = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
+  const { og } = messagesByLocale[resolved].meta;
+
   const [font400, font600, font700, stackedSvg, symbolGradientSvg] =
     await Promise.all([
-      loadFile(new URL("../fonts/sora-400.ttf", import.meta.url)),
-      loadFile(new URL("../fonts/sora-600.ttf", import.meta.url)),
-      loadFile(new URL("../fonts/sora-700.ttf", import.meta.url)),
-      loadFile(new URL("../public/brand/logo-stacked-light.svg", import.meta.url)),
+      loadFile(new URL("../../fonts/sora-400.ttf", import.meta.url)),
+      loadFile(new URL("../../fonts/sora-600.ttf", import.meta.url)),
+      loadFile(new URL("../../fonts/sora-700.ttf", import.meta.url)),
+      loadFile(new URL("../../public/brand/logo-stacked-light.svg", import.meta.url)),
       loadFile(
-        new URL("../public/brand/logo-symbol-gradient.svg", import.meta.url),
+        new URL("../../public/brand/logo-symbol-gradient.svg", import.meta.url),
       ),
     ]);
 
@@ -81,7 +91,7 @@ export default async function OpengraphImage() {
           style={{ display: "flex" }}
         />
 
-        {/* message: the real hero H1, as text (R39) */}
+        {/* message: the real hero H1, as text (R39), localized per locale */}
         <div
           style={{
             display: "flex",
@@ -100,7 +110,7 @@ export default async function OpengraphImage() {
               color: "#ffffff",
             }}
           >
-            {messages.meta.og.headline}
+            {og.headline}
           </div>
           <div
             style={{
@@ -126,7 +136,7 @@ export default async function OpengraphImage() {
                 color: "#c3cdcd",
               }}
             >
-              {messages.meta.og.support}
+              {og.support}
             </div>
           </div>
         </div>

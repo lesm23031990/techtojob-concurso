@@ -194,6 +194,12 @@
   text-decoration-color: var(--color-brand);
 }
 
+/* Language selector follows the header polarity too (i18n I5/R26): on light
+   surfaces it swaps to ink like the nav links. */
+[data-header-surface="light"] .header-locale-link {
+  color: var(--color-ink);
+}
+
 /* Scrollspy active link (D49). On dark, brand text is 6.17:1; on light we never
    use brand as text (R26) — ink text with a brand underline as decoration. */
 [data-header-surface="dark"] .header-nav-link[aria-current="location"] {

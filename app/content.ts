@@ -1,12 +1,14 @@
 /**
- * Typed access to `messages/es.json` (contest rule R36: all visible text lives
- * in one file, zero strings embedded in components).
+ * Typed access to the message catalogs (contest rule R36 / i18n I6: all visible
+ * text lives in `messages/*.json`, zero strings embedded in components).
  *
  * The `Messages` interfaces below mirror `specs/11-contenido.md` §"Estructura
- * messages/es.json". The plain assignment `messages: Messages = raw` makes any
- * missing or renamed key a compile-time error — no `as` casts, no runtime cost.
+ * messages/es.json". Typing BOTH catalogs against the same interface
+ * (`messagesByLocale: Record<Locale, Messages>`) makes a missing or renamed key
+ * in either file a compile-time error — no `as` casts, no runtime cost.
  */
-import raw from "@/messages/es.json";
+import es from "@/messages/es.json";
+import en from "@/messages/en.json";
 
 export interface Meta {
   title: string;
@@ -25,6 +27,8 @@ export interface A11y {
   menuClose: string;
   newTabHint: string;
   logoLabel: string;
+  /** aria-label of the language selector nav (spec 12-i18n, I5). */
+  languageLabel: string;
 }
 
 export interface NavLinks {
@@ -188,7 +192,12 @@ export interface Messages {
   footer: Footer;
 }
 
-export const messages: Messages = raw;
+export const locales = ["es", "en"] as const;
+export type Locale = (typeof locales)[number];
+
+/** Locale → messages. Typing both against `Messages` makes a missing/renamed
+ *  key in EITHER file a compile-time error (R36 / i18n). */
+export const messagesByLocale: Record<Locale, Messages> = { es, en };
 
 /** Single source of truth for site-level data (URL is a deploy placeholder, Q4). */
 export const site = {
@@ -206,18 +215,20 @@ export interface NavItem {
   label: string;
 }
 
-export const navItems: NavItem[] = [
-  { href: "#inicio", label: messages.nav.links.home },
-  { href: "#como-funciona", label: messages.nav.links.howItWorks },
-  { href: "#torneos", label: messages.nav.links.tournaments },
-  { href: "#talento", label: messages.nav.links.talent },
-  { href: "#empresas", label: messages.nav.links.companies },
-  { href: "#networking", label: messages.nav.links.networking },
-  { href: "#testimonios", label: messages.nav.links.testimonials },
-  { href: "#noticias", label: messages.nav.links.news },
-  { href: "#newsletter", label: messages.nav.links.newsletter },
-  { href: "#unete", label: messages.nav.links.join },
-];
+export function navItemsFor(messages: Messages): NavItem[] {
+  return [
+    { href: "#inicio", label: messages.nav.links.home },
+    { href: "#como-funciona", label: messages.nav.links.howItWorks },
+    { href: "#torneos", label: messages.nav.links.tournaments },
+    { href: "#talento", label: messages.nav.links.talent },
+    { href: "#empresas", label: messages.nav.links.companies },
+    { href: "#networking", label: messages.nav.links.networking },
+    { href: "#testimonios", label: messages.nav.links.testimonials },
+    { href: "#noticias", label: messages.nav.links.news },
+    { href: "#newsletter", label: messages.nav.links.newsletter },
+    { href: "#unete", label: messages.nav.links.join },
+  ];
+}
 
 /**
  * Narrative order of the landing body (D32), excluding the hero — the door —
@@ -246,8 +257,9 @@ export function timelineStep(id: string): number | undefined {
   return index >= 0 ? index + 1 : undefined;
 }
 
-/** Build the Organization JSON-LD object (contest rule R52). */
-export function organizationJsonLd(baseUrl: string) {
+/** Build the Organization JSON-LD object (contest rule R52). Same profiles for
+ *  both locales; the message catalog is passed in so the function stays pure. */
+export function organizationJsonLd(baseUrl: string, messages: Messages) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
