@@ -42,6 +42,9 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   Discord."). Los CTA anclan a `#unete`; nav y footer apuntan a `#talento`. La pasada de jurado (D79)
   alineó la etiqueta del CTA de Empresas ("Publicar vacante"), dio presencia a los iconos y limpió
   código muerto (`--i`).**No se vuelve a tocar sin una decisión nueva.**
+- **Torneos: contador en vivo añadido (D80)** en el hueco de la tarjeta del torneo (entre el reto y el
+  CTA): `Countdown`, la 2.ª isla cliente del sitio, con estado "Entregas cerradas." al expirar.
+  **Pendiente del gate de revisión:** capturas responsive y contraste (J3/J6).
 - **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — networking, testimonios, noticias y
   newsletter (networking es editorial; las dos bento, ya con D61; newsletter, franja `brand`).
   Punto de partida = commit de D75/D76. Después, la **Fase 5** (repo público,

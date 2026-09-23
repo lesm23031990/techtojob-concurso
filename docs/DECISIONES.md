@@ -1065,6 +1065,32 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       HowItWorks,Testimonials,News,Newsletter,Networking,Closing}.tsx`, `app/messages/{es,en}.json`,
       `app/content.ts`, `specs/11`.
 
+- **D80.** 23/09, Lorena, antes de cerrar la sesión: *"a la sección de torneos agrégale el cronómetro
+      del tiempo faltante"*, y precisa que va *"en el espacio vacío entre la descripción del torneo y
+      el botón de Discord"*.
+      **Decisión:** mostrar el tiempo restante dentro de la tarjeta del **Torneo en curso** (no en la
+      banda de husos), como contador en vivo.
+      (1) **`Countdown`** (componente cliente, 2.ª isla del sitio tras `NewsletterForm`): recibe
+      `closesAtIso` + etiquetas desde `messages` (R36); calcula `target - Date.now()` con
+      `setInterval(1s)` y lo formatea en Días/Horas/Min/Seg con Sora `tabular-nums` en `brand`
+      (6.17:1 sobre `ink`).
+      (2) **Hidratación segura:** el primer render (servidor y cliente) muestra guiones con ancho fijo
+      `2ch`; el valor real entra en `useEffect` → sin mismatch ni CLS.
+      (3) **Expiración honesta:** al pasar el cierre muestra `Entregas cerradas.` en lugar de
+      `00:00:00` (el escenario que D72 quería evitar). Sin JS queda a guiones, pero el titular del
+      cierre y la tabla de husos siguen informando (progressive enhancement).
+      (4) **A11y:** el bloque que hace tick va `aria-hidden` (un reloj que cambia cada segundo
+      spamearía al lector de pantalla); el deadline ya es texto real en el titular.
+      (5) **`closesAtIso = 2026-09-24T00:00:00-06:00`** (medianoche de México, el último huso en
+      cerrar), editable desde `messages`.
+      **Revierte la parte de D72** que exigía cierre estático y cero islas; **ajusta D56** (ya no hay
+      una única isla cliente: hay dos, `Countdown` + `NewsletterForm`).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde + comprobación en navegador
+      (el contador tickea y no hay errores de hidratación en consola).
+      **Actualizado en:** `components/Countdown.tsx` (nuevo), `components/sections/Tournaments.tsx`,
+      `app/content.ts`, `app/messages/{es,en}.json`, `specs/10`, `specs/11`, `docs/design-system.md`,
+      `app/README.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
