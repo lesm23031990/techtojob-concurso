@@ -80,8 +80,23 @@
 
 ## 5 · NETWORKING
 
+**Composición asimétrica (D81):** título + intro `lg:sticky` a la izquierda; a la derecha, los tres
+conceptos separados por hairlines de 1px. Las frases aprobadas se reparten sin reescribirse.
+
 - **H2:** `Networking`
-- **Copy:** `Canales por área y gente del sector de verdad. Preguntas que se responden en minutos. Ofertas que alguien comparte porque conoce a quien contrata. Los buenos trabajos muchas veces no se publican: se cuentan. Aquí te enteras.`
+- **Intro (bajo el H2):** `Gente del sector de verdad.`
+- **Bloque 1 · `Canales por área`** — píldoras con las **8 áreas reales del servidor** (D83):
+  `#Development`, `#Data & AI`, `#Infrastructure & Operations`, `#Cybersecurity`, `#Product & Design`,
+  `#Quality`, `#IT & Support`, `#Business & Leadership`.
+  Línea de apoyo (de la propia captura de Discord): `Responde tus áreas y obtienes acceso a sus canales y roles.`
+- **Bloque 2 · `Respuestas en minutos`** — línea destacada: `Preguntas que se responden en minutos.`
+  (con punto `brand` decorativo de actividad)
+- **Bloque 3 · `El mercado oculto`** — apoyo: `Ofertas que alguien comparte porque conoce a quien contrata.`;
+  frase ancla: `Los buenos trabajos muchas veces no se publican: se cuentan. Aquí te enteras.`
+
+> **Cobertura de la regla R16** ("Canales por área y gente del sector"): la forma el `h3` del bloque 1
+> más la intro. Los términos SEO (`networking`, `empleo tech`) siguen presentes en el H2 y el copy.
+> Claves `messages.networking.{intro,channels,speed,market}` (mismo árbol en `es`/`en`, D57).
 
 ## 6 · TESTIMONIOS *(maqueta declarada — ver nota final)*
 
@@ -136,7 +151,7 @@ hero.{h1,sub,cta,apoyo}
 comoFunciona.{h2,intro,pasos[4].{titulo,texto},cierre}
 audiencias(h2) · talento.{eyebrow,h2,copy,cta} · empresas.{eyebrow,h2,copy,cta}
 torneos.{h2,copy}
-networking.{h2,copy}
+networking.{h2,intro,channels.{label,items[4]},speed.{label,note},market.{label,note,text}}
 testimonios.{h2,sub,items[4].{nombre,rol,frase}}
 noticias.{h2,items[3].{categoria,fecha,titulo,resumen,cta}}
 newsletter.{h2,copy,label,placeholder,boton,nota}

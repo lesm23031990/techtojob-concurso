@@ -32,7 +32,7 @@
 | R13 | Ofrécete como talento: "Publicar tu perfil: stack, nivel, disponibilidad" | OBL | D26 | cumplida (audit 22/09) — desde D75 vive en el bloque izquierdo de la seccion split "Audiencias" (`#talento`), con H3 propio y CTA "Crear perfil de talento" |
 | R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) — desde D75 vive en el bloque derecho de "Audiencias" (celda `id="empresas"`), con H3 propio y CTA "Buscar talento real" |
 | R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | cumplida (audit 22/09) |
-| R16 | Networking: "Canales por área y gente del sector" | OBL | D35 | cumplida (audit 22/09) |
+| R16 | Networking: "Canales por área y gente del sector" | OBL | D35, D81 | cumplida (audit 22/09) — **D81 (23/09)** recompone la sección en 3 bloques; la cita sigue cubierta por `networking.channels.label` + `networking.intro` (`es.json`). Re-auditar con QA |
 | R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida (audit 22/09) |
 | R18 | Noticias: "Maqueta tres entradas de ejemplo" | OBL | D41 | cumplida (audit 22/09) |
 | R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | cumplida (audit 22/09) |

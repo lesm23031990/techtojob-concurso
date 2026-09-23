@@ -25,14 +25,20 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 
 ### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
 
+> **DISEÑO CERRADO (D88, 23/09): Hero → Networking.** Las secciones **Hero, Cómo funciona, Torneos,
+> Audiencias y Networking** quedan congeladas: **no se vuelven a tocar sin una decisión nueva.**
+> Por debajo de Networking (**Testimonios, Noticias, Newsletter, Cierre**) el diseño sigue abierto a la
+> revisión de Lorena; el trabajo pendiente es la **Fase 5** y, cuando ella diga *"vamos a revisar"*, el
+> gate de auditoría (D56).
+
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
 - **"Cómo funciona": DISEÑO CERRADO (23/09, D66–D69) y REABIERTO ese mismo día con D70** (Lorena pidió
   "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
   ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
   a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72), pulido (D73) y reequilibrado (D74), a la
-  espera del visto bueno de Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares sobre `ink`**:
+- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72), pulido (D73), reequilibrado (D74) y
+  superficie final `mist` (D87). DISEÑO CERRADO (D88).** Deja de ser `h2 + párrafo` y pasa a **4 pilares**:
   torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord) en 7 col con **botín y salón de la
   fama apilados** en 5 (chip `Ejemplo`), y **cierre real a todo el ancho** con tabla de husos (estático,
   Sora `tabular-nums`). Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
@@ -45,9 +51,24 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 - **Torneos: contador en vivo añadido (D80)** en el hueco de la tarjeta del torneo (entre el reto y el
   CTA): `Countdown`, la 2.ª isla cliente del sitio, con estado "Entregas cerradas." al expirar.
   **Pendiente del gate de revisión:** capturas responsive y contraste (J3/J6).
-- **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — networking, testimonios, noticias y
-  newsletter (networking es editorial; las dos bento, ya con D61; newsletter, franja `brand`).
-  Punto de partida = commit de D75/D76. Después, la **Fase 5** (repo público,
+- **Networking: rediseño asimétrico (D81)** — el párrafo monolítico pasa a título + intro `lg:sticky`
+  a la izquierda y tres bloques a la derecha (canales por área como píldoras, respuestas en minutos
+  con punto `brand` de actividad, y el mercado oculto como ancla). **Se conserva el tono `paper`** por
+  decisión de Lorena; hovers solo por opacidad. Contenido en `messages.networking` (R36).
+  **Pendiente del gate de revisión:** capturas responsive 360/768/1024/1440 y contraste (J3/J6).
+- **Networking: contenido real + ember + isotipo (D82/D83)** — las 4 píldoras inventadas pasan a las
+  **8 áreas reales del Discord** (`#Development`, `#Data & AI`…), con nota de acceso a canales/roles;
+  punto `ember` en cada eyebrow, isotipo oficial bajo el título y entrada `.reveal-enter` en la
+  columna sticky. **D85:** la columna derecha entra con `.reveal-left`.
+- **Movimiento global + ritmo cromático + vida idle (D84/D85/D86/D87)** — deriva de texto con el scroll
+  (`.text-drift`, 7 secciones), hilo ambiental por sección (`.section-idle`), **Torneos `mist`** y
+  **Audiencias `ink`** (CTA con `surface`), **Testimonios `mist`** (el mismo azul claro que Torneos:
+  `mist` `#f4f7f7`, NO `brand-soft`, que queda reservado sin uso — D87) y brillos idle de líneas y
+  bordes (`.line-idle`/`.card-idle`) con acento **`ember`** en Torneos (glints + puntos + pulso en
+  "Torneo en curso"). Detalle en `design-system.md` §3/§3.1/§7/§9 y `DECISIONES.md` D82–D87.
+- **PRÓXIMA SESIÓN: revisar con Lorena las secciones que quedan abiertas** — Testimonios (ya con el
+  color final, D87), Noticias, Newsletter y Cierre (bento ya con D61; newsletter, franja `brand`).
+  Punto de partida = D75/D76 + D80–D88. Después, la **Fase 5** (repo público,
   deploy con URL real en `content.ts` → `site.url`, y mensaje al canal ENTREGAS con la declaración de IA
   de R07).
 - **Lo que falta:** que Lorena revise el resto de secciones y dé por bueno el conjunto; después, la

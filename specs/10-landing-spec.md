@@ -45,7 +45,7 @@ exista (Fase 5), según exige R10.
 | 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **D66 stepper vertical** que reutiliza el raíl de página como track (nodos `1.1`–`1.4`, línea de resultado por paso), `<ol>` intacto | R12 |
 | 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva. **D71–D74:** activo (7 col) + botín y salón de la fama apilados (5 col), y **cierre a todo el ancho** con la tabla de husos (`tabular-nums`); botín y salón marcados con chip `Ejemplo`. **D80:** contador en vivo del tiempo restante en la tarjeta del torneo | R15 |
 | 4 | **Audiencias** (Talento + Empresas) | `#talento` (nav y footer apuntan aquí; `#empresas` queda como deep-link a la celda derecha) | Dos caminos paralelos en una sección split (D75): izquierda "Ofrécete como talento" (perfil: stack, nivel, disponibilidad), derecha "Publica como empresa" (publicar búsqueda, acceder a perfiles). H2 propio + intro SEO y listas escaneables (D76). Cada celda con badge numerado e icono; CTA dev relleno y CTA empresa outline, **ambos anclan a `#unete`** (el CTA real al Discord) | R13 + R14 (ambas en una misma `<section>` con dos `<article>`) |
-| 5 | Networking | `#networking` | Canales por área, gente del sector | R16 |
+| 5 | Networking | `#networking` | Canales por área y gente del sector, en composición asimétrica (D81): título + intro `lg:sticky` a la izquierda y tres bloques a la derecha — canales por área (píldoras), respuestas en minutos (punto `brand` de actividad) y el mercado oculto (ancla de jerarquía) | R16 |
 | 6 | Testimonios | `#testimonios` | 4 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales). **Bento 7/5/5/7 (D38)** | R17 |
 | 7 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo). **Bento 1 destacada alta + 2 (D38)** | R18 |
 | 8 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
@@ -79,7 +79,7 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 
 | Pieza | Spec | Regla/nota |
 |---|---|---|
-| **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line` | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas dos secciones |
+| **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line`. **D85 (Audiencias `ink`): celda `bg-coal` + borde `border-hairline-dark`** y `.bento-lit-ink`; **D86/D87 (Testimonios `mist`): celda `bg-paper` + borde `border-line`** + `.card-idle` | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas dos secciones |
 | **Numeración de índice** | En Testimonios el marcador es la comilla editorial y en Noticias la fila fecha+chip: no se añade numeral para no duplicar información. ("Cómo funciona" ya no usa este recurso: pasó al stepper con nodos `1.1`–`1.4`, D66) | R34; no duplica contenido |
 | **Grid** | 12 columnas desde `lg`; móvil/tablet: una columna apilada en orden DOM. Testimonios: 7/5/5/7. Noticias: 7 (row-span 2) + 5 + 5. ("Cómo funciona" es stepper de 1 columna, D66) | R38; verificar 360/768/1024/1440 |
 | **Hero ticker** | Marquee CSS puro bajo el hero (`border-t` hairline, `text-label` uppercase `cloud`, separador `brand`), con tokens reales ya publicados (stacks de `hero.meta`, "Torneo #2", "Comunidad técnica en español"). Track duplicado para bucle continuo. `aria-hidden` (duplica `hero.meta`) y **no interactivo** | R11 (no es CTA), R36 (strings en `es.json` como `hero.ticker`, derivados), R34 |
@@ -89,9 +89,11 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 | **Iluminación secuencial (D61)** | `.bento-lit`: el borde de cada celda pasa de `line` a `brand` (borde **duro, sin blur ni halo**, D43) conforme entra en el viewport, escalonado por `--i` | R34; borde `brand` sobre `paper` = decorativo (2.04:1, nunca texto ni único indicador: R26) |
 | **Hover de celda (D61)** | `transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out` + `hover:scale-[1.02]` + `hover:border-brand`; en secciones `paper` además `hover:bg-mist`. **Sin `cursor-pointer`**: las celdas no son enlaces, el hover es feedback honesto y no finge clic | R34 (CLS 0: `transform` no reflow); afordancia honesta |
 
-> **Fuera de alcance:** Networking queda editorial (no tiene ítems). **Audiencias
-> (D75)** sí usa el lenguaje de celda para el split de 2 bloques (dos caminos)
-> aunque no sean "ítems" repetidos: dos `<article>` `paper` hairline sobre `mist`.
+> **Networking (D81):** deja de ser un párrafo editorial para convertirse en una composición
+> asimétrica con tres bloques (canales / minutos / mercado oculto). **No usa el lenguaje de
+> celda bento** (sus bloques no son "ítems" repetidos): se separan con hairlines `line` de 1px
+> sobre `paper`, con hovers de opacidad. **Audiencias (D75)** sí usa el lenguaje de celda para
+> el split de 2 bloques (dos caminos): dos `<article>` `paper` hairline sobre `mist`.
 
 ## Entrada por elemento en todas las secciones (D62/D63/D64)
 
@@ -104,7 +106,7 @@ pieza**; Lorena pidió que los elementos vayan apareciendo **uno a uno** al scro
 | **`.reveal` (elemento)** | Fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()`; `animation-range: cover 0% cover calc(12% + var(--i,0) * 4%)`; easing `cubic-bezier(0.2, 0.9, 0.2, 1)`. Reutiliza el keyframe `step-in` (D61). Efecto **brusco** (D64) | R34; CLS 0 (`opacity`/`transform`); sin JS ni islas |
 | **Rango en `cover`, no `entry`** (fix D63) | `entry` se mide sobre el **alto del elemento** (un h2 de ~40px terminaba el fade en ~11px de scroll → imperceptible); `cover` es relativo al **viewport** y da ~56–96px de scroll con cualquier tamaño (D64) | Verificado en navegador |
 | **Nada de `overflow: hidden`** (fix D63) | Un ancestro con `overflow: hidden` crea scroll container propio y **congela** el timeline `view()` (pasaba en Torneos y Cierre) → se usa `overflow-clip` (recorta igual, no crea scroll container) | `Tournaments.tsx`, `Closing.tsx` |
-| **Aplicación** | Torneos (h2/copy/bloques), Audiencias (h2 + 2 celdas), Networking (h2/copy), Testimonios (h2/sub), Noticias (h2/nota), Newsletter (h2/copy/formulario), Cierre (h2/p/CTA). Las celdas bento conservan `.bento-reveal` (D61). **"Cómo funciona" y "Torneos" usan `.reveal-left`** (desde el raíl, D69/D72), no `.reveal` | `--i` para escalonar cuando los elementos van en fila (Newsletter/Cierre); en columna el scroll ya escalona |
+| **Aplicación** | Torneos (h2/copy/bloques), Audiencias (h2 + 2 celdas), Networking (h2 + intro estáticos en la columna `sticky`; los 3 bloques de la derecha con `.reveal`), Testimonios (h2/sub), Noticias (h2/nota), Newsletter (h2/copy/formulario), Cierre (h2/p/CTA). Las celdas bento conservan `.bento-reveal` (D61). **"Cómo funciona" y "Torneos" usan `.reveal-left`** (desde el raíl, D69/D72), no `.reveal` | `--i` para escalonar cuando los elementos van en fila (Newsletter/Cierre); en columna el scroll ya escalona. **D81:** la columna `lg:sticky` de Networking NO lleva `.reveal` (un `view()` sobre caja sticky es poco fiable) |
 | **Hero excluido** | Mantiene su entrada propia; el H1 nunca hace fade (elemento LCP) | R34/R40 |
 | **Fallbacks** | Sin soporte de `animation-timeline` o con `prefers-reduced-motion` → contenido visible y estático | WCAG 2.3.3 |
 

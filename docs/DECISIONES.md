@@ -1091,6 +1091,153 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `app/content.ts`, `app/messages/{es,en}.json`, `specs/10`, `specs/11`, `docs/design-system.md`,
       `app/README.md`.
 
+- **D81.** 23/09, Lorena: rediseñar la sección de **Networking** *"manteniendo un minimalismo
+      absoluto"* — composición **asimétrica** (título a la izquierda, bloques a la derecha),
+      píldoras que simulan canales de Discord, énfasis en las respuestas en minutos y en la frase
+      del mercado oculto, con **bordes divisores ultrafinos** y **hovers sutiles**, sin degradados
+      ni simulaciones de chat.
+      **Decisión (ejecutada):**
+      (1) **Se mantiene el tono `paper`.** La petición inicial decía "fondo oscuro antracita"; al
+      señalar que `design-system §7` fija esta sección como la vuelta a la lectura tranquila entre
+      dos `mist`, Lorena eligió **conservar el claro**. No hay cambio de ritmo claro/oscuro, así
+      que no se toca la regla anti-deriva del §7.
+      (2) **Composición:** grid de 12 col desde `lg` → título + intro en `lg:col-span-5`
+      `lg:sticky lg:top-32 lg:self-start`, y los tres bloques en `lg:col-span-7`, separados por
+      `border-t border-line` de 1px; cada bloque con `<h3>` real (`text-label uppercase text-slate`)
+      para no romper la jerarquía (R41).
+      (3) **Contenido (R36):** `networking` deja de ser `SimpleSection` y pasa a una interfaz
+      `Networking` (`intro`, `channels{label,items}`, `speed{label,note}`, `market{label,note,text}`).
+      **Todas las frases aprobadas se conservan**, repartidas; los canales se listan como datos
+      (`#frontend`, `#ui-ux`, `#analytics`, `#backend`) en `messages/{es,en}.json` (D57 replica ES).
+      (4) **Paleta y hovers:** sobre `paper` el verde no puede ser texto (2.04:1, R26) → el `brand`
+      entra solo como **borde decorativo** (barra de 3px del mercado oculto) y como **relleno del
+      punto** de actividad; los hovers de las píldoras son **solo por opacidad**
+      (`opacity-70 → 100`), sin color nuevo (R24/R25) ni `cursor-pointer` (no son enlaces, R11).
+      (5) **Motion:** entrada `.reveal` en los tres bloques de la derecha; el título sticky **no**
+      lleva `.reveal` (un `view()` sobre caja sticky es poco fiable). Nuevo `@keyframes
+      activity-pulse` + `@utility animate-activity` (3.6s, ≥3.5s del catálogo §9; el guard global de
+      `prefers-reduced-motion` lo deja como punto estático).
+      (6) **Alcance:** no se añaden CTAs ni enlaces; las píldoras son etiquetas, no canales reales
+      (no hay backend).
+      **Supersede** la nota de `specs/10` que dejaba Networking "editorial sin ítems" y la fila 5 del
+      `design-system §7` en su redacción anterior.
+      **Verificación:** `tsc --noEmit`, `npm run lint` y `next build` en verde (modo D56, sin
+      auditorías).
+      **Actualizado en:** `components/sections/Networking.tsx`, `app/content.ts`,
+      `app/messages/{es,en}.json`, `app/app/globals.css`, `specs/10`, `specs/11`,
+      `docs/design-system.md`, `GUIA.md`.
+
+- **D82.** 23/09, Lorena (continúa D81 sobre Networking): *"agrégale el punto o destello naranja… faltan
+      las animaciones de entrada… una pequeña imagen debajo del título que no afecte la animación"*.
+      **Decisión:**
+      (1) El acento **`ember`** entra como **punto de 1.5px antes de cada eyebrow** (mismo patrón que
+      Audiencias) y como relleno del punto de actividad de "respuestas en minutos".
+      (2) **Imagen:** el **isotipo oficial** (`/brand/logo-symbol.svg`) bajo el título, 48px,
+      `aria-hidden`, `loading="lazy"` y con `width`/`height` fijos (R55/R56, sin CLS). Es el único
+      recurso gráfico que la landing admite (§10) y su lectura ("conexión entre personas", §0) encaja
+      con Networking.
+      (3) **Motion:** la columna izquierda recupera entrada con un **`@keyframes reveal-enter` nuevo**
+      (`.reveal-enter`, *entrance-only*, sin salida) porque `.reveal` en una caja `sticky` se
+      desincroniza; los tres bloques de la derecha siguen con `.reveal` (luego `.reveal-left`, D85).
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/sections/Networking.tsx`, `app/app/globals.css`.
+
+- **D83.** 23/09, Lorena aporta capturas del **Discord real** ("Preguntas de personalización": áreas y
+      roles) y pide ajustar la sección de Networking a esa información.
+      **Decisión:** el bloque "Canales por área" deja las 4 píldoras inventadas (`#frontend`, `#ui-ux`,
+      `#analytics`, `#backend`) y pasa a las **8 áreas reales** del servidor, en inglés exacto y con `#`:
+      `#Development`, `#Data & AI`, `#Infrastructure & Operations`, `#Cybersecurity`, `#Product & Design`,
+      `#Quality`, `#IT & Support`, `#Business & Leadership`. Se añade una línea de apoyo derivada de la
+      propia captura ("Responde tus áreas y obtienes acceso a sus canales y roles").
+      (Los ~30 roles concretos NO se listan: se muestran las áreas para no convertir la sección en un muro.)
+      **R36:** todo vive en `messages.networking.channels.{label,note,items}` (ES espejo en `en.json`, D57).
+      **Supersede el punto (3) de D81** (lista de canales inventada).
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/messages/{es,en}.json`, `app/content.ts`, `components/sections/Networking.tsx`.
+
+- **D84.** 23/09, Lorena: *"que el texto (únicamente el texto) acompañe al scroll con mucha sutileza"*
+      y *"cuando me detengo a observar una sección se ve demasiado plana"*. Spec por `design-ux`.
+      **Decisión:** dos efectos CSS puros, sin islas, en las 7 secciones centrales (hero, cierre y footer
+      excluidos):
+      (1) **`.text-drift`** — deriva del *wrapper de contenido* `±0.375rem` con `animation-timeline:
+      view()`, `linear`, sin fundido (solo `transform`); va en un elemento propio para no pisar el
+      `transform` de `.reveal*`. Solo texto; jamás en imágenes ni marcas de agua. En Networking se
+      aplica **solo a la columna derecha** (la izquierda es `sticky`).
+      (2) **`.section-idle`** — hilo de luz que recorre la hairline superior de cada sección.
+      **Reescribe la prohibición de "parallax"** del §9: se prohíbe el parallax de CAPAS/scroll-jacking,
+      no una deriva de texto acotada.
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `components/Section.tsx` y las 7 secciones,
+      `docs/design-system.md` (§7/§9).
+
+- **D85.** 23/09, Lorena: *"la alternación de los colores no tiene un ritmo claro… Torneos debería ser
+      azul clarita, talentos/empresas la oscura y la siguiente blanca… el azul de Newsletter así sea la
+      única de ese color"*. Spec por `design-ux`.
+      **Decisión:**
+      (1) **Ritmo nuevo:** Hero `ink` → Cómo funciona `paper` → **Torneos `brand-soft` (claro)** →
+      **Audiencias `ink` (oscuro)** → Networking `paper` → Testimonios `mist` → Noticias `paper` →
+      **Newsletter `brand` (única)** → Cierre `ink`. Se elimina el tramo de 4 claras seguidas.
+      (2) **Token `--color-brand-soft: #dcefee`** (tinte claro de marca, mismo tratamiento que
+      `brand-deep`/`mist`; R24/R25). Contrastes verificados en §3.1 (filas 15–20).
+      (3) **Torneos** pasa a claro: h2 en `ink` (el verde como texto sobre claro está prohibido, R26),
+      sin marca de agua (§2f), divisores `ink/15`; `TimelineRail tone="brand-soft"`.
+      **Audiencias** pasa a `ink` con celdas `coal` + `.bento-lit-ink`; CTAs con `surface="ink"`.
+      (4) **Soporte:** `SectionTone += brand-soft`; `CtaSurface`/`ctaVariantClasses` en `cta-styles.ts`;
+      props `surface` en `AudienceCta`/`DiscordCta`/`Countdown`.
+      (5) La columna derecha de Networking pasa de `.reveal` a **`.reveal-left`**.
+      **Corrige además** en §3.1 ratios mal redondeados (6.77 → 6.17, etc.).
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `components/{Section,TimelineRail,cta-styles,AudienceCta,DiscordCta,Countdown}.tsx`,
+      `components/sections/{Tournaments,Audiences,Networking}.tsx`, `docs/design-system.md`.
+
+- **D86.** 23/09, Lorena: *"el azul que quería para Torneos y Testimonios es el que cambiaste de
+      Testimonios"* + *"las animaciones de las líneas y los bordes deben hacer contraste, no se ven"* +
+      *"en Torneos debe ser naranja"* + *"más pequeñas solo para Cómo funciona"*.
+      **Decisión:**
+      (1) **Testimonios adopta `brand-soft`** → Torneos y Testimonios comparten el mismo azul claro
+      (`#dcefee`); las tarjetas de Testimonios cambian `border-line` → `border-ink/15` (sobre
+      `brand-soft` el `line` desaparece, §3.1 fila 20).
+      (2) **Vida idle de líneas y bordes** (pareja de `.section-idle`):
+      **`.line-idle`** (brillo que recorre las hairlines separadoras, `line-travel`) y
+      **`.card-idle`** (anillo `brand` que respira, `card-glow`). Mismo patrón: `::after` decorativo,
+      `transform`/`opacity`, sin tocar el borde real ni `.bento-lit`.
+      (3) **Color del brillo = verde de marca (`brand`)** por pedido expreso ("usa las animaciones de las
+      líneas verdes"); se descartó la variante `slate` de la iteración intermedia. Se acorta el bucle a
+      **6s** con pausa mínima (antes tardaba demasiado en reiniciarse) y se reduce el brillo
+      (ancho 30%→`--idle-size` 16%, 2px→1px).
+      (4) **Torneos:** glints en **`ember`** (`.line-idle-ember` + `section-idle-ember`) y **punto
+      `ember`** delante de sus 4 labels, con pulso `.animate-activity` en "Torneo en curso".
+      (5) **Cómo funciona:** glints más pequeños (`.line-idle-sm`, 8%).
+      (6) Se retira `.line-idle` del **primer** bloque de Networking (lleva `first:border-t-0`: el brillo
+      flotaba sin línea).
+      **Verificación:** `tsc`/ESLint/`next build` en verde en cada iteración.
+      **Actualizado en:** `app/app/globals.css`, `components/sections/{Testimonials,Tournaments,HowItWorks,Networking,News,Audiences}.tsx`.
+
+- **D87.** 23/09, Lorena: *"puedes realmente cambiar el azul que te he estado diciendo que no es…
+      el que pasó en la imagen es el azul correcto"*.
+      **Decisión:** el azul correcto es **`mist` (#f4f7f7)** — el tinte claro que Testimonios tenía
+      originalmente — y NO el `brand-soft` (#dcefee) introducido en D85. **Torneos y Testimonios vuelven
+      a `mist`**; las tarjetas de Testimonios recuperan `border-line`. El token `--color-brand-soft`
+      (y su cableado en `SectionTone`/`TimelineRail`) queda **definido pero sin uso** (reservado).
+      **Supersede:** punto (1) de D85 (Torneos `brand-soft`) y punto (1) de D86 (Testimonios
+      `brand-soft`). **Se mantiene:** Audiencias en `ink` (D85) y toda la vida idle de D86 (glints,
+      puntos `ember`, `.card-idle`, velocidades).
+      **Verificación:** `tsc`/ESLint/`next build` en verde + HTML emitido con `bg-mist` en ambas
+      secciones y 0 `bg-brand-soft`.
+      **Actualizado en:** `components/sections/{Tournaments,Testimonials}.tsx`, `docs/design-system.md`,
+      `specs/10`, `GUIA.md`.
+
+- **D88.** 23/09, Lorena: *"ya las vi… con esto podemos dar por cerrado el diseño de todas las
+      secciones desde hero hasta networking"*.
+      **Decisión:** se **congela el diseño de Hero → Networking** (Hero, Cómo funciona, Torneos,
+      Audiencias y Networking): **no se vuelven a tocar sin una decisión nueva.** Recoge el estado
+      acumulado en D81–D87 (Networking asimétrico con las áreas reales de Discord y acento `ember`,
+      ritmo `ink → paper → mist → ink → paper` con Torneos y Testimonios en `mist` y Audiencias en
+      `ink`, y el movimiento global + idle). **Sigue abierto:** Testimonios, Noticias, Newsletter y
+      Cierre (revisión de Lorena), la **Fase 5** y, al decir *"vamos a revisar"*, el gate de auditoría
+      (D56).
+      **Actualizado en:** `GUIA.md`, `docs/DECISIONES.md` (este registro).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
