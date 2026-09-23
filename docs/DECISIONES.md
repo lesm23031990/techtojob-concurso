@@ -678,6 +678,181 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Estado del hero tras esta decisión:** cerrado el 23/09; lo que falta es que Lorena revise el
       resto de secciones y la Fase 5 (entrega).
 
+- **D61.** 23/09, Lorena pide convertir "Cómo funciona" (4 pasos: Entras al Discord → Te presentas →
+      Participas → Llega la oportunidad) en una experiencia "viva, interactiva y de alto contraste",
+      con **dos opciones** de estructura (A: línea de tiempo que se rellena con el scroll; B: sin
+      línea, bento con iluminación de borde secuencial), entrada "fade-in + slide-up" escalonada y
+      hover con `scale-102`.
+      **Decisión:** se implementa la **Opción B** (conserva el bento D38; la línea narrativa ya la
+      aporta el raíl de página D32, así que una segunda línea la duplicaría), y el lenguaje se
+      **propaga a los tres bentos D38** ("Cómo funciona", Testimonios, Noticias) por consistencia.
+      Detalles fijados con Lorena: **(1) sin Framer Motion** — el proyecto tiene cero librerías de UI
+      (D17/D95) y cero islas cliente en estas secciones; todo se logra con CSS nativo
+      `animation-timeline: view()` (patrón ya vigente), preservando LCP/INP. Con `view()` el
+      `animation-delay` se ignora, así que el stagger determinista se hace desplazando
+      `animation-range` por celda con un `--i` inline (Server Component, sin `"use client"`).
+      **(2) sin `cursor-pointer`**: las tarjetas no son enlaces; el hover es feedback honesto
+      (escala + contraste de borde/fondo) y no finge una acción inexistente (afordancia/a11y).
+      **(3) paleta y tipografía intactas** (R24/R28): solo se reutilizan tokens existentes
+      (`line`, `brand`, `paper`, `mist`) y el borde activo es **duro, sin blur ni halo** (D43).
+      **Riesgo de color asumido:** el borde `brand` sobre `paper` (2.04:1) es **decorativo**, nunca
+      texto ni único indicador de estado — cumple R26.
+      **Actualizado en:** `app/app/globals.css` (`@keyframes step-in`/`cell-lit`,
+      `.bento-reveal`/`.bento-lit`), `sections/HowItWorks.tsx`, `sections/Testimonials.tsx`,
+      `sections/News.tsx`, `docs/design-system.md` (§6.8 y §9) y `specs/10-landing-spec.md`
+      (§Bento) — estos últimos dos quedan como la fuente de verdad de la vitrina visual.
+
+- **D62.** 23/09, Lorena pide que **todas las secciones** tengan animación de entrada, con los
+      elementos apareciendo **uno a uno** al desplazarse. **Diagnóstico:** hasta ahora cada sección
+      tenía un reveal **de bloque** (`.reveal` sobre el contenedor de `Section`/Torneos/Cierre), así
+      que la sección entera aparecía como una sola pieza.
+      **Decisión:** repurposar `.reveal` de contenedor a **elemento** (fade-in + `translateY`
+      de **12px**, reutilizando el keyframe `step-in` de D61) con `--i` para escalonar, quitarlo de
+      los contenedores y aplicarlo a los "beats" de las 9 secciones del cuerpo. **Intensidad fijada
+      con Lorena:** ni 8px (sutil) ni 20px (exagerado) → 12px. **Hero excluido** (su H1 no hace fade:
+      es el elemento LCP) y **footer excluido**; se forma parte de la misma familia de motion que
+      D61 (CSS nativo `animation-timeline: view()`, cero JS, cero islas).
+      **Consecuencias:** `reveal-in` queda retirado (código muerto); en Newsletter el formulario se
+      envuelve en un `<div>` para poder animarlo (el wrapper no cambia el layout del grid).
+      **Fallbacks intactos:** sin soporte o con `prefers-reduced-motion` todo es visible y estático.
+      **Excepción de proceso:** implementado directamente por el orquestador (modo rápido D56;
+      `nextjs-builder` es la mano prevista para `app/`, excepción análoga a D29).
+      **Actualizado en:** `app/app/globals.css`, `Section.tsx`, `Tournaments.tsx`, `Talent.tsx`,
+      `Companies.tsx`, `Networking.tsx`, `Testimonials.tsx`, `News.tsx`, `Newsletter.tsx`,
+      `Closing.tsx`, `docs/design-system.md` (§9) y `specs/10-landing-spec.md` (§D62).
+
+- **D63.** 23/09, Lorena reporta *"no veo las animaciones de entrada"*. **Diagnóstico con navegador
+      real (Playwright + CSSOM):** las animaciones SÍ estaban montadas (`ViewTimeline` activo,
+      `step-in` corriendo), pero había **dos bugs**:
+      **(1) rango `entry`** — `animation-range: entry 0% entry 28%` se mide sobre el **alto del
+      propio elemento**: un `h2`/`p` de ~40px terminaba el fade en **~11px de scroll** → imperceptible
+      (las celdas bento, altas, sí se veían). **(2) `overflow-hidden`** en Torneos y Cierre: crea un
+      **scroll container propio**, y `view()` se ancla al contenedor scrolleable más cercano → como
+      esa sección nunca scrollea, el timeline queda **congelado** y esas dos secciones no animaban
+      nunca (también congelaba el relleno del raíl en Torneos; el subrayado del hero tiene el mismo
+      problema pero se deja por D60).
+      **Decisión:** (1) pasar el rango a la fase **`cover`** (relativa al viewport):
+      `cover 0% cover calc(20% + var(--i, 0) * 4%)` → fade de **~162–280px** de scroll con cualquier
+      tamaño de elemento, aplicado también a `.bento-reveal`/`.bento-lit`; (2) `overflow-hidden` →
+      **`overflow-clip`** en Torneos y Cierre (recorta igual la marca de agua pero **no** crea scroll
+      container).
+      **Verificación:** medido en navegador tras el fix — Cómo funciona 162px, Talento 198px,
+      **Torneos 162px**, **Cierre 174px**, Networking 210px, celda bento 264px; el último elemento
+      (CTA del Cierre) llega a opacidad **1** al final de la página. `tsc --noEmit`, ESLint y
+      `next build` en verde.
+      **Regla de oro para futuras animaciones `view()`:** nunca medir el rango con `entry` en
+      elementos cortos, y nunca poner `overflow-hidden` en un ancestro de algo que use `view()`.
+      **Actualizado en:** `app/app/globals.css`, `Tournaments.tsx`, `Closing.tsx`,
+      `docs/design-system.md` (§9) y `specs/10-landing-spec.md` (§D62).
+
+- **D64.** 23/09, tras ver el fix D63, Lorena pide *"definitivamente quiero animaciones más
+      bruscas"*. **Decisión:** subir la contundencia de la entrada en las tres clases
+      (`.reveal`, `.bento-reveal`, `.bento-lit`): recorrido de **40px** (`translateY(2.5rem)`, antes
+      12px), rango más corto (**`cover 0% cover calc(12% + var(--i,0)*4%)`**, antes 20-28%) para que
+      el movimiento sea rápido, y **easing de salida marcada** (`cubic-bezier(0.2, 0.9, 0.2, 1)`,
+      antes `linear`) que clava el aterrizaje.
+      **Medido en navegador:** el fade ocupa ahora **56–96px** de scroll (antes 162–264px) con un
+      desplazamiento real de **40px**, y el último elemento (CTA del Cierre) sigue llegando a
+      opacidad **1** al final de la página. **Coste:** sigue siendo solo `transform`/`opacity`
+      (CLS 0, compositor) y sigue cubierto por el guard `prefers-reduced-motion`.
+      **Nota:** este grado de movimiento se aleja del criterio conservador de R34 ("que no estorben");
+      se asume por pedido explícito de la autora y es reversible subiendo el % del rango o bajando
+      los 2.5rem.
+      **Actualizado en:** `app/app/globals.css`, `docs/design-system.md` (§9) y
+      `specs/10-landing-spec.md` (§D62/D63).
+
+- **D65.** 23/09, Lorena: *"arreglar la animación de la línea de tiempo vertical, eso no se ve"*.
+      **Diagnóstico medido en navegador:** el relleno del raíl SÍ animaba (crecía 401→1358px con el
+      scroll); el problema era **contraste y grosor**: base `line` #dfe6e6 a 1px = **1.27:1** sobre
+      `paper`, relleno `brand` a 1px = **2.04:1**. Objetivamente invisible.
+      **Decisión:** refuerzo **global** del raíl (recomendación de `design-ux`; hacerlo solo en una
+      sección lo dejaría fuerte al inicio y luego desvanecido, pareciendo error): base `slate`
+      (**5.57:1** sobre `paper`, 5.17:1 sobre `mist`), raíl a **2px** (`w-px` → `w-0.5`); sobre `ink`
+      base `white/25` y en la franja `brand`, `ink/30`. El relleno de progreso se mantiene `brand`
+      (2.04:1, decorativo permitido por R26: deja de ser el único trazo y se lee por el cambio de
+      tono gris→teal sobre una base ya visible).
+      **Verificado:** color computado `rgb(95,106,109)`, 2px, ratio 5.57:1, y captura del raíl ya
+      perceptible en la sección "Cómo funciona". `next build` en verde.
+      **Reversible:** dos tokens en `TimelineRail.tsx`.
+      **Actualizado en:** `app/components/TimelineRail.tsx`, `specs/10-landing-spec.md` (§Raíl) y
+      `docs/design-system.md` (§5).
+
+- **D66.** 23/09, Lorena: *"ese diseño para decir cómo funciona no me convence, siento que no
+      transmite el mensaje completo"* + *"agregá animaciones parecidas a las del hero"* + nodos más
+      grandes y llamativos. **Propuesta de `design-ux` aprobada por Lorena.**
+      **Diagnóstico (medido):** el bento D38 dejaba ~350px muertos en la celda 01 (`row-span-2` con
+      3 líneas) y la lectura 01→04 no era inequívoca; el raíl era invisible (ya arreglado en D65); y
+      cada paso decía QUÉ HACES pero no QUÉ OBTIENES.
+      **Decisión — el bento D38 se retira SOLO en `#como-funciona`** y pasa a **stepper vertical** que
+      **reutiliza el raíl de página como track** (no se dibuja una segunda línea): cada `<li>` es un
+      paso con **nodo sobre el raíl**, numerado **`1.1`–`1.4`** (evita colisionar con el nodo `2` de
+      Torneos y conserva el nodo de sección `1`, convención de todas las secciones). El nodo de
+      sección sigue siendo **círculo**; los nodos de paso también son ahora **círculos dobles**
+      (anillo + disco interior con separación de `paper`), **más grandes** (36px móvil / 48px `lg`,
+      borde 2px / 3px) y en el acento **`ember #f4a261`** (el único color "llamativo" de la paleta
+      fija, R24/R25; numeral `ink` sobre `ember` = 6.12:1 ✅ R26; el verde ya lo usa el raíl).
+      Cada paso añade una **línea de resultado** ("qué ganas") con barra `brand` decorativa, y el
+      recorrido cierra con un **enlace de texto** al Discord (nunca botón: R11).
+      **Motion (hero-like):** el H2 y los títulos de cada paso usan un **revelado palabra a palabra**
+      (`WordReveal` + `.word-rise-view`, el `word-rise` del hero adaptado a scroll con `view()`);
+      la máscara usa **`overflow-clip`, NO `overflow-hidden`**, para no congelar el timeline (bug
+      D63). El resto (intro, cada paso, cierre, enlace) usa `.reveal`; el relleno del nodo se enciende
+      con `.step-node-fill` (`cover` + `--i`). Todo CSS nativo, cero islas, `prefers-reduced-motion`
+      respetado (estado final = visible).
+      **Copy ⚠ aprobado por Lorena** (paráfrasis de `specs/11`, sin cifras ni promesas): línea de
+      resultado por paso + `cta` "Entrar al Discord y empezar por el paso 1".
+      **Bug corregido en el camino:** el espacio separador se había colocado dentro de la máscara
+      `inline-block`, lo que pegaba las palabras ("Cómofunciona", "EntrasalDiscord") — bug de a11y/SEO.
+      Ahora el espacio va fuera del span de máscara (como en el hero).
+      **Verificado en navegador:** `word-rise` con `ViewTimeline` (subida real 41–60px), nodo con
+      `node-lit` progresivo, texto del H2 = `"Cómo funciona "`. `tsc`, ESLint y `next build` en verde.
+      **No cambia:** header/hero/footer, el orden narrativo (`timelineOrder`), ni los bentos de
+      Testimonios/Noticias (siguen con `.bento-reveal`/`.bento-lit` y `.bento-index`).
+      **Actualizado en:** `app/content.ts` (`Step.result`, `HowItWorks.cta`), `messages/es.json` y
+      `messages/en.json`, `sections/HowItWorks.tsx`, `app/globals.css` (`.step-node-fill`, `node-lit`,
+      `.word-rise-view`), `specs/10-landing-spec.md` (§D66), `docs/design-system.md` (§6.8, §7, §9) y
+      `GUIA.md`.
+
+- **D67.** 23/09, Lorena: *"hacé más gruesa la línea de tiempo y los números principales 1,2,3,4
+      deben ser más grandes que los que tienes, doble círculo"*.
+      **Decisión:** (1) raíl de **2px → 3px** (`w-[3px]`) en `TimelineRail` (afecta a todas las
+      secciones, es el mismo trazo); (2) el **nodo de sección** (`TimelineRail`, los `1,2,3…`) pasa a
+      **círculo doble** (anillo exterior + disco interior `brand` separados por el color de la
+      superficie) y a **44px móvil / 56px `lg`** (antes 28px), de modo que queda **por encima** de los
+      nodos de paso del stepper (36/48px, D66). El numeral vive sobre el disco `brand` y es siempre
+      `ink` (6.77:1 ✅ R26); `MARKER_COLOR` deja de llevar color de texto.
+      **Verificado en navegador (`lg`):** raíl 3px, nodo de sección 56px, nodo de paso 48px.
+      **Actualizado en:** `app/components/TimelineRail.tsx`, `specs/10-landing-spec.md` (§Raíl),
+      `docs/design-system.md` (§5, §9) y `GUIA.md`.
+
+- **D68.** 23/09, Lorena: *"los textos de la sección cómo funciona hacelos aparecer desde arriba
+      hacia abajo, por eso casi no se ve la animación"*. **Diagnóstico:** el slide-up movía los
+      elementos **en el mismo sentido que el scroll**, así que el movimiento relativo era mínimo y se
+      percibía "plano". **Decisión:** en `#como-funciona` la entrada se invierte a **desde arriba**
+      (`translateY(-2.5rem) → 0`, `step-in-down`) y el revelado palabra a palabra del H2/títulos pasa
+      a **caer** (`word-drop`: `translate3d(0,-130%,0) → 0`). Al scrollear hacia abajo el movimiento
+      va **a contramano**, por lo que se percibe mucho más. Clases nuevas `.reveal-down` y
+      `.word-drop-view` (mismo rango `cover` + `--i`, mismo easing y fallback estático). El resto del
+      sitio conserva el slide-up (`.reveal`).
+      **Verificado en navegador:** el párrafo pasa de `yShift −40 → 0` con opacidad 0→1, y cada
+      palabra de `−41 → 0`.
+      **Actualizado en:** `app/app/globals.css`, `sections/HowItWorks.tsx`,
+      `specs/10-landing-spec.md` (§D66/D68), `docs/design-system.md` (§9) y `GUIA.md`.
+
+- **D69.** 23/09, Lorena: *"no me gusta esa animación"* (la caída de D68) y, tras ver el catálogo
+      de opciones, elige la **Opción A: deslizar desde el raíl (izquierda → derecha)**.
+      **Decisión:** en `#como-funciona` toda entrada de texto (H2, intro, título + descripción +
+      resultado de cada paso, cierre y enlace) usa `.reveal-left` (`step-in-left`,
+      `translateX(-2.5rem) → 0`), de modo que cada paso parece **salir de la línea de tiempo** (el
+      contenido está indentado 80–96px en `lg`, así que entra por el hueco del raíl). Se **retira el
+      revelado palabra a palabra** de esta sección (el hero conserva el suyo) y las variantes "desde
+      arriba" (D68); `.reveal-down`, `.word-drop-view` y `.word-rise-view` quedan eliminadas.
+      El nodo sigue encendiéndose y el raíl mantiene su relleno `brand`; ninguno se desplaza del eje.
+      **Verificado en navegador:** H3 de paso con `translateX −40 → 0` + opacidad 0→1, **sin overflow
+      horizontal**; `tsc`, ESLint y `next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `sections/HowItWorks.tsx`,
+      `specs/10-landing-spec.md` (§D66/D67/D69), `docs/design-system.md` (§9) y `GUIA.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

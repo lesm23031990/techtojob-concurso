@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import { getMessages } from "next-intl/server";
 import { IconArrowUpRight } from "@/components/icons";
@@ -17,12 +18,17 @@ import type { NewsItem } from "@/content";
  * shadow-free cells; the editorial marker here is the date/chip row, so no
  * oversized index numeral is added (it would fight the chip and duplicar la
  * fecha).
+ *
+ * Motion (D61): same staggered fade-in + border lighting as the other D38
+ * bentos (`.bento-reveal` / `.bento-lit`, native scroll-driven CSS, `--i`
+ * inline). The inner link keeps its own hover/focus; the card hover is honest
+ * feedback (scale-102 + contrast), never a click illusion.
  */
 async function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
   const messages = await getMessages();
   return (
     <article
-      className={`flex h-full flex-col gap-3 border border-line bg-paper transition-colors duration-150 hover:border-ink/30 ${
+      className={`bento-lit flex h-full flex-col gap-3 border border-line bg-paper transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand hover:bg-mist ${
         featured ? "p-6 lg:p-10" : "p-6"
       }`}
     >
@@ -64,16 +70,24 @@ export default async function News() {
     <Section id="noticias" headingId="noticias-heading" tone="paper">
       <h2
         id="noticias-heading"
-        className="text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
+        style={{ "--i": 0 } as CSSProperties}
       >
         {messages.news.h2}
       </h2>
-      <p className="mt-3 max-w-[65ch] text-small text-slate">
+      <p
+        className="reveal mt-3 max-w-[65ch] text-small text-slate"
+        style={{ "--i": 1 } as CSSProperties}
+      >
         {messages.news.mockNote}
       </p>
       <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:auto-rows-fr lg:grid-cols-12">
         {messages.news.items.map((item, index) => (
-          <div key={item.title} className={`reveal ${CELL_SPANS[index] ?? ""}`}>
+          <div
+            key={item.title}
+            className={`bento-reveal ${CELL_SPANS[index] ?? ""}`}
+            style={{ "--i": index } as CSSProperties}
+          >
             <NewsCard item={item} featured={index === 0} />
           </div>
         ))}

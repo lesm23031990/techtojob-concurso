@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import { getMessages } from "next-intl/server";
 import { initials } from "@/content";
@@ -18,11 +19,16 @@ import type { Testimonial } from "@/content";
  * ghost (`text-ink/15`) instead of brand text — R26 forbids the green as text
  * on `paper`, so the only green left here is the avatar fill (brand as
  * background with `ink` text: 6.77:1).
+ *
+ * Motion (D61): the same staggered fade-in + border lighting as "Cómo
+ * funciona" (`.bento-reveal` / `.bento-lit`, native scroll-driven CSS, `--i`
+ * inline). Cells sit on `mist` and are already `paper`, so the hover raises
+ * scale + border contrast without a background swap (no fake click affordance).
  */
 async function TestimonialCard({ item }: { item: Testimonial }) {
   const messages = await getMessages();
   return (
-    <figure className="relative flex h-full flex-col border border-line bg-paper p-6 lg:p-8">
+    <figure className="bento-lit relative flex h-full flex-col border border-line bg-paper p-6 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand lg:p-8">
       <span
         aria-hidden="true"
         className="bento-index block text-display font-bold leading-none text-ink/15"
@@ -73,16 +79,24 @@ export default async function Testimonials() {
     <Section id="testimonios" headingId="testimonios-heading" tone="mist">
       <h2
         id="testimonios-heading"
-        className="text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
+        style={{ "--i": 0 } as CSSProperties}
       >
         {messages.testimonials.h2}
       </h2>
-      <p className="mt-3 max-w-[65ch] text-small text-slate">
+      <p
+        className="reveal mt-3 max-w-[65ch] text-small text-slate"
+        style={{ "--i": 1 } as CSSProperties}
+      >
         {messages.testimonials.sub}
       </p>
       <ul className="mt-10 grid list-none grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-12">
         {messages.testimonials.items.map((item, index) => (
-          <li key={item.name} className={`reveal ${CELL_SPANS[index] ?? ""}`}>
+          <li
+            key={item.name}
+            className={`bento-reveal ${CELL_SPANS[index] ?? ""}`}
+            style={{ "--i": index } as CSSProperties}
+          >
             <TestimonialCard item={item} />
           </li>
         ))}

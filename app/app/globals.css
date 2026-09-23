@@ -259,28 +259,49 @@
   }
 }
 
-/* Micro-animation #1 (design-system §9): section reveal via native CSS
-   scroll-driven animations — zero JS, zero "use client". Default state is
-   fully visible: browsers without `animation-timeline` support (and any
-   prefers-reduced-motion user) simply see static content. */
+/* Entrada por elemento (D62/D63/D64): cada "beat" de una sección (h2, intro,
+   tarjeta, etc.) aparece al entrar en el viewport. Reutiliza el keyframe
+   `step-in` y el patrón `--i` para escalonar sin JS.
+   El rango va en la fase `cover` (relativa al VIEWPORT), no `entry` (relativa
+   al ALTO del elemento): con `entry`, un h2 de ~40px terminaría la animación
+   en ~11px de scroll y no se percibiría (bug D63). Rango corto (~12-20%) para
+   que el movimiento sea rápido y contundente (D64), con un easing de salida
+   marcada (`cubic-bezier(0.2, 0.9, 0.2, 1)`) que clava el aterrizaje.
+   Estado por defecto = final: sin soporte de `animation-timeline` o con
+   prefers-reduced-motion el contenido se ve completo y estático. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
-      animation: reveal-in linear both;
+      animation: step-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
-      animation-range: entry 0% entry 35%;
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
     }
   }
 }
 
-@keyframes reveal-in {
+/* ── Entrada desde el RAÍL (D69) ─────────────────────────────────────────
+   Los bloques de "Cómo funciona" entran deslizándose desde la izquierda, como
+   si salieran de la línea de tiempo. Mismo rango `cover` + `--i` y estado por
+   defecto = final. Sustituye a las variantes "desde arriba" (D68) y al
+   revelado palabra a palabra de esta sección. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-left {
+      animation: step-in-left cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+    }
+  }
+}
+
+@keyframes step-in-left {
   from {
     opacity: 0;
-    transform: translateY(0.5rem);
+    transform: translateX(-2.5rem);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
@@ -426,6 +447,87 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Bento vivo (D61): entrada escalonada + iluminación secuencial ───────
+   Aplicado a las celdas de "Cómo funciona", Testimonios y Noticias (D38).
+   CSS puro con scroll-driven animations: sin islands y sin librerías (D17/D95).
+   Con `animation-timeline` el `animation-delay` se IGNORA (el progreso es el
+   scroll, no el tiempo), así que el stagger determinista se logra desplazando
+   el `animation-range` de cada celda con el `--i` que pasa el JSX.
+   El rango va en `cover` (relativo al viewport), no `entry` (relativo al alto
+   del elemento): ver la nota de D63 en `.reveal`.
+   Estado por defecto = reposo: sin soporte o con prefers-reduced-motion las
+   celdas se ven completas y con borde hairline, nunca invisibles. */
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bento-reveal {
+      animation: step-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+    }
+
+    .bento-lit {
+      animation: cell-lit cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+    }
+  }
+}
+
+/* Fade-in + slide-up de entrada (transform/opacity: compositor, CLS 0).
+   Compartido por `.reveal` (elemento, D62) y `.bento-reveal` (celda, D61).
+   Recorrido de 40px: entrada contundente, "brusca" (pedido de Lorena, D64). */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(2.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Iluminación de borde DURO, sin blur ni halo (D43): el borde pasa de `line`
+   a `brand` conforme la celda entra en el viewport. No se introduce ningún
+   color nuevo: solo se reutilizan tokens de la paleta fija (R24/R25). */
+@keyframes cell-lit {
+  from {
+    border-color: var(--color-line);
+  }
+  to {
+    border-color: var(--color-brand);
+  }
+}
+
+/* ── Nodo de paso del stepper (D66) ──────────────────────────────────────
+   El relleno `brand` del nodo de paso (`1.1`…`1.4`) se enciende cuando su
+   paso entra en el viewport. Mismo patrón que `.reveal` (fase `cover` + `--i`)
+   y estado por defecto = final: sin soporte o con prefers-reduced-motion el
+   nodo se ve encendido. Solo `opacity` (compositor, CLS 0). */
+.step-node-fill {
+  opacity: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .step-node-fill {
+      animation: node-lit linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+    }
+  }
+}
+
+@keyframes node-lit {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

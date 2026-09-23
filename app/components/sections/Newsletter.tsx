@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import NewsletterForm from "@/components/NewsletterForm";
 import { getMessages } from "next-intl/server";
@@ -15,13 +16,21 @@ export default async function Newsletter() {
         <div>
           <h2
             id="newsletter-heading"
-            className="text-h2 font-bold text-balance lg:text-h2-lg"
+            className="reveal text-h2 font-bold text-balance lg:text-h2-lg"
+            style={{ "--i": 0 } as CSSProperties}
           >
             {messages.newsletter.h2}
           </h2>
-          <p className="mt-6 max-w-[65ch] text-body">{messages.newsletter.copy}</p>
+          <p
+            className="reveal mt-6 max-w-[65ch] text-body"
+            style={{ "--i": 1 } as CSSProperties}
+          >
+            {messages.newsletter.copy}
+          </p>
         </div>
-        <NewsletterForm />
+        <div className="reveal" style={{ "--i": 2 } as CSSProperties}>
+          <NewsletterForm />
+        </div>
       </div>
     </Section>
   );

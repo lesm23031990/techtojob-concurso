@@ -75,6 +75,9 @@ export interface Hero {
 export interface Step {
   title: string;
   text: string;
+  /** "What you get" line shown under the description (D66). Paraphrase of
+   *  already-approved copy — see specs/11; no invented facts (J2/R36). */
+  result: string;
 }
 
 export interface HowItWorks {
@@ -82,6 +85,9 @@ export interface HowItWorks {
   intro: string;
   steps: Step[];
   closing: string;
+  /** Descriptive text link to the Discord at the end of the journey (D66).
+   *  A LINK, never a button (R11: the only buttons are the hero/closing CTA). */
+  cta: string;
 }
 
 export interface AudienceSection {

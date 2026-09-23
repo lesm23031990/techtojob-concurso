@@ -40,7 +40,7 @@ exista (Fase 5), según exige R10.
 |---|---|---|---|---|
 | 0 | Nav (header) | — | **Barra adaptativa (D47/D49)**: adopta la polaridad de la sección de detrás, con logo/nav que cambian de color, **scrollspy** (`aria-current`) y **hairline de progreso**; logo + enlaces a secciones + CTA Discord | R42, R45 |
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
-| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **Bento asimétrico (D38): 1 celda alta + 2 + 1 ancha, `<ol>` intacto** | R12 |
+| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **D66 stepper vertical** que reutiliza el raíl de página como track (nodos `1.1`–`1.4`, línea de resultado por paso), `<ol>` intacto | R12 |
 | 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva | R15 |
 | 4 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
 | 5 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
@@ -62,8 +62,8 @@ como **meta**. Orden narrativo de arriba. Especificación:
 | **Relleno animado** | Sobre el segmento, relleno `brand` con `scaleY` 0→1 vía `animation-timeline: view()` (CSS puro, cero JS) | Sin soporte de scroll-driven animations → **línea dibujada completa** (nunca invisible) |
 | **Nodo** | Círculo de 28px centrado en el raíl, alineado con el `h2` de la sección (`top-20 lg:top-32`, que es el padding de la sección). Contiene el numeral del paso (aria-hidden). Se activa al entrar en vista | **Sin etiqueta de texto**: el rótulo del paso ES el `h2` de la sección → no se duplica contenido (R36/SEO) |
 | **Variantes de nodo** | `step` (secciones) y `goal` (Cierre: círculo de 40px relleno `brand`). El hero **no lleva raíl** ni nodo: es la puerta y el viaje arranca en el paso 1 | — |
-| **Tones** | Claro: raíl `line` + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/12` + relleno/nodo `brand`. Franja `brand` (newsletter): raíl `ink/20`, relleno y nodo `ink` | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
-| **Sub-timeline** | ~~En "Cómo funciona" el raíl se abre en un timeline central alternado.~~ **Sustituido por D38:** "Cómo funciona" no abre sub-timeline: el raíl cruza la sección igual que el resto y los 4 pasos se disponen en **bento asimétrico** (ver §Bento). Se conserva el `<ol>` con la secuencia real | R12; sin copy nuevo (R36) |
+| **Tones y grosor (D65)** | Claro: raíl base **`slate` 2px** (5.57:1 sobre `paper`; antes `line` 1px = 1.27:1, invisible) + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/25` + relleno/nodo `brand`. Franja `brand` (newsletter): raíl `ink/30`, relleno y nodo `ink` | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
+| **Sub-timeline** | ~~timeline central alternado~~ → **D38:** sin sub-timeline; el raíl cruza la sección. **D66:** "Cómo funciona" pasa a **stepper vertical que reutiliza ese raíl como track** (nodos de paso `1.1`–`1.4` sobre la línea), sin dibujar una segunda línea. Se conserva el `<ol>` con la secuencia real | R12; copy nuevo aprobado por Lorena (R36) |
 | **Anchos** | Raíl completo desde `xl` (1280+); compacto (mismo raíl, contenido con `pl-7`) entre 360 y 1279. Verificar que las rejillas de 4 y 3 columnas no se aprieten | R38 (responsive 360/768/1024/1440) |
 
 > **Pendiente de auditoría:** el reorden deja obsoleta la línea previa de R22 en
@@ -79,14 +79,47 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 | Pieza | Spec | Regla/nota |
 |---|---|---|
 | **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line` | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas dos secciones |
-| **Numeración de índice** | Las celdas de "Cómo funciona" muestran un numeral sobredimensionado (posición en el `<ol>`), decorativo (`aria-hidden`, tinta fantasma `ink/15` — R26 prohíbe el verde como texto sobre `paper`). En Testimonios el marcador es la comilla editorial y en Noticias la fila fecha+chip: no se añade numeral para no duplicar información | R34; no duplica contenido |
-| **Grid** | 12 columnas desde `lg`; móvil/tablet: una columna apilada en orden DOM. "Cómo funciona": 7 (row-span 2) + 5 + 5 + 12. Testimonios: 7/5/5/7. Noticias: 7 (row-span 2) + 5 + 5 | R38; verificar 360/768/1024/1440 |
+| **Numeración de índice** | En Testimonios el marcador es la comilla editorial y en Noticias la fila fecha+chip: no se añade numeral para no duplicar información. ("Cómo funciona" ya no usa este recurso: pasó al stepper con nodos `1.1`–`1.4`, D66) | R34; no duplica contenido |
+| **Grid** | 12 columnas desde `lg`; móvil/tablet: una columna apilada en orden DOM. Testimonios: 7/5/5/7. Noticias: 7 (row-span 2) + 5 + 5. ("Cómo funciona" es stepper de 1 columna, D66) | R38; verificar 360/768/1024/1440 |
 | **Hero ticker** | Marquee CSS puro bajo el hero (`border-t` hairline, `text-label` uppercase `cloud`, separador `brand`), con tokens reales ya publicados (stacks de `hero.meta`, "Torneo #2", "Comunidad técnica en español"). Track duplicado para bucle continuo. `aria-hidden` (duplica `hero.meta`) y **no interactivo** | R11 (no es CTA), R36 (strings en `es.json` como `hero.ticker`, derivados), R34 |
 | **`.marquee`** | `transform: translateX(0 → −50%)` lineal, ≥30s, `infinite`; `reduced-motion` lo detiene en reposo | D37.2 (CSS puro, cero islas) |
 | **`.bento-index`** | `animation-timeline: view()`; escala/opacidad del numeral al entrar en vista, en un `<span>` interno para no pelear con el posicionamiento | D37.2; fallback: numeral visible |
-| **Reveal de celda** | Se reutiliza `.reveal` (ya existente en `globals.css`) en cada celda | R34 |
+| **Reveal de celda (D38 → D61)** | Sustituye a `.reveal` en las celdas bento: `.bento-reveal` (fade-in + `translateY(1.25rem)` → 0) con `animation-timeline: view()`. El stagger es determinista desplazando el `animation-range` con `--i` (con `view()` el `animation-delay` se ignora: el progreso es el scroll) | R34; `prefers-reduced-motion` → celda visible sin animación |
+| **Iluminación secuencial (D61)** | `.bento-lit`: el borde de cada celda pasa de `line` a `brand` (borde **duro, sin blur ni halo**, D43) conforme entra en el viewport, escalonado por `--i` | R34; borde `brand` sobre `paper` = decorativo (2.04:1, nunca texto ni único indicador: R26) |
+| **Hover de celda (D61)** | `transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out` + `hover:scale-[1.02]` + `hover:border-brand`; en secciones `paper` además `hover:bg-mist`. **Sin `cursor-pointer`**: las celdas no son enlaces, el hover es feedback honesto y no finge clic | R34 (CLS 0: `transform` no reflow); afordancia honesta |
 
 > **Fuera de alcance:** Talento / Empresas / Networking quedan editoriales (no tienen ítems).
+
+## Entrada por elemento en todas las secciones (D62/D63/D64)
+
+**Motivo:** el reveal anterior (`.reveal` en el contenedor) animaba cada sección como **una sola
+pieza**; Lorena pidió que los elementos vayan apareciendo **uno a uno** al scrollear. Se repurposa
+`.reveal` de "contenedor" a "elemento" y se retira del wrapper.
+
+| Pieza | Spec | Regla/nota |
+|---|---|---|
+| **`.reveal` (elemento)** | Fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()`; `animation-range: cover 0% cover calc(12% + var(--i,0) * 4%)`; easing `cubic-bezier(0.2, 0.9, 0.2, 1)`. Reutiliza el keyframe `step-in` (D61). Efecto **brusco** (D64) | R34; CLS 0 (`opacity`/`transform`); sin JS ni islas |
+| **Rango en `cover`, no `entry`** (fix D63) | `entry` se mide sobre el **alto del elemento** (un h2 de ~40px terminaba el fade en ~11px de scroll → imperceptible); `cover` es relativo al **viewport** y da ~56–96px de scroll con cualquier tamaño (D64) | Verificado en navegador |
+| **Nada de `overflow: hidden`** (fix D63) | Un ancestro con `overflow: hidden` crea scroll container propio y **congela** el timeline `view()` (pasaba en Torneos y Cierre) → se usa `overflow-clip` (recorta igual, no crea scroll container) | `Tournaments.tsx`, `Closing.tsx` |
+| **Aplicación** | Torneos (h2/p), Talento (eyebrow/h2/copy), Empresas (idem), Networking (h2/copy), Testimonios (h2/sub), Noticias (h2/nota), Newsletter (h2/copy/formulario), Cierre (h2/p/CTA). Las celdas bento conservan `.bento-reveal` (D61). **"Cómo funciona" usa `.reveal-left`** (desde el raíl, D69), no `.reveal` | `--i` para escalonar cuando los elementos van en fila (Newsletter/Cierre); en columna el scroll ya escalona |
+| **Hero excluido** | Mantiene su entrada propia; el H1 nunca hace fade (elemento LCP) | R34/R40 |
+| **Fallbacks** | Sin soporte de `animation-timeline` o con `prefers-reduced-motion` → contenido visible y estático | WCAG 2.3.3 |
+
+
+## Stepper de "Cómo funciona" (D66/D67/D69)
+
+Sustituye al bento D38 **solo en esta sección** (los de Testimonios y Noticias siguen igual). El raíl
+de página se reutiliza como track: no se dibuja una segunda línea.
+
+| Pieza | Spec | Regla/nota |
+|---|---|---|
+| **Estructura** | `<ol>` de una columna; cada `<li>` = paso (nodo + `h3` + descripción + **línea de resultado** con barra `brand`). En `lg` cada paso se parte en 2 columnas (título 4 col · texto 6 col) | R12 (recorrido de 4 pasos); orden DOM = orden visual (R32) |
+| **Nodo de paso** | Círculo doble (anillo + disco interior con separación `paper`) sobre el raíl; `1.1`–`1.4`; **36px móvil / 48px `lg`**; acento **`ember`** (R25); numeral `ink` (6.12:1 ✅ R26) | `aria-hidden` (el orden lo da el `<ol>`); `-left-*` cancela el indent de `Section` |
+| **Nodo de sección** (D67) | Círculo **doble** con disco `brand`; **44px móvil / 56px `lg`** (mayor que el de paso); numeral `ink` sobre `brand` (6.77:1) | Mismo `TimelineRail` para todas las secciones |
+| **Raíl** (D65/D67) | Base `slate` de **3px** (`w-[3px]`); relleno de progreso `brand` | 5.57:1 sobre `paper` |
+| **Entrada desde el raíl** (D69) | Todo el texto de la sección (H2, intro, título + descripción + resultado de cada paso, cierre y enlace) usa `.reveal-left` (`step-in-left`, `translateX(-2.5rem) → 0`) con el `cover`/`--i`/easing de `.reveal`: cada paso "sale" de la línea de tiempo. El hero conserva su revelado palabra a palabra | Solo `transform`/`opacity` (CLS 0); sin overflow horizontal; sin soporte o `prefers-reduced-motion` → estático |
+| **Enlace final** | `TextLink` al Discord (nunca botón, R11) con `IconArrowUpRight` + hint sr-only de pestaña nueva | R44 (texto descriptivo) |
+| **Copy** | Líneas de resultado + `cta` aprobadas por Lorena; viven en `messages/{es,en}.json` (`Step.result`, `HowItWorks.cta`) | R36; sin cifras inventadas (J2) |
 
 
 ## Hero V6 — "Plano Cinético" (D40)

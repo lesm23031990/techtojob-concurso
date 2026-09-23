@@ -70,22 +70,27 @@
     "steps": [
       {
         "title": "Entras al Discord",
-        "text": "Un clic y dentro. Sin formularios de registro eternos."
+        "text": "Un clic y dentro. Sin formularios de registro eternos.",
+        "result": "Acceso a los canales por área desde el primer momento."
       },
       {
         "title": "Te presentas",
-        "text": "Tu stack, tu nivel, tu disponibilidad. Las personas del sector lo leen, no un robot."
+        "text": "Tu stack, tu nivel, tu disponibilidad. Las personas del sector lo leen, no un robot.",
+        "result": "Tu perfil queda donde lo ven quienes buscan a alguien."
       },
       {
         "title": "Participas",
-        "text": "Canales por área, torneos, dudas resueltas en minutos. Aquí se nota que existes."
+        "text": "Canales por área, torneos, dudas resueltas en minutos. Aquí se nota que existes.",
+        "result": "Te ven resolver, no solo existir."
       },
       {
         "title": "Llega la oportunidad",
-        "text": "Cuando alguien busca a alguien, acuérdate de quien ya estaba construyendo."
+        "text": "Cuando alguien busca a alguien, acuérdate de quien ya estaba construyendo.",
+        "result": "Te escriben personas, no filtros."
       }
     ],
-    "closing": "Las oportunidades salen de participar, no de rellenar formularios."
+    "closing": "Las oportunidades salen de participar, no de rellenar formularios.",
+    "cta": "Entrar al Discord y empezar por el paso 1"
   },
   "talent": {
     "eyebrow": "Para desarrolladores",

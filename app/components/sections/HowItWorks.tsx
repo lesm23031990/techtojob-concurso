@@ -1,65 +1,111 @@
+import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import { getMessages } from "next-intl/server";
+import { IconArrowUpRight } from "@/components/icons";
 
 /**
  * "Cómo funciona" (timeline step 1, #como-funciona) — the detailed journey
  * (R12): four numbered milestones.
  *
- * Layout (D38, "Bento Signature"): the D32 sub-timeline is retired and the
- * steps become an asymmetric bento — 7 (tall, row-span 2) + 5 + 5 + 12 from
- * `lg`, a 2-column pair on `md`, one stacked column on mobile. The `<ol>`
- * keeps the real sequence, so the oversized index numeral is decorative
- * (`aria-hidden`); it is a print-like ghost (`text-ink/15`) because R26 bans
- * the brand green as text on `paper`, with the green kept as a decorative
- * 2px rule (brand as fill is allowed anywhere). Cells are hairline, square
- * and shadow-free (editorial continuity with the D36 hero CTA).
+ * Layout (D66, supersedes the D38 bento for THIS section only): a vertical
+ * stepper that REUSES the page-wide rail as its track — no second line is
+ * drawn. Each `<li>` carries a step node (`1.1`…`1.4`) positioned over the rail
+ * by cancelling the `Section` indent (`-left-7 md:-left-14 lg:-left-20
+ * xl:-left-24`), so the rail reads `1 → 1.1 1.2 1.3 1.4 → 2`. The section node
+ * (circle `1`) is kept: that is the convention of every section.
+ *
+ * Every step states WHAT YOU GET (the `result` line, `brand` left bar) and the
+ * journey closes with a descriptive text link to the Discord — a LINK, never a
+ * button (R11). One column on purpose: a journey reads top-to-bottom, which an
+ * asymmetric grid was fighting (the old bento left ~350px of dead space).
+ *
+ * Motion (D69, supersedes D62→D68 for this section): every text block enters
+ * with `.reveal-left` — it slides in FROM THE RAIL (left → right), so each step
+ * looks like it comes off the timeline. The node's inner fill lights up with
+ * `.step-node-fill` and the page rail keeps its `brand` progress fill. All
+ * native scroll-driven CSS, `--i` passed inline from this Server Component — no
+ * client island, no library. Without `animation-timeline` or with
+ * `prefers-reduced-motion` everything shows at its final state.
+ *
+ * Semantics: a real `<ol>` keeps the sequence, so the nodes/numeral are
+ * decorative (`aria-hidden`); the visible label of each step is its `<h3>`
+ * (R32/R41/R42).
  */
 export default async function HowItWorks() {
   const messages = await getMessages();
-  const { steps } = messages.howItWorks;
-
-  /* Explicit per-index spans (steps are a fixed four in specs/11). The last
-     cell always closes the grid full-width. */
-  const cellSpans = [
-    "md:col-span-2 lg:col-span-7 lg:row-span-2",
-    "lg:col-span-5",
-    "lg:col-span-5",
-    "md:col-span-2 lg:col-span-12",
-  ];
+  const { h2, intro, steps, closing, cta } = messages.howItWorks;
 
   return (
     <Section id="como-funciona" headingId="como-funciona-heading" tone="paper">
       <h2
         id="como-funciona-heading"
-        className="text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
+        style={{ "--i": 0 } as CSSProperties}
       >
-        {messages.howItWorks.h2}
+        {h2}
       </h2>
-      <p className="mt-4 max-w-prose text-lead text-slate">
-        {messages.howItWorks.intro}
+      <p
+        className="reveal-left mt-4 max-w-prose text-lead text-slate"
+        style={{ "--i": 1 } as CSSProperties}
+      >
+        {intro}
       </p>
 
-      <ol className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2 sm:gap-5 lg:auto-rows-fr lg:grid-cols-12">
+      <ol className="relative mt-12 flex flex-col lg:mt-16">
         {steps.map((step, index) => (
-          <li key={step.title} className={`reveal ${cellSpans[index] ?? ""}`}>
-            <div className="flex h-full flex-col border border-line bg-paper p-6 transition-colors duration-200 hover:border-ink/30 lg:p-8">
-              <span
-                aria-hidden="true"
-                className="bento-index block text-h2 font-bold leading-none text-ink/15 lg:text-display"
-              >
-                {String(index + 1).padStart(2, "0")}
+          <li
+            key={step.title}
+            /* `--i` is inherited by the node fill and by the .reveal-left inside. */
+            style={{ "--i": index } as CSSProperties}
+            className="relative border-t border-line py-8 first:border-t-0 lg:py-10"
+          >
+            {/* Step node on the page rail (decorative: order lives in the <ol>).
+                Round, double-circle (outer ring + inner disc with a paper gap)
+                and bigger than the section marker so the steps read first. The
+                `ember` accent is the one "loud" colour the fixed palette allows
+                (R25); ink numeral on ember = 6.12:1 (R26-safe). */}
+            <span
+              aria-hidden="true"
+              className="step-node absolute top-6 -left-7 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full border-2 border-ember bg-paper md:-left-14 lg:top-8 lg:-left-20 lg:h-12 lg:w-12 lg:border-[3px] xl:-left-24"
+            >
+              <span className="step-node-fill absolute inset-[4px] rounded-full bg-ember lg:inset-[6px]" />
+              <span className="relative z-10 text-label font-bold text-ink lg:text-small">
+                {`1.${index + 1}`}
               </span>
-              <span aria-hidden="true" className="mt-5 block h-0.5 w-8 bg-brand" />
-              <h3 className="mt-5 text-h3 font-semibold lg:text-h3-lg">{step.title}</h3>
-              <p className="mt-2 max-w-prose text-body">{step.text}</p>
+            </span>
+
+            <div className="lg:grid lg:grid-cols-12 lg:gap-x-8">
+              <h3 className="reveal-left text-h3 font-semibold text-balance lg:col-span-4 lg:text-h3-lg">
+                {step.title}
+              </h3>
+              <div className="reveal-left mt-3 lg:col-span-6 lg:col-start-6 lg:mt-0">
+                <p className="max-w-prose text-body">{step.text}</p>
+                <p className="mt-4 border-l-2 border-brand pl-3 text-body font-semibold text-ink">
+                  {step.result}
+                </p>
+              </div>
             </div>
           </li>
         ))}
       </ol>
 
-      <p className="mt-12 border-t border-line pt-6 text-lead font-semibold">
-        {messages.howItWorks.closing}
+      <p
+        className="reveal-left mt-12 border-t border-line pt-6 text-lead font-semibold"
+        style={{ "--i": 2 } as CSSProperties}
+      >
+        {closing}
       </p>
+      <a
+        href={messages.discord.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="reveal-left mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        style={{ "--i": 3 } as CSSProperties}
+      >
+        {cta}
+        <IconArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        <span className="sr-only">{messages.a11y.newTabHint}</span>
+      </a>
     </Section>
   );
 }

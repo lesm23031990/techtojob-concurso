@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { getMessages } from "next-intl/server";
 import { timelineStep } from "@/content";
@@ -20,7 +21,7 @@ export default async function Tournaments() {
       id="torneos"
       aria-labelledby="torneos-heading"
       data-surface="dark"
-      className="relative isolate overflow-hidden bg-ink py-20 text-paper lg:py-32"
+      className="relative isolate overflow-clip bg-ink py-20 text-paper lg:py-32"
     >
       <Image
         src="/brand/logo-symbol-gradient.svg"
@@ -32,15 +33,19 @@ export default async function Tournaments() {
         className="pointer-events-none absolute -bottom-28 -right-20 opacity-10"
       />
       <TimelineRail tone="ink" step={timelineStep("torneos")} />
-      <div className="page-container reveal">
+      <div className="page-container">
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="torneos-heading"
-            className="text-h2 font-bold text-brand text-balance lg:text-h2-lg"
+            className="reveal text-h2 font-bold text-brand text-balance lg:text-h2-lg"
+            style={{ "--i": 0 } as CSSProperties}
           >
             {messages.tournaments.h2}
           </h2>
-          <p className="mt-6 max-w-[65ch] text-body text-cloud lg:text-lead">
+          <p
+            className="reveal mt-6 max-w-[65ch] text-body text-cloud lg:text-lead"
+            style={{ "--i": 1 } as CSSProperties}
+          >
             {messages.tournaments.copy}
           </p>
         </div>

@@ -27,8 +27,12 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
+- **"Cómo funciona": DISEÑO CERRADO Y APROBADO por Lorena (23/09, D66–D69).** Stepper vertical que
+  reutiliza el raíl como track (nodos `1.1`–`1.4` en `ember`, doble círculo; línea de resultado por
+  paso; enlace de texto al Discord), raíl de 3px y entrada deslizando desde el raíl. **No se vuelve a
+  tocar sin una decisión nueva** (checkpoint de retorno natural: commit de cierre de esta iteración).
 - **Lo que falta:** que Lorena revise **el resto de secciones** de la landing (el cuerpo:
-  cómo funciona, torneos, talento, empresas, networking, testimonios, noticias, newsletter) y dar
+  torneos, talento, empresas, networking, testimonios, noticias, newsletter) y dar
   por bueno el conjunto; después, la **Fase 5** (repo público, deploy con URL real en `content.ts`
   → `site.url`, y mensaje en el canal ENTREGAS con la declaración de IA de R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
@@ -156,6 +160,61 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > del Cierre**, que ahora va centrado, y con ello se retira la variante `goal` de `TimelineRail`.
 > Además, el CTA del menú móvil usa la etiqueta corta ("Entrar al Discord"), y se corrige la falta
 > ortográfica del copy ("acuérdate"). Todo con `tsc` + ESLint + `next build` en verde.
+
+> **Hecho (23/09, D61 — "bento vivo"):** a pedido de Lorena, los tres bentos D38 ("Cómo funciona",
+> Testimonios y Noticias) ganan **entrada escalonada** (fade-in + slide-up) e **iluminación
+> secuencial de borde** (`line → brand`, borde duro sin blur) al entrar en viewport, y un **hover**
+> de `scale-[1.02]` + contraste con `duration-300 ease-in-out`. Se eligió la **Opción B** (sin línea
+> física: el raíl de página D32 ya cuenta el recorrido) y se descartó Framer Motion por D17/D95
+> (cero librerías de UI, cero islas cliente): todo es CSS nativo `animation-timeline: view()`.
+> Sin `cursor-pointer` (las celdas no son enlaces). `tsc --noEmit` + ESLint + `next build` en verde.
+
+> **Hecho (23/09, D62 — "entrada por elemento"):** a pedido de Lorena, el reveal deja de ser **de
+> bloque** (sección entera) y pasa a ser **por elemento**: en las 9 secciones del cuerpo los "beats"
+> (h2, intro, tarjetas, CTA) aparecen uno a uno al scrollear con un fade-in + desplazamiento de
+> **12px** y escalonado vía `--i`. CSS nativo `animation-timeline: view()` (cero JS), reutilizando
+> el keyframe `step-in` de D61; `reveal-in` retirado. Hero excluido (su H1 no hace fade: es el LCP)
+> y footer excluido. `tsc --noEmit` + ESLint + `next build` en verde.
+
+> **Fix (23/09, D63 — "las animaciones no se veían"):** Lorena reportó no ver las entradas de
+> sección. Diagnóstico con navegador real (Playwright): las animaciones estaban montadas pero
+> (1) el rango `entry` se medía sobre el **alto del elemento** → un h2 lo completaba en ~11px de
+> scroll (imperceptible), y (2) `overflow-hidden` en **Torneos y Cierre** creaba un scroll container
+> que **congelaba** el timeline `view()` → esas secciones nunca animaban. Fix: rango a fase `cover`
+> (relativo al viewport, `cover 0% → calc(20% + --i*4%)` ≈ 162–280px) y `overflow-hidden` →
+> `overflow-clip`. Re-medido: las 9 secciones animan y el CTA del Cierre llega a opacidad 1.
+> `tsc --noEmit` + ESLint + `next build` en verde.
+
+> **Ajuste (23/09, D64 — "más bruscas"):** Lorena pide entradas más contundentes. Recorrido de
+> **40px** (`translateY(2.5rem)`, antes 12px), rango más corto (`cover 12% + --i*4%`, antes 20-28%)
+> y easing `cubic-bezier(0.2, 0.9, 0.2, 1)` (antes `linear`). Medido: el fade dura **56–96px** de
+> scroll (antes 162–264px) con **40px** de desplazamiento real. Solo `transform`/`opacity` (CLS 0)
+> y sigue cubierto por `prefers-reduced-motion`. `tsc --noEmit` + ESLint + `next build` en verde.
+
+> **Fix (23/09, D65 — raíl visible):** Lorena: *"la línea de tiempo vertical no se ve"*. Medido: el
+> relleno SÍ animaba (401→1358px con el scroll); el problema era contraste/grosor (base `line` 1px =
+> 1.27:1; relleno `brand` 1px = 2.04:1). Fix **global** en `TimelineRail`: base `slate` a **2px**
+> (**5.57:1** sobre `paper`), `white/25` sobre `ink` y `ink/30` en la franja green. Verificado en
+> navegador (`rgb(95,106,109)`, 2px) + captura. Reversible con dos tokens. `next build` en verde.
+
+> **Hecho (23/09, D66/D67/D68 — rediseño de `#como-funciona`):** aprobado por Lorena el rediseño de
+> `design-ux`: el bento D38 se retira **solo en esta sección** y pasa a **stepper vertical** que
+> reutiliza el raíl de página como track (nodos de paso `1.1`–`1.4`, con **línea de resultado** por
+> paso y enlace de texto al Discord; el bento sigue en Testimonios/Noticias). (D66) El H2 y los
+> títulos usan **revelado palabra a palabra** (el `word-rise` del hero adaptado a scroll con
+> `overflow-clip`, no `overflow-hidden`). (D67) raíl a **3px** y nodos de sección (los `1,2,3…`) a
+> **círculo doble** y **44/56px**, por encima de los nodos de paso (36/48px, `ember`). (D68) la
+> entrada de la sección se invierte a **desde arriba** (`step-in-down` + `word-drop`) porque el
+> slide-up iba en el mismo sentido que el scroll y no se percibía. Medido en `lg`: raíl 3px, nodo de
+> sección 56px, nodo de paso 48px; el párrafo baja de `−40 → 0`. Nota: el guard `prefers-reduced-motion`
+> sigue apagando todo (Lorena lo tiene activo en su sistema → por eso no las ve; no es un bug).
+> `tsc` + ESLint + `next build` en verde.
+>
+> **Ajuste (23/09, D69):** Lorena no quedó conforme con la caída (D68) y eligió la **Opción A**:
+> toda la entrada de `#como-funciona` pasa a **deslizar desde el raíl** (izquierda → derecha,
+> `translateX −40 → 0`, `.reveal-left`), como si cada paso saliera de la línea de tiempo. Se retiran
+> el revelado palabra a palabra de la sección (el hero conserva el suyo) y `.reveal-down`/
+> `.word-drop-view`/`.word-rise-view`. Verificado: sin overflow horizontal.
 
 ## 3. Fuentes de verdad (jerarquía)
 

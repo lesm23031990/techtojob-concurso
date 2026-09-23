@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import { getMessages } from "next-intl/server";
 
@@ -10,16 +11,25 @@ export default async function Companies() {
   const messages = await getMessages();
   return (
     <Section id="empresas" headingId="empresas-heading" tone="mist">
-      <p className="text-label font-semibold uppercase text-slate">
+      <p
+        className="reveal text-label font-semibold uppercase text-slate"
+        style={{ "--i": 0 } as CSSProperties}
+      >
         {messages.companies.eyebrow}
       </p>
       <h2
         id="empresas-heading"
-        className="mt-2 text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal mt-2 text-h2 font-bold text-balance lg:text-h2-lg"
+        style={{ "--i": 1 } as CSSProperties}
       >
         {messages.companies.h2}
       </h2>
-      <p className="mt-6 max-w-[65ch] text-body lg:text-lead">{messages.companies.copy}</p>
+      <p
+        className="reveal mt-6 max-w-[65ch] text-body lg:text-lead"
+        style={{ "--i": 2 } as CSSProperties}
+      >
+        {messages.companies.copy}
+      </p>
     </Section>
   );
 }
