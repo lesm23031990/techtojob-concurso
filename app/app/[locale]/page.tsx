@@ -4,8 +4,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import Hero from "@/components/sections/Hero";
 import HowItWorks from "@/components/sections/HowItWorks";
-import Talent from "@/components/sections/Talent";
-import Companies from "@/components/sections/Companies";
+import Audiences from "@/components/sections/Audiences";
 import Tournaments from "@/components/sections/Tournaments";
 import Networking from "@/components/sections/Networking";
 import Testimonials from "@/components/sections/Testimonials";
@@ -22,8 +21,9 @@ export function generateStaticParams() {
 /**
  * Single landing page, read as one vertical timeline (D32): the hero is the
  * door and the closing section is the goal, with the body ordered so the story
- * narrates itself — how it works → proof (a live tournament) → what you get →
- * what companies get → community → validation → news → stay close → join.
+ * narrates itself — how it works → proof (a live tournament) → the two
+ * audiences (one split section) → community → validation → news → stay close →
+ * join.
  *
  * R22: "El orden es orientativo menos el hero y el footer", so only the hero
  * (first) and the footer (in the layout) are fixed. The reorder is declared in
@@ -45,8 +45,7 @@ export default async function Home({
       <Hero />
       <HowItWorks />
       <Tournaments />
-      <Talent />
-      <Companies />
+      <Audiences />
       <Networking />
       <Testimonials />
       <News />

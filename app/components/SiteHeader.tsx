@@ -8,11 +8,12 @@ import LocaleSwitcher from "@/components/LocaleSwitcher";
 import { IconClose, IconMenu } from "@/components/icons";
 
 /** Anchors shown in the desktop bar (the full set lives in the mobile panel;
- *  "Inicio" is the logo itself, so it never needs a text link). */
+ *  "Inicio" is the logo itself, so it never needs a text link). "Talento" and
+ *  "Empresas" share the SAME anchor `#talento` because they are one split
+ *  section (D75/D76), so `#empresas` is not a separate nav target. */
 const DESKTOP_NAV_HREFS = [
   "#como-funciona",
   "#talento",
-  "#empresas",
   "#torneos",
   "#networking",
   "#noticias",
@@ -153,7 +154,7 @@ export default async function SiteHeader() {
         <nav aria-label={messages.a11y.navLabel} className="hidden lg:block">
           <ul className="flex items-center gap-2">
             {desktopNavItems.map((item) => (
-              <li key={item.href} className={TIER_CLASSES[item.tier]}>
+              <li key={`${item.href}-${item.label}`} className={TIER_CLASSES[item.tier]}>
                 <Link
                   href={item.href}
                   className="header-nav-link inline-flex min-h-10 items-center rounded-none px-2 text-small font-semibold whitespace-nowrap text-paper underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand xl:px-3 xl:text-body"
@@ -196,7 +197,7 @@ export default async function SiteHeader() {
             </div>
             <ul>
               {mobileNavItems.map((item) => (
-                <li key={item.href}>
+                <li key={`${item.href}-${item.label}`}>
                   <Link
                     href={item.href}
                     className="header-menu-link flex min-h-12 items-center rounded-none px-4 text-body font-semibold text-ink hover:bg-mist focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"

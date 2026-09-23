@@ -92,15 +92,23 @@
     "closing": "Las oportunidades salen de participar, no de rellenar formularios.",
     "cta": "Entrar al Discord y empezar por el paso 1"
   },
+  "audiences": {
+    "h2": "Para quien busca empleo y para quien contrata",
+    "intro": "Dos caminos dentro de la misma comunidad de desarrolladores y empresas tech en español: publica tu perfil si buscas empleo, o encuentra talento si contratas."
+  },
   "talent": {
     "eyebrow": "Para desarrolladores",
     "h2": "Ofrécete como talento",
-    "copy": "Publica tu perfil con tu stack, tu nivel y qué buscas. Las empresas de la comunidad lo consultan cuando necesitan a alguien y te escriben directamente. Aquí no hay filtro automático que te descarte antes de que una persona te lea. No hace falta ser senior. Y participar no te cuesta nada."
+    "copy": "Publica tu perfil con tu stack, tu nivel y qué buscas. Las empresas de la comunidad lo consultan cuando necesitan a alguien y te escriben directamente. Aquí no hay filtro automático que te descarte antes de que una persona te lea. No hace falta ser senior. Y participar no te cuesta nada.",
+    "highlights": ["Tu stack", "Tu nivel", "Tu disponibilidad"],
+    "cta": "Crear perfil de talento"
   },
   "companies": {
     "eyebrow": "Para empresas",
     "h2": "Publica como empresa",
-    "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real."
+    "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real.",
+    "highlights": ["Publica lo que buscas", "Accede a los perfiles", "Contexto real, no solo CV"],
+    "cta": "Buscar talento real"
   },
   "tournaments": {
     "h2": "Torneos",
@@ -235,7 +243,7 @@
       "companies": {
         "title": "Empresas",
         "links": [
-          { "text": "Publica como empresa", "href": "#empresas" },
+          { "text": "Publica como empresa", "href": "#talento" },
           { "text": "Torneos", "href": "#torneos" }
         ]
       },

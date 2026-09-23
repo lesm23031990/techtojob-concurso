@@ -31,7 +31,8 @@ export default function HeaderSurface() {
 
     const update = () => {
       frame = 0;
-      const line = 72; // just below the 5rem sticky bar
+      const line = 104; // just below the 5rem bar; slightly past scroll-padding-top
+      // (6rem ≈ 96px) so an anchored section is marked active right after the jump.
       let surface = "dark";
       let currentId = "";
       for (const section of sections) {
@@ -54,9 +55,14 @@ export default function HeaderSurface() {
       }
       if (currentId !== lastId) {
         lastId = currentId;
+        // Only the FIRST link that matches gets marked: Talent and Companies
+        // share the `#talento` anchor (D75/D76), so marking every match would
+        // light up two nav items at once.
+        let marked = false;
         for (const link of links) {
-          if (link.getAttribute("href") === `#${currentId}`) {
+          if (!marked && link.getAttribute("href") === `#${currentId}`) {
             link.setAttribute("aria-current", "location");
+            marked = true;
           } else {
             link.removeAttribute("aria-current");
           }

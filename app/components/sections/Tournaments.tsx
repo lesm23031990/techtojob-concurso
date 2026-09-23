@@ -54,6 +54,7 @@ export default async function Tournaments() {
         className="pointer-events-none absolute -bottom-28 -right-20 opacity-10"
       />
       <TimelineRail tone="ink" step={timelineStep("torneos")} />
+      <span aria-hidden="true" className="section-sheen" />
       <div className="page-container">
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2

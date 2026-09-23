@@ -94,6 +94,21 @@ export interface AudienceSection {
   eyebrow: string;
   h2: string;
   copy: string;
+  /** Scannable 3-item list inside the cell (D76). Derived from the approved
+   *  copy/rules (R13: stack, nivel, disponibilidad; R14: what you post + access
+   *  to profiles) — fills the cell and speeds up reading. No invented claims. */
+  highlights: string[];
+  /** CTA label of the audience block inside the fused Audiences section (D75).
+   *  It anchors to `#unete` (the real Discord CTA) — no backend (AGENTS.md). */
+  cta: string;
+}
+
+/** Section-level copy of the fused Audiences block (D75). The two audience
+ *  subtitles live in `talent`/`companies` and render as the cell `h3`s. */
+export interface Audiences {
+  h2: string;
+  /** On-page intro under the h2 (SEO: carries the seed keywords). */
+  intro: string;
 }
 
 export interface SimpleSection {
@@ -246,6 +261,7 @@ export interface Messages {
   discord: Discord;
   hero: Hero;
   howItWorks: HowItWorks;
+  audiences: Audiences;
   talent: AudienceSection;
   companies: AudienceSection;
   tournaments: Tournaments;
@@ -286,7 +302,9 @@ export function navItemsFor(messages: Messages): NavItem[] {
     { href: "#como-funciona", label: messages.nav.links.howItWorks },
     { href: "#torneos", label: messages.nav.links.tournaments },
     { href: "#talento", label: messages.nav.links.talent },
-    { href: "#empresas", label: messages.nav.links.companies },
+    // D75/D76: Talent and Companies are ONE split section now, so both nav
+    // entries point to the same anchor (the section heading), not to a cell.
+    { href: "#talento", label: messages.nav.links.companies },
     { href: "#networking", label: messages.nav.links.networking },
     { href: "#testimonios", label: messages.nav.links.testimonials },
     { href: "#noticias", label: messages.nav.links.news },
@@ -303,12 +321,15 @@ export function navItemsFor(messages: Messages): NavItem[] {
  * Single source of truth for the vertical timeline: the step numeral each
  * section shows on the rail, and the order documented in
  * specs/10-landing-spec.md and app/app/page.tsx.
+ *
+ * D75 merged the old `talento` + `empresas` sections into ONE split Audiences
+ * section, so `empresas` no longer carries a rail step and the later steps
+ * shifted down by one (9 → 8 nodes).
  */
 export const timelineOrder: readonly string[] = [
   "como-funciona",
   "torneos",
   "talento",
-  "empresas",
   "networking",
   "testimonios",
   "noticias",

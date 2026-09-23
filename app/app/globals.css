@@ -82,6 +82,12 @@
   --shadow-raised: 0 2px 4px rgb(47 52 54 / 0.06),
     0 16px 32px -12px rgb(47 52 54 / 0.18);
 
+  /* Soft brand glow (D76): subtle, hard-edged (a color shadow — NOT a blur
+     filter), same palette. Used on hover of cards and the primary CTA. */
+  --shadow-glow: 0 0 0 1px rgb(132 192 191 / 0.45),
+    0 16px 44px -20px rgb(132 192 191 / 0.55);
+  --shadow-glow-cta: 0 0 24px -6px rgb(132 192 191 / 0.6);
+
   /* Container (design-system §5: 72rem max) */
   --container-page: 72rem;
 }
@@ -90,6 +96,9 @@
   html {
     /* sticky 5rem nav + breathing room when jumping to #anchors (R45) */
     scroll-padding-top: 6rem;
+    /* Anchors (nav + the Audiences CTAs to #unete, D76) land smoothly; the
+       global reduced-motion guard below resets this to auto (WCAG 2.3.3). */
+    scroll-behavior: smooth;
   }
 
   body {
@@ -259,49 +268,59 @@
   }
 }
 
-/* Entrada por elemento (D62/D63/D64): cada "beat" de una sección (h2, intro,
-   tarjeta, etc.) aparece al entrar en el viewport. Reutiliza el keyframe
-   `step-in` y el patrón `--i` para escalonar sin JS.
-   El rango va en la fase `cover` (relativa al VIEWPORT), no `entry` (relativa
-   al ALTO del elemento): con `entry`, un h2 de ~40px terminaría la animación
-   en ~11px de scroll y no se percibiría (bug D63). Rango corto (~12-20%) para
-   que el movimiento sea rápido y contundente (D64), con un easing de salida
-   marcada (`cubic-bezier(0.2, 0.9, 0.2, 1)`) que clava el aterrizaje.
+/* Entrada/salida por elemento (D62/D63/D64 + D77): cada "beat" de una sección
+   (h2, intro, tarjeta, etc.) aparece al entrar por abajo y se desvanece al
+   salir por arriba. Como la animación va atada al scroll, al subir se invierte:
+   la sección también "cobra vida" hacia arriba (antes solo hacia abajo).
+   El rango usa la fase `cover` COMPLETA (relativa al viewport), no `entry`
+   (relativa al ALTO del elemento: un h2 de 40px terminaba en ~11px de scroll,
+   bug D63). La meseta 22%–88% mantiene el contenido opaco durante todo el paso
+   útil: a 88% el elemento ya entra bajo la barra fija (~96px), así que el
+   fundido de salida no deja un titular leído a media tinta.
    Estado por defecto = final: sin soporte de `animation-timeline` o con
    prefers-reduced-motion el contenido se ve completo y estático. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: step-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
+    .reveal,
+    .bento-reveal {
+      animation: step-in-out cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+      animation-range: cover;
     }
   }
 }
 
-/* ── Entrada desde el RAÍL (D69) ─────────────────────────────────────────
-   Los bloques de "Cómo funciona" entran deslizándose desde la izquierda, como
-   si salieran de la línea de tiempo. Mismo rango `cover` + `--i` y estado por
-   defecto = final. Sustituye a las variantes "desde arriba" (D68) y al
-   revelado palabra a palabra de esta sección. */
+/* ── Entrada desde el RAÍL (D69/D76 + salida D77) ────────────────────────
+   Los bloques de "Cómo funciona", "Torneos" y "Audiencias" entran deslizándose
+   desde la izquierda, como si salieran de la línea de tiempo, y salen
+   desvaneciéndose hacia arriba. Al subir el scroll, la animación se invierte.
+   Estado por defecto = final. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .reveal-left {
-      animation: step-in-left cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation: step-in-out-left cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+      animation-range: cover;
     }
   }
 }
 
-@keyframes step-in-left {
-  from {
+@keyframes step-in-out-left {
+  0% {
     opacity: 0;
-    transform: translateX(-2.5rem);
+    transform: translate(-4.5rem, 0);
   }
-  to {
+  22% {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate(0, 0);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -2rem);
   }
 }
 
@@ -450,25 +469,18 @@
   }
 }
 
-/* ── Bento vivo (D61): entrada escalonada + iluminación secuencial ───────
-   Aplicado a las celdas de "Cómo funciona", Testimonios y Noticias (D38).
+/* ── Bento vivo (D61): iluminación secuencial de celda ───────────────────
+   El `.bento-reveal` de las celdas comparte ahora la entrada/salida de
+   `.reveal` (bloque D62 arriba). Aquí queda la ILUMINACIÓN del borde.
    CSS puro con scroll-driven animations: sin islands y sin librerías (D17/D95).
    Con `animation-timeline` el `animation-delay` se IGNORA (el progreso es el
    scroll, no el tiempo), así que el stagger determinista se logra desplazando
    el `animation-range` de cada celda con el `--i` que pasa el JSX.
-   El rango va en `cover` (relativo al viewport), no `entry` (relativo al alto
-   del elemento): ver la nota de D63 en `.reveal`.
    Estado por defecto = reposo: sin soporte o con prefers-reduced-motion las
    celdas se ven completas y con borde hairline, nunca invisibles. */
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .bento-reveal {
-      animation: step-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
-      animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
-    }
-
     .bento-lit {
       animation: cell-lit cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
@@ -477,17 +489,27 @@
   }
 }
 
-/* Fade-in + slide-up de entrada (transform/opacity: compositor, CLS 0).
-   Compartido por `.reveal` (elemento, D62) y `.bento-reveal` (celda, D61).
-   Recorrido de 40px: entrada contundente, "brusca" (pedido de Lorena, D64). */
-@keyframes step-in {
-  from {
+/* Entrada + salida (transform/opacity: compositor, CLS 0). Compartido por
+   `.reveal` (elemento, D62) y `.bento-reveal` (celda, D61). Entra por abajo y
+   sale por arriba; al invertir el scroll, la sección también responde al subir
+   (D77). Se usa la MISMA función `translate(x, y)` en todos los keyframes para
+   que la interpolación no pase por una matriz y el recorrido sea limpio. */
+@keyframes step-in-out {
+  0% {
     opacity: 0;
-    transform: translateY(2.5rem);
+    transform: translate(0, 2.5rem);
   }
-  to {
+  22% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(0, 0);
+  }
+  88% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -2rem);
   }
 }
 
@@ -581,6 +603,32 @@
   }
   to {
     transform: translate3d(0, -4rem, 0);
+  }
+}
+
+/* Hero "al volver" (D77): movimiento sutil ligado al scroll para que el hero no
+   se vea muerto cuando vuelves a subir. Es leve (opacidad 1→0.88 y −1rem) y solo
+   se percibe mientras el hero entra/sale de la pantalla; a scroll 0 arranca en
+   su estado final, así que no toca el LCP. CSS puro; el guard
+   `prefers-reduced-motion` lo apaga. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-soft {
+      animation: hero-soft linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 80vh;
+    }
+  }
+}
+
+@keyframes hero-soft {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0.88;
+    transform: translate3d(0, -1rem, 0);
   }
 }
 
@@ -682,6 +730,67 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* ── Brillo sutil (D76) ──────────────────────────────────────────────────
+   Lorena pidió "un poco de brillo muy sutil en toda la landing" y "bordes
+   brillantes" en la sección de audiencias. Se construye SOLO con `brand`/`ink`
+   (paleta fija R24/R25), con bordes duros y gradientes — sin manchas ni blobs
+   (D37.1) y sin `filter: blur`: el glow es una sombra de color de bajo alfa.
+   El guard global de `prefers-reduced-motion` desactiva las transiciones. */
+
+/* Barrido diagonal de borde duro que cruza la tarjeta al hover. Reutiliza el
+   motivo especular del CTA (D43/D46). El contenedor debe ser `relative` con
+   `overflow-clip` (recorta sin crear scroll container, D63). */
+.sheen-sweep {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  pointer-events: none;
+}
+
+.sheen-sweep::before {
+  content: "";
+  position: absolute;
+  top: -60%;
+  bottom: -60%;
+  left: -40%;
+  width: 40%;
+  background: linear-gradient(105deg, transparent, rgb(132 192 191 / 0.16), transparent);
+  transform: translateX(-120%) skewX(-12deg);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.group:hover .sheen-sweep::before {
+  transform: translateX(360%) skewX(-12deg);
+}
+
+/* Hairline luminosa en el borde superior de cada sección: un hilo `brand` con
+   un glow muy suave. En la franja verde (newsletter) usa `ink` para no
+   desaparecer. Decorativo: siempre dentro de un contenedor aria-hidden. */
+.section-sheen {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  pointer-events: none;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(132 192 191 / 0.55),
+    transparent
+  );
+  box-shadow: 0 0 14px 0 rgb(132 192 191 / 0.35);
+}
+
+.section-sheen-ink {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(47 52 54 / 0.4),
+    transparent
+  );
+  box-shadow: 0 0 14px 0 rgb(47 52 54 / 0.18);
 }
 
 /* Global reduced-motion guard (R34 + WCAG 2.3.3): kills transitions and

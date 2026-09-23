@@ -32,6 +32,7 @@ export default async function Closing() {
         loading="lazy"
         className="pointer-events-none absolute -top-24 -left-20 opacity-10"
       />
+      <span aria-hidden="true" className="section-sheen" />
       <div className="page-container">
         <div className="flex flex-col items-center text-center">
           {/* Two-line split echoing the hero (D35): `cloud` 7.77:1 over ink,

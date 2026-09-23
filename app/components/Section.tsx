@@ -60,6 +60,10 @@ export default function Section({
       data-surface={TONE_SURFACE[tone]}
       className={`relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
     >
+      <span
+        aria-hidden="true"
+        className={`section-sheen ${tone === "brand" ? "section-sheen-ink" : ""}`}
+      />
       <TimelineRail tone={tone} step={step} />
       <div className="page-container">
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">{children}</div>

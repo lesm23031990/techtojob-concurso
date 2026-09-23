@@ -125,7 +125,7 @@ export default async function Hero() {
         />
       </div>
 
-      <div className="page-container relative flex flex-1 flex-col justify-center pt-36 pb-16 lg:grid lg:grid-cols-12 lg:content-center lg:pt-40 lg:pb-20">
+      <div className="page-container hero-soft relative flex flex-1 flex-col justify-center pt-36 pb-16 lg:grid lg:grid-cols-12 lg:content-center lg:pt-40 lg:pb-20">
         {/* Word-by-word masked reveal (D40): transform-only, no opacity change
             → LCP painted on frame 1. Two-line editorial split: line1 in `cloud`
             (7.77:1), line2 in `paper` with the highlight phrase in `brand`
@@ -175,7 +175,7 @@ export default async function Hero() {
               <div key={item.label} className="relative">
                 <span
                   aria-hidden="true"
-                  className="absolute top-2 -left-6 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-brand"
+                  className="absolute top-2 -left-6 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-ember"
                 />
                 <dt className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
                   {item.label}
@@ -203,7 +203,7 @@ export default async function Hero() {
                   <span className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
                     {token}
                   </span>
-                  <span className="h-1 w-1 rounded-full bg-brand" />
+                  <span className="h-1 w-1 rounded-full bg-ember" />
                 </span>
               ))}
             </div>
