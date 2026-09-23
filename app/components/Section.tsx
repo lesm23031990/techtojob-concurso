@@ -49,6 +49,11 @@ interface SectionProps {
    *  sections whose content wrapper holds a `position: sticky` column or a
    *  form — a `transform` ancestor breaks `sticky` and moves controls. */
   textDrift?: boolean;
+  /** Accent of the ambient top hairline thread (D98). Defaults to the tone
+   *  logic below: `brand` everywhere and the `ink` thread on the `brand` band.
+   *  `"ember"` opts a section into the warm accent (Noticias) without a second
+   *  decoration span. */
+  idleAccent?: "brand" | "ember" | "ink";
   /** Optional positional decoration (e.g. a watermark) rendered as a DIRECT
    *  child of `<section>`, outside `page-container` and the `text-drift`
    *  wrapper: a `transform` ancestor would break the decoration's
@@ -84,10 +89,17 @@ export default function Section({
   tone,
   className = "",
   textDrift = false,
+  idleAccent,
   decoration,
   children,
 }: SectionProps) {
   const step = timelineStep(id);
+  const idleAccentClass =
+    idleAccent === "ember"
+      ? "section-idle-ember"
+      : idleAccent === "ink" || (idleAccent === undefined && tone === "brand")
+        ? "section-idle-ink"
+        : "";
   return (
     <section
       id={id}
@@ -102,7 +114,7 @@ export default function Section({
       />
       <span
         aria-hidden="true"
-        className={`section-idle ${tone === "brand" ? "section-idle-ink" : ""}`}
+        className={`section-idle ${idleAccentClass}`}
       />
       {decoration}
       <TimelineRail tone={tone} step={step} />
