@@ -1,16 +1,14 @@
 import type { SectionTone } from "@/components/Section";
 
-type RailVariant = "step" | "goal";
-
 interface TimelineRailProps {
   tone: SectionTone;
   /**
-   * `step` = numbered milestone aligned with the section heading;
-   * `goal` = the final, larger marker (closing CTA).
+   * Decorative numeral inside the marker (order lives in content.ts).
+   * Required: every rail still drawn belongs to a numbered step. Callers pass
+   * `timelineStep(id)`, which may be undefined for ids outside `timelineOrder`
+   * — that simply renders an empty marker, same as before.
    */
-  variant?: RailVariant;
-  /** Decorative numeral inside a `step` marker (order lives in content.ts). */
-  step?: number;
+  step: number | undefined;
 }
 
 /** Horizontal coordinates mirror `page-container` metrics (gutter 20/32/40px)
@@ -54,9 +52,7 @@ const MARKER_COLOR: Record<SectionTone, string> = {
  * native scroll-driven CSS). Without `animation-timeline` support the line is
  * simply fully drawn and the markers are active — never invisible.
  */
-export default function TimelineRail({ tone, variant = "step", step }: TimelineRailProps) {
-  const isGoal = variant === "goal";
-
+export default function TimelineRail({ tone, step }: TimelineRailProps) {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0">
       <div className="page-container relative h-full">
@@ -67,11 +63,9 @@ export default function TimelineRail({ tone, variant = "step", step }: TimelineR
 
         <span className={`absolute -translate-x-1/2 ${MARKER_Y} ${RAIL_X}`}>
           <span
-            className={`timeline-marker grid place-items-center rounded-full border-2 font-bold ${
-              isGoal ? "h-10 w-10 border-brand bg-brand text-ink" : `h-7 w-7 text-label ${MARKER_COLOR[tone]}`
-            }`}
+            className={`timeline-marker grid h-7 w-7 place-items-center rounded-full border-2 text-label font-bold ${MARKER_COLOR[tone]}`}
           >
-            {isGoal ? null : step}
+            {step}
           </span>
         </span>
       </div>

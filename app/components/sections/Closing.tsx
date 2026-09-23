@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getMessages } from "next-intl/server";
 import DiscordCta from "@/components/DiscordCta";
-import TimelineRail from "@/components/TimelineRail";
 
 /**
  * "Cierre" (section 10, #unete) — mirror of the hero (design-system §7):
@@ -9,8 +8,9 @@ import TimelineRail from "@/components/TimelineRail";
  * white line), the same dominant green CTA. Last impression = first action
  * (R20). Gradient symbol watermark at 10%, decorative.
  *
- * It is the GOAL of the page timeline (D32): the rail closes here with the
- * larger, filled marker.
+ * It is the narrative GOAL of the page, but it no longer draws the timeline
+ * rail (author's request, D59). Without a rail the content sits centered,
+ * with no left indent.
  */
 export default async function Closing() {
   const messages = await getMessages();
@@ -31,9 +31,8 @@ export default async function Closing() {
         loading="lazy"
         className="pointer-events-none absolute -top-24 -left-20 opacity-10"
       />
-      <TimelineRail tone="ink" variant="goal" />
       <div className="page-container reveal">
-        <div className="flex flex-col items-center pl-7 text-center md:pl-14 lg:pl-20 xl:pl-24">
+        <div className="flex flex-col items-center text-center">
           {/* Two-line split echoing the hero (D35): `cloud` 7.77:1 over ink,
               answer in `paper`. ONE <h2>, one text node per line (R41). */}
           <h2
