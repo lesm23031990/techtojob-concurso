@@ -28,9 +28,12 @@ no por favoritismo.
 | No hace falta traducir | "No hay que traducir nada" | D275 |
 | Bilingüe opcional | next-intl + `app/[locale]/` + generateStaticParams + hreflang + selector enlace-real | D285-287 |
 
-**Decisión D-14:** se entrega solo ES con arquitectura i18n-ready (`messages/es.json`). El coste
-de next-intl + dos locales no compensa con plazo de 1 día; el criterio J4 premia la *organización*
-de textos (D295), que sí se cumple.
+**Decisión D-14 (superseded por D54, 23/09):** la entrega inicial era solo ES con arquitectura
+i18n-ready (`messages/es.json`), porque el coste de next-intl + dos locales no compensaba con
+plazo de 1 día. **Lorena pidió expresamente agregar la internacionalización**, así que el
+bilingüe opcional (R37) pasa a entregarse: plan verificable en `specs/12-i18n.md`. La regla
+"no hace falta traducir" (D275) se mantiene: la traducción es esfuerzo propio, no obligación
+de base.
 
 ## Estructura HTML / SEO técnico
 

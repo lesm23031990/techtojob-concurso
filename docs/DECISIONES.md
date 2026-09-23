@@ -546,6 +546,41 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       último hijo** de la `<section>`. Grid de 4rem y decorativos intactos. Supersede la variante A
       de D51. `tsc`, ESLint y `next build` en verde.
 
+- **D53.** 23/09 (madrugada), tercera iteración del ancho del header. Lorena: *"el header se ve
+      todo amurruchado"*. Ya se había probado `page-container-wide` (80rem, D43) y vuelto a
+      `page-container` (72rem, D49, por alineación con el eje del H1). Esta vez se resuelve de
+      raíz: el header pasa a **full-bleed** — se retira el contenedor y la fila interna usa solo
+      los gutters del sistema (`px-5 md:px-8 lg:px-10`), con `gap-6` entre logo, nav y CTA y
+      `gap-2` dentro del nav. Motivo: el encabezado es una banda de navegación, no contenido
+      editorial; atarlo al mismo eje de 72rem era lo que lo hacía sentir "apretado". **Supersede
+      D49.1** (el scrollspy, la hairline de progreso y el resto de D49 siguen vigentes). El
+      cambio es deliberado y consciente: el logo deja de alinear con el H1 a cambio de aire, que
+      es lo que la autora prioriza.
+      **Estado:** implementado por `nextjs-builder`; `tsc`, ESLint y `next build` en verde
+      (commiteado en `2377827`). Deja sitio para el selector de idioma de D54. QA en pausa (D39).
+
+- **D54.** 23/09 (madrugada), Lorena: *"faltan las opciones para el español e inglés, que es la
+      internacionalización que se agregó al final de las bases"* y luego *"agrega la
+      internalización"*. Se revisó la base textual antes de actuar:
+      **D281-289 la marca como OPCIONAL** ("✨ OPCIONAL: entregar ya las dos versiones… next-intl,
+      `app/[locale]/` y `generateStaticParams ['es','en']`… hreflang cruzado, lang correcto y
+      selector de idioma que sea un enlace de verdad, no JS") y **D295** aclara que *"no sube el
+      peso de ningún criterio"*: solo suma en SEO (10%) y en Código y estructura (15%) por la
+      organización de textos. Lo obligatorio (D269-275: textos en archivo aparte, "no hay que
+      traducir nada") ya se cumplía con `messages/es.json` (R36).
+      **Decisión:** se entrega el bilingüe ES/EN. **Supersede D-14** (que lo descartaba por
+      plazo). Se hace con `next-intl` —la vía que nombra la propia base— y `localePrefix:
+      'as-needed'` para que **`/` siga siendo ES** (no se rompe el canonical ya declarado) y
+      `/en` sea la versión inglesa. Plan verificable: `specs/12-i18n.md` (requisitos I1–I10).
+      **Checkpoint:** commit `2377827` (estado aprobado del hero/header) previo al refactor.
+      **Riesgo asumido y declarado:** es un refactor de routing el día de la fecha límite
+      (23/09 23:59) con el QA en pausa (D39) → el gate de Fase 5 medirá ambas rutas.
+      Fases: (1) infraestructura + cableado + selector + metadata/sitemap, con `en.json` como
+      copia temporal; (2) traducción real del copy, **aprobada por Lorena** (J2) antes de cerrar.
+      **Nota de alcance:** no aplica `output: "export"` (el middleware de next-intl lo requiere);
+      sigue siendo frontend puro + estático, sin backend. Deploy en Vercel (D16).
+      **Estado:** Fase 1 en curso por `nextjs-builder`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

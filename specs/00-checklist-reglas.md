@@ -60,7 +60,7 @@
 | R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida (audit 22/09) |
 | R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | cumplida — fixes 22/09: commits reworded a inglés (D22) + claves-identificador a inglés (D23) |
 | R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | cumplida (audit 22/09) |
-| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | n-a — bilingüe descartado por plazo (D-14) |
+| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | en curso (D54) — spec `specs/12-i18n.md`; supersede el "n-a por plazo" de D-14 |
 
 ## E. SEO (contenido y estructura)
 
