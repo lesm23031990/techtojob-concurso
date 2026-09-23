@@ -664,6 +664,20 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `docs/design-system.md` §4 (raíl), §7 (intro y filas 10–11) y la tabla de
       movimiento.
 
+- **D60.** 23/09, Lorena: *"solo quería guardar el commit local para tener el punto al cual puedo
+      regresar"* y *"solo en local"*. **Decisión:** el estado aprobado (hero/header/footer, D41–D59)
+      se marca con la **etiqueta local `hero-v1`** sobre el commit `b18c3e1`; **no se hace push**
+      (los 17 commits del 23/09 quedan solo en la máquina de Lorena, `master` 17 por delante de
+      `origin/master`). **Se descartan por ahora** el contrato escrito del hero (`docs/hero-contrato.md`),
+      el guard estructural (`scripts/hero-guard.mjs`) y el respaldo en bundle: Lorena no los considera
+      necesarios en este momento. Si en el futuro un cambio rompe el hero, el retorno es
+      `git checkout hero-v1 -- .` (solo archivos), `git switch --detach hero-v1` (mirar) o
+      `git reset --hard hero-v1` (devolver `master`, destructivo).
+      **Nota de riesgo asumida y declarada:** sin push ni bundle, el respaldo queda en un único disco;
+      el punto de retorno protege contra cambios de código, no contra pérdida del equipo.
+      **Estado del hero tras esta decisión:** cerrado el 23/09; lo que falta es que Lorena revise el
+      resto de secciones y la Fase 5 (entrega).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

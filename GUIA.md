@@ -23,6 +23,19 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
 | 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 · **sin auditorías (D56)** |
 
+### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
+
+- **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
+  (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
+- **Lo que falta:** que Lorena revise **el resto de secciones** de la landing (el cuerpo:
+  cómo funciona, torneos, talento, empresas, networking, testimonios, noticias, newsletter) y dar
+  por bueno el conjunto; después, la **Fase 5** (repo público, deploy con URL real en `content.ts`
+  → `site.url`, y mensaje en el canal ENTREGAS con la declaración de IA de R07).
+- **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
+  `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado.
+- Los 17 commits del 23/09 están **solo en local**: `master` va 17 por delante de `origin/master`
+  y no se hizo push por decisión de Lorena (D60).
+
 ### 2.1 Modo de trabajo vigente (D56, 23/09)
 
 **Regla activa hasta que Lorena diga "vamos a revisar":** se trabaja con **3 agentes** y **cero
@@ -150,7 +163,7 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
 3. `AGENTS.md` — reglas de proceso y gates de calidad.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D59);
+Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D60);
 nada de lo construido se asumió sin fuente.
 
 ## 4. Método: spec-driven + multiagente
@@ -171,6 +184,6 @@ declarado en el README, como piden las bases.
 |---|---|
 | "Cumple las 61 reglas" | `docs/qa/2026-09-22-rules-audit-1.md` (regla → estado → evidencia → acción) |
 | "Calidad medida, no prometida" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, capturas Playwright) |
-| "Por qué se decidió X" | `docs/DECISIONES.md` (59 decisiones fechadas, D1–D59) |
+| "Por qué se decidió X" | `docs/DECISIONES.md` (60 decisiones fechadas, D1–D60) |
 | "El sistema de diseño es real" | `docs/design-system.md` + tokens en `app/app/globals.css` |
 | "Los textos viven aparte del código" | `app/messages/es.json` (única fuente de copy visible) |
