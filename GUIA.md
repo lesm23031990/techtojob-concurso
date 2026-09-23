@@ -1,7 +1,7 @@
 # GUIA — Mapa del proyecto TechToJob Landing
 
 > Documento de proceso: cómo se planificó, construyó y auditó esta entrega.
-> Actualizado: 22/09/2026.
+> Actualizado: 23/09/2026.
 
 ## 1. Qué es esto
 
@@ -21,7 +21,24 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 | 2. Sistema de diseño | Tokens Tailwind, paleta, tipografía, uso del logo oficial → `docs/design-system.md` | ✅ 22/09 |
 | 3. Construcción | Scaffold + 11 secciones + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 |
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
-| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 |
+| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 · **sin auditorías (D56)** |
+
+### 2.1 Modo de trabajo vigente (D56, 23/09)
+
+**Regla activa hasta que Lorena diga "vamos a revisar":** se trabaja con **3 agentes** y **cero
+auditorías** en todas las tareas y fases, incluida la Fase 5.
+
+- **Activos:** orquestador (specs, decisiones, coordinación), `design-ux` (criterio visual y
+  copy) y `nextjs-builder` (única mano que escribe en `app/`).
+- **Dormidos hasta el modo revisión:** `rules-auditor`, `qa-access`, `seo-perf`, Lighthouse,
+  Playwright/axe, medición de INP y capturas de QA. Los agentes no se borran: siguen definidos
+  en `.opencode/agent/` con su prompt y modelo intactos.
+- **Permitido:** `tsc --noEmit`, ESLint y `next build` (segundos; evitan commitear código roto).
+- **Motivo declarado por Lorena:** los ciclos de auditoría tardaban más que el propio cambio.
+- **Supersede D28 y D39** (que pausaban QA solo mientras el diseño no estuviera congelado); los
+  cierres "QA en pausa (D39)" de las iteraciones anteriores quedan como historia.
+- **Consecuencia asumida:** la Fase 5 se cierra sin medición de Lighthouse/Playwright; al activar
+  el modo revisión esos checks corren de una sola pasada sobre el estado congelado.
 
 > **Pendiente (22/09):** la landing se reordena y se lee como **línea de tiempo vertical** (D32).
 > El hero pasó por dos iteraciones más el mismo día: **D34 "Cosmos en tinta"** (muro de tiles
@@ -110,13 +127,22 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 > gustaba la fila de salida) y el hero **cierra con la banda del ticker**; sin texto muerto
 > (`quickNavLabel` fuera). `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
 
+> **Hecho (23/09, D54/D55/D57):** (D54) **i18n ES/EN** con next-intl: `/` sirve ES y `/en` sirve
+> EN (`as-needed`, sin detección automática), hreflang cruzado en metadata y sitemap, OG por
+> locale, selector de idioma como **enlace real** en header y panel móvil; textos solo en
+> `messages/{es,en}.json` con paridad forzada por tipos. La **traducción real del EN queda
+> aplazada (D57)** con handoff documentado en `specs/12-i18n.md`. (D55) el logo del header pasa a
+> **composite simétrico tile+wordmark** en ambas polaridades, con el derivado
+> `brand/wordmark-ink.svg` (mismos contornos oficiales, relleno carbón) para que el estado claro
+> pese igual que el oscuro. `tsc` + ESLint + `next build` en verde.
+
 ## 3. Fuentes de verdad (jerarquía)
 
 1. Bases oficiales del concurso y brief (material de entrada, no versionado por privacidad).
 2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
 3. `AGENTS.md` — reglas de proceso y gates de calidad.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D38);
+Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D57);
 nada de lo construido se asumió sin fuente.
 
 ## 4. Método: spec-driven + multiagente
@@ -127,12 +153,16 @@ sin pasar el auditor de reglas. El trabajo lo ejecutaron 6 roles (definidos en
 SEO/rendimiento, QA de accesibilidad y auditor implacable de las bases. El uso de IA está
 declarado en el README, como piden las bases.
 
+> Desde el **23/09 (D56)** el ciclo se simplificó a **3 roles** (orquestador, `design-ux`,
+> `nextjs-builder`) y sin auditorías, para priorizar avance; ver §2.1. Al decir Lorena
+> "vamos a revisar" se reactivan los 6 roles y el gate de calidad completo.
+
 ## 5. Dónde está cada evidencia
 
 | Afirmación | Prueba |
 |---|---|
 | "Cumple las 61 reglas" | `docs/qa/2026-09-22-rules-audit-1.md` (regla → estado → evidencia → acción) |
 | "Calidad medida, no prometida" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, capturas Playwright) |
-| "Por qué se decidió X" | `docs/DECISIONES.md` (38 decisiones fechadas con motivo) |
+| "Por qué se decidió X" | `docs/DECISIONES.md` (57 decisiones fechadas, D1–D57) |
 | "El sistema de diseño es real" | `docs/design-system.md` + tokens en `app/app/globals.css` |
 | "Los textos viven aparte del código" | `app/messages/es.json` (única fuente de copy visible) |

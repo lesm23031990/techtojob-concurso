@@ -41,6 +41,10 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
 - Sin archivo LICENSE hasta confirmar propiedad del código en las bases.
 
 ### Calidad mínima exigida (gate de toda entrega)
+> Este gate **NO se ejecuta por defecto**. Solo se activa cuando Lorena dice "vamos a revisar"
+> (ver *Modo rápido* más abajo). Es el listón que la entrega debe alcanzar en ese momento, no una
+> tarea de cada cambio.
+
 - Lighthouse ≥ 95 en Performance, SEO y Accessibility (móvil y escritorio)
 - Accesibilidad WCAG 2.1 AA: semántica HTML, roles ARIA cuando toque, contraste,
   navegación por teclado, `alt` reales, jerarquía de encabezados correcta
@@ -56,8 +60,8 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
   1. Ingesta del material de Discord → `specs/`
   2. Sistema de diseño → `docs/design-system.md` + tokens Tailwind
   3. Scaffold Next.js en `app/`
-  4. Implementación por secciones (cada una pasa `rules-auditor` + `qa-access`)
-  5. Pulido SEO + evidencia de QA en `docs/qa/` + README final
+  4. Implementación por secciones (en modo revisión: `rules-auditor` + `qa-access`)
+  5. Pulido SEO + evidencia de QA en `docs/qa/` + README final (solo en modo revisión)
 
 ### Roles de trabajo
 - Los agentes y sus permisos están definidos en `opencode.json` + `.opencode/agent/`.
@@ -65,16 +69,29 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
 - `nextjs-builder` es el único que escribe en `app/`. Excepción registrada: D29 (créditos
   de `opencode-go` agotados), donde el orquestador implementó directamente.
 - Los reportes de auditoría citan textual la regla del concurso que motiva el hallazgo.
+- **Modo rápido vigente (D56):** `rules-auditor`, `qa-access` y `seo-perf` están **dormidos**;
+  no se invocan hasta que Lorena diga "vamos a revisar". Los roles de abajo siguen vigentes
+  para cuando eso ocurra.
 
-### Modo diseño (mientras el diseño no esté congelado)
-- Durante la definición de diseño solo actúan **`design-ux`** (propuesta y criterio visual) y
-  **`nextjs-builder`** (implementación). El orquestador mantiene specs y decisiones.
-- **Prohibido invocar** `rules-auditor`, `qa-access`, `seo-perf` y cualquier herramienta de
-  verificación (Lighthouse, Playwright, axe) en esta etapa: auditan diseño congelado y su
-  veredicto manda solo entonces. Evita gastar ciclos en algo que va a cambiar.
-- Al congelar el diseño, el gate de calidad de este archivo vuelve a aplicar completo antes de
-  cerrar la Fase 5.
-- Origen: D39 en `docs/DECISIONES.md`; amplía D28 (QA en pausa).
+### Modo rápido: 3 agentes, cero auditorías (REGLA VIGENTE por defecto)
+- **Vigente desde D56 (23/09/2026) y hasta que Lorena diga "vamos a revisar" o cambie la
+  decisión.** No tiene fecha de caducidad: aplica a **toda** tarea y a **todas** las fases,
+  incluida la Fase 5 (entrega).
+- **Solo 3 roles activos:** el orquestador (specs, decisiones, coordinación), **`design-ux`**
+  (criterio visual y copy) y **`nextjs-builder`** (única mano que escribe en `app/`).
+- **Prohibido invocar** `rules-auditor`, `qa-access`, `seo-perf`, y cualquier herramienta de
+  verificación: Lighthouse, Playwright/axe, auditorías de contraste, medición de INP, capturas
+  de QA. Motivo declarado: el ciclo de auditoría tardaba más que el propio cambio y frenaba el
+  avance; Lorena prioriza iterar.
+- Los agentes pausados **no se borran**: siguen definidos en `.opencode/agent/` y su prompt,
+  permisos y modelo intactos. Solo quedan dormidos hasta el modo revisión.
+- **Permitido en este modo** (no es auditoría ni agente): `tsc --noEmit`, ESLint y `next build`
+  — verificaciones locales de segundos que evitan commitear código roto. Nada más.
+- **Al activar el modo revisión** (Lorena dice "vamos a revisar"): vuelve a aplicar completo el
+  gate "Calidad mínima exigida" + Fase 5, con `rules-auditor`, `qa-access` y `seo-perf` sobre el
+  estado congelado en ese momento.
+- Origen: D56 en `docs/DECISIONES.md`; **supersede D28 y D39** (que pausaban QA solo mientras el
+  diseño no estuviera congelado y reactivaban el gate al congelarlo).
 
 ### Modelos de los agentes (arquitectura dual)
 - **Primario: `opencode-go`**, con el modelo afinado de cada agente (kimi-k3 para el builder,
@@ -115,6 +132,10 @@ fixes aplicados (R35 commits+identificadores, R56 lazy, J6 aria-label footer) y 
 en `docs/qa/`. Historial reescrito local antes del primer push (D22) — sin remote aún, seguro.
 **Queda FASE 5 (23/09):** repo público GitHub → deploy Vercel con URL real en `content.ts`
 (`site.url`) → Lighthouse + capturas sobre el deploy → mensaje al canal ENTREGAS con
-declaración de IA (R07). Nota: la rama `backup/pre-reword` ya se borró (22/09) porque sus
+declaración de IA (R07).
+**Modo vigente (D56, 23/09):** Fase 5 se ejecuta **sin auditorías**: solo orquestador +
+`design-ux` + `nextjs-builder`. Lighthouse/Playwright/`rules-auditor`/`qa-access`/`seo-perf`
+se reactivan **solo** cuando Lorena diga "vamos a revisar". Nota: la rama `backup/pre-reword`
+ya se borró (22/09) porque sus
 blobs contenían el invite no oficial; el historial quedó reescrito con `filter-branch` y
 verificado con `git grep` sobre `rev-list --all` → 0 ocurrencias.

@@ -581,6 +581,63 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       sigue siendo frontend puro + estático, sin backend. Deploy en Vercel (D16).
       **Estado:** Fase 1 en curso por `nextjs-builder`.
 
+- **D55.** 23/09, Lorena pide **igualar el peso del logo del header en las dos polaridades**
+      (el estado claro usaba el lockup horizontal oficial y se veía más liviano que el composite
+      oscuro). **Decisión:** el header usa **el mismo composite de dos piezas (tile + wordmark) en
+      `ink` y en `paper`**; solo cambian el isotipo oficial y los tokens de color:
+      en `ink` → `logo-symbol-light.svg` (verde `#84c0bf`, 6.17:1) en tile `border-brand/40
+      bg-white/5` + `wordmark-duo.svg` ("Tech" `paper` / "ToJob" `brand`, D31); en `paper` →
+      `logo-symbol.svg` (carbón `#303436`, 12.58:1) en tile `border-brand bg-ink/5` +
+      **`wordmark-ink.svg`**, un **derivado documentado** (idénticos contornos y `viewBox`
+      `176 26 934 126`, `fill` a carbón `#303436`; ningún archivo oficial se altera — mismo
+      criterio que D31).
+      **Motivo de la asimetría del borde:** `brand/40` sobre `paper` cae a 1.31:1 y el marco
+      desaparecería; en claro va `brand` sólido sin alpha (2.04:1, decorativo: el tile no
+      transmite información, el nombre accesible es el `aria-label` del enlace). Medidas y ratios
+      exactos en `docs/design-system.md` §2.2.
+      **Supersede la parte light de D47** (que usaba el lockup horizontal oficial en claro); el
+      resto de D47 (header adaptativo) sigue vigente.
+      **Estado:** implementado en `app/components/SiteHeader.tsx` + `globals.css` +
+      `docs/design-system.md` §2.2; pendiente de verificación local (`tsc`/ESLint/`next build`) y
+      de declarar los derivados en los créditos del README (R9). Modo rápido (D56): sin auditorías.
+
+- **D56.** 23/09, Lorena: *"no se va a hacer QA ni SEO ni rules-auditor, solo mantener activos
+      3 agentes en todas las tareas hasta que yo diga que vamos a revisar; es que demoras
+      demasiado"*. **Decisión:** se fija como **regla vigente por defecto** (sin fecha de
+      caducidad) el modo reducido a **3 agentes**: orquestador (specs, decisiones, coordinación),
+      **`design-ux`** (criterio visual y copy) y **`nextjs-builder`** (única mano que escribe en
+      `app/`). **Prohibido invocar** `rules-auditor`, `qa-access` y `seo-perf`, y cualquier
+      herramienta de verificación (Lighthouse, Playwright/axe, contraste, INP, capturas de QA) en
+      **toda** tarea y fase, **incluida la Fase 5 (entrega)**.
+      **Motivo:** los ciclos de auditoría duraban más que el propio cambio pedido y frenaban la
+      iteración; Lorena prioriza avanzar y decide revisar después.
+      **Excepción permitida:** `tsc --noEmit`, ESLint y `next build` — verificaciones locales de
+      segundos que evitan commitear código roto (no son agentes ni auditorías).
+      **Reactivación:** basta que Lorena diga *"vamos a revisar"* para que se restaure el gate
+      completo de `AGENTS.md` ("Calidad mínima exigida" + Fase 5) con los 6 roles, sobre el estado
+      congelado en ese momento.
+      **Los agentes no se borran:** siguen definidos en `.opencode/agent/` con prompt, permisos y
+      modelo intactos; solo quedan dormidos.
+      **Supersede D28 y D39** (que pausaban QA solo mientras el diseño no estuviera congelado y
+      reactivaban el gate al congelarlo; D39 queda reemplazada como "modo diseño").
+      **Registrado en:** `AGENTS.md` (sección *Modo rápido* + notas en gate y roles) y `GUIA.md`
+      (§2.1). **Riesgo asumido y declarado:** la entrega se cierra sin medición de Lighthouse ni
+      evidencia Playwright nuevas; quedan como evidencia previa las de `docs/qa/` (22/09).
+
+- **D57.** 23/09, Lorena sobre el bilingüe: *"no traduzcas, si da tiempo lo hacemos; hay que dejar
+      todo listo para que ellos hagan las traducciones en caso de que mi proyecto gane"*.
+      **Decisión:** **Fase 2 de `specs/12-i18n.md` (traducción real del catálogo EN) se aplaza**;
+      `app/messages/en.json` sigue siendo el espejo del ES. La infraestructura (D54) queda
+      **completa y operativa**, y se documenta un **handoff de traducción** para el equipo oficial
+      de TechToJob en `specs/12-i18n.md` (dónde vive el copy, paridad de claves forzada por tipos,
+      cómo traducir sin tocar código y cómo añadir un idioma).
+      **Opción elegida (A):** se **mantiene `/en` activo** con el catálogo ES como *placeholder
+      declarado* (en README y spec), en lugar de desactivar la ruta hasta tener la traducción.
+      **Riesgo asumido y declarado:** `/en` se sirve hoy con contenido ES y `lang="en"` /
+      `og:locale=en_US`; se mitiga declarándolo como placeholder. ES sigue siendo el canonical en
+      `/` y el idioma principal de la entrega. Traducir después **no requiere cambios de código**
+      (solo valores en `messages/en.json`; `content.ts` verifica la paridad de claves en compilación).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
