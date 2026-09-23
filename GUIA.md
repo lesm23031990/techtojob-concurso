@@ -113,7 +113,8 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   and scannable message`) y `4325e02` (`design(motion): slower reveals, shorter exit, cta glint and
   rail node flash`), más el commit de documentación que cierra este registro
   (`docs: record D100-D107 and sync design system, specs and guide`). Working tree **limpio**;
-  **sin push** (`master` va 17 commits por delante de `origin/master`). Tag `hero-v1` sobre `b18c3e1`.
+  **sin push** (`master` va por delante de `origin/master`; no se tocó el remoto).
+  Tag `hero-v1` sobre `b18c3e1`.
 
 ### 2.1 Modo de trabajo vigente (D56, 23/09)
 
