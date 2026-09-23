@@ -48,7 +48,7 @@ exista (Fase 5), según exige R10.
 | 5 | Networking | `#networking` | Canales por área y gente del sector, en composición asimétrica (D81): título + intro `lg:sticky` a la izquierda y tres bloques a la derecha — canales por área (píldoras), respuestas en minutos (punto `brand` de actividad) y el mercado oculto (ancla de jerarquía) | R16 |
 | 6 | Testimonios | `#testimonios` | 4 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales). **Bento 7/5/5/7 (D38)** | R17 |
 | 7 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo). **Bento 1 destacada alta + 2 (D38)** | R18 |
-| 8 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
+| 8 | Newsletter | `#newsletter` | **D100:** tarjeta Bento (`coal` + hairline) sobre `ink` con el h2/copy a la izquierda y el formulario a la derecha; label visible, validación HTML5 + feedback y nota de confianza bajo el input; franja antes del footer | R19 |
 | 9 | Cierre | `#unete` | Último empujón: repetir CTA Discord (nodo "meta" del raíl) | R20 |
 | 10 | Footer | — | Enlaces por bloques (secciones, comunidad, legal), redes (Q5), copyright | R21 |
 
@@ -63,7 +63,7 @@ como **meta**. Orden narrativo de arriba. Especificación:
 | **Relleno animado** | Sobre el segmento, relleno `brand` con `scaleY` 0→1 vía `animation-timeline: view()` (CSS puro, cero JS) | Sin soporte de scroll-driven animations → **línea dibujada completa** (nunca invisible) |
 | **Nodo** | Círculo de 28px centrado en el raíl, alineado con el `h2` de la sección (`top-20 lg:top-32`, que es el padding de la sección). Contiene el numeral del paso (aria-hidden). Se activa al entrar en vista | **Sin etiqueta de texto**: el rótulo del paso ES el `h2` de la sección → no se duplica contenido (R36/SEO) |
 | **Variantes de nodo** | `step` (secciones) y `goal` (Cierre: círculo de 40px relleno `brand`). El hero **no lleva raíl** ni nodo: es la puerta y el viaje arranca en el paso 1 | — |
-| **Tones y grosor (D65)** | Claro: raíl base **`slate` 2px** (5.57:1 sobre `paper`; antes `line` 1px = 1.27:1, invisible) + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/25` + relleno/nodo `brand`. Franja `brand` (newsletter): raíl `ink/30`, relleno y nodo `ink` | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
+| **Tones y grosor (D65)** | Claro: raíl base **`slate` 2px** (5.57:1 sobre `paper`; antes `line` 1px = 1.27:1, invisible) + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/25` + relleno/nodo `brand`. **D100:** la variante de la franja `brand` (raíl `ink/30`, relleno y nodo `ink`) queda **sin uso** — Newsletter pasa a `ink` y usa la variante oscura estándar | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
 | **Sub-timeline** | ~~timeline central alternado~~ → **D38:** sin sub-timeline; el raíl cruza la sección. **D66:** "Cómo funciona" pasa a **stepper vertical que reutiliza ese raíl como track** (nodos de paso `1.1`–`1.4` sobre la línea), sin dibujar una segunda línea. Se conserva el `<ol>` con la secuencia real | R12; copy nuevo aprobado por Lorena (R36) |
 | **Anchos** | Raíl completo desde `xl` (1280+); compacto (mismo raíl, contenido con `pl-7`) entre 360 y 1279. Verificar que las rejillas de 4 y 3 columnas no se aprieten | R38 (responsive 360/768/1024/1440) |
 
@@ -79,7 +79,7 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 
 | Pieza | Spec | Regla/nota |
 |---|---|---|
-| **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line`. **D85 (Audiencias `ink`): celda `bg-coal` + borde `border-hairline-dark`** y `.bento-lit-ink`; **D86/D87 (Testimonios `mist`): celda `bg-paper` + borde `border-line`** + `.card-idle` | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas dos secciones |
+| **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line`. **D85 (Audiencias `ink`): celda `bg-coal` + borde `border-hairline-dark`** y `.bento-lit-ink`; **D86/D87 (Testimonios `mist`): celda `bg-paper` + borde `border-line`** + `.card-idle`; **D100 (Newsletter `ink`): UNA tarjeta `bg-coal` + `border-hairline-dark`** + `.bento-lit-ink` + `.card-idle` que envuelve texto y formulario | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas secciones |
 | **Numeración de índice** | En Testimonios el marcador es la comilla editorial y en Noticias la fila fecha+chip: no se añade numeral para no duplicar información. ("Cómo funciona" ya no usa este recurso: pasó al stepper con nodos `1.1`–`1.4`, D66) | R34; no duplica contenido |
 | **Grid** | 12 columnas desde `lg`; móvil/tablet: una columna apilada en orden DOM. Testimonios: 7/5/5/7. Noticias: 7 (row-span 2) + 5 + 5. ("Cómo funciona" es stepper de 1 columna, D66) | R38; verificar 360/768/1024/1440 |
 | **Hero ticker** | Marquee CSS puro bajo el hero (`border-t` hairline, `text-label` uppercase `cloud`, separador `brand`), con tokens reales ya publicados (stacks de `hero.meta`, "Torneo #2", "Comunidad técnica en español"). Track duplicado para bucle continuo. `aria-hidden` (duplica `hero.meta`) y **no interactivo** | R11 (no es CTA), R36 (strings en `es.json` como `hero.ticker`, derivados), R34 |
@@ -129,6 +129,43 @@ de página se reutiliza como track: no se dibuja una segunda línea.
 | **Copy** | Líneas de resultado + `cta` aprobadas por Lorena; viven en `messages/{es,en}.json` (`Step.result`, `HowItWorks.cta`) | R36; sin cifras inventadas (J2) |
 
 
+## Newsletter — tarjeta Bento sobre `ink` (D100, 23/09)
+
+**Motivo:** pedido de Lorena (*"elimina el bloque gigante de color plano… el contenido debe vivir
+dentro de una tarjeta Bento unificada"*). Se retira la franja `brand` maciza (D44) y la sección se
+reintegra al **ritmo oscuro** con una tarjeta única, conservando el raíl y su nodo (paso 7).
+
+| Pieza | Spec | Regla/nota |
+|---|---|---|
+| **Superficie** | `tone="ink"` (`#2f3436`): la sección deja de ser la única franja `brand` del sitio y enlaza con el `ink` del Cierre. El verde queda como **fondo de botón, relleno del raíl y nodo** — el rol que R26 permite | R19 se sigue cumpliendo: **franja pre-footer** con formulario y `label` visible (la norma pide "una franja", no un color); R24/R25: los 3 colores base siguen dominando |
+| **Tarjeta Bento** | UN panel que envuelve eyebrow + título + copy + formulario: `bg-coal` + `border border-hairline-dark` (1px), esquinas rectas, sin sombra, `p-6 lg:p-10`; `.panel-in` (entrada del panel, D103) + `.bento-lit-ink` (borde que se ilumina al entrar). **D104:** se retiran `.card-idle` y el `line-idle` del borde superior (repetían el hilo de sección y el encendido del borde) | Lenguaje de celda sobre `ink` ya establecido en Audiencias (D85); **sin tokens nuevos** |
+| **Raíl y nodo 7** | Sin cambios de estructura: `TimelineRail tone="ink"` → base `white/25`, relleno `brand`, nodo doble `border-brand bg-ink` con numeral `ink` sobre disco `brand` (6.17:1). **D105:** el nodo lleva un **halo `brand` que respira** (`node-flash`, 7s, centro transparente, fase escalonada por `--i`) | R34 (decorativo, `aria-hidden`); el numeral ya es **7** (`timelineOrder` → posición 7); `brand` `#84c0bf` es el "verde menta" del brief |
+| **Rejilla** | `lg:grid-cols-12`: texto en `lg:col-span-7` y formulario en `lg:col-span-5`, separados por **hairline vertical** (`lg:border-l border-hairline-dark lg:pl-12`). Móvil: apilado (texto → formulario) | R38 (verificar 360/768/1024/1440) |
+| **Eyebrow** | Overline `text-label uppercase text-brand` con punto `brand`, reutilizando la etiqueta ya existente `nav.links.newsletter` | R36 (cero copy nuevo) |
+| **Entrada** | El **panel entra con `.panel-in`** (recorrido 1rem y ventana del 26%, D103) y **cada** elemento del formulario (label, input, botón, hairline, nota y estado) entra y sale con `.reveal`; eyebrow/h2/copy con `.reveal-left`. `.text-drift` **solo** en la columna de texto (un `transform` ancestro mueve los controles) | D62/D84/D101/D102/D103 |
+| **Input** | Fondo `ink` (hundido sobre la tarjeta `coal`), borde **1px `white/40`** (**3.37:1** ≥3:1, WCAG 1.4.11 del control), `rounded-input`, `min-h-12`, **ancho completo**, texto `paper` (12.62:1), placeholder `cloud/70` (4.64:1). Foco: `focus:border-brand` (6.17:1) + `outline-3 brand` con offset. Transición de color suave | `type="email" required` + `aria-describedby` (§6.5). El `focus:border-cyan-500` del brief **NO se aplica**: el cian viola R24/R25 (paleta fija) → se mapea a `brand`, el mismo "verde menta/cian" |
+| **Label** | Overline visible sobre el campo (`text-label uppercase text-cloud`) — nunca solo placeholder | J6 ("etiquetas en el formulario") |
+| **Nota de confianza** | `Solo un correo a la semana. Nada más.` **justo debajo del campo**, con punto `brand` y separador `.line-idle`; `text-small text-cloud/80` (**4.73:1** sobre `coal`) | R36 (copy existente, sin tocar); el `text-slate-400` del brief se mapea a `cloud/80` (token de la paleta) |
+| **Botón** | Relleno `brand` + texto `ink` (6.17:1) + `font-bold`, **`rounded-none`** (D101; el `rounded-lg` de D100 se retiró), `min-h-12` y **ancho completo bajo el campo** (el input deja de ir estrangulado); hover: `bg-brand-deep` (5.01:1) + `-translate-y-0.5` + `shadow-glow-cta` + barrido especular; foco: `outline-3 brand` | R26 (texto sobre verde = siempre `ink`); R11 (no compite como primario: **sin** flecha, **sin** `cta-glint` y sin flecha de CTA Discord) |
+| **Estado** | `<p role="status" aria-live="polite">` bajo la nota, sin altura reservada (el mensaje aparece tras una acción del usuario → fuera del CLS) | R19/Q8 (maqueta sin backend, feedback honesto) |
+
+> **Mapeos declarados (brief → sistema):** (1) "fondo sutilmente más oscuro que el general" → se usa
+> `coal`, la superficie de tarjeta **documentada sobre `ink`** (D85); no existe un token más oscuro que
+> `ink` y crear uno violaría R24/R25 sin necesidad. (2) "cian" → `brand`. (3) "slate-400" → `cloud/80`.
+> (4) `rounded-lg` en el botón → **probado en D100 y revertido en D101**: era la única pieza redondeada
+> del sitio y rompía el lenguaje cuadrado de D42. Hoy todo el sitio es `rounded-none`.
+> (5) **D107:** el mensaje pasa a estructura escaneable (lead + `<ul>` de 3 items verbatim del copy
+> aprobado + sello de la promesa); el tipo `Messages` es una interfaz escrita a mano en `content.ts`,
+> así que cada cambio de catálogo exige ampliarla (`items`, `seal`).
+> **Ajustes posteriores al brief (D101–D106):** D101 formulario en columna estrecha → apilado a ancho
+> completo + eyebrow + botón cuadrado; D102 escala tipográfica propia de "Cómo funciona"/"Torneos"
+> (`.section-tight`) y entradas/salidas más lentas; D103 `panel-in` + destello idle de los CTA
+> (`.cta-glint`); D104 poda de ornamento del panel; D105 halo de los nodos del raíl (`node-flash`);
+> D106 salida acortada (meseta 84% → 92%).
+> **Efecto en el ritmo (design-system §7):** Newsletter deja de ser la franja que rompe; el tramo
+> `Newsletter ink → Cierre ink` se lee como un **único bloque de cierre** (misma excepción que
+> `Cierre → Footer`). Se actualiza la tabla de ritmo y la regla anti-deriva.
+
 ## Hero V6 — "Plano Cinético" (D40)
 
 **Motivo:** pedido de rediseño del hero (22/09 noche) con *mesh gradient* animado e imágenes
@@ -172,13 +209,13 @@ aprobado (#2 cristal facetado + #4 red que se dibuja) y rebalancear la altura.
 | Ajuste | Spec | Regla/nota |
 |---|---|---|
 | **Soporte del hero** | `hero.support` y el `div` del CTA ganan `lg:col-span-5`: ya no caen en 1/12 y no se parten en 6 líneas | D42, R38 |
-| **Botones cuadrados** | Todas las píldoras → `rounded-none`: `DiscordCta` (sin anillo `animate-breathe`, eliminado del CSS), header completo (logo, enlaces, hamburguesa, panel móvil) y botón del newsletter + skip-link | D42, R24, D36 |
+| **Botones cuadrados** | Todas las píldoras → `rounded-none`: `DiscordCta` (sin anillo `animate-breathe`, eliminado del CSS), header completo (logo, enlaces, hamburguesa, panel móvil), botón del newsletter y skip-link. **D100** lo excepcionó con `rounded-lg` y **D101 lo revirtió** al verlo en pantalla: hoy **no hay ninguna excepción** | D42, D100/D101, R24, D36 |
 | **Header más ancho** | El header usa `page-container-wide` (`--container-page-wide: 80rem`); el resto de la página sigue en 72rem | D43, R38 |
 | **Marca de agua del hero** | `logo-symbol-gradient.svg` al 10% abajo-derecha, **520×520** (D45); reemplaza la red retirada | D43/D45, R39 |
 | **Grid vivo** | El grid del hero se mueve: paneo por scroll (capa externa `.hero-field`) + **drift continuo** de una celda (4rem X/Y) en 28s (capa interna `.hero-field-drift`, sobredimensionada `-inset-16`). Loop sin costura; solo `transform` | D44, D37, R34 |
 | **Nav sin recuadro** | El `<ul>` del nav de escritorio pierde borde/fondo/padding (queda `flex items-center gap-1`); enlaces con hover subrayado. El panel del menú móvil se conserva | D45, R42 |
 | **CTA Discord único (D46)** | Un solo estilo en TODO el sitio: cuadrado relleno `brand`, texto `ink` (6.77:1), barrido especular + micro-elevación, flecha. Solo cambia el tamaño (`nav` compacto / `hero` prominente / `block` full-width). Se **retira la variante `line`** (hairline) y el hero pasa a `size="hero"`. Focus ring `ink` en el panel móvil sobre `paper` (R26) | D46, R11, R26, R34 |
-| **Header adaptativo (D47)** | Barra **sólida** que adopta la polaridad de la sección de detrás (`data-header-surface` en `<html>` vía la isla `HeaderSurface`); disolución en una franja de gradiente **debajo** de la barra; logo compuesto en oscuro / `logo-horizontal.svg` en claro; bloque `brand` de la newsletter tratado como `dark`; en claro, CTA con borde `ink` (WCAG 1.4.11) | D47, R24/R25, R26, R34 |
+| **Header adaptativo (D47)** | Barra **sólida** que adopta la polaridad de la sección de detrás (`data-header-surface` en `<html>` vía la isla `HeaderSurface`); disolución en una franja de gradiente **debajo** de la barra; logo compuesto en oscuro / `logo-horizontal.svg` en claro; bloque `brand` de la newsletter tratado como `dark` (**D100:** ya no aplica — la newsletter es `ink` y se declara `dark` por su propio tono); en claro, CTA con borde `ink` (WCAG 1.4.11) | D47, D100, R24/R25, R26, R34 |
 | **H1 y copy (D48)** | Espacios reales entre palabras del `<h1>` (bug de a11y/SEO); `lg:col-span-8`; línea 2 → *"Aquí te conocen antes de la vacante."* + `meta.og.headline`/`ogImageAlt` sincronizados | D48, R39/R40 |
 | **Header eje + nav vivo (D49)** | Header vuelve al eje `page-container` (72rem) como el contenido; **scrollspy** (`aria-current="location"`, activo `brand` en oscuro / `ink`+subrayado `brand` en claro por R26); **hairline de progreso** `.header-progress` (`scaleX`, `animation-timeline: scroll(root)`, CSS puro) | D49, R42, R45, R34 |
 | **Ritmo vertical del hero (D50)** | `pt − pb = 80px` (altura del header, `-mt-20`) para centrar el bloque en el área visible: `pt-36 pb-16` / `lg:pt-40 lg:pb-20`; `support → quick-nav` pasa a `mt-10` en móvil (ritmo consistente) | D50, J1 |

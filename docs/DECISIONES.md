@@ -1387,6 +1387,129 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificación:** `tsc`/ESLint/`next build` en verde; repaso responsive 360/768/1024/1440.
       **Actualizado en:** `app/app/globals.css`, `docs/design-system.md` §4.
 
+- **D100.** 23/09, Lorena (brief de rediseño del Nodo 7): *"elimina el bloque gigante de color plano…
+      la sección debe continuar con el fondo gris oscuro/antracita profundo… mantené la línea de
+      tiempo vertical fina a la izquierda con el círculo número 7… el contenido debe vivir dentro de
+      una tarjeta Bento unificada, con bordes muy finos"*, con formulario moderno, botón premium y la
+      nota de confianza bajo el input; **cierre del brief: "omite los cambios de colores"**.
+      **Decisión:** se retira la franja `brand` maciza (D44) y la sección pasa a `tone="ink"`
+      (`#2f3436`, color **base** de la paleta) con UNA tarjeta `bg-coal` + `border-hairline-dark` de
+      1px (el lenguaje de celda sobre `ink` de Audiencias, D85) + `.bento-lit-ink` + `.card-idle`:
+      h2 + copy a la izquierda (`text-cloud`, 6.40:1) y formulario a la derecha. **El raíl y el nodo
+      no se tocan** — `timelineStep("newsletter")` ya devuelve **7** (`timelineOrder`) y sobre `ink`
+      el nodo se enciende en `brand` `#84c0bf` (el "verde menta" del brief) vía `.timeline-marker`.
+      **Mapeos obligados por las bases y el sistema** (el brief pedía colores fuera de la paleta):
+      (1) `focus:border-cyan-500` → **`focus:border-brand`** — el cian viola R24/R25 (paleta fija;
+      ya vetado en D40/`specs/10` §Hero V6); (2) `text-slate-400` → **`text-cloud/80`** (4.73:1 ✅);
+      (3) "fondo más oscuro que el general" → `coal`, la superficie de tarjeta documentada sobre
+      `ink` (no existe token más oscuro y crear uno chocaría con R24/R25); (4) input con borde 1px
+      `white/40` (**3.37:1**, WCAG 1.4.11 del control) y placeholder `cloud/70` (4.64:1); (5) botón
+      relleno `brand` + texto `ink` (6.17:1, R26) con hover `bg-brand-deep` (5.01:1) + micro-elevación
+      + `shadow-glow-cta`, **sin** flecha ni barrido especular (R11: no compite con el CTA Discord).
+      **Excepción registrada:** el botón usa **`rounded-lg`** (pedido explícito) → primera y única
+      excepción al `rounded-none` de D42, acotada a este módulo y reversible con una clase; el input
+      conserva su token `--radius-input`. La nota `Solo un correo a la semana. Nada más.` sube bajo
+      el input y la región `role="status"` pierde la altura reservada (el mensaje llega tras una
+      acción del usuario → fuera del CLS). Cero copy nuevo (R36) y cero islas nuevas (sigue siendo
+      la 2.ª isla `NewsletterForm`); R19 se mantiene (franja pre-footer con formulario y label
+      visible: la norma pide una franja, no un color).
+      **Consecuencia en el ritmo:** la página pierde su única franja verde maciza; `Newsletter ink →
+      Cierre ink` se lee como un **bloque de cierre continuo** (misma excepción que `Cierre →
+      Footer`), documentado en `design-system.md` §7. El verde conserva su rol AA: fondo de botón,
+      relleno del raíl, nodo y foco.
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde por `nextjs-builder`
+      (sin Lighthouse/Playwright: modo rápido D56). **Actualizado en:**
+      `components/sections/Newsletter.tsx`, `components/NewsletterForm.tsx`,
+      `specs/10-landing-spec.md` (sección D100), `docs/design-system.md` (§3.1/§5/§6.5/§7),
+      `specs/00-checklist-reglas.md` (R19).
+
+- **D101.** 23/09, Lorena: *"no me gusta el formulario de newsletter"* (con captura: el input salía
+      estrangulado — `tu@correc` cortado — y el botón comía casi toda la fila). **Decisión:** el
+      formulario pasa a **columna "consola" apilada**: overline de label (`text-label uppercase`),
+      input a **ancho completo**, botón a **ancho completo** debajo (fuera la fila `sm:flex-row` que
+      estrangulaba el campo), `.line-idle` al pie y nota de confianza con punto `brand`. Se añade un
+      **eyebrow** reutilizando la etiqueta ya existente `nav.links.newsletter` (cero copy nuevo, R36)
+      y la rejilla del panel pasa a **7/5** (`lg:grid-cols-12`) con **hairline vertical**, como
+      Networking. **Se revierte el `rounded-lg` de D100**: al verlo en pantalla era la única pieza
+      redondeada de un sitio cuadrado (D42); el input conserva su token `rounded-input`. El botón
+      mantiene el lenguaje de hover del CTA (barrido + micro-elevación + glow) pero **sin flecha y
+      sin `cta-glint`**, para que el Discord siga siendo el único botón vivo (R11).
+      **Verificación:** `tsc`/ESLint/`next build` en verde. **Actualizado en:**
+      `components/sections/Newsletter.tsx`, `components/NewsletterForm.tsx`,
+      `docs/design-system.md` (§5/§6.5), `specs/10-landing-spec.md`.
+
+- **D102.** 23/09, Lorena: *"me gustaría reducir un poco más las fuentes de las secciones «como
+      funciona» y «torneos», y quiero las animaciones de entrada y salida más lentas para poderlas
+      apreciar"*. **Decisión:** (1) **densidad tipográfica por sección**: Tailwind v4 emite las
+      utilidades `text-*` como `var(--text-*)`, así que una clase nueva **`.section-tight`**
+      redefine los tokens de titular/entradilla en el scope de esas dos secciones (`h2` 28→26px,
+      `h2-lg` 40→36px, `h3` 20→19px, `h3-lg` 24→22px, `lead` 18→17px, `lead-lg` 20→19px) sin tocar
+      la fuente (Sora, R28), los pesos (R59) ni `body`/`small`/`label` — D99 los dejó en ~15/13/11px.
+      (2) **entrada/salida más lentas**: en los keyframes `step-in-out`, `step-in-out-left` y
+      `panel-in` la entrada pasa de terminar en `22%` a `38%` del rango `cover` (+70% de recorrido).
+      **Verificación:** `tsc`/ESLint/`next build` en verde. **Actualizado en:**
+      `app/app/globals.css`, `components/sections/HowItWorks.tsx`, `components/sections/Tournaments.tsx`,
+      `docs/design-system.md` (§9).
+
+- **D103.** 23/09, Lorena: *"agregale un destello a los botones principales de la timeline"* y
+      *"incluye el cuadro de newsletter a la animación de entrada"*. **Decisión:** (1) **`.cta-glint`**:
+      los CTA rellenos (variante `solid` de `cta-styles.ts`, que cubre header, hero, Torneos,
+      Audiencias y Cierre) ganan un **barrido idle cada 9s** (cruce ~1,3s, blanco al 22% — más suave
+      que el 30% del hover) vía `::after` con `transform` (CLS 0); el outline y el botón del
+      newsletter se quedan quietos (R11). (2) **`.panel-in`**: el cuadro del newsletter entra con su
+      propia ventana — recorrido de **1rem** (es una superficie grande, 2.5rem se vería excesivo) y
+      **26% del `cover`** en lugar del 38%: en `view()` el rango dura (viewport + alto del elemento),
+      así que un panel de ~650px con el 38% quedaría a media tinta hasta tener el borde a ~190px del
+      viewport; con el 26% está opaco a ~350px (zona de lectura). En píxeles su entrada (≈350px de
+      scroll) es **más larga** que la de un titular (≈280px). **Verificación:**
+      `tsc`/ESLint/`next build` en verde. **Actualizado en:** `app/app/globals.css`,
+      `components/cta-styles.ts`, `components/sections/Newsletter.tsx`.
+
+- **D104.** 23/09, orquestador (aprobado por Lorena con *"ok ejecuta"* tras el diagnóstico de la
+      sesión): **poda de ornamento del panel de newsletter**. La sección acumulaba 6-7 efectos
+      simultáneos (hilo `section-idle`, `section-sheen`, 2 `line-idle`, `card-idle`, `bento-lit-ink`,
+      `panel-in`, 6 `reveal`, 3 `reveal-left`). **Decisión:** se retiran **`.card-idle`** (anillo que
+      respira) y el **`line-idle` del borde superior** del panel: repetían el hilo de sección y el
+      propio encendido del borde. Quedan los tres que aportan jerarquía: **entrada del panel**
+      (`panel-in`), **encendido del borde** (`bento-lit-ink`) y **un solo `line-idle`** al pie del
+      formulario. R34 ("que no estorben") + J1 (jerarquía sobre ruido). **Verificación:**
+      `tsc`/ESLint/`next build` en verde. **Actualizado en:** `components/sections/Newsletter.tsx`,
+      `docs/design-system.md` (§6.5), `specs/10-landing-spec.md` (sección D100).
+
+- **D105.** 23/09, Lorena: *"faltan los destellos parecidos a los de este punto [punto `ember` con
+      halo] en los círculos de la timeline"*. **Decisión:** **`.node-flash`** — los círculos del raíl
+      ganan un **halo suave que respira** (7s, `opacity`/`transform`, `radial-gradient` de **centro
+      transparente** para no teñir disco ni numeral). Cada nodo usa **su** acento: `brand` en los
+      nodos de sección (`1`–`8`) y `ember` en los de paso del stepper (`1.1`–`1.4`), sin colores
+      nuevos (R24/R25). El `--i` **escalona la fase** (los marcadores publican su posición 0-based
+      desde `TimelineRail`) para que el destello **recorra la página en oleada** en lugar de
+      parpadear en sincronía. Decorativo (`pointer-events: none`) y apagado por el guard global de
+      `prefers-reduced-motion`. **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `components/TimelineRail.tsx`,
+      `docs/design-system.md` (§9).
+
+- **D106.** 23/09, Lorena: *"haz la animación de salida más corta"*. **Decisión:** en los tres
+      keyframes de entrada/salida (`step-in-out`, `step-in-out-left`, `panel-in`) la **meseta opaca
+      sube de 84% a 92%**: la despedida dura la mitad (8% del `cover` en vez de 16%) y arranca cuando
+      el contenido ya está bajo la barra fija. La entrada (38%, y 26% en el panel) **no se toca**.
+      **Verificación:** `tsc`/`next build` en verde. **Actualizado en:** `app/app/globals.css`.
+
+- **D107.** 23/09, Lorena (aprobación del punto 1 del diagnóstico): *"rediseñaste el newsletter con
+      tus indicaciones para transmitir un mensaje claro"*. **Decisión:** el mensaje deja de ser un
+      párrafo de 4 líneas y pasa a **estructura escaneable**, con **las mismas palabras del copy
+      aprobado** (cero afirmaciones nuevas, R36/J2): lead `Un correo cada lunes con:`, **lista `<ul>`
+      de 3 items verbatim** (`Las ofertas nuevas de la comunidad` · `Los torneos que se abren` · `Lo
+      que merecía la pena leer esta semana`), separados por hairline `hairline-dark` y punto `brand`,
+      y la promesa `Sin relleno y sin spam: te bajas cuando quieras.` como **sello** con barra
+      `border-l-[3px] brand` (el patrón de "resultado" de D70). Las 3 líneas entran con `.reveal-left`
+      (la posición ya las escalona). `label`, `placeholder`, `button`, `note` y `success` **no se
+      tocan**; `newsletter.copy` no alimenta metadata, así que el SEO no se ve afectado.
+      **Ampliación necesaria:** el tipo `Messages` **no** se deriva de `es.json` sino que es una
+      **interfaz escrita a mano en `content.ts`** (`interface Newsletter`); se añaden `items: string[]`
+      y `seal: string` con su JSDoc para mantener la paridad tipo ↔ catálogo. **Verificación:**
+      `tsc`/ESLint/`next build` en verde. **Actualizado en:** `messages/{es,en}.json`,
+      `content.ts`, `components/sections/Newsletter.tsx`, `specs/11-contenido.md` (§8).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

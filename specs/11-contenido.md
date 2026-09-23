@@ -118,14 +118,24 @@ conceptos separados por hairlines de 1px. Las frases aprobadas se reparten sin r
   2. `Torneos · 07/09/2026 ·` `Torneo #2 abierto: la landing de TechToJob se decide a retos` — `Cualquiera del servidor puede participar. El jurado publica criterios. La ganadora se convierte en la web oficial.` → `Ver las bases del torneo`
   3. `Empleo · 01/09/2026 ·` `Cómo leer una oferta antes de que la publiquen` — `Una guía breve sobre el mercado tech en español y por qué estar dentro cambia las reglas.` → `Leer la guía`
 
-## 8 · NEWSLETTER *(franja pre-footer, R19)*
+## 8 · NEWSLETTER *(franja pre-footer, R19 · panel Bento sobre `ink` desde D100)*
 
+Estructura escaneable (D107): lead → lo que llega → sello de la promesa. **Las palabras son las del
+copy aprobado**, solo repartidas en la forma; no hay afirmaciones nuevas (R36/J2).
+
+- **Eyebrow:** `Newsletter` — se **reutiliza** la etiqueta del nav (`nav.links.newsletter`), no se añade copy.
 - **H2:** `El parte de la semana, los lunes`
-- **Copy:** `Un correo cada lunes con las ofertas nuevas de la comunidad, los torneos que se abren y lo que merecía la pena leer esta semana. Sin relleno y sin spam: te bajas cuando quieras.`
+- **Lead (`copy`):** `Un correo cada lunes con:`
+- **Lo que llega (`items`, lista `<ul>` de 3):**
+  1. `Las ofertas nuevas de la comunidad`
+  2. `Los torneos que se abren`
+  3. `Lo que merecía la pena leer esta semana`
+- **Sello de la promesa (`seal`):** `Sin relleno y sin spam: te bajas cuando quieras.`
 - **Label input:** `Tu correo electrónico`
 - **Placeholder:** `tu@correo.com`
 - **Botón (dice qué recibes, no "Suscribirse"):** `Quiero el correo de los lunes`
-- **Nota bajo formulario:** `Solo un correo a la semana. Nada más.`
+- **Nota bajo el campo:** `Solo un correo a la semana. Nada más.`
+- **Estado tras enviar (`success`):** declara honestamente que es una maqueta (R19/Q8).
 
 ## 9 · CIERRE
 
@@ -156,7 +166,7 @@ torneos.{h2,copy}
 networking.{h2,intro,channels.{label,items[4]},speed.{label,note},market.{label,note,text}}
 testimonios.{h2,sub,items[4].{nombre,rol,frase}}
 noticias.{h2,items[3].{categoria,fecha,titulo,resumen,cta}}
-newsletter.{h2,copy,label,placeholder,boton,nota}
+newsletter.{h2,copy,items[3],seal,label,placeholder,boton,nota,success}
 cierre.{h2,copy,cta}
 footer.{bloques.{talento,empresas,comunidad,legal}.{titulo,enlaces[]},redes,creditos,legalNota}
 discord.url

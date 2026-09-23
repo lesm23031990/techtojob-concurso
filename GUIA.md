@@ -25,11 +25,11 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 
 ### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
 
-> **DISEÑO CERRADO (D88, 23/09): Hero → Networking.** Las secciones **Hero, Cómo funciona, Torneos,
-> Audiencias y Networking** quedan congeladas: **no se vuelven a tocar sin una decisión nueva.**
-> Por debajo de Networking (**Testimonios, Noticias, Newsletter, Cierre**) el diseño sigue abierto a la
-> revisión de Lorena; el trabajo pendiente es la **Fase 5** y, cuando ella diga *"vamos a revisar"*, el
-> gate de auditoría (D56).
+> **DISEÑO CERRADO (D88/D98/D100–D107, 23/09): Hero → Newsletter.** Las secciones **Hero, Cómo
+> funciona, Torneos, Audiencias, Networking, Testimonios (D89/D90), Noticias (D98) y Newsletter
+> (D100–D107)** quedan congeladas: **no se vuelven a tocar sin una decisión nueva.**
+> La **única sección abierta es el Cierre (`#unete`)**; después, el **entregable (Fase 5)** y, cuando
+> Lorena diga *"vamos a revisar"*, el gate de auditoría (D56).
 
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
@@ -75,21 +75,45 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   Cierre pasan de `logo-symbol-gradient` a `logo-symbol-light` al **6%**. `#newsletter` entra en la
   **nav de escritorio** (tier `xl`). Detalle en `DECISIONES.md` D89/D90 y `design-system.md`
   §6.4/§7/§9. `tsc` + ESLint + `next build` en verde.
-- **PRÓXIMA SESIÓN (handoff):** continuar con las **secciones abiertas** — **Noticias**,
-  **Newsletter** y **Cierre** (Testimonios ya rediseñada en D89/D90, pendiente solo tu visto bueno
-  visual), y luego la **Fase 5**. Punto de partida: `design-system.md` §7/§9 y `docs/DECISIONES.md`
-  D75–D90.
+- **Newsletter rediseñada de punta a punta (D100–D107, 23/09) — sección CERRADA, pendiente solo tu
+  visto bueno visual.** Por petición de Lorena se retira la franja `brand` maciza: la sección pasa a
+  **`ink`** y todo el bloque vive en **UN panel Bento** `coal` + hairline (D100), con la rejilla 7/5 y
+  hairline vertical (D101). El formulario se rehace como **columna "consola"**: overline de label,
+  input a ancho completo (`border-white/40` = 3.37:1, WCAG 1.4.11) y **botón cuadrado a ancho
+  completo** (D101 — el `rounded-lg` de D100 se revirtió al verlo en pantalla). El mensaje deja de ser
+  un párrafo y pasa a **estructura escaneable** con las mismas palabras del copy aprobado: lead +
+  `<ul>` de 3 items + sello "sin relleno y sin spam" (D107). Movimiento: **entrada del panel**
+  (`.panel-in`), **destello idle de los CTA rellenos** (`.cta-glint`) y **halo de los nodos del raíl**
+  (`.node-flash`, con el acento propio de cada familia y fase escalonada por `--i`) (D103/D105); la
+  **entrada/salida se ralentiza** (entrada 22%→38%) y luego **la salida se acorta** (meseta 84%→92%)
+  (D102/D106); y se **poda ornamento** del panel (fuera `.card-idle` y el glint del borde superior,
+  D104). Además, "Cómo funciona" y "Torneos" bajan su escala tipográfica con `.section-tight` (D102).
+  Cero copy nuevo, cero islas nuevas, cero colores fuera de la paleta. `tsc` + ESLint + `next build`
+  en verde.
+- **PRÓXIMA SESIÓN (handoff):** queda **una sola sección abierta: el CIERRE (`#unete`)** — hoy es el
+  espejo del hero (H2 en dos líneas `cloud`/`paper` + CTA dominante, sin raíl desde D59), así que el
+  trabajo es darle el mismo nivel de criterio que a Newsletter (jerarquía, entrada/salida, hilo
+  animado, `cta-glint` ya heredado por ser CTA `solid`) y decidir si se le da algo propio. Punto de
+  partida: `design-system.md` §7/§9, `specs/10-landing-spec.md` (Cierre) y `docs/DECISIONES.md`
+  D100–D107. **Después del Cierre, el entregable (Fase 5).**
 - **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. Excepción
   registrada: **Audiencias** recibió el watermark en D90 por petición expresa (solo decoración).
-  El **modo rápido D56** sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
-- **Después, Fase 5:** repo público en GitHub → deploy Vercel con URL real en `content.ts`
+  **Noticias** (D98) y **Newsletter** (D100–D107) también quedan cerradas. El **modo rápido D56**
+  sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
+- **Después, Fase 5 (entregable):** repo público en GitHub → deploy Vercel con URL real en `content.ts`
   (`site.url`) → Lighthouse/capturas → mensaje al canal ENTREGAS con la declaración de IA (R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
-  `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado.
-- **Commits (23/09):** las iteraciones de diseño quedaron en **dos commits** — `0ea124c`
-  (`design: networking rebuild, mist rhythm and idle motion`, D81–D87) y `89b83bd`
-  (`docs: record D82-D88 and sync design system, specs and guide`). Working tree **limpio**;
-  **sin push** (`master` va 2 por delante de `origin/master`). Tag `hero-v1` sobre `b18c3e1`.
+  `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado (por eso
+  `messages/en.json` mantiene el texto en español, incluidos los nuevos `items`/`seal`).
+- **Deuda técnica declarada (para el gate "vamos a revisar"):** (1) el tipo `Messages` es una
+  **interfaz escrita a mano en `content.ts`**, no se deriva de `es.json`: cada cambio de catálogo
+  exige ampliarla (pasó en D107); (2) los `style={{ "--i": n }}` que quedan sobre elementos `.reveal`
+  son inertes (el rango volvió a `cover` completo en D77): solo sirven a `.bento-lit`/`.step-node-fill`.
+- **Commits (23/09, sesión de newsletter):** `7f8d2a6` (`feat(newsletter): bento panel, console form
+  and scannable message`) y `4325e02` (`design(motion): slower reveals, shorter exit, cta glint and
+  rail node flash`), más el commit de documentación que cierra este registro
+  (`docs: record D100-D107 and sync design system, specs and guide`). Working tree **limpio**;
+  **sin push** (`master` va 17 commits por delante de `origin/master`). Tag `hero-v1` sobre `b18c3e1`.
 
 ### 2.1 Modo de trabajo vigente (D56, 23/09)
 
