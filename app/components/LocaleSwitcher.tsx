@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { getLocale, getMessages } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { getPathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 type LocaleSwitcherTone = "surface" | "panel";
@@ -17,12 +18,12 @@ const TONE_CLASSES: Record<LocaleSwitcherTone, string> = {
 
 /**
  * Language selector (spec 12-i18n, I5) — real links, zero JavaScript: each
- * entry points at the same landing in its locale. Passing `locale` to the
- * locale-aware `Link` forces the prefix, so the anchor resolves to `/es` or
- * `/en`; next-intl's middleware canonicalises the default-locale `/es` to `/`
- * (as-needed, I1) and the emitted `hrefLang`/`lang` describe the target for
- * crawlers and screen readers. The active locale is marked with `aria-current`.
- * No `onClick`, no state.
+ * entry points at the same landing in its locale. `getPathname` resolves the
+ * final pathname per locale, so the default locale (ES) links straight to `/`
+ * and EN to `/en` without bouncing through the proxy's `/es` → `/` redirect
+ * (an internal link should never need one); the emitted `hrefLang`/`lang`
+ * describe the target for crawlers and screen readers. The active locale is
+ * marked with `aria-current`. No `onClick`, no state.
  */
 export default async function LocaleSwitcher({
   tone = "surface",
@@ -38,8 +39,7 @@ export default async function LocaleSwitcher({
           return (
             <li key={option}>
               <Link
-                href="/"
-                locale={option}
+                href={getPathname({ href: "/", locale: option })}
                 hrefLang={option}
                 lang={option}
                 aria-current={isActive ? "page" : undefined}
