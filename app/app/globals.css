@@ -182,6 +182,16 @@
   box-shadow: 0 18px 40px -24px rgb(47 52 54 / 0.32);
 }
 
+/* D92: en las superficies AZULES (`mist`) el header claro no proyecta sombra
+   inferior ni franja de disolución (sobre azul se veían como una mancha
+   gris/blanca). Blanco y oscuro conservan el tratamiento de siempre. */
+[data-header-surface="light"][data-header-tint="true"] .header-veil-light {
+  box-shadow: none;
+}
+[data-header-surface="light"][data-header-tint="true"] .header-fade-light {
+  opacity: 0;
+}
+
 /* Logo swap: the same tile+wordmark composite in both polarities (D55). */
 .header-logo-light {
   display: none;

@@ -9,6 +9,11 @@ import { useEffect } from "react";
  * no layout thrash, no visible UI; server default is dark (the hero is ink) so
  * the first paint is already correct. Progressive enhancement: without JS the
  * header stays ink and no link is marked current.
+ *
+ * D92: alongside the polarity it publishes `data-header-tint`, true when the
+ * section under the bar is a BLUE tint (`mist`/`brand-soft`) — the header then
+ * drops its bottom shadow and dissolve band. Absent attribute → "false", so
+ * `paper`/dark sections keep the usual treatment.
  */
 export default function HeaderSurface() {
   useEffect(() => {
@@ -26,6 +31,7 @@ export default function HeaderSurface() {
 
     let frame = 0;
     let lastSurface = "";
+    let lastTint = "";
     let lastScrolled = "";
     let lastId = "";
 
@@ -34,11 +40,13 @@ export default function HeaderSurface() {
       const line = 104; // just below the 5rem bar; slightly past scroll-padding-top
       // (6rem ≈ 96px) so an anchored section is marked active right after the jump.
       let surface = "dark";
+      let tint = "false";
       let currentId = "";
       for (const section of sections) {
         const { top, bottom } = section.getBoundingClientRect();
         if (top <= line && bottom > line) {
           surface = section.dataset.surface === "light" ? "light" : "dark";
+          tint = section.dataset.headerTint === "true" ? "true" : "false";
           currentId = section.id;
           break;
         }
@@ -48,6 +56,10 @@ export default function HeaderSurface() {
       if (surface !== lastSurface) {
         root.dataset.headerSurface = surface;
         lastSurface = surface;
+      }
+      if (tint !== lastTint) {
+        root.dataset.headerTint = tint;
+        lastTint = tint;
       }
       if (scrolled !== lastScrolled) {
         root.dataset.headerScrolled = scrolled;

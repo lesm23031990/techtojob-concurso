@@ -25,6 +25,18 @@ const TONE_SURFACE: Record<SectionTone, "dark" | "light"> = {
   "brand-soft": "light",
 };
 
+/** D92: the BLUE tints (`mist`, `brand-soft`) keep the light header but switch
+ *  off its bottom shadow and `paper` dissolve band — both read as a grey/white
+ *  smudge over a blue field. `paper` and the dark tones keep the usual
+ *  treatment. Published to <html> as `data-header-tint` by HeaderSurface. */
+const TONE_TINT: Record<SectionTone, boolean> = {
+  paper: false,
+  mist: true,
+  ink: false,
+  brand: false,
+  "brand-soft": true,
+};
+
 interface SectionProps {
   /** Anchor target (specs/10-landing-spec.md, R45). */
   id: string;
@@ -61,6 +73,10 @@ interface SectionProps {
  * Ambient layer (D84): every `Section` renders the `.section-idle` hairline
  * thread (decorative, `aria-hidden`); `.text-drift` on the content wrapper is
  * opt-in via `textDrift` and must never wrap a `position: sticky` column.
+ *
+ * Tint (D92): `data-header-tint="true"` on the blue tones (`mist`,
+ * `brand-soft`) tells the header to drop its bottom shadow and dissolve band;
+ * the header link/CTA colours are unaffected.
  */
 export default function Section({
   id,
@@ -77,6 +93,7 @@ export default function Section({
       id={id}
       aria-labelledby={headingId}
       data-surface={TONE_SURFACE[tone]}
+      data-header-tint={TONE_TINT[tone] ? "true" : undefined}
       className={`relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
     >
       <span

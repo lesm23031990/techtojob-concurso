@@ -42,6 +42,7 @@ export default async function Tournaments() {
       id="torneos"
       aria-labelledby="torneos-heading"
       data-surface="light"
+      data-header-tint="true"
       className="relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
       <TimelineRail tone="mist" step={timelineStep("torneos")} />

@@ -129,6 +129,7 @@ export default async function Testimonials() {
       id="testimonios"
       aria-labelledby="testimonios-heading"
       data-surface="light"
+      data-header-tint="true"
       className="relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
       <TimelineRail tone="mist" step={timelineStep("testimonios")} />
