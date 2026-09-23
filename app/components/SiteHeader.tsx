@@ -10,24 +10,28 @@ import { IconClose, IconMenu } from "@/components/icons";
 /** Anchors shown in the desktop bar (the full set lives in the mobile panel;
  *  "Inicio" is the logo itself, so it never needs a text link). "Talento" and
  *  "Empresas" share the SAME anchor `#talento` because they are one split
- *  section (D75/D76), so `#empresas` is not a separate nav target. `#newsletter`
- *  joins from xl (see tier list below). */
+ *  section (D75/D76), so `#empresas` is not a separate nav target. Which tier
+ *  each anchor joins at is decided by the lists below: base at `lg` are
+ *  `#como-funciona`, `#torneos`, `#talento`/`#talento` (Talent + Companies);
+ *  `#networking`, `#testimonios` and `#newsletter` join from `xl`; `#noticias`
+ *  from `2xl`. */
 const DESKTOP_NAV_HREFS = [
   "#como-funciona",
   "#talento",
   "#torneos",
   "#networking",
+  "#testimonios",
   "#noticias",
   "#newsletter",
 ];
 
 /** Anchors that only fit from 1280px up. Adding the locale selector to the
  *  right cluster costs ~100px, so at 1024–1279 the bar keeps four anchors;
- *  dropping one from the bar is cheaper than letting the row overflow and the
- *  footer/mobile panel still link it (same trade-off D34/D45 already made).
- *  `#newsletter` joins `#networking` at this tier so the `lg` row (with the
- *  locale selector + CTA) never gets squeezed. */
-const DESKTOP_NAV_HREFS_XL = ["#networking", "#newsletter"];
+ *  dropping anchors from the bar is cheaper than letting the row overflow and
+ *  the footer/mobile panel still link them (same trade-off D34/D45 already
+ *  made). `#testimonios` (D95) joins `#networking` and `#newsletter` at this
+ *  tier so the `lg` row (with the locale selector + CTA) never gets squeezed. */
+const DESKTOP_NAV_HREFS_XL = ["#networking", "#testimonios", "#newsletter"];
 
 /** Shown only from 1536px: the widest anchor returns when there is room. */
 const DESKTOP_NAV_HREFS_2XL = ["#noticias"];
@@ -77,9 +81,11 @@ function desktopTier(href: string): DesktopNavTier {
  *
  * The locale selector joins the right cluster, before the CTA, from 640px up
  * (i18n I5); below that it lives in the menu panel. Because the row is tight,
- * the two widest anchors tier up (`#networking` and `#newsletter` from xl,
- * `#noticias` from 2xl) so the bar never overflows or eats the CTA's gutter
- * (D53) — the footer and the mobile panel still link every section.
+ * the widest anchors tier up: `#networking`, `#testimonios` and `#newsletter`
+ * from xl, `#noticias` from 2xl, while the base `lg` row keeps how-it-works,
+ * tournaments, talent and companies. This way the bar never overflows or eats
+ * the CTA's gutter (D53) — the footer and the mobile panel still link every
+ * section.
  */
 export default async function SiteHeader() {
   const messages = await getMessages();
