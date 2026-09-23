@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Fragment } from "react";
 import { getMessages } from "next-intl/server";
 import DiscordCta from "@/components/DiscordCta";
+import Ticker from "@/components/Ticker";
 
 interface HeroWord {
   text: string;
@@ -84,13 +85,6 @@ export default async function Hero() {
   const { hero } = messages;
   const line1Words = splitWords(hero.line1);
   const line2Words = splitWords(hero.line2, hero.highlight);
-  /* D96: every half must overflow the viewport, so the -50% loop never shows a
-     gap (same fix as the testimonials slider). */
-  const TICKER_REPEAT = 3;
-  const tickerTokens = Array.from(
-    { length: TICKER_REPEAT },
-    () => hero.ticker,
-  ).flat();
   return (
     <section
       id="inicio"
@@ -199,35 +193,11 @@ export default async function Hero() {
         </aside>
       </div>
 
-      {/* Ticker (D38): full-bleed hairline marquee built only from tokens
-          already published in `hero.meta` (stacks, edition, community
-          language). It duplicates that data, so the whole strip is
-          `aria-hidden` and non-interactive: it is rhythm, never a second CTA
-          (R11) and never duplicated indexable content. The track is rendered
-          twice and shifted -50% for a seamless loop; the reduced-motion guard
-          parks it at origin.
-
-          D96: one half holds the 9 tokens repeated `TICKER_REPEAT` times
-          (27 tokens ≈ 3.9k-4.5k px), always wider than the viewport, so the
-          -50% cycle never exposes an empty gap (same fix as the testimonials
-          slider). Tripling the original half keeps the ≈40px/s linear speed
-          with a 102s cycle instead of 34s. */}
-      <div aria-hidden="true" className="overflow-hidden border-t border-white/12 py-5">
-        <div className="animate-marquee flex w-max [--marquee-duration:102s]">
-          {[0, 1].map((copy) => (
-            <div key={copy} className="flex shrink-0 items-center gap-8 pr-8">
-              {tickerTokens.map((token, index) => (
-                <span key={`${copy}-${index}-${token}`} className="flex items-center gap-8">
-                  <span className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
-                    {token}
-                  </span>
-                  <span className="h-1 w-1 rounded-full bg-ember" />
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Ticker (D38/D96): the shared band lives in `components/Ticker.tsx`
+          since D122, so the hero and the closing render exactly the same
+          markup and cannot diverge. It is the hero's last row (and the closing's
+          too: the page opens and closes with the same band). */}
+      <Ticker />
     </section>
   );
 }

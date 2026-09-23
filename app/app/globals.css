@@ -578,10 +578,48 @@
 /* D89/D90-7: edge mask of the testimonials marquee (same pattern as
    `.hero-field`), so the cards dissolve. It sits on an INNER wrapper around the
    track only — never on `.testimonial-band`, whose green field and `border-block`
-   must reach the viewport edges (the 5% fade keeps the band reading full width). */
+   must reach the viewport edges.
+   D123: tanto la BANDA como las tarjetas desaparecen a la IZQUIERDA DEL RAÍL de
+   la línea de tiempo: a la izquierda del eje no queda nada (ni campo, ni
+   hairline, ni sombra), y el borde derecho se queda igual que estaba (95% →
+   100%). `--fade-x` es el **borde DERECHO** del raíl: la x del raíl (el
+   `page-container` centrado a 72rem, `50% − 36rem`, más el `left` del raíl —
+   1.25 / 2 / 2.5rem según breakpoint, con `max()` para los viewports más
+   estrechos que el contenedor) **más sus 3px de ancho**, para que el slider
+   termine ANTES de la línea y no la atraviese. */
+.marquee-block {
+  --fade-x: calc(max(1.25rem, calc(50% - 34.75rem)) + 3px);
+}
+
+@media (width >= 48rem) {
+  .marquee-block {
+    --fade-x: calc(max(2rem, calc(50% - 34rem)) + 3px);
+  }
+}
+
+@media (width >= 64rem) {
+  .marquee-block {
+    --fade-x: calc(max(2.5rem, calc(50% - 33.5rem)) + 3px);
+  }
+}
+
 .marquee-fade {
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--fade-x),
+    #000 calc(var(--fade-x) + 96px),
+    #000 95%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--fade-x),
+    #000 calc(var(--fade-x) + 96px),
+    #000 95%,
+    transparent 100%
+  );
 }
 
 /* D89: pause/resume of the testimonials marquee, CSS-only (hidden checkbox,
@@ -619,6 +657,26 @@
   background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.5), rgb(132 192 191 / 0.12));
   border-block: 1px solid rgb(132 192 191 / 0.35);
   box-shadow: var(--shadow-raised), inset 0 1px 0 rgb(255 255 255 / 0.55);
+  /* D123: la banda ARRANCA en el raíl con un corte LIMPIO en `--fade-x` (su
+     borde derecho). Sin rampa: si el campo verde se fundiera, su opacidad
+     parcial se mezclaría con el `mist` (#f4f7f7) y se leería como OTRO verde
+     más grisáceo. El difuminado de ese extremo lo aportan las TARJETAS (ver
+     `.marquee-fade`), así el color del campo es idéntico de punta a punta.
+     A la izquierda del corte no queda nada (ni campo, ni hairline, ni sombra:
+     la máscara recorta también el `box-shadow`). Borde derecho, de canto a
+     canto. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent var(--fade-x),
+    #000 var(--fade-x),
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent var(--fade-x),
+    #000 var(--fade-x),
+    #000 100%
+  );
 }
 
 /* Numeral sobredimensionado de una celda bento: entra con el scroll en un
@@ -1325,3 +1383,149 @@
   --text-lead: 1.0625rem;
   --text-lead-lg: 1.1875rem;
 }
+
+/* ── D121 · Remate de marca: el isotipo en un anillo de luz ───────────────
+   Versión aprobada por Lorena ("me gusta más el logo animado que primero
+   hiciste"): el ISOTIPO OFICIAL solo, grande, dentro de un anillo CIRCULAR de
+   cuñas facetadas que gira con el mismo `facet-turn` del hero (64s) más un
+   borde que respira (9s). El isotipo no se rota ni se deforma (R27/R39): lo que
+   gira es la luz. El anillo se recorta con una máscara radial dura (centro
+   transparente), así que no hay `filter: blur` (D37.1/D86). Solo
+   `transform`/`opacity`, paleta fija (R24/R25) y el guard de
+   `prefers-reduced-motion` lo apaga. */
+
+.closing-seal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+.closing-seal-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background-image: conic-gradient(
+    from 200deg,
+    transparent 0deg,
+    rgb(132 192 191 / 0.5) 46deg,
+    transparent 106deg,
+    rgb(132 192 191 / 0.28) 154deg,
+    transparent 212deg,
+    rgb(244 162 97 / 0.2) 266deg,
+    transparent 320deg
+  );
+  -webkit-mask-image: radial-gradient(
+    closest-side,
+    transparent 58%,
+    #000 66%,
+    #000 88%,
+    transparent 94%
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    transparent 58%,
+    #000 66%,
+    #000 88%,
+    transparent 94%
+  );
+  will-change: transform;
+  animation: facet-turn 64s linear infinite;
+}
+
+.closing-seal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 1px solid rgb(132 192 191 / 0.5);
+  pointer-events: none;
+  animation: closing-seal-breath 9s ease-in-out infinite;
+}
+
+@keyframes closing-seal-breath {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+/* ── D121 · "La puerta" ───────────────────────────────────────────────────
+   Gesto propio del cierre: el copy aprobado de esta sección ya dice "La puerta
+   es el Discord", así que el cierre lo literaliza. Dos hojas `ink` con un canto
+   `brand` cubren la sección y se ABREN conforme la sección entra en el viewport,
+   dejando salir la luz facetada hacia el CTA.
+
+   Detalles que importan:
+   - Estado por DEFECTO = abiertas (`translate(±100%)`): sin soporte de
+     `animation-timeline` o con `prefers-reduced-motion` no existe puerta y el
+     contenido se ve entero. La animación solo se declara dentro de
+     `@supports` + `no-preference`, con `both` para que el `from` (cerradas)
+     aplique al entrar.
+   - Rango CORTO (`cover 0% → cover 35%`): a un salto de ancla (los CTA de
+     Audiencias apuntan a `#unete`) las hojas ya están abiertas y **nunca** tapan
+     el CTA.
+   - `pointer-events: none`: aunque estén cerradas, el foco y el clic pasan.
+   - Solo `transform` (compositor, CLS 0) y paleta fija (R24/R25). */
+
+.closing-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background-color: var(--color-ink);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.closing-door-left {
+  left: 0;
+  border-right: 1px solid rgb(132 192 191 / 0.35);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.closing-door-right {
+  right: 0;
+  border-left: 1px solid rgb(132 192 191 / 0.35);
+  transform: translate3d(100%, 0, 0);
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .closing-door-left {
+      animation: closing-door-left cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 35%;
+    }
+
+    .closing-door-right {
+      animation: closing-door-right cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 35%;
+    }
+  }
+}
+
+@keyframes closing-door-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes closing-door-right {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+
