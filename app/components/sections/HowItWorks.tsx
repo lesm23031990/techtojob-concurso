@@ -43,7 +43,7 @@ export default async function HowItWorks() {
   const { h2, intro, steps, closing, cta } = messages.howItWorks;
 
   return (
-    <Section id="como-funciona" headingId="como-funciona-heading" tone="paper">
+    <Section id="como-funciona" headingId="como-funciona-heading" tone="paper" textDrift>
       <h2
         id="como-funciona-heading"
         className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
@@ -62,7 +62,7 @@ export default async function HowItWorks() {
             key={step.title}
             /* `--i` is inherited by the node fill and by the .reveal-left inside. */
             style={{ "--i": index } as CSSProperties}
-            className="relative border-t border-line py-8 first:border-t-0 lg:py-10"
+            className={`relative border-t border-line py-8 first:border-t-0 lg:py-10${index > 0 ? " line-idle line-idle-sm" : ""}`}
           >
             {/* Step node on the page rail (decorative: order lives in the <ol>).
                 Round, double-circle (outer ring + inner disc with a paper gap)
@@ -98,7 +98,7 @@ export default async function HowItWorks() {
       </ol>
 
       <p
-        className="reveal-left mt-12 border-t border-line pt-6 text-lead font-semibold"
+        className="reveal-left line-idle line-idle-sm relative mt-12 border-t border-line pt-6 text-lead font-semibold"
       >
         {closing}
       </p>

@@ -8,16 +8,17 @@
  */
 export type CtaSize = "nav" | "hero" | "block";
 export type CtaVariant = "solid" | "outline";
+export type CtaSurface = "light" | "ink";
 
 export const CTA_SIZE_CLASSES: Record<CtaSize, string> = {
   // ButtonPrimary — design-system §6.1 (D42/D46): one single CTA look across
-  // the whole site — sharp square, brand fill, ink text (6.77:1).
+  // the whole site — sharp square, brand fill, ink text (6.17:1).
   nav: "min-h-11 px-4 py-2 text-body font-bold xl:px-5",
   hero: "min-h-14 px-8 py-4 text-lead font-bold",
   block: "min-h-14 px-8 py-4 text-lead font-bold w-full justify-center",
 };
 
-/* Solid = the single CTA look (D46): brand fill + ink text (6.77:1).
+/* Solid = the single CTA look (D46): brand fill + ink text (6.17:1).
    Outline = hairline secondary (design-system §6.2). On the light surface it
    changes BOTH the border (to `brand`) and the fill (to `mist`) on hover, so the
    green is never the ONLY state cue — brand edges stay at 2.04:1 on paper, below
@@ -27,6 +28,26 @@ export const CTA_VARIANT_CLASSES: Record<CtaVariant, string> = {
   outline:
     "border-2 border-ink/60 bg-transparent text-ink hover:border-brand hover:bg-mist hover:shadow-glow-cta",
 };
+
+/** Outline secondary per surface (§6.2). On `ink` the border is `paper/60`
+ *  (5.66:1 ≥ 3:1) and hover gives TWO cues (brand border + white/5 fill) so
+ *  the green is never the only state indicator (R26). */
+export const CTA_OUTLINE_CLASSES: Record<CtaSurface, string> = {
+  light:
+    "border-2 border-ink/60 bg-transparent text-ink hover:border-brand hover:bg-mist hover:shadow-glow-cta",
+  ink:
+    "border-2 border-paper/60 bg-transparent text-paper hover:border-brand hover:bg-white/5 hover:shadow-glow-cta",
+};
+
+/** Variant classes resolved per surface (solid is surface-agnostic). */
+export function ctaVariantClasses(
+  variant: CtaVariant,
+  surface: CtaSurface,
+): string {
+  return variant === "solid"
+    ? CTA_VARIANT_CLASSES.solid
+    : CTA_OUTLINE_CLASSES[surface];
+}
 
 /** Classes shared by the anchor and the inert button. */
 export const CTA_BASE =

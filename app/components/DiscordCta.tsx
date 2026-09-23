@@ -3,9 +3,10 @@ import { IconArrowUpRight } from "@/components/icons";
 import {
   CTA_BASE,
   CTA_SIZE_CLASSES,
-  CTA_VARIANT_CLASSES,
+  ctaVariantClasses,
   ctaFocusRing,
   type CtaSize,
+  type CtaSurface,
   type CtaVariant,
 } from "@/components/cta-styles";
 
@@ -17,6 +18,9 @@ interface DiscordCtaProps {
   className?: string;
   /** `solid` is THE site CTA (D46). `outline` is the hairline secondary. */
   variant?: CtaVariant;
+  /** Explicit surface override (D85). Omit to keep the historical per-size
+   *  logic — the header CTA must not change. */
+  surface?: CtaSurface;
 }
 
 /**
@@ -25,7 +29,7 @@ interface DiscordCtaProps {
  * and an sr-only "opens in a new tab" hint (text from es.json, R36).
  *
  * `solid` is THE site CTA style (D46): sharp square (`rounded-none`), `brand`
- * fill with `ink` text (6.77:1), a specular sweep plus a micro-lift on hover
+ * fill with `ink` text (6.17:1), a specular sweep plus a micro-lift on hover
  * (`-translate-y-0.5`) while the arrow glides toward the top-right corner. Only
  * the size differs per context (D37/D42/D46). On hover it also catches a soft
  * brand glow (D76).
@@ -51,17 +55,20 @@ export default async function DiscordCta({
   label,
   className = "",
   variant = "solid",
+  surface,
 }: DiscordCtaProps) {
   const messages = await getMessages();
   const isSolid = variant === "solid";
-  const focusRing = ctaFocusRing(!(isSolid && size !== "block"));
+  const focusRing = surface
+    ? ctaFocusRing(surface === "light")
+    : ctaFocusRing(!(isSolid && size !== "block"));
   return (
     <span className={`group/cta relative inline-flex shrink-0 rounded-none ${className}`}>
       <a
         href={messages.discord.url}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${CTA_BASE} ${focusRing} ${CTA_SIZE_CLASSES[size]} ${CTA_VARIANT_CLASSES[variant]}`}
+        className={`${CTA_BASE} ${focusRing} ${CTA_SIZE_CLASSES[size]} ${ctaVariantClasses(variant, surface ?? "light")}`}
       >
         {isSolid && (
           <span

@@ -2,14 +2,17 @@ import { IconArrowDown } from "@/components/icons";
 import {
   CTA_BASE,
   CTA_SIZE_CLASSES,
-  CTA_VARIANT_CLASSES,
+  ctaVariantClasses,
   ctaFocusRing,
+  type CtaSurface,
   type CtaVariant,
 } from "@/components/cta-styles";
 
 interface AudienceCtaProps {
   label: string;
   variant: CtaVariant;
+  /** Surface the CTA sits on; picks the matching ring and outline colours. */
+  surface?: CtaSurface;
   /** Layout classes for the wrapper (e.g. `w-full sm:w-auto`). */
   className?: string;
 }
@@ -30,6 +33,7 @@ interface AudienceCtaProps {
 export default function AudienceCta({
   label,
   variant,
+  surface = "light",
   className = "",
 }: AudienceCtaProps) {
   const isSolid = variant === "solid";
@@ -37,7 +41,7 @@ export default function AudienceCta({
     <span className={`group/cta relative inline-flex shrink-0 rounded-none ${className}`}>
       <a
         href="#unete"
-        className={`${CTA_BASE} ${ctaFocusRing(true)} ${CTA_SIZE_CLASSES.hero} ${CTA_VARIANT_CLASSES[variant]}`}
+        className={`${CTA_BASE} ${ctaFocusRing(surface === "light")} ${CTA_SIZE_CLASSES.hero} ${ctaVariantClasses(variant, surface)}`}
       >
         {isSolid && (
           <span

@@ -27,6 +27,7 @@ const RAIL_COLOR: Record<SectionTone, string> = {
   mist: "bg-slate",
   ink: "bg-white/25",
   brand: "bg-ink/30",
+  "brand-soft": "bg-slate",
 };
 
 const FILL_COLOR: Record<SectionTone, string> = {
@@ -34,18 +35,20 @@ const FILL_COLOR: Record<SectionTone, string> = {
   mist: "bg-brand",
   ink: "bg-brand",
   brand: "bg-ink",
+  "brand-soft": "bg-brand",
 };
 
 /* D65/D67: section marker is a DOUBLE CIRCLE (outer ring + inner brand disc
    with a `paper`/`ink` gap) and is LARGER than the step nodes (D67): 44px
    mobile / 56px `lg`, vs 36/48 for the steps. The numeral is always `ink`
-   because it sits on the brand disc (6.77:1 — R26 allows brand as a fill with
+   because it sits on the brand disc (6.17:1 — R26 allows brand as a fill with
    ink text anywhere). */
 const MARKER_COLOR: Record<SectionTone, string> = {
   paper: "border-brand bg-paper",
   mist: "border-brand bg-paper",
   ink: "border-brand bg-ink",
   brand: "border-ink bg-ink",
+  "brand-soft": "border-brand bg-brand-soft",
 };
 
 /**

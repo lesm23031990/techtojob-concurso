@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import TimelineRail from "@/components/TimelineRail";
 import { timelineStep } from "@/content";
 
-export type SectionTone = "paper" | "mist" | "ink" | "brand";
+export type SectionTone = "paper" | "mist" | "ink" | "brand" | "brand-soft";
 
 /** Background/text pair per tone — every combination is AA-verified in
  *  docs/design-system.md §3.1 (never brand-green text on paper, never
@@ -12,6 +12,7 @@ const TONE_CLASSES: Record<SectionTone, string> = {
   mist: "bg-mist text-ink",
   ink: "bg-ink text-paper",
   brand: "bg-brand text-ink",
+  "brand-soft": "bg-brand-soft text-ink",
 };
 
 /** Dark/light polarity per tone for the adaptive header (D47). `brand` is
@@ -21,6 +22,7 @@ const TONE_SURFACE: Record<SectionTone, "dark" | "light"> = {
   mist: "light",
   ink: "dark",
   brand: "dark",
+  "brand-soft": "light",
 };
 
 interface SectionProps {
@@ -31,6 +33,10 @@ interface SectionProps {
   tone: SectionTone;
   /** Extra classes for special cases (watermarks, borders). */
   className?: string;
+  /** Opt-in: subtle scroll-linked text drift (design-system §9 #17). Off for
+   *  sections whose content wrapper holds a `position: sticky` column or a
+   *  form — a `transform` ancestor breaks `sticky` and moves controls. */
+  textDrift?: boolean;
   children: ReactNode;
 }
 
@@ -44,12 +50,17 @@ interface SectionProps {
  * section's full height so the line stays continuous from top to bottom.
  * The step numeral comes from `timelineOrder` (content.ts) — the single source
  * of truth for the narrative order, so reordering the page is one list edit.
+ *
+ * Ambient layer (D84): every `Section` renders the `.section-idle` hairline
+ * thread (decorative, `aria-hidden`); `.text-drift` on the content wrapper is
+ * opt-in via `textDrift` and must never wrap a `position: sticky` column.
  */
 export default function Section({
   id,
   headingId,
   tone,
   className = "",
+  textDrift = false,
   children,
 }: SectionProps) {
   const step = timelineStep(id);
@@ -64,9 +75,17 @@ export default function Section({
         aria-hidden="true"
         className={`section-sheen ${tone === "brand" ? "section-sheen-ink" : ""}`}
       />
+      <span
+        aria-hidden="true"
+        className={`section-idle ${tone === "brand" ? "section-idle-ink" : ""}`}
+      />
       <TimelineRail tone={tone} step={step} />
       <div className="page-container">
-        <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">{children}</div>
+        <div
+          className={`pl-7 md:pl-14 lg:pl-20 xl:pl-24 ${textDrift ? "text-drift" : ""}`}
+        >
+          {children}
+        </div>
       </div>
     </section>
   );

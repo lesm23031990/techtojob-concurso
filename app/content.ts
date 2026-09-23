@@ -114,9 +114,16 @@ export interface Audiences {
   ctaNote: string;
 }
 
-export interface SimpleSection {
+export interface Networking {
   h2: string;
-  copy: string;
+  /** Short lead under the h2 (design-system §7 / D81). */
+  intro: string;
+  /** Channels-by-area block: label + the real Discord area tags (R16). */
+  channels: { label: string; note: string; items: string[] };
+  /** Fast-answers block, with its decorative activity dot. */
+  speed: { label: string; note: string };
+  /** Hidden-market block: supporting line + the highlighted sentence. */
+  market: { label: string; note: string; text: string };
 }
 
 export interface Closing {
@@ -278,7 +285,7 @@ export interface Messages {
   talent: AudienceSection;
   companies: AudienceSection;
   tournaments: Tournaments;
-  networking: SimpleSection;
+  networking: Networking;
   testimonials: Testimonials;
   news: News;
   newsletter: Newsletter;

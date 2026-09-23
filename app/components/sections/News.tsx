@@ -28,7 +28,7 @@ async function NewsCard({ item, featured = false }: { item: NewsItem; featured?:
   const messages = await getMessages();
   return (
     <article
-      className={`bento-lit flex h-full flex-col gap-3 border border-line bg-paper transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand hover:bg-mist ${
+      className={`bento-lit card-idle relative flex h-full flex-col gap-3 border border-line bg-paper transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand hover:bg-mist ${
         featured ? "p-6 lg:p-10" : "p-6"
       }`}
     >
@@ -67,7 +67,7 @@ const CELL_SPANS = [
 export default async function News() {
   const messages = await getMessages();
   return (
-    <Section id="noticias" headingId="noticias-heading" tone="paper">
+    <Section id="noticias" headingId="noticias-heading" tone="paper" textDrift>
       <h2
         id="noticias-heading"
         className="reveal text-h2 font-bold text-balance lg:text-h2-lg"

@@ -164,7 +164,30 @@
   },
   "networking": {
     "h2": "Networking",
-    "copy": "Canales por área y gente del sector de verdad. Preguntas que se responden en minutos. Ofertas que alguien comparte porque conoce a quien contrata. Los buenos trabajos muchas veces no se publican: se cuentan. Aquí te enteras."
+    "intro": "Gente del sector de verdad.",
+    "channels": {
+      "label": "Canales por área",
+      "items": [
+        "#Development",
+        "#Data & AI",
+        "#Infrastructure & Operations",
+        "#Cybersecurity",
+        "#Product & Design",
+        "#Quality",
+        "#IT & Support",
+        "#Business & Leadership"
+      ],
+      "note": "Responde tus áreas y obtienes acceso a sus canales y roles."
+    },
+    "speed": {
+      "label": "Respuestas en minutos",
+      "note": "Preguntas que se responden en minutos."
+    },
+    "market": {
+      "label": "El mercado oculto",
+      "note": "Ofertas que alguien comparte porque conoce a quien contrata.",
+      "text": "Los buenos trabajos muchas veces no se publican: se cuentan. Aquí te enteras."
+    }
   },
   "testimonials": {
     "h2": "Lo que se dice dentro",

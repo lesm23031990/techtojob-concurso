@@ -7,7 +7,8 @@ import type { Testimonial } from "@/content";
 
 /**
  * "Lo que se dice dentro" (section 7, #testimonios, R17) — 4 sample cells on
- * `mist`. Each cell reserves the real-data slots the brief demands: circular
+ * `mist` (the neutral tinted light surface shared with Torneos).
+ * Each cell reserves the real-data slots the brief demands: circular
  * avatar (honest initials placeholder, no broken image) and a LinkedIn link
  * placeholder that is visibly present but clearly NOT clickable (role=link +
  * aria-disabled + tabindex=-1 — we never fake a dead link, R43). The "sample"
@@ -18,17 +19,19 @@ import type { Testimonial } from "@/content";
  * are hairline, square and shadow-free; the oversized quote mark is a print
  * ghost (`text-ink/15`) instead of brand text — R26 forbids the green as text
  * on `paper`, so the only green left here is the avatar fill (brand as
- * background with `ink` text: 6.77:1).
+ * background with `ink` text: 6.17:1).
  *
  * Motion (D61): the same staggered fade-in + border lighting as "Cómo
  * funciona" (`.bento-reveal` / `.bento-lit`, native scroll-driven CSS, `--i`
- * inline). Cells sit on `mist` and are already `paper`, so the hover raises
- * scale + border contrast without a background swap (no fake click affordance).
+ * inline). Cells sit on `mist` and are already `paper`, so the hover
+ * raises scale + border contrast without a background swap (no fake click
+ * affordance). D86 keeps `.card-idle` (a breathing brand ring on its own
+ * layer); the cell border is the shared `line` hairline, correct over `mist`.
  */
 async function TestimonialCard({ item }: { item: Testimonial }) {
   const messages = await getMessages();
   return (
-    <figure className="bento-lit relative flex h-full flex-col border border-line bg-paper p-6 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand lg:p-8">
+    <figure className="bento-lit card-idle relative flex h-full flex-col border border-line bg-paper p-6 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand lg:p-8">
       <span
         aria-hidden="true"
         className="bento-index block text-display font-bold leading-none text-ink/15"
@@ -76,7 +79,7 @@ const CELL_SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-s
 export default async function Testimonials() {
   const messages = await getMessages();
   return (
-    <Section id="testimonios" headingId="testimonios-heading" tone="mist">
+    <Section id="testimonios" headingId="testimonios-heading" tone="mist" textDrift>
       <h2
         id="testimonios-heading"
         className="reveal text-h2 font-bold text-balance lg:text-h2-lg"

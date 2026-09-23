@@ -15,6 +15,9 @@ interface CountdownProps {
    *  countdown is the same instant for every visitor regardless of their zone. */
   targetIso: string;
   labels: CountdownLabels;
+  /** Section surface (D85): on `light` the brand-as-text is swapped for `ink`
+   *  and `cloud` for `slate` (R26 forbids green text on light surfaces). */
+  surface?: "ink" | "light";
 }
 
 interface Remaining {
@@ -60,9 +63,16 @@ const pad2 = (value: number) => String(value).padStart(2, "0");
  * A11y: the ticking digits are `aria-hidden` (a clock that updates every second
  * would spam a screen reader); the deadline is already real text in the heading.
  */
-export default function Countdown({ targetIso, labels }: CountdownProps) {
+export default function Countdown({
+  targetIso,
+  labels,
+  surface = "ink",
+}: CountdownProps) {
   const target = new Date(targetIso).getTime();
   const [time, setTime] = useState<Remaining | null>(null);
+  const onLight = surface === "light";
+  const digitTone = onLight ? "text-ink" : "text-brand";
+  const labelTone = onLight ? "text-slate" : "text-cloud";
 
   useEffect(() => {
     const tick = () => setTime(remainingUntil(target, Date.now()));
@@ -73,7 +83,9 @@ export default function Countdown({ targetIso, labels }: CountdownProps) {
 
   if (time?.closed) {
     return (
-      <p className="mt-6 text-lead font-semibold text-brand">{labels.closed}</p>
+      <p className={`mt-6 text-lead font-semibold ${digitTone}`}>
+        {labels.closed}
+      </p>
     );
   }
 
@@ -91,14 +103,18 @@ export default function Countdown({ targetIso, labels }: CountdownProps) {
     >
       {units.map((unit) => (
         <div key={unit.label} className="flex flex-col">
-          <span className="min-w-[2ch] text-h3 font-bold tabular-nums leading-none text-brand lg:text-h2">
+          <span
+            className={`min-w-[2ch] text-h3 font-bold tabular-nums leading-none ${digitTone} lg:text-h2`}
+          >
             {unit.value === undefined
               ? "--"
               : unit.pad
                 ? pad2(unit.value)
                 : unit.value}
           </span>
-          <span className="mt-2 text-label font-semibold uppercase text-cloud">
+          <span
+            className={`mt-2 text-label font-semibold uppercase ${labelTone}`}
+          >
             {unit.label}
           </span>
         </div>

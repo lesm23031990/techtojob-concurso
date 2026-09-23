@@ -15,6 +15,9 @@
   /* Brand state shade (same hue, hover only — not a new color) */
   --color-brand-deep: #6faeae;
 
+  /* ── Brand tint surface (Torneos, D85) ── */
+  --color-brand-soft: #dcefee; /* light brand-tinted surface                    */
+
   /* Intermediate grays (allowed by R25) */
   --color-mist: #f4f7f7; /* tinted light section background       */
   --color-line: #dfe6e6; /* borders/dividers on light surfaces    */
@@ -324,6 +327,50 @@
   }
 }
 
+/* Networking (D81): slow "live" dot that signals fast answers. Decorative only
+   (aria-hidden). 3.6s honours the motion catalogue (loops ≥3.5s) and the global
+   reduced-motion guard parks it as a static dot. */
+@keyframes activity-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@utility animate-activity {
+  animation: activity-pulse 3.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+/* Entrance-only reveal for Networking's sticky left column (D82/D83): slides in
+   from the rail and KEEPS its final state. Unlike `.reveal` it has no exit, so a
+   `position: sticky` box can never fade away mid-read (view() progress stops
+   once the column pins). Default state = final. */
+@keyframes reveal-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-2.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-enter {
+      animation: reveal-enter cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 40%;
+    }
+  }
+}
+
 /* Hero entrance (design-system §9): soft staggered rise on first paint.
    `rise-in` fades + lifts (sub, CTA, support, meta, nav). `lift-in`
    is TRANSFORM ONLY and exists for the H1: with no opacity change the LCP
@@ -486,6 +533,27 @@
       animation-timeline: view();
       animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
     }
+  }
+}
+
+/* D85: misma iluminación secuencial para las celdas de Audiencias, que pasan a
+   `coal` sobre `ink` — el arranque en `line` sería un borde claro. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bento-lit-ink {
+      animation: cell-lit-ink cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+    }
+  }
+}
+
+@keyframes cell-lit-ink {
+  from {
+    border-color: rgb(255 255 255 / 0.12);
+  }
+  to {
+    border-color: var(--color-brand);
   }
 }
 
@@ -791,6 +859,201 @@
     transparent
   );
   box-shadow: 0 0 14px 0 rgb(47 52 54 / 0.18);
+}
+
+/* ── D84 · Deriva de TEXTO + vida ambiental por sección ──────────────────
+   Pedido de la autora: (a) que el texto acompañe el scroll con mucha
+   sutileza y (b) que ninguna sección se sienta "plana" al detenerse.
+   Solo tokens de la paleta fija (R24/R25) y solo `transform`/`opacity`
+   (CLS 0); nada de `filter: blur` ni blobs. CSS puro: cero islas cliente,
+   cero JS. El guard global de `prefers-reduced-motion` (final del archivo)
+   neutraliza ambos efectos. */
+
+/* A) Deriva de TEXTO con el scroll (catálogo §9 #17).
+   Va en un WRAPPER del contenido — jamás en los nodos con `.reveal`/
+   `.reveal-left` (ya animan `transform`) ni en imágenes/marcas de agua.
+   Recorrido mínimo: ±0.375rem (0.75rem totales), sin salida ni fundido:
+   NUNCA toca `opacity`, solo acompaña (al subir, se invierte). Estado por
+   defecto = posición natural → sin soporte o con reduced-motion el texto
+   queda quieto y completo. Alcance: pasos 2–8; NO en hero/cierre/footer. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .text-drift {
+      animation: text-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes text-drift {
+  from {
+    transform: translate3d(0, 0.375rem, 0);
+  }
+  to {
+    transform: translate3d(0, -0.375rem, 0);
+  }
+}
+
+/* ── D84/D86 · Vida idle de secciones, líneas y bordes ───────────────────
+   El brillo usa el VERDE de marca (`brand`), igual que el hilo de sección, e
+   `ink` sobre la franja `brand` (verde sobre verde desaparecería). Recorrido
+   corto (16% de ancho, 1px) y bucle de 6s con pausa mínima, para que la luz
+   vuelva pronto. Estado base invisible/fuera de pantalla: sin animación (o con
+   `prefers-reduced-motion`) no queda nada raro. */
+
+/* Hilo del borde superior de sección (D84). */
+.section-idle {
+  --idle-color: var(--color-brand);
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1rem;
+  overflow: clip;
+  pointer-events: none;
+}
+.section-idle-ink {
+  --idle-color: var(--color-ink);
+}
+.section-idle-ember {
+  --idle-color: var(--color-ember);
+}
+.section-idle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16%;
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    var(--idle-color),
+    transparent
+  );
+  box-shadow: 0 0 8px 0 var(--idle-color);
+  transform: translate3d(-100%, 0, 0);
+  will-change: transform;
+  animation: section-travel 6s linear infinite;
+}
+
+@keyframes section-travel {
+  0% {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  8% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+    transform: translate3d(525%, 0, 0);
+  }
+  82%,
+  100% {
+    opacity: 0;
+    transform: translate3d(525%, 0, 0);
+  }
+}
+
+/* Línea separadora que recorre (D86). El brillo tiene tamaño FIJO en `rem`
+   (--idle-size), así todos los separadores de una sección se ven iguales
+   aunque tengan anchos distintos. Viaja con `background-position` medido en
+   unidades ABSOLUTAS (`calc(0% - size)` → `calc(100% - size)`): con porcentajes
+   el recorrido dependía del ancho del elemento y el brillo aparecía antes o
+   después según lo ancha que fuera la línea. Con `calc` el brillo entra desde
+   el borde izquierdo y sale flush por el derecho, con la MISMA ventana visible
+   en cualquier ancho; las líneas de una sección no llevan desfase, así que
+   todos los glints aparecen y desaparecen juntos. El fondo se recorta al propio
+   elemento: nunca desborda ni necesita `overflow`.
+   NO lleva `filter`: `drop-shadow` rasterizaba la capa del `::after` y el
+   brillo (que anima `background-position`) podía quedarse congelado fuera de
+   pantalla en algunas líneas; sin filtro el repintado siempre es correcto. La
+   presencia sin halo se compensa con un degradado más lleno. La duración es por
+   sección vía `--idle-duration`. */
+.line-idle {
+  --idle-color: var(--color-brand);
+  --idle-size: 8rem;
+  --idle-duration: 6.5s;
+  position: relative;
+}
+/* Glints más pequeños (Cómo funciona, D86): tamaño reducido y recorrido más
+   lento (10s) para que el paso a paso no vaya acelerado. */
+.line-idle-sm {
+  --idle-size: 4rem;
+  --idle-duration: 10s;
+}
+/* Glints naranjas (Torneos, D86): el acento cálido marca la sección "en vivo"
+   y la cadencia baja a 8s. */
+.line-idle-ember {
+  --idle-color: var(--color-ember);
+  --idle-duration: 8s;
+}
+.line-idle::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--idle-color) 25%,
+    var(--idle-color) 75%,
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--idle-size) 100%;
+  background-position: -100% 0;
+  opacity: 0;
+  pointer-events: none;
+  animation: line-travel var(--idle-duration) linear infinite;
+}
+
+@keyframes line-travel {
+  0% {
+    opacity: 0;
+    background-position: calc(0% - var(--idle-size)) 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 1;
+    background-position: calc(100% - var(--idle-size)) 0;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    background-position: calc(100% - var(--idle-size)) 0;
+  }
+}
+
+/* Borde de tarjeta que respira (D86). */
+.card-idle {
+  --idle-color: var(--color-brand);
+  position: relative;
+}
+.card-idle::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--idle-color);
+  opacity: 0;
+  pointer-events: none;
+  animation: card-glow 9s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -2.3s);
+}
+
+@keyframes card-glow {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 /* Global reduced-motion guard (R34 + WCAG 2.3.3): kills transitions and
