@@ -146,6 +146,12 @@ export interface Testimonials {
   items: Testimonial[];
   linkedinSlotTitle: string;
   linkedinSlotHint: string;
+  /** Etiquetas del control de pausa del marquee de testimonios (D89). */
+  pause: string;
+  play: string;
+  /** Enlace de texto de cierre de la sección (D90): lleva a la acción principal.
+   *  Es un LINK, nunca un botón (R11). */
+  cta: string;
 }
 
 export interface NewsItem {

@@ -488,8 +488,56 @@
 }
 
 @utility animate-marquee {
-  animation: marquee 34s linear infinite;
+  /* D89: duration is a custom property so the hero keeps 34s and the
+     testimonials slider can slow down to 60s without a second utility. */
+  animation: marquee var(--marquee-duration, 34s) linear infinite;
   will-change: transform;
+}
+
+/* D89/D90-7: edge mask of the testimonials marquee (same pattern as
+   `.hero-field`), so the cards dissolve. It sits on an INNER wrapper around the
+   track only — never on `.testimonial-band`, whose green field and `border-block`
+   must reach the viewport edges (the 5% fade keeps the band reading full width). */
+.marquee-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%);
+}
+
+/* D89: pause/resume of the testimonials marquee, CSS-only (hidden checkbox,
+   no client island). Sibling order in the JSX: input → `.marquee-head` (which
+   holds the control) → `.marquee-block` (which holds the track). The checked
+   and focus styles are drawn here because the label is no longer a direct
+   sibling of the input (Tailwind `peer-*` variants only reach siblings). */
+.marquee-label-play {
+  display: none;
+}
+.marquee-toggle:checked ~ .marquee-head .marquee-label-pause {
+  display: none;
+}
+.marquee-toggle:checked ~ .marquee-head .marquee-label-play {
+  display: inline;
+}
+.marquee-toggle:checked ~ .marquee-head .marquee-control {
+  border-color: var(--color-brand);
+  color: var(--color-ink);
+}
+.marquee-toggle:checked ~ .marquee-block .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-toggle:focus-visible ~ .marquee-head .marquee-control {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* D90: delicate brand-tinted band that carries the testimonials slider OVER the
+   timeline. Pale `brand-soft` (never solid brand: Newsletter is the single solid
+   green band, R19/D44), brand hairlines and a soft raised shadow + top highlight
+   for the "relieve" Lorena asked for. */
+.testimonial-band {
+  background-color: var(--color-brand-soft);
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.5), rgb(132 192 191 / 0.12));
+  border-block: 1px solid rgb(132 192 191 / 0.35);
+  box-shadow: var(--shadow-raised), inset 0 1px 0 rgb(255 255 255 / 0.55);
 }
 
 /* Numeral sobredimensionado de una celda bento: entra con el scroll en un
@@ -757,7 +805,7 @@
    Hard-edged conic wedges (no blur; not a blob). Motion is transform only (a
    slow 64/88s rotation) and the global reduced-motion guard collapses it. The
    drawn node network was removed in D43 in favour of the shared logo
-   watermark (logo-symbol-gradient at 10%), same as Tournaments/Closing. */
+   watermark (light symbol at 15%, D43/D90), same as Closing/Audiences. */
 
 .hero-facet-mask {
   -webkit-mask-image: radial-gradient(130% 130% at 34% 28%, #000 16%, transparent 72%);

@@ -194,28 +194,31 @@
     "sub": "Testimonios de muestra. Los reales se recogen en el servidor antes de publicar.",
     "items": [
       {
-        "name": "Marta Ruiz",
-        "role": "Frontend en Sevilla",
-        "quote": "Llevaba meses sin respuesta en portales. Aquí me escribieron dos empresas tras un torneo."
+        "name": "Lorem Ipsum",
+        "role": "Dolor sit amet",
+        "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
       },
       {
-        "name": "Diego Fuentes",
-        "role": "Junior backend, Bogotá",
-        "quote": "Entré sin experiencia y sin título. Me leyeron personas, no filtros."
+        "name": "Consectetur Adipiscing",
+        "role": "Elit sed do eiusmod",
+        "quote": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
       },
       {
-        "name": "Lucía Ortega",
-        "role": "CTO, Valencia",
-        "quote": "Fichamos a dos devs de la comunidad. Las vi resolver en directo antes de hablar con ellas."
+        "name": "Tempor Incididunt",
+        "role": "Labore et dolore",
+        "quote": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
       },
       {
-        "name": "Andrés Salas",
-        "role": "DevOps, Ciudad de México",
-        "quote": "Conseguí mi trabajo actual por un canal de networking. Ni lo habían publicado."
+        "name": "Excepteur Sint",
+        "role": "Occaecat cupidatat",
+        "quote": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
       }
     ],
     "linkedinSlotTitle": "Perfil verificable próximamente",
-    "linkedinSlotHint": "El enlace al perfil de LinkedIn se añadirá con los testimonios reales."
+    "linkedinSlotHint": "El enlace al perfil de LinkedIn se añadirá con los testimonios reales.",
+    "pause": "Pausar los testimonios",
+    "play": "Reanudar los testimonios",
+    "cta": "Entrar al Discord y dejar que te conozcan"
   },
   "news": {
     "h2": "Noticias",
