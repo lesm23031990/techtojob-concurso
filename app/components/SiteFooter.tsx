@@ -32,16 +32,27 @@ export default async function SiteFooter() {
   return (
     <footer className="border-t border-hairline-dark bg-ink text-cloud">
       <div className="page-container py-16">
-        {/* decorative brand mark — the only one in the footer (§2c) */}
-        <Image
-          src="/brand/logo-horizontal-light.svg"
-          alt=""
-          aria-hidden="true"
-          width={216}
-          height={32}
-          loading="lazy"
-          className="h-8 w-auto"
-        />
+        {/* decorative brand mark — the same header composite as the ink state (§2a/§2c, D58) */}
+        <span aria-hidden="true" className="flex items-center gap-2.5">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-none border border-brand/40 bg-white/5">
+            <Image
+              src="/brand/logo-symbol-light.svg"
+              alt=""
+              width={24}
+              height={24}
+              loading="lazy"
+              className="h-6 w-6"
+            />
+          </span>
+          <Image
+            src="/brand/wordmark-duo.svg"
+            alt=""
+            width={178}
+            height={24}
+            loading="lazy"
+            className="h-5 w-auto sm:h-6"
+          />
+        </span>
 
         <nav
           aria-label={messages.a11y.footerNavLabel}

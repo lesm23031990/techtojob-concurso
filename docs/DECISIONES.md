@@ -638,6 +638,32 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `/` y el idioma principal de la entrega. Traducir después **no requiere cambios de código**
       (solo valores en `messages/en.json`; `content.ts` verifica la paridad de claves en compilación).
 
+- **D58.** 23/09, Lorena pide (con captura del footer) que el logo del pie sea **el mismo que usa el
+      header en su estado oscuro**: *"cambia este logo por el que usamos en el header con el fondo
+      negro"*. **Decisión:** el footer deja el lockup horizontal verde
+      (`brand/logo-horizontal-light.svg`, 216×32) y pasa a renderizar el **composite tile + wordmark
+      en polaridad oscura** (isotipo oficial `logo-symbol-light.svg` en tile `h-10 w-10` con borde
+      `brand/40` sobre `bg-white/5` + `brand/wordmark-duo.svg`), con las mismas medidas y `gap` que
+      el header para que la marca se lea igual arriba y abajo.
+      **Diferencias deliberadas con el header:** ambas imágenes van `loading="lazy"` (R56: el footer
+      está bajo el pliegue, el header usa `priority`) y el conjunto es decorativo
+      (`aria-hidden="true"` en el wrapper + `alt=""`), porque el pie ya tiene texto real.
+      `logo-horizontal-light.svg` queda en el kit oficial sin uso en la web.
+      **Actualizado en:** `docs/design-system.md` §2c y §7 (fila 11 del mapa de secciones).
+
+- **D59.** 23/09, Lorena pide (con captura del cierre) **quitar el raíl de la línea de tiempo** de la
+      sección "Cierre" (`#unete`): la línea vertical y el nodo grande señalados en rojo.
+      **Decisión:** se elimina `<TimelineRail variant="goal" />` del Cierre y, con él, la
+      indentación de compensación del bloque (`pl-7 md:pl-14 lg:pl-20 xl:pl-24`), que existía solo
+      para dejar pasar el raíl → el contenido del cierre queda **centrado**.
+      **Consecuencias asumidas:** (1) el raíl recorre ahora de "Cómo funciona" a "Newsletter" y
+      termina ahí, sin remate gráfico en el cierre; (2) como el único uso de `variant="goal"` era el
+      Cierre, se **retira la variante `goal` de `TimelineRail`** (código muerto) y la prop `step`
+      pasa a obligatoria tipada `number | undefined` (los callers usan `timelineStep()`, que puede
+      devolver `undefined` fuera de `timelineOrder`).
+      **Actualizado en:** `docs/design-system.md` §4 (raíl), §7 (intro y filas 10–11) y la tabla de
+      movimiento.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

@@ -136,13 +136,21 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > `brand/wordmark-ink.svg` (mismos contornos oficiales, relleno carbón) para que el estado claro
 > pese igual que el oscuro. `tsc` + ESLint + `next build` en verde.
 
+> **Hecho (23/09, ajustes pedidos por Lorena):** (D56) el ciclo queda en **3 agentes sin
+> auditorías** hasta que ella diga "vamos a revisar". (D57) la **traducción del EN se aplaza** con
+> handoff listo para el equipo oficial. (D58) el **logo del footer** pasa a ser el composite del
+> header en polaridad oscura (con `loading="lazy"` y decorativo). (D59) se **quita el raíl y el nodo
+> del Cierre**, que ahora va centrado, y con ello se retira la variante `goal` de `TimelineRail`.
+> Además, el CTA del menú móvil usa la etiqueta corta ("Entrar al Discord"), y se corrige la falta
+> ortográfica del copy ("acuérdate"). Todo con `tsc` + ESLint + `next build` en verde.
+
 ## 3. Fuentes de verdad (jerarquía)
 
 1. Bases oficiales del concurso y brief (material de entrada, no versionado por privacidad).
 2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
 3. `AGENTS.md` — reglas de proceso y gates de calidad.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D57);
+Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D59);
 nada de lo construido se asumió sin fuente.
 
 ## 4. Método: spec-driven + multiagente
@@ -163,6 +171,6 @@ declarado en el README, como piden las bases.
 |---|---|
 | "Cumple las 61 reglas" | `docs/qa/2026-09-22-rules-audit-1.md` (regla → estado → evidencia → acción) |
 | "Calidad medida, no prometida" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, capturas Playwright) |
-| "Por qué se decidió X" | `docs/DECISIONES.md` (57 decisiones fechadas, D1–D57) |
+| "Por qué se decidió X" | `docs/DECISIONES.md` (59 decisiones fechadas, D1–D59) |
 | "El sistema de diseño es real" | `docs/design-system.md` + tokens en `app/app/globals.css` |
 | "Los textos viven aparte del código" | `app/messages/es.json` (única fuente de copy visible) |
