@@ -43,7 +43,13 @@ export default async function HowItWorks() {
   const { h2, intro, steps, closing, cta } = messages.howItWorks;
 
   return (
-    <Section id="como-funciona" headingId="como-funciona-heading" tone="paper" textDrift>
+    <Section
+      id="como-funciona"
+      headingId="como-funciona-heading"
+      tone="paper"
+      textDrift
+      className="section-tight"
+    >
       <h2
         id="como-funciona-heading"
         className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"

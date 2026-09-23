@@ -311,9 +311,13 @@
    la sección también "cobra vida" hacia arriba (antes solo hacia abajo).
    El rango usa la fase `cover` COMPLETA (relativa al viewport), no `entry`
    (relativa al ALTO del elemento: un h2 de 40px terminaba en ~11px de scroll,
-   bug D63). La meseta 22%–88% mantiene el contenido opaco durante todo el paso
-   útil: a 88% el elemento ya entra bajo la barra fija (~96px), así que el
+   bug D63). La meseta 38%–92% mantiene el contenido opaco durante todo el paso
+   útil: a 92% el elemento ya entra bajo la barra fija (~96px), así que el
    fundido de salida no deja un titular leído a media tinta.
+   D102: entrada/salida más lentas a petición de la autora (entrada 22% → 38%,
+   meseta a 92%).
+   D106: la salida se acorta (meseta 84% → 92%): la despedida dura la mitad y
+   arranca cuando el contenido ya está bajo la barra fija.
    Estado por defecto = final: sin soporte de `animation-timeline` o con
    prefers-reduced-motion el contenido se ve completo y estático. */
 @supports (animation-timeline: view()) {
@@ -347,17 +351,60 @@
     opacity: 0;
     transform: translate(-4.5rem, 0);
   }
-  22% {
+  38% {
     opacity: 1;
     transform: translate(0, 0);
   }
-  88% {
+  92% {
     opacity: 1;
     transform: translate(0, 0);
   }
   100% {
     opacity: 0;
     transform: translate(0, -2rem);
+  }
+}
+
+/* ── D103 · Entrada del panel de Newsletter ───────────────────────────────
+   El "cuadro" del newsletter entra como una pieza más, con dos ajustes propios:
+   recorrido más corto (1rem en vez de 2.5rem, es una superficie grande) y
+   VENTANA MÁS CORTA EN PORCENTAJE (26% en lugar del 38% de `.reveal`). El
+   motivo es geométrico: en `view()` el rango `cover` dura (viewport + alto del
+   elemento), así que el 38% sobre un panel de ~650px lo dejaría a media tinta
+   hasta que su borde superior subiera a ~190px del viewport; con el 26% el
+   panel ya está opaco con el borde a ~350px (zona de lectura). En píxeles, la
+   entrada del panel (~350px de scroll) es MÁS LARGA que la de un titular
+   (~280px), que es lo que la autora pidió: más lenta y apreciable, sin que el
+   cuadro quede translúcido mientras se lee. La meseta de salida sube a 92% con
+   el resto de los bloques (D106). Solo `opacity`/`transform`
+   (CLS 0); sin soporte de `animation-timeline` o con `prefers-reduced-motion`
+   el panel se ve completo y estático. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .panel-in {
+      animation: panel-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes panel-in {
+  0% {
+    opacity: 0;
+    transform: translate(0, 1rem);
+  }
+  26% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  92% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -1.5rem);
   }
 }
 
@@ -613,7 +660,7 @@
     .bento-lit {
       animation: cell-lit cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+      animation-range: cover 0% cover calc(32% + var(--i, 0) * 5%);
     }
   }
 }
@@ -625,7 +672,7 @@
     .bento-lit-ink {
       animation: cell-lit-ink cubic-bezier(0.2, 0.9, 0.2, 1) both;
       animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+      animation-range: cover 0% cover calc(32% + var(--i, 0) * 5%);
     }
   }
 }
@@ -649,11 +696,11 @@
     opacity: 0;
     transform: translate(0, 2.5rem);
   }
-  22% {
+  38% {
     opacity: 1;
     transform: translate(0, 0);
   }
-  88% {
+  92% {
     opacity: 1;
     transform: translate(0, 0);
   }
@@ -689,7 +736,7 @@
     .step-node-fill {
       animation: node-lit linear both;
       animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
+      animation-range: cover 0% cover calc(32% + var(--i, 0) * 5%);
     }
   }
 }
@@ -1138,6 +1185,96 @@
   }
 }
 
+/* ── D105 · Destello de los nodos de la línea de tiempo ───────────────────
+   Pedido de la autora, con el punto `ember` de Noticias como referencia: los
+   círculos del raíl ganan un halo suave que respira. Cada nodo usa SU acento —
+   `brand` en los nodos de SECCIÓN (1–8, el disco del raíl) y `ember` en los
+   nodos de PASO del stepper 1.1–1.4 (D66) —, así el raíl se lee vivo sin
+   introducir ningún color nuevo (R24/R25). El halo es un `radial-gradient` de
+   centro TRANSPARENTE: no tiñe el disco ni el numeral (que va `z-10`). El `--i`
+   (posición en el raíl / índice del paso) escalona la fase para que el destello
+   recorra la página en oleada en lugar de parpadear todo a la vez. Solo
+   `opacity`/`transform` (CLS 0), bucle 7s ≥3.5s (R34) y `pointer-events: none`.
+   El guard global de `prefers-reduced-motion` lo apaga. */
+.timeline-marker::after,
+.step-node::after {
+  content: "";
+  position: absolute;
+  inset: -0.875rem;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    rgb(132 192 191 / 0) 52%,
+    rgb(132 192 191 / 0.38) 70%,
+    rgb(132 192 191 / 0) 100%
+  );
+  opacity: 0;
+  transform: scale(0.9);
+  animation: node-flash 7s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.9s);
+}
+
+/* El nodo de paso es más pequeño y su acento es `ember` (#f4a261). */
+.step-node::after {
+  inset: -0.75rem;
+  background: radial-gradient(
+    closest-side,
+    rgb(244 162 97 / 0) 52%,
+    rgb(244 162 97 / 0.4) 70%,
+    rgb(244 162 97 / 0) 100%
+  );
+}
+
+@keyframes node-flash {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  45% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+/* ── D103 · Destello del CTA principal ────────────────────────────────────
+   Pedido de la autora: "agregale un destello a los botones principales de la
+   timeline". Los CTA rellenos ya tienen un barrido especular al HOVER (el span
+   `-skew-x-12 bg-white/30` de `DiscordCta`/`AudienceCta`); esto añade una
+   pasada IDLE cada 9s (cruce corto de ~1,3s y el resto en reposo) para que el
+   botón principal respire sin pedir clic, en la línea de la "vida idle" D86
+   (`.card-idle`, `.line-idle`, `.section-idle`). Solo `transform` (compositor,
+   CLS 0) y blanco al 22% — más suave que la pasada de hover al 30%, para que
+   el reposo no grite. Decorativo (`pointer-events: none`) y bucle 9s ≥3.5s
+   (R34). Se aplica SOLO a la variante `solid` desde `cta-styles.ts` (header,
+   hero, Torneos, Audiencias y Cierre): el outline y el botón del newsletter
+   se quedan quietos (R11 — el CTA del Discord es el único botón "vivo"). El
+   guard global de `prefers-reduced-motion` lo apaga del todo. */
+.cta-glint::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -33.333%;
+  width: 33.333%;
+  background: rgb(255 255 255 / 0.22);
+  transform: translateX(-100%) skewX(-12deg);
+  pointer-events: none;
+  animation: cta-glint 9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes cta-glint {
+  0%,
+  58% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  72%,
+  100% {
+    transform: translateX(400%) skewX(-12deg);
+  }
+}
+
 /* Noticias (D98): faint blueprint plate behind the featured brand symbol —
    the same "plano cinético" language as the hero, contained inside the card
    banner. Decorative only, `ink` at 4% so it never competes with the copy. */
@@ -1165,4 +1302,26 @@
     animation: none !important;
     transform: none !important;
   }
+
+  /* D103: el destello idle no debe quedar congelado a medio cruce. */
+  .cta-glint::after {
+    display: none;
+  }
+}
+
+/* ── D102 · Densidad tipográfica por sección ─────────────────────────────
+   Tailwind v4 emite las utilidades `text-*` como `var(--text-*)`, así que
+   redefinir esos tokens en el scope de la sección reescala SOLO ese bloque.
+   Pedido de Lorena: "Cómo funciona" y "Torneos" son las dos secciones más
+   densas y bajan ~6-10% su escala de titulares/entradilla. NO se toca la
+   fuente (Sora, R28), los pesos (R59), ni `body`/`small`/`label` (D99 los
+   dejó en ~15px / ~13px / ~11px). Cero tokens nuevos: solo valores derivados
+   de la escala existente (R24/R25). */
+.section-tight {
+  --text-h2: 1.625rem;
+  --text-h2-lg: 2.25rem;
+  --text-h3: 1.1875rem;
+  --text-h3-lg: 1.375rem;
+  --text-lead: 1.0625rem;
+  --text-lead-lg: 1.1875rem;
 }

@@ -19,12 +19,14 @@ export const CTA_SIZE_CLASSES: Record<CtaSize, string> = {
 };
 
 /* Solid = the single CTA look (D46): brand fill + ink text (6.17:1).
+   `cta-glint` is the D103 idle glint (globals.css) and lives ONLY on `solid`:
+   the Discord CTA is the single "live" button (R11).
    Outline = hairline secondary (design-system §6.2). On the light surface it
    changes BOTH the border (to `brand`) and the fill (to `mist`) on hover, so the
    green is never the ONLY state cue — brand edges stay at 2.04:1 on paper, below
    the 3:1 a boundary alone would need (R26). */
 export const CTA_VARIANT_CLASSES: Record<CtaVariant, string> = {
-  solid: "bg-brand text-ink ring-1 ring-ink/10 hover:bg-brand-deep hover:shadow-glow-cta",
+  solid: "bg-brand text-ink ring-1 ring-ink/10 hover:bg-brand-deep hover:shadow-glow-cta cta-glint",
   outline:
     "border-2 border-ink/60 bg-transparent text-ink hover:border-brand hover:bg-mist hover:shadow-glow-cta",
 };

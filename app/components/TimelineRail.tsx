@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 import type { SectionTone } from "@/components/Section";
 
 interface TimelineRailProps {
@@ -65,6 +67,9 @@ const MARKER_COLOR: Record<SectionTone, string> = {
  * enters the viewport (`.timeline-fill` / `.timeline-marker` in globals.css,
  * native scroll-driven CSS). Without `animation-timeline` support the line is
  * simply fully drawn and the markers are active — never invisible.
+ *
+ * D105: each marker publishes its 0-based position as `--i` so the idle node
+ * glow (`node-flash`) travels down the rail instead of flashing in sync.
  */
 export default function TimelineRail({ tone, step }: TimelineRailProps) {
   return (
@@ -77,6 +82,7 @@ export default function TimelineRail({ tone, step }: TimelineRailProps) {
 
         <span className={`absolute -translate-x-1/2 ${MARKER_Y} ${RAIL_X}`}>
           <span
+            style={{ "--i": (step ?? 1) - 1 } as CSSProperties}
             className={`timeline-marker relative grid h-11 w-11 place-items-center rounded-full border-2 text-small font-bold lg:h-14 lg:w-14 lg:border-[3px] ${MARKER_COLOR[tone]}`}
           >
             <span
