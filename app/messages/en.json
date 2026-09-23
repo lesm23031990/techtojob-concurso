@@ -41,7 +41,7 @@
   },
   "hero": {
     "highlight": "te conocen",
-    "line1": "El fin de la búsqueda pasiva.",
+    "line1": "Comunidad de desarrolladores y empresas tech en español.",
     "line2": "Aquí te conocen antes de la vacante.",
     "sub": "No encajamos vacantes con currículos. Vemos a la gente construir, participar y resolver — y dejamos que las conexiones pasen solas.",
     "cta": "Entrar al Discord",
@@ -194,24 +194,24 @@
     "sub": "Testimonios de muestra. Los reales se recogen en el servidor antes de publicar.",
     "items": [
       {
-        "name": "Lorem Ipsum",
-        "role": "Dolor sit amet",
-        "quote": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        "name": "Andrea C.",
+        "role": "Desarrolladora frontend",
+        "quote": "Dejé de mandar candidaturas a ciegas: aquí me conocían por lo que ya había construido."
       },
       {
-        "name": "Consectetur Adipiscing",
-        "role": "Elit sed do eiusmod",
-        "quote": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        "name": "Bruno T.",
+        "role": "Desarrollador backend",
+        "quote": "Una duda que me habría llevado horas se resolvió en minutos porque alguien ya había pasado por lo mismo."
       },
       {
-        "name": "Tempor Incididunt",
-        "role": "Labore et dolore",
-        "quote": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        "name": "Carla N.",
+        "role": "Desarrolladora junior",
+        "quote": "Del torneo salí con algo real que enseñar y explicar en la siguiente entrevista."
       },
       {
-        "name": "Excepteur Sint",
-        "role": "Occaecat cupidatat",
-        "quote": "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        "name": "Damián S.",
+        "role": "Tech lead",
+        "quote": "Antes de la primera llamada ya sabía cómo trabajaba esa persona."
       }
     ],
     "linkedinSlotTitle": "Perfil verificable próximamente",
@@ -230,7 +230,7 @@
         "dateIso": "2026-09-15",
         "title": "Canales por área: ya puedes hablar solo con gente de tu stack",
         "summary": "Frontend, backend, datos, mobile, DevOps… Entra al canal del tuyo desde el Discord.",
-        "cta": "Leer la novedad"
+        "cta": "Leer la novedad en el Discord"
       },
       {
         "category": "Torneos",
@@ -238,7 +238,7 @@
         "dateIso": "2026-09-07",
         "title": "Torneo #2 abierto: la landing de TechToJob se decide a retos",
         "summary": "Cualquiera del servidor puede participar. El jurado publica criterios. La ganadora se convierte en la web oficial.",
-        "cta": "Ver las bases del torneo"
+        "cta": "Ver las bases en el Discord"
       },
       {
         "category": "Empleo",
@@ -246,7 +246,7 @@
         "dateIso": "2026-09-01",
         "title": "Cómo leer una oferta antes de que la publiquen",
         "summary": "Una guía breve sobre el mercado tech en español y por qué estar dentro cambia las reglas.",
-        "cta": "Leer la guía"
+        "cta": "Leer la guía en el Discord"
       }
     ]
   },
@@ -284,7 +284,7 @@
       "companies": {
         "title": "Empresas",
         "links": [
-          { "text": "Publica como empresa", "href": "#talento" },
+          { "text": "Publica como empresa", "href": "#empresas" },
           { "text": "Torneos", "href": "#torneos" }
         ]
       },

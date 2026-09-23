@@ -17,8 +17,8 @@ import { getMessages } from "next-intl/server";
  * Layout: `ink` surface since D85 (the dark counterpoint that separates the
  * clear runs; §7) with two raised `coal` hairline cells (§3.1 #14). A single
  * rail node (step 3); the section keeps `id="talento"` and the companies cell
- * keeps `id="empresas"` as an optional deep-link. Nav and footer both point at
- * `#talento` (D76) because it is ONE section, not two destinations.
+ * keeps `id="empresas"`. D126: the "Empresas" nav/footer links now target
+ * `#empresas` so the label matches the destination (the companies cell).
  *
  * Decoration (D90): the same 6% light-symbol watermark as the hero and the
  * closing, rendered through `Section`'s `decoration` slot as a direct child of

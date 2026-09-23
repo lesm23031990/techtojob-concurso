@@ -40,17 +40,6 @@ export function IconArrowUpRight(props: IconProps) {
   );
 }
 
-/** Right arrow for IN-PAGE / future actions (inert AudienceCta, D76). Unlike
- *  `IconArrowUpRight`, it does not imply "opens somewhere else". */
-export function IconArrowRight(props: IconProps) {
-  return (
-    <SvgBase {...props}>
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </SvgBase>
-  );
-}
-
 /** Down arrow for an in-page jump to a section below (`#unete`, D76). */
 export function IconArrowDown(props: IconProps) {
   return (

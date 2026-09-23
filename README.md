@@ -9,7 +9,7 @@ oferta de empleo y la prueba técnica es la propia web.
 
 ## Stack
 
-- **Next.js 16** (App Router) · Server Components por defecto, solo 2 client components justificados
+- **Next.js 16** (App Router) · Server Components por defecto, solo 3 client components justificados (header adaptativo, countdown y formulario)
 - **TypeScript estricto** · sin `any`, `tsc --noEmit` limpio
 - **Tailwind CSS v4** · design tokens en `@theme`, cero CSS a mano, cero UI kits
 - Frontend puro + SEO técnico: sin backend, sin APIs propias, sin trackers de terceros
@@ -39,8 +39,9 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 
 ## Internacionalización (ES / EN)
 
-- **Español en `/`** (idioma principal y canonical) y **`/en`** para la versión inglesa, con
-  `hreflang` cruzado en el `<head>` y en el `sitemap.xml`; `<html lang>` correcto por ruta.
+- **Español en `/`** (idioma principal y canonical) y **`/en`** para la versión inglesa. Mientras el
+  catálogo EN sea un espejo del ES, `/en` queda accesible pero **`noindex`** y fuera del `sitemap`
+  (evita anunciar un `hreflang` cuyo idioma no coincide); el `lang` de cada ruta ya es correcto.
 - El selector de idioma del header es un **enlace real** (`<a href>`, sin JavaScript, sin estado),
   como piden las bases.
 - Todo el texto visible vive en `app/messages/es.json` y `app/messages/en.json`, nunca incrustado
@@ -48,9 +49,9 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 
 > **Estado de la traducción:** `/en` sirve hoy **el mismo contenido en español** (el catálogo EN es
 > un espejo del ES, *placeholder declarado*). La infraestructura bilingüe está completa y probada;
-> la traducción es un trabajo de copy pendiente que **no requiere tocar código**. El procedimiento
-> para traducirlo (o añadir otro idioma) está documentado paso a paso en `specs/12-i18n.md`
-> → *Handoff de traducción*.
+> la traducción es un trabajo de copy pendiente que **no requiere tocar código**. Para publicarlo
+> basta traducir `en.json` y revertir el `noindex` + la entrada de `sitemap` (un cambio de 2 líneas,
+> documentado en `specs/12-i18n.md` → *Handoff de traducción*).
 
 ## Calidad verificada
 
@@ -58,8 +59,8 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 |---|---|
 | `next build` + `tsc --noEmit` + ESLint | ✅ 0 errores |
 | Auditoría de las 61 reglas del concurso (`docs/qa/2026-09-22-rules-audit-1.md`) | ✅ tras fixes R35/R56 |
-| Lighthouse móvil (SEO / Accesibilidad / Rendimiento) | 📊 evidencia en `docs/qa/` |
-| Responsive 360 / 768 / 1024 / 1440 | 📊 capturas en `docs/qa/` |
+| Lighthouse móvil (SEO / Accesibilidad / Rendimiento) | ⏳ a medir sobre el deploy final (última medición local: SEO 100 · A11y 100 · Perf 76 en `docs/qa/2026-09-22/`) |
+| Responsive 360 / 768 / 1024 / 1440 | ⏳ capturas a generar sobre el deploy final |
 | Auditorías, Lighthouse y Playwright | ⏸ **en pausa desde el 23/09 (D56)**; la evidencia vigente es la del 22/09 en `docs/qa/` |
 | Metadata API + OG 1200×630 + Twitter Card + JSON-LD Organization + sitemap + robots | ✅ |
 | WCAG 2.1 AA: semántica, jerarquía H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ |
