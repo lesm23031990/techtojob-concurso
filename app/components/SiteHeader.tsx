@@ -170,7 +170,7 @@ export default async function SiteHeader() {
               <li key={`${item.href}-${item.label}`} className={TIER_CLASSES[item.tier]}>
                 <Link
                   href={item.href}
-                  className="header-nav-link inline-flex min-h-10 items-center rounded-none px-2 text-small font-semibold whitespace-nowrap text-paper underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand xl:px-3 xl:text-body"
+                  className="header-nav-link inline-flex min-h-10 items-center rounded-none px-2 text-small font-semibold whitespace-nowrap text-paper underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand 2xl:px-3 2xl:text-body"
                 >
                   {item.label}
                 </Link>
