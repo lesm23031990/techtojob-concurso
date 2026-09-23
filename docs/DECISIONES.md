@@ -1294,6 +1294,32 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       esta sección.** **Verificación:** `tsc`/ESLint/`next build` en verde.
       **Actualizado en:** `app/messages/{es,en}.json`, `specs/11-contenido.md`.
 
+- **D92.** 23/09, Lorena: *"no me gusta cómo se ve el sombreado inferior en los fondos azules; mejor
+      removerlo solo en los fondos azules, mantenerlo para secciones oscuras y blancas"*.
+      **Decisión:** el header pegajoso pasa de dos estados (`light`/`dark`) a tres: se añade el estado
+      **`tint`** para las superficies azules (`mist`/`brand-soft`). Sobre azul el header sigue siendo
+      claro (misma polaridad, mismos colores de logo/nav/CTA) pero **no proyecta la sombra inferior ni
+      la franja de disolución** `paper→transparent`, que sobre azul se veían como una mancha
+      gris/blanca. Blanco (`paper`) y oscuro (`ink`/`brand`) mantienen el tratamiento.
+      **Implementación:** `Section` expone `data-header-tint` según el tono; las secciones `mist` sin
+      `Section` (Torneos, Testimonios) lo llevan directo; `HeaderSurface` publica
+      `data-header-tint` en `<html>`; `globals.css` anula `box-shadow` y la franja solo para
+      `[data-header-surface="light"][data-header-tint="true"]`.
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/{Section,HeaderSurface}.tsx`,
+      `components/sections/{Tournaments,Testimonials}.tsx`, `app/app/globals.css`.
+
+- **D93.** 23/09, Lorena: *"esa raya azul sobre el círculo naranja no va"* (captura de `#talento`).
+      **Diagnóstico:** el badge numerado `1`/`2` se centra a `-top-5` sobre el borde superior de la
+      tarjeta; su anillo `border-ink` sí corta el borde de la tarjeta, pero el anillo decorativo
+      `.card-idle::after` (1px `brand`, `inset:-1px`) es un pseudo-elemento del último orden de pintado
+      y su línea superior pasaba por encima del badge.
+      **Decisión:** `z-10` en el `<span>` del badge (ambas celdas), de modo que el badge opaco tape el
+      `::after` en su tramo y el anillo vuelva a leerse solo alrededor de la tarjeta. Sin tocar color
+      del badge, borde de la tarjeta, `.card-idle` ni `.bento-lit-ink`.
+      **Verificación:** `tsc`/ESLint/`next build` en verde; HTML con `z-10` en los dos badges.
+      **Actualizado en:** `components/sections/Audiences.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
