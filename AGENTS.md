@@ -62,8 +62,19 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
 ### Roles de trabajo
 - Los agentes y sus permisos están definidos en `opencode.json` + `.opencode/agent/`.
 - `rules-auditor` y `qa-access` NO editan código: solo auditan y reportan a `docs/qa/`.
-- `nextjs-builder` es el único que escribe en `app/`.
+- `nextjs-builder` es el único que escribe en `app/`. Excepción registrada: D29 (créditos
+  de `opencode-go` agotados), donde el orquestador implementó directamente.
 - Los reportes de auditoría citan textual la regla del concurso que motiva el hallazgo.
+
+### Modelos de los agentes (arquitectura dual)
+- **Primario: `opencode-go`**, con el modelo afinado de cada agente (kimi-k3 para el builder,
+  glm-5.3 para diseño, qwen3.8-flash para spec/QA/auditoría/SEO).
+- **Reserva: `deepseek/deepseek-flash`**, solo mientras los créditos de `opencode-go` estén
+  agotados. Es reserva de **disponibilidad**, no de calidad: los agentes conservan su prompt,
+  permisos y temperatura.
+- Interruptor: `node scripts/set-agent-models.mjs opencode-go|deepseek|status [--dry-run]`.
+- opencode **no recarga la config en caliente**: tras cambiar de modo hay que reiniciar opencode.
+- La evidencia de `docs/qa/` debe indicar con qué modelo se generó.
 
 ## Estructura del repositorio
 

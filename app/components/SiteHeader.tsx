@@ -15,52 +15,81 @@ const DESKTOP_NAV_HREFS = [
   "#noticias",
 ];
 
-const desktopNavItems = navItems.filter((item) =>
-  DESKTOP_NAV_HREFS.includes(item.href),
-);
+/** Only shown at ≥1280px: at 1024–1279 there is no room for the full set next
+ *  to the 216px logo and the CTA, and dropping one anchor from the bar is
+ *  cheaper than letting the row overflow (the footer still links it). */
+const DESKTOP_NAV_HREFS_WIDE = ["#noticias"];
+
+const desktopNavItems = navItems
+  .filter((item) => DESKTOP_NAV_HREFS.includes(item.href))
+  .map((item) => ({ ...item, wideOnly: DESKTOP_NAV_HREFS_WIDE.includes(item.href) }));
 
 const mobileNavItems = navItems.filter((item) => item.href !== "#inicio");
 
 /**
- * Sticky site header (design-system §6.6). The mobile menu is a styled
- * <details> element: operable with Enter/Space natively and zero client JS —
- * the only "use client" on this page is the newsletter form.
+ * Sticky site header (design-system §6.6). The bar is `ink` and dissolves into
+ * transparent over its last 30% (`header-veil`): at the top of the page it
+ * disappears into the dark hero — no seam, no visible band — and while
+ * scrolling it reads as a soft dark veil. The opaque 70% is where the logo and
+ * links live, so their contrast is never at the mercy of the fade.
+ *
+ * The logo is a composite built from OFFICIAL assets: the green `Negativo`
+ * symbol (§0.1: on ink the green mark reads 6.17:1) inside a rounded tile,
+ * plus a derived two-tone wordmark (same official outlines; "Tech" in paper,
+ * "ToJob" in brand) for the dark surface. No official file was altered and the
+ * accessible name comes from the link's aria-label, not from the images.
+ *
+ * Height 5rem, kept in sync with the hero (`-mt-20` pulls it up behind this
+ * bar and `pt-20`/`min-h-svh` on its content block) and with
+ * `scroll-padding-top` in globals.css. The bar slides in on load
+ * (`animate-header-in`, CSS only, transform/opacity → CLS 0) as the first beat
+ * of the page cascade: header → H1 → sub → CTA → support.
+ * The mobile menu is a styled <details> element: operable with Enter/Space
+ * natively and zero client JS.
  */
 export default function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur">
-      <div className="page-container flex h-16 items-center justify-between gap-4">
+    <header className="header-veil animate-header-in sticky top-0 z-50">
+      <div className="page-container flex h-20 items-center justify-between gap-4">
         <Link
           href="#inicio"
           aria-label={messages.a11y.logoLabel}
-          className="flex min-h-11 items-center rounded-full focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink"
+          className="flex min-h-11 shrink-0 items-center gap-2.5 rounded-full focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand"
         >
-          {/* v1 horizontal on ≥768px, Símbolo on mobile (design-system §2 a/a') */}
+          {/* Official symbol inside a rounded tile — composition only, no
+              recolouring: the green `Negativo` mark on ink is 6.17:1 (§0.1). */}
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-brand/40 bg-white/5">
+            <Image
+              src="/brand/logo-symbol-light.svg"
+              alt=""
+              width={24}
+              height={24}
+              priority
+              className="h-6 w-6"
+            />
+          </span>
+          {/* Derived two-tone wordmark (same official outlines, dark-surface
+              ink split: "Tech" paper + "ToJob" brand) — see DECISIONES D31. */}
           <Image
-            src="/brand/logo-horizontal.svg"
+            src="/brand/wordmark-duo.svg"
             alt=""
-            width={190}
-            height={28}
+            width={178}
+            height={24}
             priority
-            className="hidden h-7 w-auto md:block"
-          />
-          <Image
-            src="/brand/logo-symbol.svg"
-            alt=""
-            width={32}
-            height={32}
-            priority
-            className="h-8 w-8 md:hidden"
+            className="h-5 w-auto sm:h-6"
           />
         </Link>
 
-        <nav aria-label={messages.a11y.navLabel} className="hidden md:block">
-          <ul className="flex items-center">
+        {/* Desktop nav (D34): the anchors live inside a hairline pill — the
+            echo of the reference's centred search pill, but a real list of
+            section links (no fake search field: this site has no backend). */}
+        <nav aria-label={messages.a11y.navLabel} className="hidden lg:block">
+          <ul className="flex items-center rounded-full border border-white/10 bg-white/5 px-1.5 py-1">
             {desktopNavItems.map((item) => (
-              <li key={item.href}>
+              <li key={item.href} className={item.wideOnly ? "hidden xl:block" : undefined}>
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-11 items-center rounded-full px-3 text-body font-semibold text-ink underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  className="inline-flex min-h-10 items-center rounded-full px-2 text-small font-semibold whitespace-nowrap text-paper underline-offset-4 hover:underline hover:decoration-brand hover:decoration-2 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand xl:px-3 xl:text-body"
                 >
                   {item.label}
                 </Link>
@@ -69,13 +98,15 @@ export default function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="hidden md:block">
+        {/* The conversion action stays in the bar from 640px up; below that it
+            lives in the menu panel (there is no room for it at 360px). */}
+        <div className="hidden shrink-0 sm:block">
           <DiscordCta size="nav" label={messages.discord.ctaShort} />
         </div>
 
-        {/* Mobile: <details> menu — 44px trigger, full-width panel, 48px rows */}
-        <details className="group relative md:hidden">
-          <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-ink hover:bg-mist focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink [&::-webkit-details-marker]:hidden">
+        {/* Menu: <details> — 44px trigger, full-width panel, 48px rows */}
+        <details className="group relative lg:hidden">
+          <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded-full text-paper hover:bg-white/10 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand [&::-webkit-details-marker]:hidden">
             <IconMenu className="h-6 w-6 open:hidden" />
             <IconClose className="hidden h-6 w-6 open:block" />
             <span className="sr-only group-open:hidden">{messages.a11y.menuOpen}</span>
@@ -97,8 +128,8 @@ export default function SiteHeader() {
                 </li>
               ))}
             </ul>
-            <div className="mt-3 border-t border-line pt-3">
-              <DiscordCta size="block" className="w-full" label={messages.discord.cta} />
+            <div className="mt-3 border-t border-line pt-3 sm:hidden">
+              <DiscordCta size="block" label={messages.discord.cta} />
             </div>
           </nav>
         </details>

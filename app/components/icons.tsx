@@ -1,8 +1,8 @@
 /**
  * Hand-drawn inline icons (geometry follows the ISC-licensed Lucide icon set —
  * declared in the README per contest rule R9). No icon library dependency:
- * only four glyphs are needed site-wide. All are decorative (`aria-hidden`)
- * and always accompanied by visible text.
+ * only a handful of glyphs are needed site-wide. All are decorative
+ * (`aria-hidden`) and always accompanied by visible text.
  */
 import type { ReactNode } from "react";
 

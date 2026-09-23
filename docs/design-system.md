@@ -48,8 +48,7 @@ Regla: `-light` = para fondo oscuro (la variante verde). SVG siempre en runtime;
 
 | # | Ubicación | Archivo exacto (destino) | Fondo | Justificación |
 |---|---|---|---|---|
-| a | **Navbar desktop (≥768px)** | `brand/logo-horizontal.svg` (v1Positivo) | `paper` claro | Wordmark carbón sobre blanco = 12.6:1. Alto 28px (auto width ≈190px). aria-label/logo con alt "TechToJob — inicio" |
-| a' | **Navbar móvil (<768px)** | `brand/logo-symbol.svg` (SímboloPositivo) | `paper` claro | v1 no cabe con holgura en 360px; el símbolo cuadrado a 32×32px mantiene marca + espacio para hamburguesa de 44px |
+| a | **Navbar** | Composición: isotipo `brand/logo-symbol-light.svg` (SímboloNegativo) dentro de un tile `rounded-xl` con borde `brand/40` + wordmark derivado `brand/wordmark-duo.svg` (mismos trazados oficiales, tinta doble: "Tech" `paper`, "ToJob" `brand`) | `ink` oscuro (`header-veil`) | Sobre `ink` la variante oficial es la Negativa verde (6.17:1, §0.1) y ninguna oficial sirve para el wordmark claro: `wordmark-duo` es un **derivado** (D31), no un recoloreo de los originales. Tile `h-10 w-10`, wordmark `h-5 sm:h-6`. Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
 | b | **Hero** | `brand/logo-symbol-light.svg` (SímboloNegativo) como marca de agua decorativa (§6) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). El símbolo verde en grande da identidad sin robar jerarquía |
 | c | **Footer** | `brand/logo-horizontal-light.svg` (v1Negativo) | `ink` oscuro | Verde sobre carbón = 6.17:1 ✅. Alto 32px. Es la única marca del footer |
 | d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); fallback PNG: `logo-symbol.svg` exportado a 180×180 sobre fondo blanco para `apple-touch-icon.png` y a 512×512 con fondo `brand` y símbolo carbón para `icon-512.png` (maskable) | — | El símbolo cuadrado es la única variante legible a 16–32px. Carbón sobre blanco del navegador ✅; nunca Degradado en favicon (las bandas oscuras desaparecen a tamaño miniatura) |
@@ -130,7 +129,7 @@ Sobre `paper`: el verde jamás es texto, jamás es el único estado de un contro
 
 | Token | Móvil (≥360) | Desktop (≥1024) | Line-height | Tracking | Uso |
 |---|---|---|---|---|---|
-| `display` (h1, único en la página, R40) | 2.25rem / 36px | 3.75rem / 60px | 1.08 | −0.02em | Hero. `text-balance` |
+| `display` (h1, único en la página, R40) | 3rem / 48px | 4.5rem / 72px | 1.05 (móvil) · 1.0 (desktop) | −0.04em | Hero. `text-balance` |
 | `h2` | 1.75rem / 28px | 2.5rem / 40px | 1.15 | −0.015em | Título de sección. `text-balance` |
 | `h3` | 1.25rem / 20px | 1.5rem / 24px | 1.3 | −0.01em | Tarjetas, pasos, noticias |
 | `lead` | 1.125rem / 18px | 1.25rem / 20px | 1.55 | 0 | Sub del hero, intros |
@@ -140,6 +139,8 @@ Sobre `paper`: el verde jamás es texto, jamás es el único estado de un contro
 
 Nota de rendimiento: 3 pesos = 3 archivos woff2 por subset vía `next/font` (latin); nada de `italic` (no lo usa el contenido) → no pedirlo.
 
+Nota de escala: la fila `display` se reescaló el 22/09 para el rediseño del hero (minimalismo premium, D27 en `docs/DECISIONES.md`): el H1 pasa a ser el centro de gravedad visual de la primera pantalla.
+
 ---
 
 ## 5. Espaciado, layout, radius y sombras
@@ -148,7 +149,8 @@ Nota de rendimiento: 3 pesos = 3 archivos woff2 por subset vía `next/font` (lat
 - **Container máximo:** `72rem` (1152px), centrado (`mx-auto`).
 - **Gutters:** móvil `1.25rem` (20px) · `md:` `2rem` · `lg:` `2.5rem`. En 360px el contenido nunca toca el borde.
 - **Breakpoints de verificación (J3):** 360 / 768 / 1024 / 1440 — defaults de Tailwind (`sm 640, md 768, lg 1024, xl 1280`).
-- **Grids por sección:** pasos de "cómo funciona" `grid-cols-1 → md:grid-cols-2 → lg:grid-cols-4` · testimonios `1 → sm:2 → lg:4` (4 tarjetas) · noticias `1 → lg:3` · footer `1 → sm:2 → lg:4` bloques.
+- **Grids por sección:** pasos de "cómo funciona" → **timeline vertical** (apilado con conector por debajo de `xl`; alternado alrededor de una espina central en `xl`) · testimonios `1 → sm:2 → lg:4` (4 tarjetas) · noticias `1 → lg:3` · footer `1 → sm:2 → lg:4` bloques.
+- **Raíl de la línea de tiempo (D32):** eje en el borde izquierdo del `page-container` (mismas métricas de gutter), 1px, `inset-y-0` por sección para que la línea sea continua. El contenido se indenta para dejarlo pasar: `pl-7 md:pl-14 lg:pl-20 xl:pl-24` (en 360px quedan ~288px útiles). Raíl y nodos son decorativos (`aria-hidden`).
 
 ### Escala vertical (ritmo entre secciones)
 ```css
@@ -156,7 +158,7 @@ Nota de rendimiento: 3 pesos = 3 archivos woff2 por subset vía `next/font` (lat
   --spacing-section-y: 5rem;    /* py de sección en móvil */
 }
 ```
-Desktop (`lg:`): `8rem`. Hero: `min-height: calc(100svh - 4rem)` con contenido verticalmente centrado (no 100vh fijo: evita el salto de la barra de URL en móvil → CLS). Nav sticky de `4rem` (64px).
+Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-height: 100svh` con **todo el bloque centrado como una sola pieza** (H1 + sub + CTA + apoyo, `flex` centrado + `pt-20` que compensa el header y `pb-0` para que el centro sea el del área visible). Se probó fijar solo el H1 a la línea central con un grid `1fr/auto/1fr`: **se revirtió el mismo día** porque el bloque se lee como una unidad y quedaba descolgado (D33). No `100vh` fijo: `svh` evita el salto de la barra de URL en móvil → CLS. El hero sube con `-mt-20` para quedar **detrás** del header (transición sin costura).
 
 ### Radius
 | Elemento | Token | Valor |
@@ -175,6 +177,7 @@ Desktop (`lg:`): `8rem`. Hero: `min-height: calc(100svh - 4rem)` con contenido v
 ```
 - `card` por defecto en tarjetas sobre `paper`/`mist`; `raised` SOLO en hover de tarjeta con enlace.
 - **En superficies `ink`: cero sombras** (no se ven); separar con `--color-coal` de superficie + borde `hairline-dark`.
+- **Excepción (rediseño hero 22/09, D27):** el CTA del hero puede llevar un halo `brand` y escala 1.02 SOLO en hover — es feedback transitorio de asequibilidad, no sombra de reposo; el botón en reposo sigue sin sombra.
 - El botón primario NO lleva sombra (el color ya domina la jerarquía).
 
 ---
@@ -214,9 +217,10 @@ Desktop (`lg:`): `8rem`. Hero: `min-height: calc(100svh - 4rem)` con contenido v
 - Alineación móvil: label → input full-width → botón full-width (stack); `sm:` input + botón en fila.
 
 ### 6.6 `Nav` / `SiteHeader`
-- `position: sticky; top: 0` · alto 64px · fondo `paper/90` + `backdrop-blur` · `border-b` `line`.
-- Desktop (≥768): `logo-horizontal.svg` h-7 (28px) · enlaces a anclas (`#como-funciona`… R45) en 600 `ink`, hover subrayado `brand` 2px, targets ≥44px de alto · CTA `ButtonPrimary` compacto h-11 a la derecha.
-- Móvil (<768): `logo-symbol.svg` 32px + hamburguesa Lucide `Menu` en botón de 44×44px. Menú desplegable = panel `paper` a ancho completo, enlaces en pila de 48px de alto + CTA Discord full-width. Cierre con `Escape` y foco atrapado mientras esté abierto (criterio propio J6).
+- `position: sticky; top: 0` · alto 80px (5rem, en sincronía con el `-mt-20` del hero y el `scroll-padding-top: 6rem`) · superficie `header-veil`: `ink` **opaco hasta el 70%** (donde viven logo y enlaces → su contraste nunca depende del degradado) y degradado a transparente en el 30% inferior. El hero sube por detrás (`-mt-20`), así que el degradado resuelve sobre `ink` y la barra **se pierde en el hero sin costura**; al scrollear queda como un velo oscuro sobre el contenido.
+- Desktop (≥1024): composición de logo (§2a) · enlaces a anclas (`#como-funciona`… R45) en 600 `paper` sobre `ink` (≥8:1), `whitespace-nowrap`, hover subrayado `brand` 2px, targets ≥44px de alto · 5 anclas en `lg` y la 6.ª (`#noticias`) desde `xl` · CTA `ButtonPrimary` compacto con `whitespace-nowrap` — **jamás en 2 líneas** (el nav recorta enlaces, no el botón).
+- 640–1023: logo + CTA + hamburguesa · <640: logo + hamburguesa (el CTA vive en el panel).
+- Menú desplegable (<1024): panel `paper` a ancho completo, enlaces en pila de 48px + CTA Discord full-width. `<details>` nativo: Enter/Space de serie, cero JS.
 - Enlaces de salto de foco: primer elemento del `body` = "Saltar al contenido" sr-only que se revela al focus (criterio propio de accesibilidad; no es texto oculto con keywords, no viola R60).
 
 ### 6.7 `NewsCard` (×3, sección 8)
@@ -234,19 +238,21 @@ Desktop (`lg:`): `8rem`. Hero: `min-height: calc(100svh - 4rem)` con contenido v
 
 Objetivo: que la página "entre por los ojos" (J1 25%) con alternancia controlada — **3 momentos oscuros que enmarcan, 1 franja verde que rompe, lectura siempre en claro**. El verde luce DONDE BRILLA: sobre `ink`.
 
+La página se lee como **una línea de tiempo vertical** (D32): el Hero es la puerta (sin raíl) y el Cierre la meta (nodo grande). El orden de esta tabla es el narrativo vigente (`content.ts → timelineOrder`) y el reorden se declara en el README (R10).
+
 | # | Sección | Fondo | Énfasis y rol del verde |
 |---|---|---|---|
-| 0 | Nav | `paper` sticky | Neutro y fino: no compite con el hero. CTA verde compacto como ancla de conversión siempre visible |
-| 1 | **Hero** | **`ink`** | **El botón verde `brand` es EL elemento dominante de la primera pantalla** (tamaño `lead`, único botón, R11). H1 `display` en `paper`; la sub en `cloud`; línea de apoyo en `small` `cloud`. Símbolo de agua al 8% en `brand`. Contraste máximo, 3 segundos de lectura (brief §1) |
-| 2 | Cómo funciona | `paper` | 4 pasos horizontales; los círculos numerados en verde son la única saturación → el ojo recorre el recorrido |
-| 3 | Talento | `paper` | H2 `ink` + iconografía Lucide en `brand`/`ink` mixta; copy en una columna de 65ch. (Talento y Cómo Funciona comparten claro: se separan con `label` eyebrow + borde superior `line`) |
-| 4 | Empresas | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
-| 5 | **Torneos** | **`ink`** | Sección "juego": números/headline en `brand` 700 sobre oscuro (6.17 ✅); menciona que esta web salió de un torneo → guiño con el símbolo de agua `gradient` al 10% |
-| 6 | Networking | `paper` | Vuelta a lectura tranquila; iconos de canales en `brand` |
-| 7 | Testimonios | `mist` | 4 `paper` cards flotando sobre tinte con `shadow-card`; avatares con fondo verde |
-| 8 | Noticias | `paper` | 3 cards; el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
-| 9 | **Newsletter** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo de la página → no compite con el CTA (está pre-footer, R19/D44) |
-| 10 | **Cierre** | **`ink`** | Espejo del hero: H2 `paper` grande + el mismo botón verde dominante. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto |
+| 0 | Nav | `ink` + `header-veil` | Barra oscura que **se disuelve en el hero** (sin costura) y, al scrollear, queda como velo suave. Enlaces `paper`, logo compuesto (§2a), CTA verde compacto siempre visible |
+| 1 | **Hero (puerta)** | **`ink`** | **D35 "Recruit en tinta"**: H1 en dos líneas editoriales — pregunta en `cloud` (7.77:1), respuesta en `paper` con la palabra final en `brand` (6.17:1). Debajo: sub, el ÚNICO botón verde (R11), píldoras-ancla outline (nav real, no CTAs) y muro de stacks en texto `cloud`. Glow al 50% y muro de tiles flotantes (D34) al 60%: escenario plano donde manda la tipografía. Campo de grafos mouse-reactivo activo. Sin chip de eyebrow (D33/D35) y sin raíl |
+| 2 | Cómo funciona (**paso 1**) | `paper` | El recorrido: 4 hitos numerados en verde con el raíl de página abriéndose en sub-timeline; la única saturación en claro |
+| 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15) |
+| 4 | Talento (paso 3) | `paper` | H2 `ink` + iconografía Lucide en `brand`/`ink` mixta; copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
+| 5 | Empresas (paso 4) | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
+| 6 | Networking (paso 5) | `paper` | Vuelta a lectura tranquila; iconos de canales en `brand` |
+| 7 | Testimonios (paso 6) | `mist` | 4 `paper` cards flotando sobre tinte con `shadow-card`; avatares con fondo verde |
+| 8 | Noticias (paso 7) | `paper` | 3 cards; el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
+| 9 | **Newsletter (paso 8)** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo → no compite con el CTA (pre-footer, R19/D44). El raíl cruza en `ink/20` para no desaparecer |
+| 10 | **Cierre (meta)** | **`ink`** | Espejo del hero (D35): H2 en dos líneas (`cloud` + `paper`) + el mismo botón verde dominante, y el nodo final del raíl. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto (R20) |
 | 11 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo `horizontal-light`. Legal con la nota honesta de specs/11 |
 
 Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer** (son el mismo bloque visual). Las secciones de lectura larga (copy > 3 líneas) siempre en claro.
@@ -264,15 +270,31 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 
 ---
 
-## 9. Movimiento — máximo 3 microanimaciones (R34: "que no estorben")
+## 9. Movimiento — catálogo vigente (R34: "que no estorben")
+
+> **Nota de revisión (22/09, D30/D32/D33):** el criterio original de "máximo 3 microanimaciones"
+> era propio, no de las bases. Con el rediseño del hero y la línea de tiempo el catálogo creció a
+> 8 piezas. Lo que R34 exige —que no estorben— se mantiene por diseño: todos los bucles son
+> lentos (≥3.5s), solo animan `transform`/`opacity`/`box-shadow`/`canvas`, ninguno cambia el
+> layout (CLS 0), ninguno toca el copy ni el CTA, y el guard global `prefers-reduced-motion` los
+> apaga todos (el campo de grafos pasa a un frame estático).
 
 | # | Qué | Spec | Fallback `reduced-motion` |
 |---|---|---|---|
-| 1 | **Reveal de sección** (fade + `translate-y-2` → 0, 300ms `ease-out`, stagger 60ms entre cards hermanas) vía IntersectionObserver + clase CSS | Solo entrada, una vez por elemento; `opacity` parte en 1 si JS no corre (nunca contenido invisible por defecto) | Sin transform ni fade: contenido visible de entrada |
-| 2 | **Hover del CTA primario**: fondo a `brand-deep` + icono `ArrowUpRight` translada 2px en X, 150ms | Feedback de asequibilidad del botón, no decorativo | Cambio de color instantáneo, sin translate |
-| 3 | **Subrayado de nav link**: `decoration` crece de 0→2px en 150ms | Indica interactividad | Subrayado presente estático en hover |
+| 1 | **Entrada del header** (`animate-header-in`, 500ms): baja `-0.75rem` + fundido | Primer beat de la cascada (`transform`/`opacity` → CLS 0). El H1 es el elemento LCP, no el header | Header visible de inmediato |
+| 2 | **Entrada del hero** (H1, sub, CTA, apoyo: escalonado 100→460ms) | El **H1 anima solo `transform`**, nunca `opacity`: el elemento LCP se pinta opaco en el primer frame | Todo el contenido visible de entrada, en su estado final |
+| 3 | **Campo de grafos del hero** (`HeroGraph`, isla cliente) | Canvas 2D con **3 capas de profundidad** y clusters de 4–5 vértices: **puntitos luminosos** (núcleo de 1.8/2.2/2.6px de radio + halo a 2.6× con 18% del alpha) unidos por **aristas de 1.5px** (alpha ≤0.30). Cada grafo mide **~300px** (spread 0.21) y deriva en su propia órbita (18–42px, ~14–26s); twinkle por nodo, parallax por capa (10/20/36) y campo local que empuja/enciende cerca del cursor (radio 240 / empuje 24). Sesgo suave fuera de la columna central + **dip elíptico 560×320 a piso 0.15** protegiendo el copy. DPR ≤1.5, 6/8/10 clusters según ancho, pausa fuera de pantalla/pestaña oculta | Un único frame estático; sin `requestAnimationFrame` ni listeners de puntero |
+| 4 | **Glow del hero** (rim `glow-brand-edge` + `glow-pulse` 7s en una esquina + `drift` 18s en otra + lavado superior) | Luz que **entra desde los bordes**: el gradiente es transparente en el centro (el copy no se ensucia) y sube hacia los bordes; los halos de esquina sangran hacia adentro. Nada de destello centro→extremos. Opacidades tales que el H1 mantiene ≥8:1 y el subtítulo ≥4.5:1 | Luz fija (pulso colapsado) |
+| 5 | **Línea de tiempo vertical** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | El relleno `brand` crece con el scroll y cada nodo se enciende al entrar en vista. Un segmento por sección → la línea se ve continua | Línea dibujada completa y nodos activos |
+| 6 | **Sub-timeline de "Cómo funciona"** (misma técnica `view()` en los hitos) | Los 4 pasos alternan alrededor de una espina central en `xl`; por debajo se apilan con conector | Contenido estático visible |
+| 7 | **Hover del CTA primario** (todas las instancias de `DiscordCta`): `scale-[1.02]` + halo `brand` + flecha 2px hacia arriba-derecha, 300ms | Feedback de asequibilidad del botón, no decorativo | Sin escala ni translate; el cambio de color se mantiene |
+| 8 | **Anillo respirante del CTA** (`animate-breathe`, 3.5s, `box-shadow`) + reveal de sección (`.reveal`) + subrayado de nav 150ms | Anillo en un `span` hermano: el botón nunca anima en reposo (protege INP/LCP) | Sin anillo; contenido visible; subrayado presente en hover |
+| 9 | **Muro de tiles flotantes** (`HeroTiles`, D34; opacidad global 60% desde D35) | 15 fichas inclinadas en 3 capas (ghost/glass/brand-coal) con deriva `tile-drift` solo `transform` (≥14s, delays escalonados). Decorativo: `aria-hidden`, `pointer-events-none`, z-0 fuera de la columna de copy; en móvil solo 2 ghosts en las esquinas inferiores | Tiles estáticos en su posición base |
 
-**Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax, autoplay de nada, animaciones en el LCP (el H1 del hero aparece sin animar — protegería el CLS < 0.1 y el gate de Lighthouse ≥95).
+**Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax **de scroll**,
+autoplay de nada y cualquier animación que retrase el LCP (por eso el H1 no hace fade).
+Sí está permitida la reacción **al puntero** dentro del hero (el campo de grafos): no secuestra
+el scroll, no mueve contenido y se apaga con `reduced-motion`.
 
 ---
 

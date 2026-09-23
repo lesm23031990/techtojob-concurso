@@ -107,6 +107,156 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
 - **D26.** `package.json` name `app` → `techtojob-landing`. Footer `<nav>` con `aria-label` propio
       ("Navegación del pie de página") para desambiguar los 3 landmarks (J6).
 
+### 2026-09-22 (rediseño hero)
+
+- **D27.** Rediseño estético del Hero (minimalismo premium): escala `display` reescalada
+      (3rem/4.5rem, line-height 1.05/1.0, tracking −0.04em), fondo `bg-hero-radial` ink→`ink-deep`
+      (`#262b2d`, sombra de la misma familia de tono — R25: no es color nuevo), badges orbitales
+      decorativos con datos mock de actividad de la comunidad (`aria-hidden`, ocultos <md,
+      flotado CSS puro apagado por el guard reduced-motion) y glow de hover exclusivo del CTA
+      del hero. Los textos de los orbitales son maqueta de actividad comunitaria — mismo criterio
+      que el `mockNote` de noticias (D11): no son cifras reales de miembros (D21) y no forman
+      parte del contenido indexable. El H1 sigue sin animarse (LCP protegido, R39/R40).
+- **D28.** QA suspendido por decisión de Lorena (22/09): NINGÚN agente de pruebas
+      (qa-access, Lighthouse, Playwright, rules-auditor sobre el rediseño hero) se ejecuta
+      hasta que ella lo autorice expresamente. El rediseño del Hero queda implementado y
+      compilando (tsc + lint + build OK) pero SIN evidencia QA en `docs/qa/`. Pendiente para
+      cuando se reactive: auditoría rules-auditor del hero (R25 ink-deep, contraste orbitales),
+      QA responsive con Playwright (colisiones badges↔texto en 768–1024) y revisión design-ux.
+      Gate de AGENTS.md (toda entrega pasa rules-auditor + qa-access) NO se elimina: solo se
+      pospone; la Fase 5 no se cierra sin esa evidencia.
+
+## Arquitectura de modelos y rediseño V3 del hero (22/09, noche)
+
+- **D29.** Arquitectura dual de modelos: **primario `opencode-go`** (kimi-k3 builder, glm-5.3
+      diseño, qwen3.8-flash spec/QA/auditoría/SEO) y **reserva `deepseek/deepseek-flash`** solo
+      mientras los créditos estén agotados. No existe fallback nativo en opencode (verificado
+      contra el schema oficial: 0 ocurrencias de `fallback`/`retry`), así que el cambio se hace
+      con `scripts/set-agent-models.mjs opencode-go|deepseek|status [--dry-run]`, documentado en
+      `AGENTS.md`. Las temperaturas y permisos de cada agente no cambian entre modos.
+      **Excepción de proceso:** con los créditos de `opencode-go` agotados y `nextjs-builder`
+      indisponible, el orquestador implementó directamente en `app/` (hero V3, header, grafo,
+      CTA, logo). Los cambios están compilando y pasan `tsc --noEmit`, ESLint y `next build`,
+      pero **deben pasar `rules-auditor` y `qa-access` cuando Lorena reactive el QA (D28)**.
+- **D30.** Rediseño estético del hero (orden directa de Lorena): se eliminan las tarjetas
+      orbitales flotantes (se veían mal) y se construye una **constelación 3D en canvas** como
+      ambiente, con topología estable precalculada, twinkle por nodo, campo que responde al
+      cursor, viñeta elíptica y **cobertura del ancho completo** del hero (el cálculo original
+      usaba `Math.min(width, height)` y dejaba el cúmulo reducido a un cuadrado central — el
+      ajuste escala cada eje por su semieje y protege el texto con un dip elíptico). Es la única
+      isla cliente del hero (`"use client"` justificado: necesitaba render loop y puntero), sin
+      dependencias (nada de three.js: ~300 KB por una decoración habrían puesto en riesgo el gate
+      de Lighthouse ≥95). Guardas: DPR ≤1.5, pausa offscreen/pestaña oculta y frame estático con
+      `prefers-reduced-motion`. Además: entrada escalonada de los elementos del hero (**el H1
+      anima solo `transform`** para no retrasar el LCP), el anillo respirante + glow de hover se
+      vuelven universales en `DiscordCta` (nav, hero, menú y cierre), el header pasa a 5rem con
+      superficie `header-veil` (`ink` opaco al 70% → transparente) y **el hero sube por detrás
+      del header (`-mt-20`)** para que el degradado resuelva sobre `ink` y no sobre el blanco del
+      `body`: ese era el corte claro que se veía entre header y hero. Se fija además que el botón
+      de Discord **nunca** puede quedar en dos líneas (`whitespace-nowrap` + `shrink-0`, y el nav
+      recorta enlaces por breakpoint en lugar de comprimir el botón).
+- **D31.** El kit oficial **no tiene variante clara del wordmark** (§0.1: la "Negativa" es verde
+      y la "Degradada" es carbón→turquesa, que sobre `ink` desaparece). Para el header oscuro se
+      usa una **composición**: el isotipo oficial (SímboloNegativo, verde) dentro de un tile
+      `rounded-xl` con borde `brand/40`, más `brand/wordmark-duo.svg`, un **asset derivado** con
+      los **mismos trazados oficiales** (9 glifos, sin redibujar nada) y tinta doble "Tech"
+      `paper` / "ToJob" `brand`. Los archivos oficiales no se alteran; el color de marca se usa
+      dentro de la paleta fija (R24). Geometría verificada: la tinta cae dentro del `viewBox`
+      (sin recortes).
+
+## Línea de tiempo vertical, reorden narrativo y hero V4 (22/09, madrugada)
+
+- **D32.** La landing se recorre como una **línea de tiempo vertical** continua: raíl en el borde
+      izquierdo del `page-container`, un segmento a altura completa por sección (los segmentos
+      contiguos forman una sola línea, sin cálculos entre secciones), relleno `brand` que crece
+      con el scroll y nodo numerado que se enciende al entrar en vista (`animation-timeline:
+      view()`, CSS puro, cero JS; sin soporte la línea se ve completa). "Cómo funciona" abre el
+      raíl en un sub-timeline de pasos (alternado en `xl`, apilado con conector por debajo).
+      **Reorden narrativo** (R22: *"El orden es orientativo menos el hero y el footer"*): Torneos
+      pasa del #5 al #3 para que la página cuente cómo funciona → prueba (torneo vivo) → qué
+      ganás → qué gana la empresa → red → validación → actualidad → CTA. Hero primero y footer
+      último intactos; la declaración que R10 exige para el README queda redactada acá y se sube
+      al README en la Fase 5 (todavía no existe). El orden vive en `content.ts → timelineOrder`
+      (fuente única: de ahí salen los numerales del raíl) y se reflejó en
+      `specs/10-landing-spec.md`; la línea de R22 en el checklist pasa a **"en riesgo,
+      re-auditar"** porque decía "orden del brief sin cambios".
+- **D33.** Cuarta iteración del hero, sobre orden directa de Lorena:
+      1. **Se quita el chip de eyebrow** ("Comunidad tech en español · 100% gratis"): clave
+         eliminada de `messages/es.json` y de la interfaz `Hero` (sin texto muerto, R36).
+      2. **Se quita el raíl del hero**: la puerta del relato no lleva línea; el viaje arranca en
+         el paso 1 (Cómo funciona) y la variante `start` de `TimelineRail` se elimina por quedar
+         sin uso.
+      3. **Centrado del bloque**: se probó dejar el H1 exacto en la línea central
+         (`grid-rows-[1fr_auto_1fr]`) y **se revirtió el mismo día** a pedido de Lorena: el H1, el sub,
+         el CTA y la línea de apoyo se leen como **una sola pieza**, así que lo que se centra es el
+         bloque completo (`flex` centrado + `pt-20` que compensa el header y `pb-0` para que el
+         centro sea el del área visible). También se revirtió el `pl-*` que existía para esquivar
+         el raíl → centrado simétrico.
+      4. **`HeroGraph` v2.2 = campo de grafos con puntitos luminosos.** Iterado en tres pasos el
+         mismo día con Lorena: primero se pidieron grafos "al menos 6× más grandes y más
+         cantidad" (elegida esa escala advertida del entrelazamiento), después que los vértices
+         fueran **puntitos y no círculos**, y finalmente **la mitad del tamaño** de esos grafos.
+         Estado final: **span ~300px** (`CLUSTER_SPREAD` 0.21, mitad del build 6×), **6/8/10
+         clusters** según ancho, vértices de **1.8/2.2/2.6px de radio** con halo a 2.6× y 18% del
+         alpha (techo de núcleo 0.9), **aristas de 1.5px** (alpha ≤0.30), deriva orbital 18–42px,
+         parallax por capa 10/20/36 y cursor de radio 240 con empuje 24. La lección quedó escrita
+         en el código: **un grafo se lee por los enlaces largos entre puntos chicos**, no por
+         discos grandes. El **dip de protección del texto** se mantiene en 560×320 con piso 0.15 y
+         los clusters conservan el sesgo suave fuera de la columna central. Siguen activas todas
+         las guardas (DPR ≤1.5, buffers reutilizados, buckets de alpha, pausa fuera de
+         pantalla/pestaña oculta, frame estático con `reduced-motion`).
+      5. **Glow del hero**: halo ambiental (dos halos `brand`, uno con `glow-pulse` de 7s y otro
+         con `drift` de 18s), franja luminosa bajo el header y foco difuminado detrás del titular.
+         Todo ≤15% de opacidad para no comprometer el contraste AA del H1 (7:1) ni del subtítulo,
+         y todo decorativo (`aria-hidden`, `pointer-events-none`, absoluto → CLS 0).
+       **Estado:** implementado y compilando (`tsc --noEmit`, ESLint y `next build` en verde). El
+       QA sigue **en pausa (D28)**, así que INP/Lighthouse y los contrastes del glow quedan
+       pendientes de medición; la implementación la hizo el orquestador por la excepción de D29.
+- **D34.** 22/09, a pedido de Lorena (referencia visual: cosmos.so): **"Cosmos en tinta"** —
+      el lenguaje del referente se tradujo sin copiar lo que las bases vetan:
+      1. **Muro de tiles flotantes** (`HeroTiles.tsx`, server component, sin JS): 15 fichas
+         inclinadas en 3 capas (ghost `brand/10` con blur, glass con iconos Lucide, brand/coal con
+         el símbolo oficial), rotaciones −12°…+12°, deriva `tile-drift` solo `transform` (≥14s,
+         delays escalonados). **Cero fotografías** → sin coste LCP, sin alt cosmético (R53–R57),
+         todo dentro de la paleta fija (R24). Decorativo: `aria-hidden` + `pointer-events-none`,
+         z-0 bajo el copy (z-10). Posiciones por breakpoint: en móvil solo 2 ghosts en las esquinas
+         inferiores; los anchos aparecen de `xl`.
+      2. **Descartados y por qué**: buscador Cosmos (sin backend, funcionalidad falsa), segundo
+         botón "Get the app" (R11: un solo botón), fondo crema (R24: dominan los 3 colores),
+         fotos de la galería (prohibido inventar + R56).
+      3. **Nav pill**: las anclas de escritorio se envolvieron en una píldora hairline
+         (`border-white/10 bg-white/5 rounded-full`) — eco visual del pill del referente sin
+         fingir un buscador.
+      4. **Símbolo oficial pequeño** (40px) sobre el H1 como marca centrada (eco del wordmark),
+         decorativo; la marca accesible sigue viviendo en el logo del nav.
+      5. Se añadió un **enlace terciario** "Ver cómo funciona" (text link, no botón). → **Queda
+         sustituido por D35.**
+      Implementó el orquestador (excepción D29). `SHOW_GRAPH` se retiró como flag: el campo de
+      grafos vuelve a renderizar siempre (era el estado exigido antes de entregar).
+- **D35.** 22/09, a pedido de Lorena (referencia visual: plantilla "Recruit"): **"Recruit en
+      tinta"** — firma tipográfica del referente aplicada al hero y al cierre, con las 61 reglas
+      intactas:
+      1. **H1 partido en dos líneas editoriales**: línea 1 (pregunta) en `cloud` (7.77:1), línea 2
+         (respuesta) en `paper` con la palabra final en `brand` (6.17:1). Sigue siendo UN `h1` con
+         el mismo texto (R40); `es.json` pasa de `h1` a `line1`/`line2` + `highlight`.
+      2. **Glows al 50%** (`0.3→0.15`, `0.16→0.08`, `0.2→0.1`, `0.14→0.07`) y **muro de tiles al
+         60%** de opacidad: escenario plano y oscuro donde la tipografía manda.
+      3. **Fila de píldoras-ancla** bajo el CTA (`Cómo funciona · Torneos · Talento · Empresas`):
+         `<Link>` reales a las secciones (R43/R45), etiquetas reusadas de `nav.links` (R36),
+         estilo outline (nunca relleno) para que el Discord siga siendo el ÚNICO botón del hero
+         (R11). `<nav>` propio con `aria-label` distinto al del header (landmarks).
+      4. **Muro de stacks** (`React · Next.js · Laravel · Node · Python · Rust · AWS`) como eco
+         honesto del "logo wall": tecnologías reales, cero empresas inventadas, cero cifras falsas
+         (prohibido inventar, D7). Texto `cloud` AA.
+      5. **Cierre espejado**: `closing.h2` → `line1`/`line2` con el mismo tratamiento.
+      6. **Descartados**: chip "Trusted by 100k+" (cifras inventadas; y el eyebrow lo borró
+         Lorena en D33 → no vuelve sin pedido explícito), buscador de vacantes (sin backend +
+         contradice el posicionamiento), botón blanco del nav (R24: domina la paleta; el CTA
+         sigue verde), job cards (no hay ofertas que listar).
+      **Pendiente:** re-auditoría enfocada (R11 pills-vs-botones, R26, R40, R44, contraste
+      `cloud`/`brand`) y decisión de Lorena sobre el H1 editorial propuesto aparte
+      ("El empleo llega a quien ya estaba construyendo." — aún NO aplicado).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

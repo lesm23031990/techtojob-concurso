@@ -35,7 +35,7 @@
 | R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | cumplida (audit 22/09) |
 | R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | cumplida (audit 22/09) |
 | R21 | Footer: "Enlaces por bloques, redes y legal" | OBL | D50 | cumplida (audit 22/09) |
-| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | cumplida (audit 22/09) |
+| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | **en riesgo** - reordenada 22/09 (D32) para narrar como linea de tiempo (Torneos del #5 al #3); hero primero y footer ultimo intactos; declaracion R10 pendiente en el README; RE-AUDITAR al reactivar QA |
 | R23 | Objetivo general: "explicar qué somos, a quién le sirve y conseguir que la gente entre al Discord" | EVAL | D3 | cumplida (audit 22/09) |
 
 ## C. Identidad de marca

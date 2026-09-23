@@ -27,25 +27,48 @@ Ambas en el mismo ecosistema: comunidad + torneos + networking.
 - Versión bilingüe entregada: **NO** por restricción de tiempo (decisión D-14); se documenta en README
   que la arquitectura está lista.
 
-## Estructura de secciones (orden propuesto)
+## Estructura de secciones (orden narrativo)
 
-Orden orientativo salvo hero primero y footer último (R22). Este orden NO se reordena respecto
-al brief → no requiere justificación extra en README (R10).
+Orden orientativo salvo hero primero y footer último (R22: *"El orden es orientativo menos el
+hero y el footer"*). **Decisión (22/09, D32):** se reordena respecto del orden propuesto del
+brief para que la página se lea como una línea de tiempo — explicación → prueba → qué ganás →
+qué gana la empresa → comunidad → confirmación → actualidad → CTA final. El reorden se declara
+en el README y la declaración queda redactada en `docs/DECISIONES.md` (D32) hasta que el README
+exista (Fase 5), según exige R10.
 
 | # | Sección | Ancla | Qué comunica (brief disponible) | Regla |
 |---|---|---|---|---|
 | 0 | Nav (header) | — | logo + enlaces a secciones + CTA Discord | R42 |
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
-| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (3-4 pasos visuales) | R12 |
-| 3 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
-| 4 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
-| 5 | Torneos | `#torneos` | Competiciones abiertas como esta | R15 |
+| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **Acá el raíl de página se abre en el sub-timeline de pasos** | R12 |
+| 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva | R15 |
+| 4 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
+| 5 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
 | 6 | Networking | `#networking` | Canales por área, gente del sector | R16 |
 | 7 | Testimonios | `#testimonios` | 4-5 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales) | R17 |
 | 8 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo) | R18 |
 | 9 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
-| 10 | Cierre | `#unete` | Último empujón: repetir CTA Discord | R20 |
+| 10 | Cierre | `#unete` | Último empujón: repetir CTA Discord (nodo "meta" del raíl) | R20 |
 | 11 | Footer | — | Enlaces por bloques (secciones, comunidad, legal), redes (Q5), copyright | R21 |
+
+## Línea de tiempo vertical (estructura compartida, D32)
+
+La página se recorre como una línea de tiempo continua, con el Hero como **puerta** y el Cierre
+como **meta**. Orden narrativo de arriba. Especificación:
+
+| Elemento | Spec | Regla/nota |
+|---|---|---|
+| **Raíl** | Línea continua en el borde izquierdo del `page-container`. **Cada sección dibuja su propio segmento a altura completa** (`inset-y-0`) y los segmentos contiguos forman una sola línea: sin cálculo entre secciones | Decorativo → `aria-hidden` + `pointer-events-none` (R34: no estorba; no es interactivo) |
+| **Relleno animado** | Sobre el segmento, relleno `brand` con `scaleY` 0→1 vía `animation-timeline: view()` (CSS puro, cero JS) | Sin soporte de scroll-driven animations → **línea dibujada completa** (nunca invisible) |
+| **Nodo** | Círculo de 28px centrado en el raíl, alineado con el `h2` de la sección (`top-20 lg:top-32`, que es el padding de la sección). Contiene el numeral del paso (aria-hidden). Se activa al entrar en vista | **Sin etiqueta de texto**: el rótulo del paso ES el `h2` de la sección → no se duplica contenido (R36/SEO) |
+| **Variantes de nodo** | `step` (secciones) y `goal` (Cierre: círculo de 40px relleno `brand`). El hero **no lleva raíl** ni nodo: es la puerta y el viaje arranca en el paso 1 | — |
+| **Tones** | Claro: raíl `line` + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/12` + relleno/nodo `brand`. Franja `brand` (newsletter): raíl `ink/20`, relleno y nodo `ink` | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
+| **Sub-timeline** | En "Cómo funciona" el raíl de página se desvanece y los 4 pasos pasan a un timeline **central alternado** (`xl`), apilado con espina izquierda por debajo de `xl`. Títulos: los ya existentes en `es.json` | R12; sin copy nuevo (R36) |
+| **Anchos** | Raíl completo desde `xl` (1280+); compacto (mismo raíl, contenido con `pl-7`) entre 360 y 1279. Verificar que las rejillas de 4 y 3 columnas no se aprieten | R38 (responsive 360/768/1024/1440) |
+
+> **Pendiente de auditoría:** el reorden deja obsoleta la línea previa de R22 en
+> `specs/00-checklist-reglas.md` ("orden del brief sin cambios") → debe re-auditarse cuando se
+> reactive el QA (D28).
 
 ## Copy
 

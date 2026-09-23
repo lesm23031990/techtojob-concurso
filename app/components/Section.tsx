@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import TimelineRail from "@/components/TimelineRail";
+import { timelineStep } from "@/content";
 
 export type SectionTone = "paper" | "mist" | "ink" | "brand";
 
@@ -25,7 +27,14 @@ interface SectionProps {
 
 /**
  * Semantic section wrapper: <section id aria-labelledby> + vertical rhythm
- * (5rem mobile / 8rem desktop, design-system §5) + page container.
+ * (5rem mobile / 8rem desktop, design-system §5) + page container + its
+ * segment of the page-wide vertical timeline (D32).
+ *
+ * The rail is a sibling of the content, not a wrapper: the content is indented
+ * enough to clear it (R38-safe at 360px) while the rail keeps spanning the
+ * section's full height so the line stays continuous from top to bottom.
+ * The step numeral comes from `timelineOrder` (content.ts) — the single source
+ * of truth for the narrative order, so reordering the page is one list edit.
  */
 export default function Section({
   id,
@@ -34,13 +43,17 @@ export default function Section({
   className = "",
   children,
 }: SectionProps) {
+  const step = timelineStep(id);
   return (
     <section
       id={id}
       aria-labelledby={headingId}
-      className={`${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
+      className={`relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
     >
-      <div className="page-container reveal">{children}</div>
+      <TimelineRail tone={tone} step={step} />
+      <div className="page-container reveal">
+        <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">{children}</div>
+      </div>
     </section>
   );
 }

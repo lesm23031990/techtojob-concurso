@@ -23,13 +23,25 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
 | 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 |
 
+> **Pendiente (22/09):** la landing se reordena y se lee como **línea de tiempo vertical** (D32).
+> El hero pasó por dos iteraciones más el mismo día: **D34 "Cosmos en tinta"** (muro de tiles
+> flotantes decorativos + nav pill + símbolo sobre el H1) y **D35 "Recruit en tinta"** (H1 partido
+> en dos líneas editoriales, glows al 50%, tiles al 60%, píldoras-ancla + muro de stacks, cierre
+> espejado). El campo de grafos vuelve a estar siempre activo (el flag `SHOW_GRAPH` se retiró).
+> Todo está implementado y compilando (`tsc` + ESLint + `next build` en verde), pero **QA en pausa
+> por decisión de Lorena (D28)**: nada de Playwright/Lighthouse/`rules-auditor` hasta su
+> autorización explícita → quedan sin medir el INP del canvas, los contrastes del glow y la
+> re-auditoría de R22 (reorden) y R11 (píldoras-ancla vs "un solo botón"). Implementó el
+> orquestador por agotamiento de créditos de `opencode-go` (D29). La declaración del reorden para
+> el README (R10) está redactada en D32 y se sube en la Fase 5.
+
 ## 3. Fuentes de verdad (jerarquía)
 
 1. Bases oficiales del concurso y brief (material de entrada, no versionado por privacidad).
 2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
 3. `AGENTS.md` — reglas de proceso y gates de calidad.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D26);
+Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D33);
 nada de lo construido se asumió sin fuente.
 
 ## 4. Método: spec-driven + multiagente

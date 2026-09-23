@@ -12,6 +12,7 @@
     "skipLink": "Saltar al contenido",
     "mainLabel": "Contenido principal",
     "navLabel": "Navegación principal",
+    "quickNavLabel": "Atajos a secciones",
     "footerNavLabel": "Navegación del pie de página",
     "mobileNavLabel": "Navegación móvil",
     "menuOpen": "Abrir menú de navegación",
@@ -39,10 +40,13 @@
     "ctaShort": "Entrar al Discord"
   },
   "hero": {
-    "h1": "No es un portal de empleo. Es una comunidad.",
+    "highlight": "comunidad.",
+    "line1": "No es un portal de empleo.",
+    "line2": "Es una comunidad.",
     "sub": "TechToJob reúne a desarrolladores y empresas tech en español. Aquí construyes, participas y te conocen antes de que exista una vacante.",
     "cta": "Entrar al Discord de TechToJob",
-    "support": "Entrar no cuesta nada. Ni un CV en PDF, ni una espera de semanas."
+    "support": "Entrar no cuesta nada. Ni un CV en PDF, ni una espera de semanas.",
+    "stackWall": "React · Next.js · Laravel · Node · Python · Rust · AWS"
   },
   "howItWorks": {
     "h2": "Cómo funciona",
@@ -153,7 +157,8 @@
     "success": "Recibido: el parte de los lunes ya cuenta contigo. (Maqueta: esta web aún no envía correos; el destino del formulario se definirá tras el torneo.)"
   },
   "closing": {
-    "h2": "Ya sabes cómo funciona. Lo que falta es que entres.",
+    "line1": "Ya sabes cómo funciona.",
+    "line2": "Lo que falta es que entres.",
     "copy": "Hay gente del sector al otro lado del enlace, construyendo cosas ahora mismo. La puerta es el Discord.",
     "cta": "Entrar al Discord de TechToJob"
   },

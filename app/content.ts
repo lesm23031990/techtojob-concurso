@@ -19,6 +19,7 @@ export interface A11y {
   skipLink: string;
   mainLabel: string;
   navLabel: string;
+  quickNavLabel: string;
   footerNavLabel: string;
   mobileNavLabel: string;
   menuOpen: string;
@@ -47,10 +48,17 @@ export interface Discord {
 }
 
 export interface Hero {
-  h1: string;
+  /** Closing word of `line2`, rendered in brand — must occur exactly once. */
+  highlight: string;
+  /** Headline, line 1 (muted `cloud`) — D35 split, still ONE <h1> (R40). */
+  line1: string;
+  /** Headline, line 2 (white + brand highlight word). */
+  line2: string;
   sub: string;
   cta: string;
   support: string;
+  /** Muted one-line wall of technologies (D35, factual — no fake companies). */
+  stackWall: string;
 }
 
 export interface Step {
@@ -74,6 +82,14 @@ export interface AudienceSection {
 export interface SimpleSection {
   h2: string;
   copy: string;
+}
+
+export interface Closing {
+  /** Two-line headline (D35): line1 muted `cloud`, line2 `paper`. */
+  line1: string;
+  line2: string;
+  copy: string;
+  cta: string;
 }
 
 export interface Testimonial {
@@ -161,7 +177,7 @@ export interface Messages {
   testimonials: Testimonials;
   news: News;
   newsletter: Newsletter;
-  closing: SimpleSection & { cta: string };
+  closing: Closing;
   footer: Footer;
 }
 
@@ -174,7 +190,10 @@ export const site = {
   locale: "es",
 } as const;
 
-/** Anchor targets mirror specs/10-landing-spec.md (R45: readable anchors). */
+/** Anchor targets mirror specs/10-landing-spec.md (R45: readable anchors).
+ *  Order = the page's narrative order (D32): the timeline reads
+ *  explanation → proof → what you get → what companies get → community →
+ *  validation → news → CTA. */
 export interface NavItem {
   href: string;
   label: string;
@@ -183,15 +202,42 @@ export interface NavItem {
 export const navItems: NavItem[] = [
   { href: "#inicio", label: messages.nav.links.home },
   { href: "#como-funciona", label: messages.nav.links.howItWorks },
+  { href: "#torneos", label: messages.nav.links.tournaments },
   { href: "#talento", label: messages.nav.links.talent },
   { href: "#empresas", label: messages.nav.links.companies },
-  { href: "#torneos", label: messages.nav.links.tournaments },
   { href: "#networking", label: messages.nav.links.networking },
   { href: "#testimonios", label: messages.nav.links.testimonials },
   { href: "#noticias", label: messages.nav.links.news },
   { href: "#newsletter", label: messages.nav.links.newsletter },
   { href: "#unete", label: messages.nav.links.join },
 ];
+
+/**
+ * Narrative order of the landing body (D32), excluding the hero — the door —
+ * and the footer. R22 only fixes the hero first and the footer last, so this
+ * order is ours and is declared in the README (R10).
+ *
+ * Single source of truth for the vertical timeline: the step numeral each
+ * section shows on the rail, and the order documented in
+ * specs/10-landing-spec.md and app/app/page.tsx.
+ */
+export const timelineOrder: readonly string[] = [
+  "como-funciona",
+  "torneos",
+  "talento",
+  "empresas",
+  "networking",
+  "testimonios",
+  "noticias",
+  "newsletter",
+  "unete",
+];
+
+/** 1-based timeline position of a section id (undefined = no step numeral). */
+export function timelineStep(id: string): number | undefined {
+  const index = timelineOrder.indexOf(id);
+  return index >= 0 ? index + 1 : undefined;
+}
 
 /** Build the Organization JSON-LD object (contest rule R52). */
 export function organizationJsonLd(baseUrl: string) {
