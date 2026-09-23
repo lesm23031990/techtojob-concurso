@@ -20,13 +20,16 @@ import DiscordCta from "@/components/DiscordCta";
  * prizes list and the hall of fame. Asymmetric on purpose: the active card
  * takes 7 columns and the two right blocks stack in the remaining 5.
  *
- * Data honesty (brief + J2): the contest's bases forbid invented figures,
- * deadlines and hiring promises, so every value here is SAMPLE data and the
- * section says so out loud (`mockNote`, same pattern as Testimonios/Noticias).
- * The time block ships placeholders on purpose: no date and no client island
- * (D56/D71), so it can never read "00:00:00" after a deadline.
+ * Data honesty (brief + J2): the running tournament, its challenge and the
+ * closing schedule are the REAL Torneo #2 facts (D72); prizes and winners stay
+ * SAMPLE data and the section says so out loud (`mockNote`, same pattern as
+ * Testimonios/Noticias). The closing schedule is STATIC on purpose: no client
+ * island and no date to expire (D56/D71/D72), so it can never read "00:00:00"
+ * after the deadline.
  *
- * Motion: `.reveal` per beat with `--i` (D62/D64); CSS-only, no islands.
+ * Motion: `.reveal-left` per beat with `--i` — the SAME entrance as the
+ * section above (#como-funciona, D69), by author request (D72): every block
+ * slides in from the rail. CSS-only, no islands.
  * The countdown digits use Sora `tabular-nums` (monospaced figures with the
  * single allowed typeface — R58/R59) instead of adding a mono font.
  */
@@ -56,13 +59,13 @@ export default async function Tournaments() {
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="torneos-heading"
-            className="reveal text-h2 font-bold text-brand text-balance lg:text-h2-lg"
+            className="reveal-left text-h2 font-bold text-brand text-balance lg:text-h2-lg"
             style={{ "--i": 0 } as CSSProperties}
           >
             {h2}
           </h2>
           <p
-            className="reveal mt-6 max-w-[65ch] text-body text-cloud lg:text-lead"
+            className="reveal-left mt-6 max-w-[65ch] text-body text-cloud lg:text-lead"
             style={{ "--i": 1 } as CSSProperties}
           >
             {copy}
@@ -71,7 +74,7 @@ export default async function Tournaments() {
           <div className="mt-12 grid grid-cols-1 gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-x-12">
             {/* 1 · The running tournament */}
             <article
-              className="reveal border-t border-hairline-dark pt-6 lg:col-span-7"
+              className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-7"
               style={{ "--i": 2 } as CSSProperties}
             >
               <p className="text-label font-semibold uppercase text-cloud">
@@ -88,30 +91,38 @@ export default async function Tournaments() {
                 <span className="text-small text-cloud">{active.status}</span>
               </div>
 
-              {/* 2 · The time — STATIC by design (D71): no date, no island. */}
+              {/* 2 · The closing schedule — REAL data (D72), STATIC by design:
+                  no date logic, no island, so it never expires. */}
               <div className="mt-8 border-t border-hairline-dark pt-6">
                 <p className="text-label font-semibold uppercase text-cloud">
                   {timer.label}
                 </p>
-                <ul className="mt-3 flex gap-8">
-                  {timer.units.map((unit) => (
-                    <li key={unit.name}>
-                      <span className="block text-h2 font-bold tabular-nums text-paper">
-                        {unit.value}
-                      </span>
-                      <span className="mt-1 block text-label uppercase text-cloud">
-                        {unit.name}
-                      </span>
-                    </li>
+                <p className="mt-3 text-lead font-semibold tabular-nums text-paper">
+                  {timer.heading}
+                </p>
+                <p className="mt-2 max-w-prose text-small text-cloud">
+                  {timer.note}
+                </p>
+                <dl className="mt-5 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                  {timer.zones.map((zone) => (
+                    <div
+                      key={zone.region}
+                      className="flex items-baseline justify-between gap-4 border-b border-hairline-dark pb-2"
+                    >
+                      <dt className="text-small text-cloud">{zone.region}</dt>
+                      <dd className="text-small font-semibold tabular-nums text-paper">
+                        {zone.closing}
+                      </dd>
+                    </div>
                   ))}
-                </ul>
+                </dl>
               </div>
             </article>
 
             <div className="flex flex-col gap-10 lg:col-span-5">
               {/* 3 · The prizes */}
               <div
-                className="reveal border-t border-hairline-dark pt-6"
+                className="reveal-left border-t border-hairline-dark pt-6"
                 style={{ "--i": 3 } as CSSProperties}
               >
                 <p className="text-label font-semibold uppercase text-cloud">
@@ -136,7 +147,7 @@ export default async function Tournaments() {
 
               {/* 4 · The hall of fame (social proof) */}
               <div
-                className="reveal border-t border-hairline-dark pt-6"
+                className="reveal-left border-t border-hairline-dark pt-6"
                 style={{ "--i": 4 } as CSSProperties}
               >
                 <p className="text-label font-semibold uppercase text-cloud">
@@ -168,7 +179,7 @@ export default async function Tournaments() {
           </div>
 
           <p
-            className="reveal mt-12 border-t border-hairline-dark pt-6 text-small text-cloud"
+            className="reveal-left mt-12 border-t border-hairline-dark pt-6 text-small text-cloud"
             style={{ "--i": 5 } as CSSProperties}
           >
             {mockNote}

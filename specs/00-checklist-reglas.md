@@ -4,6 +4,9 @@
 > Tipos: **OBL** obligatoria · **EVAL** evaluable (suma en rúbrica) · **NEG** negativa (prohibida) · **META** requisito del entregable.
 > Estados: pendiente / cumplida / en riesgo / violada / n-a.
 > ⚠️ **FECHA DE ENTREGA: miércoles 23/09/2026 23:59** ("Nada del 24 en adelante", D207). Revisión 24, ganador 25 (D241).
+> **Cierre real por huso horario (D72):** México jue 24 · 00:00 · Colombia/Perú/Ecuador · 01:00 ·
+> Venezuela/Bolivia · 02:00 · Argentina/Uruguay/Chile · 03:00 · Canarias · 07:00 · España peninsular · 08:00.
+> Se cierra cuando es medianoche en México, que es el último. (Entregas tardías: solo con justificación.)
 
 ## A. Entregables (META)
 

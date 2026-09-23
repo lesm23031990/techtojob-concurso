@@ -892,6 +892,25 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `app/components/sections/Tournaments.tsx`, `specs/10`, `specs/11`, `docs/design-system.md` (§7)
       y `GUIA.md`.
 
+- **D72.** 23/09, Lorena aporta el anuncio REAL de cierre/entrega del Torneo #2 y pide usarlo en
+      `#torneos` ("básate en esto para rellenar ese espacio"). **Decisión (opción A aprobada):**
+      (1) el **torneo en curso** pasa a ser el real: `Torneo #2 — la landing de TechToJob`, reto
+      "Diseña y construye esta landing con Next.js, TypeScript y Tailwind. Solo frontend y SEO",
+      estado "Abierto a cualquiera del servidor" (dato ya publicado en Noticias).
+      (2) el bloque **tiempo** deja los placeholders y muestra el **cierre real** + la **tabla de husos**
+      (México jue 24 00:00 · Colombia/Perú/Ecuador 01:00 · Venezuela/Bolivia 02:00 ·
+      Argentina/Uruguay/Chile 03:00 · Canarias 07:00 · España peninsular 08:00), en **estático**
+      (sin isla): hoy es el día de cierre y un contador vivo quedaría expirado justo cuando el jurado
+      lo vea. Horas con `tabular-nums`.
+      (3) premios y ganador siguen siendo **maqueta declarada**, con `mockNote` acotada ("los premios y
+      el ganador son de ejemplo: el torneo, su reto y la fecha son reales"). No se inventan premios ni
+      promesas de empleo (brief/J2).
+      (4) a pedido de Lorena, la entrada de `#torneos` pasa de `.reveal` a **`.reveal-left`**: la MISMA
+      animación que la sección de arriba (`#como-funciona`, D69) — cada bloque desliza desde el raíl.
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
+      `specs/00` (fecha/husos), `specs/10`, `specs/11`, `docs/design-system.md` (§7, §9) y `GUIA.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

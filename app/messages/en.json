@@ -105,20 +105,25 @@
   "tournaments": {
     "h2": "Torneos",
     "copy": "De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno.",
-    "mockNote": "Sección de ejemplo: el torneo activo, los premios y los ganadores reales se anuncian en el Discord.",
+    "mockNote": "Los premios y el ganador son de ejemplo: el torneo, su reto y la fecha de cierre son los reales del Torneo #2.",
     "active": {
       "label": "Torneo en curso",
-      "title": "Reto de frontend",
-      "challenge": "Diseña y construye una landing accesible con Next.js en una semana.",
-      "status": "Próxima edición",
+      "title": "Torneo #2 — la landing de TechToJob",
+      "challenge": "Diseña y construye esta landing con Next.js, TypeScript y Tailwind. Solo frontend y SEO.",
+      "status": "Abierto a cualquiera del servidor",
       "cta": "Entrar al Discord"
     },
     "timer": {
       "label": "Cierre de entregas",
-      "units": [
-        { "value": "—", "name": "Días" },
-        { "value": "—", "name": "Horas" },
-        { "value": "—", "name": "Minutos" }
+      "heading": "Miércoles 23, 23:59 (México) — cierre definitivo jueves 24, 00:00",
+      "note": "Cerramos cuando sea medianoche en México, que es el último en cerrar.",
+      "zones": [
+        { "region": "México", "closing": "jue 24 · 00:00" },
+        { "region": "Colombia · Perú · Ecuador", "closing": "jue 24 · 01:00" },
+        { "region": "Venezuela · Bolivia", "closing": "jue 24 · 02:00" },
+        { "region": "Argentina · Uruguay · Chile", "closing": "jue 24 · 03:00" },
+        { "region": "Canarias", "closing": "jue 24 · 07:00" },
+        { "region": "España peninsular", "closing": "jue 24 · 08:00" }
       ]
     },
     "prizes": {

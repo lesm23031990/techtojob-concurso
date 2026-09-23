@@ -31,10 +31,11 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
   ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
   a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **Torneos: REDISEÑADO (23/09, D71) y a la espera del visto bueno de Lorena.** Deja de ser `h2 +
-  párrafo` y pasa a **4 pilares en rejilla hairline sobre `ink`** (torneo en curso + CTA Discord, tiempo
-  estático D/H/M con Sora `tabular-nums`, el botín y el salón de la fama), todo rotulado como **maqueta
-  declarada** para no inventar cifras, plazos ni ganadores (brief/J2). Sin islas nuevas.
+- **Torneos: REDISEÑADO (23/09, D71) y ampliado con datos reales (D72), a la espera del visto bueno de
+  Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares en rejilla hairline sobre `ink`**: torneo
+  real (`Torneo #2 — la landing de TechToJob` + CTA Discord), **cierre real con tabla de husos**
+  (estático, Sora `tabular-nums`), el botín y el salón de la fama (estos dos, **maqueta declarada**).
+  Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
 - **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — talento, empresas, networking,
   testimonios, noticias y newsletter (las tres primeras son editoriales; las dos bento, ya con D61;
   newsletter, franja `brand`). Punto de partida = commit de D71. Después, la **Fase 5** (repo público,
@@ -242,6 +243,14 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > `mockNote` (maqueta declarada) para no inventar cifras, plazos ni ganadores (brief/J2); sin marcas de
 > terceros. Cero islas nuevas; `tsc` + ESLint + `next build` en verde. **Pendiente de visto bueno visual
 > de Lorena.**
+
+> **Hecho (23/09, D72 — datos reales del Torneo #2 en `#torneos`):** Lorena aportó el anuncio real de
+> cierre/entrega y eligió la opción A. El **torneo en curso es el real** (`Torneo #2 — la landing de
+> TechToJob`) y el bloque de **tiempo** deja los placeholders para mostrar el **cierre real + tabla de
+> husos** (México jue 24 · 00:00 → España · 08:00), en **estático** (hoy es el cierre: un contador vivo
+> quedaría expirado para el jurado). Premios y ganador siguen como **maqueta declarada** (`mockNote`
+> acotada). Además, la entrada de `#torneos` pasa a **`.reveal-left`**, la misma animación que
+> `#como-funciona` (pedido de Lorena). `tsc` + ESLint + `next build` en verde.
 
 ## 3. Fuentes de verdad (jerarquía)
 

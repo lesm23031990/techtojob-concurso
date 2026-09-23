@@ -159,19 +159,22 @@ export interface TournamentWinner {
   outcome: string;
 }
 
-export interface TournamentTimeUnit {
-  value: string;
-  name: string;
+export interface TournamentZone {
+  region: string;
+  closing: string;
 }
 
 /**
- * "Torneos" (D71). Four pillars: the running tournament, the time slot, the
- * prizes and the hall of fame. All of it is SAMPLE data declared on the page
- * (`mockNote`) — same honesty pattern as Testimonios/Noticias; nothing here may
- * be read as a real deadline, prize or hiring promise (brief + J2).
+ * "Torneos" (D71/D72). Four pillars: the running tournament, the closing
+ * schedule, the prizes and the hall of fame.
  *
- * The time block is STATIC on purpose: no client island and no date to expire
- * (D56/D71), so the units ship as placeholders.
+ * The active tournament, its challenge and the closing date are the REAL
+ * Torneo #2 facts (D72); prizes and winners are still SAMPLE data declared on
+ * the page (`mockNote`) — same honesty pattern as Testimonios/Noticias; nothing
+ * here may be read as a real prize or hiring promise (brief + J2).
+ *
+ * The closing schedule is STATIC on purpose: no client island and no date to
+ * expire (D56/D71/D72), so it can never read "00:00:00" after the deadline.
  */
 export interface Tournaments {
   h2: string;
@@ -186,7 +189,9 @@ export interface Tournaments {
   };
   timer: {
     label: string;
-    units: TournamentTimeUnit[];
+    heading: string;
+    note: string;
+    zones: TournamentZone[];
   };
   prizes: {
     label: string;
