@@ -170,7 +170,7 @@
   box-shadow: 0 18px 40px -24px rgb(47 52 54 / 0.32);
 }
 
-/* Logo swap (dark wordmark vs official charcoal lockup on light). */
+/* Logo swap: the same tile+wordmark composite in both polarities (D55). */
 .header-logo-light {
   display: none;
 }

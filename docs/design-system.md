@@ -42,13 +42,37 @@ Hallazgos que condicionan las decisiones:
 
 Regla: `-light` = para fondo oscuro (la variante verde). SVG siempre en runtime; PNG/PDF solo como archivo muerto del repo del concurso, NO entran a `app/`.
 
+### 2.2 Composite del header — medidas y clases exactas (revisión del estado claro, D47)
+
+El header es el único punto donde el logo NO es un asset único: es un composite de dos piezas
+(tile + wordmark) para que ambas polaridades tengan el mismo peso visual. Las medidas son
+idénticas en `dark` y `light`; solo cambian el `src` del isotipo y los tokens de color:
+
+| Pieza | Clases comunes | Superficie `ink` (dark) | Superficie `paper` (light) |
+|---|---|---|---|
+| Contenedor | `flex items-center gap-2.5` | — | — |
+| Tile | `grid h-10 w-10 shrink-0 place-items-center rounded-none` | `border border-brand/40 bg-white/5` | `border border-brand bg-ink/5` |
+| Isotipo (`priority`, `alt=""`) | `h-6 w-6` (24px) | `brand/logo-symbol-light.svg` (verde `#84c0bf`) | `brand/logo-symbol.svg` (carbón `#303436`) |
+| Wordmark (`priority`, `alt=""`) | `h-5 w-auto sm:h-6`, `width=178 height=24` | `brand/wordmark-duo.svg` (`paper` + `brand`) | `brand/wordmark-ink.svg` (carbón `#303436`) |
+
+Ratios medidos (WCAG 2.1): isotipo carbón sobre `paper` **12.58:1** ✅ · wordmark carbón sobre
+`paper` **12.58:1** ✅ · borde `brand` sólido sobre `paper` **2.04:1** (decorativo: el tile no
+transmite información; el nombre accesible es el `aria-label` del enlace). El borde del tile
+oscuro (`brand/40` sobre `ink`) mide **2.23:1**; por eso en claro el borde va **sin alpha** — el
+mismo `brand/40` diluido sobre blanco caería a 1.31:1 y el marco desaparecería. Es el único
+ajuste asimétrico, y es por paridad percibida, no por capricho.
+
+`wordmark-ink.svg` es un **derivado documentado** (mismo criterio que `wordmark-duo.svg`, D31):
+idénticos contornos y `viewBox` (`176 26 934 126`), los `fill` a carbón `#303436`. Ningún archivo
+oficial se altera. Se anota en el README (§Fuentes y créditos, R9).
+
 ---
 
 ## 2. Tabla de uso de logos por ubicación
 
 | # | Ubicación | Archivo exacto (destino) | Fondo | Justificación |
 |---|---|---|---|---|
-| a | **Navbar** | **Adaptativo (D47)**: `data-header-surface="dark"` → composición isotipo `brand/logo-symbol-light.svg` (SímboloNegativo) dentro de un tile cuadrado (`rounded-none`, D42) con borde `brand/40` + wordmark derivado `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`). `data-header-surface="light"` → lockup oficial carbón `brand/logo-horizontal.svg` | `ink`/`paper` según la sección | Sobre `ink` la variante oficial es la Negativa verde (6.17:1, §0.1); en claro manda el lockup oficial Positivo (carbón). El `wordmark-duo` es un **derivado** documentado (D31/D47), no un recoloreo. Tile `h-10 w-10`, wordmark `h-5 sm:h-6`. Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
+| a | **Navbar** | **Adaptativo (D47), composite simétrico**: `data-header-surface="dark"` → isotipo `brand/logo-symbol-light.svg` (SímboloNegativo verde) en tile `h-10 w-10 rounded-none border-brand/40 bg-white/5` + `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`). `data-header-surface="light"` → **la MISMA composición en polaridad clara** (revisión de D47 pedida por Lorena): isotipo oficial `brand/logo-symbol.svg` (Positivo carbón) en tile `h-10 w-10 rounded-none border-brand bg-ink/5` + `brand/wordmark-ink.svg` (derivado monocromo carbón). Medidas y ratios exactos en §2.2 | `ink`/`paper` según la sección | Cada superficie usa la variante OFICIAL correcta: Positivo en claro, Negativo en oscuro (el mark no se recolorea, se elige). `wordmark-duo.svg` **no sirve en claro**: su mitad "Tech" es `#ffffff` → **1.00:1** sobre `paper` (invisible), no es una simple excepción de logotipo; y "ToJob" verde daría 2.04:1, prohibido por R26 (§3.1 #10). En claro el verde queda **solo en el borde del tile** (detalle decorativo, permitido por R26). Ambas polaridades comparten tile `h-10 w-10`, wordmark `h-5 sm:h-6` y `gap-2.5` → idéntico peso (228px a `sm`). Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
 | b | **Hero** | `brand/logo-symbol-gradient.svg` (Degradado) como marca de agua decorativa al 10% (D43, igual que Torneos/Cierre) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). La marca de agua en la esquina da identidad sin robar jerarquía |
 | c | **Footer** | `brand/logo-horizontal-light.svg` (v1Negativo) | `ink` oscuro | Verde sobre carbón = 6.17:1 ✅. Alto 32px. Es la única marca del footer |
 | d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); fallback PNG: `logo-symbol.svg` exportado a 180×180 sobre fondo blanco para `apple-touch-icon.png` y a 512×512 con fondo `brand` y símbolo carbón para `icon-512.png` (maskable) | — | El símbolo cuadrado es la única variante legible a 16–32px. Carbón sobre blanco del navegador ✅; nunca Degradado en favicon (las bandas oscuras desaparecen a tamaño miniatura) |
@@ -246,7 +270,7 @@ La página se lee como **una línea de tiempo vertical** (D32): el Hero es la pu
 
 | # | Sección | Fondo | Énfasis y rol del verde |
 |---|---|---|---|
-| 0 | Nav | **Adaptativo (D47/D49)**: `ink` sobre secciones oscuras y `paper` sobre claras (barra sólida + franja de disolución debajo) | Barra que **se funde con la sección que tiene detrás** (crossfade 250ms) y, al scrollear, suma una hairline de progreso `brand`. Enlaces `paper`/`ink` según superficie, logo compuesto (§2a) o lockup oficial en claro, scrollspy activo y CTA verde compacto siempre visible. Mismo eje 72rem que el contenido |
+| 0 | Nav | **Adaptativo (D47/D49)**: `ink` sobre secciones oscuras y `paper` sobre claras (barra sólida + franja de disolución debajo) | Barra que **se funde con la sección que tiene detrás** (crossfade 250ms) y, al scrollear, suma una hairline de progreso `brand`. Enlaces `paper`/`ink` según superficie, el MISMO composite tile+wordmark en ambas polaridades (§2a/§2.2), scrollspy activo y CTA verde compacto siempre visible. Eje full-bleed con gutters del sistema (D53) |
 | 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia, marca de agua del símbolo al 10% y CTA relleno `brand` (`DiscordCta size="hero"`, estilo único D46) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
 | 2 | Cómo funciona (**paso 1**) | `paper` | **D38 bento asimétrico**: 4 celdas hairline con numeral fantasma y regla `brand` decorativa; el raíl de página la cruza igual que al resto (sin sub-timeline) |
 | 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15) |

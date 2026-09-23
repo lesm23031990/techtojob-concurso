@@ -51,12 +51,16 @@ function desktopTier(href: string): DesktopNavTier {
  * sit over a translucent edge; the default state is dark, so the server render
  * is already correct (CLS 0) and without JS the bar simply stays ink.
  *
- * The dark logo is a composite built from OFFICIAL assets: the green `Negativo`
- * symbol (§0.1: on ink the green mark reads 6.17:1) inside a square tile, plus
- * a derived two-tone wordmark (same official outlines; "Tech" in paper,
- * "ToJob" in brand). On light surfaces it swaps to the official charcoal
- * horizontal lockup (6.75:1 on paper). No official file was altered and the
- * accessible name comes from the link's aria-label, not from the images.
+ * The logo is the SAME two-piece composite in both polarities (D55): an
+ * official symbol inside a square tile plus a wordmark, so both surfaces carry
+ * identical weight (228px at sm). On ink the tile holds the green `Negativo`
+ * symbol (§0.1: 6.17:1) and the two-tone `wordmark-duo` (derived, D31); on
+ * paper it holds the official charcoal `Positivo` symbol (12.58:1) and the
+ * derived mono charcoal `wordmark-ink` (same outlines, recoloured, D55). Only
+ * the tile border differs — solid `brand` on paper, `brand/40` on ink — because
+ * a diluted green on white would vanish (the border is decoration only, R26).
+ * No official file was altered and the accessible name comes from the link's
+ * aria-label, not from the images.
  *
  * Height 5rem, kept in sync with the hero (`-mt-20` pulls it up behind this
  * bar and `pt-20`/`min-h-svh` on its content block) and with
@@ -93,11 +97,9 @@ export default async function SiteHeader() {
           aria-label={messages.a11y.logoLabel}
           className="flex min-h-11 shrink-0 items-center gap-2.5 rounded-none focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand"
         >
-          {/* TODO(D55): sustituir el lockup light por el composite tipo tile+wordmark, pendiente del criterio de design-ux */}
           {/* Dark-surface lockup: composite built from OFFICIAL assets (D31) —
               green `Negativo` symbol (§0.1: 6.17:1 on ink) in a square tile
-              plus the two-tone wordmark. Swapped for the official charcoal
-              lockup when the adaptive header sits on a light surface (D47). */}
+              plus the two-tone wordmark. */}
           <span className="header-logo header-logo-dark flex items-center gap-2.5">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-none border border-brand/40 bg-white/5">
               <Image
@@ -118,15 +120,28 @@ export default async function SiteHeader() {
               className="h-5 w-auto sm:h-6"
             />
           </span>
-          {/* Official charcoal horizontal lockup: 6.75:1 on paper (D47). */}
-          <span className="header-logo header-logo-light items-center">
+          {/* Light-surface lockup: the SAME composite in light polarity (D55) —
+              official charcoal `Positivo` symbol (12.58:1 on paper) in a solid
+              `brand` tile plus the derived mono charcoal wordmark. Mirrors the
+              dark lockup so both surfaces carry identical weight. */}
+          <span className="header-logo header-logo-light flex items-center gap-2.5">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-none border border-brand bg-ink/5">
+              <Image
+                src="/brand/logo-symbol.svg"
+                alt=""
+                width={24}
+                height={24}
+                priority
+                className="h-6 w-6"
+              />
+            </span>
             <Image
-              src="/brand/logo-horizontal.svg"
+              src="/brand/wordmark-ink.svg"
               alt=""
-              width={162}
+              width={178}
               height={24}
               priority
-              className="h-6 w-auto"
+              className="h-5 w-auto sm:h-6"
             />
           </span>
         </Link>
