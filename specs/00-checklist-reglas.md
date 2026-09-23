@@ -33,9 +33,9 @@
 | R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) — desde D75 vive en el bloque derecho de "Audiencias" (celda `id="empresas"`), con H3 propio y CTA "Buscar talento real" |
 | R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | cumplida (audit 22/09) |
 | R16 | Networking: "Canales por área y gente del sector" | OBL | D35, D81 | cumplida (audit 22/09) — **D81 (23/09)** recompone la sección en 3 bloques; la cita sigue cubierta por `networking.channels.label` + `networking.intro` (`es.json`). Re-auditar con QA |
-| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida (audit 22/09) |
+| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida — **D89/D90/D91:** marquee CSS puro sobre `mist`; 4 tarjetas con avatar (hueco de foto, iniciales honestas), nombre, rol y frase + slot LinkedIn deshabilitado (R43), con **contenido de relleno declarado (Lorem ipsum)** — el brief lo declara "de relleno", no se inventan personas verosímiles. El track visual repetido va `aria-hidden` y el contenido se sirve en una lista `sr-only` que incluye la nota del slot LinkedIn |
 | R18 | Noticias: "Maqueta tres entradas de ejemplo" | OBL | D41 | cumplida (audit 22/09) |
-| R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | cumplida (audit 22/09) |
+| R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44 | cumplida (audit 22/09) — **D89:** la banda de Testimonios usa el tinte pálido `brand-soft`, no una franja verde maciza; Newsletter sigue siendo la única franja `brand` del sitio (D44, R26) |
 | R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | cumplida (audit 22/09) |
 | R21 | Footer: "Enlaces por bloques, redes y legal" | OBL | D50 | cumplida (audit 22/09) |
 | R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | **en riesgo** - reordenada 22/09 (D32) para narrar como linea de tiempo (Torneos del #5 al #3); hero primero y footer ultimo intactos; declaracion R10 pendiente en el README; RE-AUDITAR al reactivar QA |
@@ -45,7 +45,7 @@
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R24 | "Los tres colores y la tipografía son fijos y tienen que dominar el diseño" (#2f3436, #84c0bf, #ffffff + Sora) | OBL | D60-66 | cumplida (audit 22/09) |
+| R24 | "Los tres colores y la tipografía son fijos y tienen que dominar el diseño" (#2f3436, #84c0bf, #ffffff + Sora) | OBL | D60-66 | cumplida — **D85/D90:** `--color-brand-soft` (#dcefee) es un tinte del verde de marca (mismo hue) documentado en el design-system; no introduce un color nuevo. Los tres base siguen dominando |
 | R25 | Permitidos: "grises intermedios para textos y bordes, y un color de acento… como apoyo y sin sustituir a los base" | OBL | D66 | cumplida (audit 22/09) |
 | R26 | "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" | OBL | D68 | cumplida (audit 22/09) |
 | R27 | Logo: "todas sus versiones (color, negro, blanco y SVG)" del canal 🎨 RECURSOS | OBL | D58 | cumplida — kit oficial en app/public/brand/ (nombres ASCII) |
@@ -60,7 +60,7 @@
 | R31 | "Responsive real en móvil, tablet y escritorio" | OBL/EVAL 15% | D93, D219 | cumplida (audit 22/09) |
 | R32 | "HTML semántico" | OBL/EVAL 15% | D94, D221 | cumplida (audit 22/09) |
 | R33 | "Nada de plantillas compradas ni kits de componentes ya montados" | NEG | D95 | cumplida (audit 22/09) |
-| R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida (audit 22/09) |
+| R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida — **D89:** el marquee de Testimonios corre ≥180s (transform only, CLS 0) con pausa por `hover`/`focus-within`, control CSS-only y el guard `prefers-reduced-motion` que lo estaciona |
 | R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | cumplida — fixes 22/09: commits reworded a inglés (D22) + claves-identificador a inglés (D23) |
 | R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | cumplida (audit 22/09) |
 | R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | infraestructura cumplida (D54, commit `1d4cdd0`); **traducción EN aplazada (D57)** con handoff listo en `specs/12-i18n.md`; supersede el "n-a por plazo" de D-14 |
@@ -76,7 +76,7 @@
 | R42 | "Usa header, nav, main, section, article, footer, button y a donde corresponda" | OBL | D129 | cumplida (audit 22/09) |
 | R43 | "un div con onClick no es un enlace. Si navega, es <a> o <Link>" | NEG | D133 | cumplida (audit 22/09) |
 | R44 | Enlaces con "Texto descriptivo siempre" (❌ "haz clic aquí" · "leer más") | OBL | D139-142 | cumplida (audit 22/09) |
-| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | cumplida (audit 22/09) |
+| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | cumplida — **D90:** `#newsletter` añadido a la barra de escritorio (tier `xl`), además del panel móvil y el footer |
 
 ## F. SEO (metadata, imágenes, fuentes)
 

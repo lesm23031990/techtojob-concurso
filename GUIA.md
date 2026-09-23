@@ -66,12 +66,22 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   `mist` `#f4f7f7`, NO `brand-soft`, que queda reservado sin uso — D87) y brillos idle de líneas y
   bordes (`.line-idle`/`.card-idle`) con acento **`ember`** en Torneos (glints + puntos + pulso en
   "Torneo en curso"). Detalle en `design-system.md` §3/§3.1/§7/§9 y `DECISIONES.md` D82–D87.
-- **PRÓXIMA SESIÓN (handoff):** continuar con las **secciones abiertas** — **Testimonios** (ya con el
-  color final `mist`, D87; falta tu visto bueno de diseño), **Noticias**, **Newsletter** y **Cierre**
-  (bento ya con D61; newsletter, franja `brand`). Punto de partida: `design-system.md` §7/§9 y
-  `docs/DECISIONES.md` D75–D88.
-- **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. El **modo
-  rápido D56** sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
+- **Testimonios: marquee + banda + watermarks + nav (D89/D90, 23/09)** — la sección deja el bento
+  7/5/5/7 y pasa a un **slider horizontal CSS puro full-bleed** sobre `mist`, dentro de una **banda
+  `brand-soft`** (hairlines, sombra y relieve; el desvanecido de bordes va solo en las tarjetas).
+  Track duplicado `−50%` con `REPEAT=3` (sin huecos en ningún viewport), pausa por `hover`/`focus`
+  + control CSS-only, tarjetas `paper` (borde `ink/10`), `.reveal`/`.reveal-left`, dos puntos `ember`
+  y enlace de cierre al Discord (texto, R11). Las **marcas de agua** de Hero, Audiencias (nueva) y
+  Cierre pasan de `logo-symbol-gradient` a `logo-symbol-light` al **6%**. `#newsletter` entra en la
+  **nav de escritorio** (tier `xl`). Detalle en `DECISIONES.md` D89/D90 y `design-system.md`
+  §6.4/§7/§9. `tsc` + ESLint + `next build` en verde.
+- **PRÓXIMA SESIÓN (handoff):** continuar con las **secciones abiertas** — **Noticias**,
+  **Newsletter** y **Cierre** (Testimonios ya rediseñada en D89/D90, pendiente solo tu visto bueno
+  visual), y luego la **Fase 5**. Punto de partida: `design-system.md` §7/§9 y `docs/DECISIONES.md`
+  D75–D90.
+- **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. Excepción
+  registrada: **Audiencias** recibió el watermark en D90 por petición expresa (solo decoración).
+  El **modo rápido D56** sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
 - **Después, Fase 5:** repo público en GitHub → deploy Vercel con URL real en `content.ts`
   (`site.url`) → Lighthouse/capturas → mensaje al canal ENTREGAS con la declaración de IA (R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en

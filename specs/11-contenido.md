@@ -102,11 +102,13 @@ conceptos separados por hairlines de 1px. Las frases aprobadas se reparten sin r
 
 - **H2:** `Lo que se dice dentro`
 - **Sub:** `Testimonios de muestra. Los reales se recogen en el servidor antes de publicar.`
-- **Tarjetas (4, cada una con avatar redondo + nombre + rol + frase + hueco de enlace LinkedIn):**
-  1. Marta Ruiz · Frontend en Sevilla — `Llevaba meses sin respuesta en portales. Aquí me escribieron dos empresas tras un torneo.`
-  2. Diego Fuentes · Junior backend, Bogotá — `Entré sin experiencia y sin título. Me leyeron personas, no filtros.`
-  3. Lucía Ortega · CTO, Valencia — `Fichamos a dos devs de la comunidad. Las vi resolver en directo antes de hablar con ellas.`
-  4. Andrés Salas · DevOps, Ciudad de México — `Conseguí mi trabajo actual por un canal de networking. Ni lo habían publicado.`
+- **Tarjetas (4, cada una con avatar redondo + nombre + rol + frase + hueco de enlace LinkedIn).**
+  **D91 (23/09): relleno declarado en Lorem ipsum** — el brief pide maqueta y la declara "de relleno",
+  así que los slots NO son personas reales ni verosímiles:
+  1. Lorem Ipsum · Dolor sit amet — `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+  2. Consectetur Adipiscing · Elit sed do eiusmod — `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`
+  3. Tempor Incididunt · Labore et dolore — `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`
+  4. Excepteur Sint · Occaecat cupidatat — `Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`
 
 ## 7 · NOTICIAS *(3 entradas de ejemplo — maqueta)*
 

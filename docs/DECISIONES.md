@@ -1238,6 +1238,62 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       (D56).
       **Actualizado en:** `GUIA.md`, `docs/DECISIONES.md` (este registro).
 
+- **D89.** 23/09, Lorena: *"rediseña la sección de testimonios (…) en un slider horizontal de
+      movimiento infinito"*, después *"el slider debe ser full width"*, *"las tarjetas un poco más
+      anchas y más cortas"* y *"a mí me gusta el diseño así"*.
+      **Decisión (versión final):** Testimonios pasa del bento 7/5/5/7 a un **marquee horizontal de
+      CSS puro** sobre `mist` (la superficie `ink` de la primera pasada se revirtió en D90).
+      (1) **Track** doble `translateX(0 → −50%)`; cada mitad repite el set `REPEAT=3` para superar el
+      ancho de viewport (si no, aparecía hueco al final del ciclo) y `[--marquee-duration:180s]`
+      conserva la velocidad lineal (~22px/s).
+      (2) **Banda `brand-soft` full-bleed** con hairlines `brand`, sombra elevada y relieve interior;
+      la máscara de desvanecido vive SOLO en el contenedor interno (la banda va de borde a borde, no
+      se ve "acotada").
+      (3) **Tarjetas** `paper` con borde `ink/10`, `card-idle` y `sheen-sweep` al hover; avatar
+      `brand` con iniciales y slot LinkedIn deshabilitado (R17/R43).
+      (4) **Pausa accesible**: `hover`/`focus-within` + control CSS-only (checkbox oculto + `<label>`,
+      sin islas cliente); el guard `prefers-reduced-motion` la detiene.
+      (5) **Accesibilidad del bucle**: al repetir tarjetas, el track visual va `aria-hidden` y el
+      contenido se sirve una sola vez en una lista `sr-only` (cita + nombre + rol + nota del slot
+      LinkedIn), evitando lecturas triplicadas.
+      (6) **Entrada/salida**: `.reveal` en la banda y `.reveal-left` en h2/sub/control; dos puntos
+      `ember` decorativos, `section-idle-ember` y enlace de cierre al Discord (texto, nunca botón, R11).
+      **Verificación:** `tsc`/ESLint/`next build` en verde en cada iteración.
+      **Actualizado en:** `components/sections/Testimonials.tsx`, `app/app/globals.css`, `content.ts`,
+      `messages/{es,en}.json`.
+
+- **D90.** 23/09, Lorena: *"restituye los colores originales predestinados para esta sección, el azul
+      que cambiaste"*, *"no veo las marcas de agua en las secciones oscuras"*, *"la marca de agua está
+      muy pronunciada, más clarita"* y *"agregar la opción al menú para el newsletter"*.
+      **Decisión:**
+      (1) **Testimonios vuelve a `mist`** (D87) y todo su interior a polaridad clara; **supersede** el
+      `ink` de la primera pasada de D89.
+      (2) **Marcas de agua en superficies `ink`:** los watermarks de **Hero**, **Cierre** y
+      **Audiencias** (que no tenía) pasan del `logo-symbol-gradient.svg` (mitad carbón → invisible
+      sobre `ink`) al **`logo-symbol-light.svg`** (verde sólido) y quedan en **opacidad 6%**
+      (`opacity-[0.06]`) tras dos ajustes de Lorena (15% → 8% → 6%). `Section` gana la prop aditiva
+      `decoration` (hijo directo de `<section>`, fuera del wrapper con `transform`); Audiencias añade
+      `isolate overflow-clip` y `-z-10` para que el watermark quede tras el contenido.
+      (3) **Newsletter en la barra de escritorio:** `#newsletter` entra en `DESKTOP_NAV_HREFS` y en el
+      tier `xl` (ya estaba en móvil y en el footer). Cubre R45.
+      (4) Se conserva la vida idle (D86) y el full-bleed (D89). **Audiencias estaba congelada por D88**:
+      se toca únicamente para añadir el watermark, por petición expresa de Lorena.
+      **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/Section.tsx`, `components/SiteHeader.tsx`,
+      `components/sections/{Hero,Closing,Audiences,Testimonials}.tsx`.
+
+- **D91.** 23/09, Lorena: *"esto no se podría rellenar con lorem ipsum, esto es especial para eso"* y
+      *"si el brief permite los testimonios que hay, déjalos así y aprobamos"*.
+      **Decisión:** el contenido de los 4 testimonios pasa de **nombres/frases inventados verosímiles**
+      (Marta Ruiz, Diego Fuentes, Lucía Ortega, Andrés Salas) a **relleno declarado en Lorem ipsum**.
+      Base: el brief de Testimonios (*"Maqueta cuatro o cinco tarjetas con nombre y una frase. Para el
+      torneo son de relleno: los recogeremos reales en el servidor antes de publicar la web"*) permite
+      el relleno, y `brief.md` §"Datos que no se inventan" prohíbe dar por reales datos no confirmados.
+      Se mantienen la `sub` honesta ("Testimonios de muestra...") y los slots de foto (avatar con
+      iniciales) y LinkedIn (deshabilitado, R17/R43). **No hay corrección de cumplimiento pendiente en
+      esta sección.** **Verificación:** `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/messages/{es,en}.json`, `specs/11-contenido.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
