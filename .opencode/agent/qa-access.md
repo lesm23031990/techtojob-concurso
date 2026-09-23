@@ -1,7 +1,7 @@
 ---
 description: QA integral de la landing. Lighthouse, WCAG AA, responsive con Playwright, checklist de seguridad y evidencia documentada. No edita codigo.
 mode: subagent
-model: opencode-go/qwen3.8-flash
+model: deepseek/deepseek-flash
 temperature: 0.1
 permission:
   edit:

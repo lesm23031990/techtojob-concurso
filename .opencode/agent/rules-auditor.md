@@ -1,7 +1,7 @@
 ---
 description: Auditor implacable de cumplimiento. Verifica cada regla del concurso citada textualmente contra lo construido. Es el agente que mas puntos protege.
 mode: subagent
-model: opencode-go/qwen3.8-flash
+model: deepseek/deepseek-flash
 temperature: 0.1
 permission:
   edit:

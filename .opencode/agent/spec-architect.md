@@ -1,7 +1,7 @@
 ---
 description: Orquestador del concurso TechToJob. Ingesta el material de Discord, mantiene specs y el checklist de reglas, y decide prioridades entre fases.
 mode: primary
-model: opencode-go/qwen3.8-flash
+model: deepseek/deepseek-flash
 temperature: 0.2
 ---
 

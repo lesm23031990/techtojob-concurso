@@ -1,7 +1,7 @@
 ---
 description: Especialista en SEO tecnico y rendimiento Web Vitals para la landing Next.js. Audita metadata, structured data, indexabilidad y velocidad.
 mode: subagent
-model: opencode-go/qwen3.8-flash
+model: deepseek/deepseek-flash
 temperature: 0.2
 permission:
   edit:
