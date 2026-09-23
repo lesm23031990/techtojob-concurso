@@ -212,6 +212,16 @@ export interface Tournaments {
     label: string;
     heading: string;
     note: string;
+    /** Absolute deadline (ISO WITH offset) for the live countdown (D80). */
+    closesAtIso: string;
+    /** Countdown unit labels + the honest "closed" line (D80). */
+    countdown: {
+      days: string;
+      hours: string;
+      minutes: string;
+      seconds: string;
+      closed: string;
+    };
     zones: TournamentZone[];
   };
   prizes: {

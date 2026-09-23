@@ -3,6 +3,7 @@ import { getMessages } from "next-intl/server";
 import { timelineStep } from "@/content";
 import TimelineRail from "@/components/TimelineRail";
 import DiscordCta from "@/components/DiscordCta";
+import Countdown from "@/components/Countdown";
 
 /**
  * "Torneos" (#torneos, timeline step 2 since D32) — dark "game" moment
@@ -82,6 +83,12 @@ export default async function Tournaments() {
               <p className="mt-3 max-w-prose text-body text-cloud">
                 {active.challenge}
               </p>
+              {/* Live remaining time (D80, the site's 2nd client island): it
+                  fills the gap between the challenge and the CTA. It shows an
+                  honest "closed" line after the deadline instead of 00:00:00;
+                  with JS off it stays as dashes and the heading + the timezone
+                  table of the closing band below still state the closing time. */}
+              <Countdown targetIso={timer.closesAtIso} labels={timer.countdown} />
               <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-4">
                 <DiscordCta size="nav" label={active.cta} />
                 <span className="text-small text-cloud">{active.status}</span>

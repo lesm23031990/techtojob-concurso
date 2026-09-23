@@ -13,7 +13,7 @@ v4**. Static generation only — no APIs, no database, no backend of any kind.
 | `app/layout.tsx` | `lang="es"`, Metadata API (title template, OG, Twitter card), Sora via `next/font`, skip link, JSON-LD `Organization`. |
 | `app/page.tsx` | Composes the 9 sections in spec order inside `<main>`. |
 | `components/sections/` | One component per landing section (Hero → Closing). |
-| `components/` | `SiteHeader`, `SiteFooter`, `Section` (semantic wrapper), `DiscordCta` + `AudienceCta` (shared look in `cta-styles.ts`), `NewsletterForm` (the **only** client component), `icons`. |
+| `components/` | `SiteHeader`, `SiteFooter`, `Section` (semantic wrapper), `DiscordCta` + `AudienceCta` (shared look in `cta-styles.ts`), `NewsletterForm` + `Countdown` (the client islands), `icons`. |
 | `app/icon.svg` | Favicon (brand symbol, ASCII-safe name). |
 | `app/opengraph-image.tsx` | 1200×630 OG card generated at build time with `ImageResponse`. |
 | `app/sitemap.ts` / `app/robots.ts` | SEO endpoints, root URL only (single page). |

@@ -126,6 +126,14 @@
       "label": "Cierre de entregas",
       "heading": "Miércoles 23, 23:59 (México) — cierre definitivo jueves 24, 00:00",
       "note": "Cerramos cuando sea medianoche en México, que es el último en cerrar.",
+      "closesAtIso": "2026-09-24T00:00:00-06:00",
+      "countdown": {
+        "days": "Días",
+        "hours": "Horas",
+        "minutes": "Min",
+        "seconds": "Seg",
+        "closed": "Entregas cerradas."
+      },
       "zones": [
         { "region": "México", "closing": "jue 24 · 00:00" },
         { "region": "Colombia · Perú · Ecuador", "closing": "jue 24 · 01:00" },
