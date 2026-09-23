@@ -5,7 +5,7 @@ Este sitio es la entrega de Lorena Salas al **Torneo #2** de la comunidad: el pr
 oferta de empleo y la prueba técnica es la propia web.
 
 > **No es un portal de empleo. Es una comunidad.**
-> [Entra al Discord](https://discord.gg/h9FFgKdkRd) · Web desplegada: _enlace en el canal 📦│ENTREGAS_
+> [Entra al Discord](https://discord.gg/h9FFgKdkRd) · Web desplegada: [techtojob-concurso.vercel.app](https://techtojob-concurso.vercel.app)
 
 ## Stack
 

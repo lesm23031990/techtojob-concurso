@@ -310,10 +310,10 @@ export type Locale = (typeof locales)[number];
  *  key in EITHER file a compile-time error (R36 / i18n). */
 export const messagesByLocale: Record<Locale, Messages> = { es, en };
 
-/** Single source of truth for site-level data (URL is a deploy placeholder, Q4). */
+/** Single source of truth for site-level data. */
 export const site = {
   name: "TechToJob",
-  url: "https://techtojob.vercel.app",
+  url: "https://techtojob-concurso.vercel.app",
   locale: "es",
 } as const;
 

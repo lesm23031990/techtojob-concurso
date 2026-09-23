@@ -1788,6 +1788,51 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       Verificado en captura a 360px: el H1 cabe legible sin dominar la pantalla.
       **Actualizado en:** `app/app/globals.css` (tokens), `components/sections/Hero.tsx`.
 
+- **D129.** 23/09, **cierre del bloqueante de entrega (R02).** Lorena creó el proyecto en Vercel y el
+      dominio de producción es **https://techtojob-concurso.vercel.app** (root directory `app`,
+      deploy desde el repo público). Se fija en `content.ts` → `site.url`, con lo que canonical,
+      `metadataBase`, `og:url`, `og:image`, hreflang (`es` + `x-default`), `sitemap.xml`, `robots.txt`
+      y el `url`/`logo` del JSON-LD pasan a apuntar al dominio propio (antes apuntaban a
+      `techtojob.vercel.app`, que sirve la web de OTRO participante — causa confirmada del
+      **SEO 92** medido por Lorena en DevTools; al corregirlo debe volver a 100). README actualizado
+      con la URL real. **Extra de rendimiento:** los 4 SVGs del logo del header pasan de `priority`
+      (generaban 4 `<link rel="preload" as="image">`, dos de ellos ocultos, compitiendo con la fuente)
+      a `loading="eager"`, que evita el preload sin volverlos `lazy` sobre el pliegue.
+      `tsc --noEmit`, ESLint y `next build` en verde; `canonical`/`og:url` verificados en el HTML.
+      **Actualizado en:** `app/content.ts`, `README.md`, `app/components/SiteHeader.tsx`,
+      `specs/00-checklist-reglas.md` (R02 → cumplida).
+
+- **D130.** 23/09, requerimiento responsive de Lorena: *"en celulares reduce el tamaño de los
+      steppers y de la letra de los enlaces"*. **Decisión (solo móvil; `lg` intacto):**
+      (1) **Steppers** — el marcador de sección del raíl pasa de `h-11 w-11` (44px) a **`h-9 w-9`**
+      (36px) con numeral `text-small → text-label` e interior `inset-[5px] → inset-[4px]`; el nodo de
+      paso de "Cómo funciona" pasa de `h-9 w-9` (36px) a **`h-7 w-7`** (28px) con numeral
+      `text-label → text-[0.65rem]` e interior `inset-[4px] → inset-[3px]`. Se conserva la jerarquía
+      (marcador > nodo) y los tamaños de `lg` (56/48px).
+      (2) **Enlaces** — bajan un escalón `text-body → text-small` en móvil, con `sm:text-body`
+      devolviendo el tamaño base para no tocar tablet/escritorio: panel del menú móvil, bloques y
+      redes del footer, y los enlaces de texto de "Cómo funciona", Testimonios y Noticias. Los
+      `min-h-11/12` (tap targets ≥44px) y el contraste quedan intactos.
+      `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `components/TimelineRail.tsx`, `components/sections/HowItWorks.tsx`,
+      `components/SiteHeader.tsx`, `components/SiteFooter.tsx`, `components/sections/{Testimonials,News}.tsx`.
+
+- **D131.** 23/09, Lorena: *"asegúrate de que el hero ocupe 100vh en pantallas desde la mediana
+      hasta la más grande; el texto es más largo, redúcelo un poco o amplía el ancho"*. **Decisión
+      (opción A, reducir tipografía; se conserva la grilla editorial con la col 1 vacía, D36):**
+      (1) **`--text-display-lg`: 4.5rem → 4rem** (solo lo usa el hero en `lg`+; el Cierre usa
+      `--text-display`, que NO se toca).
+      (2) **Nuevo token `--text-display-md: 2.75rem`** (line-height 1.05, tracking −0.035em) aplicado
+      al H1 en la franja `md` (768–1023), donde el layout sigue en una columna con los metadatos
+      apilados. Secuencia final del H1: `text-display-sm sm:text-display md:text-display-md
+      lg:text-display-lg`.
+      (3) **`min-h-svh → md:min-h-svh`**: en celular el hero vuelve a **altura natural** (mismo
+      criterio que la Newsletter, D127) y desde 768px garantiza el viewport completo.
+      Verificado por captura a 768×1024, 1024×768, 1280×800 y 1440×900. Si en `md` aún desborda,
+      se quita `text-balance` del H1 (con texto largo añade líneas).
+      `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `app/app/globals.css` (tokens), `components/sections/Hero.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

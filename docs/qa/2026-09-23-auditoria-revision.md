@@ -22,7 +22,7 @@ Código de nivel alto, **paquete de entrega incompleto**. Bloqueante: **no hay d
 
 | # | Hallazgo | Criterio | Estado |
 |---|---|---|---|
-| 1 | `content.ts:316` `site.url` = `https://techtojob.vercel.app` sirve la web de OTRO participante (verificado); `techtojob-landing.vercel.app` también es de otro | R02/R49/R50/R51/R52 | **ABIERTO** — requiere deploy real |
+| 1 | `content.ts:316` `site.url` = `https://techtojob.vercel.app` sirve la web de OTRO participante (verificado); `techtojob-landing.vercel.app` también es de otro | R02/R49/R50/R51/R52 | ✅ **CERRADO** — deploy real en `https://techtojob-concurso.vercel.app` y `site.url` corregido (D129); canonical/hreflang/OG/sitemap/JSON-LD verificados |
 | 2 | Sin capturas desktop/móvil | R03/J3 | **ABIERTO** |
 | 3 | Lighthouse móvil = Perf 76, medido en localhost y pre-rediseño | R61/J6 | **ABIERTO** — remedir sobre el deploy |
 | 4 | `loading="lazy"` en la imagen del hero | R56 | ✅ corregido (`Hero.tsx`) |
@@ -58,3 +58,12 @@ Código de nivel alto, **paquete de entrega incompleto**. Bloqueante: **no hay d
 La evidencia vigente de Lighthouse/Playwright es la del **22/09** y **no** cubre el rediseño
 posterior (Hero V7, Newsletter D100–D107, Cierre D121–D123). Debe re-medirse **sobre el deploy** antes
 de cerrar la Fase 5.
+
+## Cierre 23/09 (tarde)
+
+- **R02 cerrado:** deploy en `https://techtojob-concurso.vercel.app`; `site.url` corregido (D129).
+  El **SEO 92** medido por Lorena en DevTools se atribuye al canonical/hreflang apuntando al dominio
+  ajeno; con el fix debe volver a 100 (se re-mide con Lighthouse CLI).
+- **Responsive (D130/D131):** steppers y enlaces más pequeños en móvil; hero a 100vh desde `md`.
+- **Medición pendiente:** Lighthouse **móvil + escritorio** sobre el deploy y capturas responsive
+  (paso siguiente de la Fase 5).

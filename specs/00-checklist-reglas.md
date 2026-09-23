@@ -13,7 +13,7 @@
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
 | R01 | "Repo público en GitHub con README" | META | D202 | pendiente — mañana: repo público GitHub |
-| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | **VIOLADA hasta el deploy** — `content.ts:316` (`site.url`) apunta a `https://techtojob.vercel.app`, que sirve la web de OTRO participante; hay que desplegar ESTE repo y fijar la URL real (bloqueante, D125) |
+| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | cumplida — deploy en Vercel: **https://techtojob-concurso.vercel.app** (`site.url` en `app/content.ts`, D129) |
 | R03 | "Capturas de escritorio y móvil" | META | D204 | pendiente — capturas sobre el deploy mañana |
 | R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | pendiente — Lighthouse final sobre el deploy (control local: SEO 100, A11y 100, Perf 76) |
 | R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | en riesgo — queda 1 día para ENTREGAS |
