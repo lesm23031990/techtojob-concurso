@@ -18,7 +18,7 @@
 | R07 | Uso de IA: "Solo pedimos que lo digas al entregar" | META | D102 | cumplida en README (§Declaración de uso de IA); repetir en el mensaje de ENTREGAS |
 | R08 | "Tienes que entender y poder defender lo que entregas" | OBL | D102-103 | pendiente (humana: repasar specs/11 + design-system antes de defender) |
 | R09 | Imágenes/iconos: "Fuente apuntada en el README" | META | D77 | cumplida — README §Fuentes y créditos |
-| R10 | Si se reordena secciones: "hazlo y cuéntalo en el README" | META | D54 | cumplida — orden del brief sin cambios, anotado en README |
+| R10 | Si se reordena secciones: "hazlo y cuéntalo en el README" | META | D32, D38 | cumplida — **reorden declarado en README** (§QuAc contiene la landing): hero → cómo funciona → torneos → talento → empresas → networking → testimonios → noticias → newsletter → cierre, según `app/app/[locale]/page.tsx` |
 
 ## B. Secciones obligatorias de la landing
 
@@ -60,7 +60,7 @@
 | R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida (audit 22/09) |
 | R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | cumplida — fixes 22/09: commits reworded a inglés (D22) + claves-identificador a inglés (D23) |
 | R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | cumplida (audit 22/09) |
-| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | en curso (D54) — spec `specs/12-i18n.md`; supersede el "n-a por plazo" de D-14 |
+| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | infraestructura cumplida (D54, commit `1d4cdd0`); **traducción EN aplazada (D57)** con handoff listo en `specs/12-i18n.md`; supersede el "n-a por plazo" de D-14 |
 
 ## E. SEO (contenido y estructura)
 
