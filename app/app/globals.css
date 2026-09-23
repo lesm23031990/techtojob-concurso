@@ -113,16 +113,6 @@
   }
 }
 
-/* Hero living background (V3): flat ink + one almost imperceptible static
-   ember warmth up top (R25 support accent). The brand halos and the 3D node
-   graph are NOT painted here — they live as real elements in Hero.tsx
-   (light movement and pointer response need DOM, design-system §9).
-   CLS 0, no LCP cost. */
-@utility bg-hero-live {
-  background-color: var(--color-ink);
-  background-image: radial-gradient(circle at 60% 10%, rgb(244 162 97 / 0.05), transparent 35%);
-}
-
 /* Sticky header surface (design-system §6.6): opaque `ink` through the top
    70% — where the logo and the nav links live, so their AA contrast never
    depends on the fade — dissolving to transparent at the bottom. At the top of
@@ -157,9 +147,9 @@
   }
 }
 
-/* Hero entrance (V3, design-system §9): soft staggered rise on first paint.
-   `rise-in` fades + lifts (sub, CTA, support). `lift-in` is
-   TRANSFORM ONLY and exists for the H1: with no opacity change the LCP
+/* Hero entrance (design-system §9): soft staggered rise on first paint.
+   `rise-in` fades + lifts (overline, sub, CTA, support, meta, nav). `lift-in`
+   is TRANSFORM ONLY and exists for the H1: with no opacity change the LCP
    element is painted at full opacity on the first frame (an opacity fade
    would delay LCP). Pure CSS, no JS island; the global reduced-motion guard
    collapses both to their final state. */
@@ -191,23 +181,10 @@
   animation: lift-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Hero motion set (all loops subtle, transform/opacity/shadow only → no
-   layout work, CLS 0; the global reduced-motion guard below kills them). */
+/* CTA motion (loop subtle, box-shadow only → no layout work, CLS 0; the
+   global reduced-motion guard below kills it). */
 
-/* Status dots: gentle opacity/scale blink (online, tournament live). */
-@keyframes pulse-dot {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.55;
-    transform: scale(0.8);
-  }
-}
-
-/* Breathing ring around the hero CTA wrapper — box-shadow only, painted on
+/* Breathing ring around the pill CTA wrapper — box-shadow only, painted on
    a sibling span so the button itself never animates (LCP/INP protected). */
 @keyframes breathe {
   0%,
@@ -219,30 +196,8 @@
   }
 }
 
-/* Slow positional drift for the two blurred brand halos (light movement). */
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  33% {
-    transform: translate(18px, -12px);
-  }
-  66% {
-    transform: translate(-14px, 10px);
-  }
-}
-
-@utility animate-pulse-dot {
-  animation: pulse-dot 2.4s ease-in-out infinite;
-}
-
 @utility animate-breathe {
   animation: breathe 3.5s ease-in-out infinite;
-}
-
-@utility animate-drift-slow {
-  animation: drift 18s ease-in-out infinite;
 }
 
 /* ── Línea de tiempo vertical (D32) ──────────────────────────────────────
@@ -312,73 +267,6 @@
 
 @utility animate-header-in {
   animation: header-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-/* ── Hero tiles (D34, "Cosmos wall") ─────────────────────────────────────
-   Slow transform-only drift for the decorative tiles: translate never fights
-   the static tilt because Tailwind v4 `rotate-*` animates the standalone
-   `rotate` property. Durations are ≥14s and staggered per tile (arbitrary
-   `animation-duration/delay` utilities in HeroTiles). No layout work → CLS 0;
-   the global reduced-motion guard below freezes every tile in place (R34). */
-@keyframes tile-drift {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(10px, -14px);
-  }
-}
-
-@utility animate-tile-drift {
-  animation: tile-drift 18s ease-in-out infinite;
-}
-
-/* ── Glow del hero (D33, atenuado al 50% por D35) ───────────────────────
-   Radial gradients instead of blurred discs: a 10–15% disc blurred 64px over
-   `ink` was literally invisible, while a radial gradient reads as real light
-   (bright core fading out) and is cheaper to paint. Opacities halved in D35
-   ("Recruit en tinta": flat darkness, typography dominates) — the white H1
-   keeps ≥8:1 and the `cloud` sub ≥4.5:1 with room to spare. */
-@utility glow-brand-strong {
-  background-image: radial-gradient(circle, rgb(132 192 191 / 0.15), transparent 62%);
-}
-
-/* Light that comes IN from the edges: transparent through the middle (the copy
-   area stays clean and dark) and intensifying towards the borders. This is the
-   opposite of a centre-out burst. */
-@utility glow-brand-edge {
-  background-image: radial-gradient(
-    ellipse at center,
-    transparent 38%,
-    rgb(132 192 191 / 0.08) 72%,
-    rgb(132 192 191 / 0.15) 100%
-  );
-}
-
-@utility glow-brand-soft {
-  background-image: radial-gradient(circle, rgb(132 192 191 / 0.1), transparent 65%);
-}
-
-@utility glow-brand-top {
-  background-image: linear-gradient(to bottom, rgb(132 192 191 / 0.07), transparent);
-}
-
-/* Slow ambient pulse for one hero halo (D33): the light breathes so the
-   background feels alive without pulling attention from the copy. Opacity only
-   (no layout, no other repaints); the global reduced-motion guard freezes it. */
-@keyframes glow-pulse {
-  0%,
-  100% {
-    opacity: 0.85;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-@utility animate-glow-pulse {
-  animation: glow-pulse 7s ease-in-out infinite;
 }
 
 /* Global reduced-motion guard (R34 + WCAG 2.3.3): kills transitions and

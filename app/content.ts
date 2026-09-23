@@ -47,18 +47,25 @@ export interface Discord {
   ctaShort: string;
 }
 
+export interface HeroMetaItem {
+  label: string;
+  value: string;
+}
+
 export interface Hero {
-  /** Closing word of `line2`, rendered in brand — must occur exactly once. */
+  /** Editorial folio line above the headline (V5). */
+  overline: string;
+  /** Highlight phrase of `line2`, rendered in brand — must occur exactly once. */
   highlight: string;
-  /** Headline, line 1 (muted `cloud`) — D35 split, still ONE <h1> (R40). */
+  /** Headline, line 1 (muted `cloud`) — two-line split, still ONE <h1> (R40). */
   line1: string;
-  /** Headline, line 2 (white + brand highlight word). */
+  /** Headline, line 2 (white + brand highlight phrase). */
   line2: string;
   sub: string;
   cta: string;
   support: string;
-  /** Muted one-line wall of technologies (D35, factual — no fake companies). */
-  stackWall: string;
+  /** Meta column entries (V5): factual label/value pairs, no invented figures. */
+  meta: HeroMetaItem[];
 }
 
 export interface Step {

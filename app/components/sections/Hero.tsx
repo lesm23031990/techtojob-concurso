@@ -1,50 +1,40 @@
-import Image from "next/image";
 import Link from "next/link";
 import { messages, navItems } from "@/content";
 import DiscordCta from "@/components/DiscordCta";
-import HeroGraph from "@/components/HeroGraph";
-import HeroTiles from "@/components/HeroTiles";
 
-/** Quick-nav pills under the CTA (D35, echo of the reference's chip row):
- *  real anchor links to the sections they name (R43/R45), styled as outline
- *  links — never filled buttons — so the Discord CTA stays the only button
- *  on the first screen (R11). Labels reuse the existing nav strings (R36). */
+/** Quick-nav links below the support line: real anchor links to the sections
+ *  they name (R43/R45), styled as plain uppercase text — never pills or
+ *  buttons — so the Discord CTA stays the only button on the first screen
+ *  (R11). Labels reuse the existing nav strings (R36). */
 const QUICK_LINK_HREFS = ["#como-funciona", "#torneos", "#talento", "#empresas"];
 const quickLinks = navItems.filter((item) => QUICK_LINK_HREFS.includes(item.href));
 
 /**
- * Hero (section 1, anchor #inicio) — dark `ink` surface, "Recruit en tinta"
- * composition (D35): the headline split into two editorial lines (muted
- * question → white answer with the closing word in brand), the ONE Discord
- * button (R11), a row of quick-nav anchor pills and a quiet stack wall below.
- * The glow is halved and the floating wall (D34) dimmed to 60%: a flat dark
- * stage where typography carries the first screen. No photographs anywhere:
- * every visual is palette fill + official symbol + real text (R53–R57).
+ * Hero (section 1, anchor #inicio) — "Editorial Void" composition (V5):
+ * a flat `ink` canvas (no gradients, no glow, no tiles, no graph — pure
+ * server component, zero client islands) laid out as a 12-column asymmetric
+ * editorial grid on lg: an overline folio and a real-data meta column share
+ * the top row, the two-line H1 is the gravity center, then sub, the ONE
+ * Discord button (R11), a support line and a plain-text quick-nav. On mobile
+ * every block flows in DOM order, always left-aligned.
  *
  * Conversion contract (R11): the Discord button is the ONLY button in the
- * hero. The quick-nav pills are real anchor links to sections (R43) using the
+ * hero. The quick-nav links are real anchors to sections (R43) using the
  * existing descriptive nav labels (R44) — navigation, never a second CTA.
  *
- * Ambient depth, back to front: brand glow layers → HeroTiles wall (z-0) →
- * mouse-reactive graph field (HeroGraph, the only client island) → copy (z-10).
- *
  * Motion contract:
- * - Entrance cascade: header → symbol → H1 → sub → CTA → support → pills → wall.
+ * - Entrance cascade: overline → H1 → sub → CTA → support → meta → nav.
  * - The H1 animates TRANSFORM ONLY, never opacity, so the LCP element is
  *   painted at full opacity on the first frame (fast LCP, zero CLS).
- * - Tiles drift slowly (transform only, ≥14s loops); the global
- *   `prefers-reduced-motion` guard collapses every entrance and freezes the
- *   wall; HeroGraph paints a single static frame.
+ * - The global `prefers-reduced-motion` guard collapses every entrance to
+ *   its final state (R34).
  * - The H1 is real text, never an image (R39/R40).
- *
- * The page timeline (D32) starts at step 1 ("Cómo funciona"): the hero is the
- * door of the story and carries no rail.
  */
 export default function Hero() {
   const { hero } = messages;
-  // es.json guarantees `highlight` is the closing word of `line2` (exactly
-  // one occurrence). Defensive fallback: if the copy ever changes, line2
-  // renders whole without the brand accent instead of splitting wrong.
+  // es.json guarantees `highlight` occurs exactly once in `line2`. Defensive
+  // fallback: if the copy ever changes, line2 renders whole without the
+  // brand accent instead of splitting wrong.
   const highlightIndex = hero.line2.lastIndexOf(hero.highlight);
   const hasHighlight = highlightIndex >= 0;
   const l2Before = hasHighlight ? hero.line2.slice(0, highlightIndex) : hero.line2;
@@ -53,68 +43,23 @@ export default function Hero() {
     <section
       id="inicio"
       aria-labelledby="hero-heading"
-      /* -mt-20 pulls the hero up UNDER the 5rem sticky header so its dark
+      /* -mt-20 pulls the hero up UNDER the 5rem sticky header so its flat ink
          surface sits behind the header's gradient: the `header-veil` fade
-         resolves into ink instead of the white body, and the bar dissolves
-         into the hero with no seam. pt-20 on the content box then centres the
-         block on the centre line of the visible area, not of the raw section. */
-      className="relative isolate -mt-20 overflow-hidden bg-hero-live text-paper"
+         resolves into ink and the bar dissolves into the hero with no seam. */
+      className="relative isolate -mt-20 bg-ink text-paper"
     >
-      {/* Glow (D33): light that comes IN from the edges — a rim glow plus two
-          corner lights bleeding inward and a wash under the header. All layers
-          are decorative (aria-hidden, pointer-events-none) and absolutely
-          positioned → CLS 0; the H1 keeps ≥8:1 and the sub ≥4.5:1 over the
-          glowing area. Painted BEFORE the tiles and the canvas. */}
-      <div
-        aria-hidden="true"
-        className="glow-brand-edge pointer-events-none absolute inset-0"
-      />
-      <div
-        aria-hidden="true"
-        className="glow-brand-top pointer-events-none absolute inset-x-0 top-0 h-32"
-      />
-      <div
-        aria-hidden="true"
-        className="glow-brand-strong animate-glow-pulse pointer-events-none absolute -top-40 -left-40 h-[44rem] w-[44rem] rounded-full"
-      />
-      <div
-        aria-hidden="true"
-        className="glow-brand-soft animate-drift-slow pointer-events-none absolute -right-40 -bottom-52 h-[44rem] w-[44rem] rounded-full [animation-delay:-9s]"
-      />
+      <div className="page-container relative flex min-h-svh flex-col justify-start pt-40 pb-24 lg:grid lg:grid-cols-12 lg:pt-48 lg:pb-32">
+        {/* Overline folio: top-left of the grid on lg, first block on mobile. */}
+        <p className="animate-rise-in text-label font-semibold uppercase tracking-[0.15em] text-cloud [animation-delay:40ms] lg:col-start-2 lg:row-start-1">
+          {hero.overline}
+        </p>
 
-      {/* The floating wall (D34): tilted tiles in the margins, behind the
-          copy layer and the graph. Fully decorative (see HeroTiles). */}
-      <HeroTiles />
-
-      {/* Must stay a DIRECT child of <section>: HeroGraph listens for the
-          pointer on its parent, and the canvas itself is pointer-events-none
-          so the CTA and links above it remain fully clickable. */}
-      <HeroGraph />
-
-      {/* pt-20 offsets the header (it floats above the hero) so the whole
-          block — symbol, H1, sub, CTA, support, pills and stack wall — is centred
-          as ONE piece on the centre line of the visible area. */}
-      <div className="page-container relative z-10 flex min-h-svh flex-col items-center justify-center pt-20 pb-0 text-center">
-        {/* Official symbol as the small centred mark above the headline — the
-            hero echo of the reference's wordmark. Decorative: the accessible
-            name of the brand lives in the header logo, not here (R39). */}
-        <Image
-          src="/brand/logo-symbol-light.svg"
-          alt=""
-          aria-hidden="true"
-          width={40}
-          height={40}
-          loading="eager"
-          className="animate-rise-in mb-8 h-10 w-10 [animation-delay:40ms]"
-        />
         {/* transform-only entrance: no opacity change → LCP painted on frame 1.
-            D35 two-line editorial split (the reference's signature): the
-            question sits in `cloud` (7.77:1), the answer in `paper` with the
-            closing word in `brand` (6.17:1). ONE <h1>, one text node per
-            line (R40). */}
+            Two-line editorial split: line1 in `cloud` (7.77:1), line2 in
+            `paper` with the highlight phrase in `brand` (6.17:1). ONE <h1> (R40). */}
         <h1
           id="hero-heading"
-          className="animate-lift-in max-w-5xl text-display font-bold text-balance [animation-delay:100ms] lg:text-display-lg"
+          className="animate-lift-in mt-6 text-display font-bold tracking-tight text-balance [animation-delay:100ms] lg:col-start-2 lg:col-span-7 lg:mt-0 lg:text-display-lg"
         >
           <span className="block text-cloud">{hero.line1}</span>
           <span className="block">
@@ -123,38 +68,59 @@ export default function Hero() {
             {l2After}
           </span>
         </h1>
-        <p className="animate-rise-in mt-8 max-w-2xl text-lead text-cloud [animation-delay:220ms] lg:text-lead-lg">
+
+        <p className="animate-rise-in mt-8 max-w-[46ch] text-lead text-cloud [animation-delay:220ms] lg:col-start-2 lg:col-span-5 lg:mt-10 lg:text-lead-lg">
           {hero.sub}
         </p>
-        <div className="animate-rise-in mt-12 [animation-delay:340ms]">
-          <DiscordCta size="hero" label={hero.cta} />
+
+        <div className="animate-rise-in mt-10 [animation-delay:340ms] lg:col-start-2 lg:mt-12">
+          <DiscordCta size="line" label={hero.cta} />
         </div>
-        <p className="animate-rise-in mt-6 text-small text-cloud [animation-delay:460ms]">
+
+        <p className="animate-rise-in mt-6 text-small text-cloud [animation-delay:460ms] lg:col-start-2">
           {hero.support}
         </p>
-        {/* Quick-nav pills (D35): anchor links, outline-styled, ≥44px targets
-            (J6). They navigate to sections; the ONE conversion action stays
-            the button above (R11). `cloud` on ink 7.77:1, hover `brand` 6.17:1. */}
+
+        {/* Meta column: 100% real data (no invented figures). Marginalia at
+            the top-right on lg; flows after the support line on mobile. */}
+        <aside className="animate-rise-in mt-16 [animation-delay:580ms] lg:col-start-10 lg:col-span-3 lg:row-start-1 lg:mt-0 lg:self-start">
+          <dl className="space-y-6">
+            {hero.meta.map((item) => (
+              <div key={item.label}>
+                <dt className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
+                  {item.label}
+                </dt>
+                <dd className="mt-1 text-small text-paper">{item.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+
+        {/* Quick-nav: plain uppercase text links, ≥44px targets (J6), `cloud`
+            on ink 7.77:1, hover `brand` 6.17:1. The ONE conversion action
+            stays the button above (R11). */}
         <nav
           aria-label={messages.a11y.quickNavLabel}
-          className="animate-rise-in mt-12 flex flex-wrap items-center justify-center gap-2 [animation-delay:580ms]"
+          className="animate-rise-in mt-16 [animation-delay:700ms] lg:col-start-2 lg:col-span-7 lg:mt-12"
         >
-          {quickLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="inline-flex min-h-11 items-center rounded-full border border-white/10 px-4 text-small font-semibold text-cloud whitespace-nowrap transition-colors duration-150 hover:border-brand/40 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
-            >
-              {item.label}
-            </Link>
-          ))}
+          <ul className="flex flex-wrap items-center gap-x-6">
+            {quickLinks.map((item, index) => (
+              <li key={item.href} className="flex items-center gap-x-6">
+                {index > 0 ? (
+                  <span aria-hidden="true" className="text-cloud/40">
+                    ·
+                  </span>
+                ) : null}
+                <Link
+                  href={item.href}
+                  className="inline-flex min-h-11 items-center text-label font-semibold uppercase tracking-[0.15em] whitespace-nowrap text-cloud underline-offset-4 transition-colors duration-150 hover:text-brand hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
-        {/* Stack wall (D35): the honest echo of a "trusted by" logo row —
-            technologies the community actually builds with, as quiet text.
-            No invented companies, no invented member counts. */}
-        <p className="animate-rise-in mt-14 max-w-3xl text-small tracking-wide text-cloud [animation-delay:700ms]">
-          {hero.stackWall}
-        </p>
       </div>
     </section>
   );

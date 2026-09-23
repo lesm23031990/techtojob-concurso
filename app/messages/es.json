@@ -2,9 +2,9 @@
   "meta": {
     "title": "TechToJob · Comunidad de desarrolladores y empresas tech",
     "description": "TechToJob es una comunidad de desarrolladores y empresas tech en español. Publica tu perfil, participa en torneos, haz networking y entra al Discord ahora.",
-    "ogImageAlt": "Tarjeta social de TechToJob: logo verde apilado sobre fondo carbón junto al lema «No es un portal de empleo. Es una comunidad.»",
+    "ogImageAlt": "Tarjeta social de TechToJob: logo verde apilado sobre fondo carbón junto al lema «Aquí te conocen antes de que exista la vacante.»",
     "og": {
-      "headline": "No es un portal de empleo. Es una comunidad.",
+      "headline": "Aquí te conocen antes de que exista la vacante.",
       "support": "Comunidad de desarrolladores y empresas tech en español"
     }
   },
@@ -40,13 +40,19 @@
     "ctaShort": "Entrar al Discord"
   },
   "hero": {
-    "highlight": "comunidad.",
-    "line1": "No es un portal de empleo.",
-    "line2": "Es una comunidad.",
-    "sub": "TechToJob reúne a desarrolladores y empresas tech en español. Aquí construyes, participas y te conocen antes de que exista una vacante.",
-    "cta": "Entrar al Discord de TechToJob",
-    "support": "Entrar no cuesta nada. Ni un CV en PDF, ni una espera de semanas.",
-    "stackWall": "React · Next.js · Laravel · Node · Python · Rust · AWS"
+    "overline": "TechToJob · comunidad técnica en español",
+    "highlight": "te conocen",
+    "line1": "El fin de la búsqueda pasiva.",
+    "line2": "Aquí te conocen antes de que exista la vacante.",
+    "sub": "No encajamos vacantes con currículos. Vemos a la gente construir, participar y resolver — y dejamos que las conexiones pasen solas.",
+    "cta": "Entrar al Discord",
+    "support": "Sin formularios. Sin CV en PDF. Sin semanas de espera.",
+    "meta": [
+      { "label": "Comunidad", "value": "Discord · canales por área" },
+      { "label": "Formato", "value": "Torneos · networking · talento" },
+      { "label": "Edición", "value": "Torneo #2 — esta web" },
+      { "label": "Stack", "value": "React · Next.js · Laravel · Node · Python · Rust · AWS" }
+    ]
   },
   "howItWorks": {
     "h2": "Cómo funciona",
