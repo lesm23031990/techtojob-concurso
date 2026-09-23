@@ -65,7 +65,9 @@ function desktopTier(href: string): DesktopNavTier {
  * identical weight (228px at sm). On ink the tile holds the green `Negativo`
  * symbol (§0.1: 6.17:1) and the two-tone `wordmark-duo` (derived, D31); on
  * paper it holds the official charcoal `Positivo` symbol (12.58:1) and the
- * derived mono charcoal `wordmark-ink` (same outlines, recoloured, D55). Only
+ * derived `wordmark-ink-duo` (same outlines as D55, recoloured per D97: `Tech`
+ * in ink, `toJob` in brand with a thin ink outline so the pale green reads on
+ * white). Only
  * the tile border differs — solid `brand` on paper, `brand/40` on ink — because
  * a diluted green on white would vanish (the border is decoration only, R26).
  * No official file was altered and the accessible name comes from the link's
@@ -133,8 +135,9 @@ export default async function SiteHeader() {
           </span>
           {/* Light-surface lockup: the SAME composite in light polarity (D55) —
               official charcoal `Positivo` symbol (12.58:1 on paper) in a solid
-              `brand` tile plus the derived mono charcoal wordmark. Mirrors the
-              dark lockup so both surfaces carry identical weight. */}
+              `brand` tile plus the derived `wordmark-ink-duo` (D97): `Tech` in
+              ink and `toJob` in brand, outlined in ink so the pale green reads
+              on white. Mirrors the dark lockup's two-tone wordmark. */}
           <span className="header-logo header-logo-light flex items-center gap-2.5">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-none border border-brand bg-ink/5">
               <Image
@@ -147,7 +150,7 @@ export default async function SiteHeader() {
               />
             </span>
             <Image
-              src="/brand/wordmark-ink.svg"
+              src="/brand/wordmark-ink-duo.svg"
               alt=""
               width={178}
               height={24}
