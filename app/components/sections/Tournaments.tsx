@@ -15,23 +15,22 @@ import DiscordCta from "@/components/DiscordCta";
  * funciona" it turns the explanation into proof ("there is a tournament
  * running"). The rail keeps the page-wide line continuous on ink.
  *
- * Structure (D71/D73): four sober pillars on a 2×2 asymmetric grid (7/5 + 7/5)
- * over hairlines — square, shadow-free: the running tournament (with its CTA),
- * the prizes, the closing schedule and the hall of fame. D73 split the schedule
- * out of the active card so each pillar is its own block and no column dangles.
+ * Structure (D71→D74): the running tournament (with its CTA) takes 7 columns;
+ * the prizes and the hall of fame stack in the remaining 5 so the short blocks
+ * fill the active card's height; and the closing schedule runs as a FULL-WIDTH
+ * band below. D74 replaced the flat 2×2, which left the right column empty
+ * (a short prize list next to a tall schedule) and broke the timezone grid.
  *
  * Data honesty (brief + J2): the running tournament, its challenge and the
  * closing schedule are the REAL Torneo #2 facts (D72); prizes and winner stay
- * SAMPLE data, now flagged INLINE with a `sampleTag` chip on their blocks (D73)
- * so a fast reader cannot mistake them for real — instead of a single note at
- * the section's foot. The closing schedule is STATIC on purpose: no client
- * island and no date to expire (D56/D71/D72), so it never reads "00:00:00".
+ * SAMPLE data, flagged INLINE with a `sampleTag` chip on their blocks (D73).
+ * The closing schedule is STATIC on purpose: no client island and no date to
+ * expire (D56/D71/D72), so it never reads "00:00:00".
  *
  * Motion: `.reveal-left` per beat with `--i` — the SAME entrance as the
- * section above (#como-funciona, D69), by author request (D72): every block
- * slides in from the rail. CSS-only, no islands. The schedule times use Sora
- * `tabular-nums` (monospaced figures with the single allowed typeface —
- * R58/R59) instead of adding a mono font.
+ * section above (#como-funciona, D69/D72). CSS-only, no islands. The schedule
+ * times use Sora `tabular-nums` (monospaced figures with the single allowed
+ * typeface — R58/R59) instead of adding a mono font.
  */
 export default async function Tournaments() {
   const messages = await getMessages();
@@ -71,8 +70,7 @@ export default async function Tournaments() {
             {copy}
           </p>
 
-          {/* 2×2 grid: active | prizes on row 1, schedule | hall on row 2. */}
-          <div className="mt-12 grid grid-cols-1 gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-12">
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-x-12">
             {/* 1 · The running tournament (real data, D72) */}
             <article
               className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-7"
@@ -93,95 +91,104 @@ export default async function Tournaments() {
               </div>
             </article>
 
-            {/* 2 · The prizes (sample) */}
-            <div
-              className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-5"
-              style={{ "--i": 3 } as CSSProperties}
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="text-label font-semibold uppercase text-cloud">
-                  {prizes.label}
-                </p>
-                <span className="rounded-full bg-ember px-2.5 py-0.5 text-label font-semibold uppercase text-ink">
-                  {sampleTag}
-                </span>
+            {/* 2 & 4 · Prizes over hall of fame, stacked in the 5-col column
+                (D74): the two short blocks fill the active card's height. */}
+            <div className="flex flex-col gap-10 lg:col-span-5 lg:justify-between">
+              <div
+                className="reveal-left border-t border-hairline-dark pt-6"
+                style={{ "--i": 3 } as CSSProperties}
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-label font-semibold uppercase text-cloud">
+                    {prizes.label}
+                  </p>
+                  <span className="rounded-full bg-ember px-2.5 py-0.5 text-label font-semibold uppercase text-ink">
+                    {sampleTag}
+                  </span>
+                </div>
+                <ul className="mt-4 divide-y divide-hairline-dark">
+                  {prizes.items.map((item) => (
+                    <li
+                      key={item.place}
+                      className="flex items-baseline gap-4 py-4"
+                    >
+                      <span className="w-8 shrink-0 text-lead font-bold text-brand">
+                        {item.place}
+                      </span>
+                      <span className="text-body text-paper">
+                        {item.reward}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-4 divide-y divide-hairline-dark">
-                {prizes.items.map((item) => (
-                  <li
-                    key={item.place}
-                    className="flex items-baseline gap-4 py-4"
-                  >
-                    <span className="w-8 shrink-0 text-lead font-bold text-brand">
-                      {item.place}
-                    </span>
-                    <span className="text-body text-paper">{item.reward}</span>
-                  </li>
-                ))}
-              </ul>
+
+              <div
+                className="reveal-left border-t border-hairline-dark pt-6"
+                style={{ "--i": 4 } as CSSProperties}
+              >
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="text-label font-semibold uppercase text-cloud">
+                    {hallOfFame.label}
+                  </p>
+                  <span className="rounded-full bg-ember px-2.5 py-0.5 text-label font-semibold uppercase text-ink">
+                    {sampleTag}
+                  </span>
+                </div>
+                {hallOfFame.items.length > 0 ? (
+                  <ul className="mt-4 flex flex-col gap-4">
+                    {hallOfFame.items.map((winner) => (
+                      <li
+                        key={winner.handle}
+                        className="border-l-2 border-brand pl-3"
+                      >
+                        <p className="text-body font-semibold text-paper">
+                          {winner.handle}
+                        </p>
+                        <p className="text-small text-cloud">
+                          {winner.edition} · {winner.outcome}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-4 text-body text-cloud">
+                    {hallOfFame.empty}
+                  </p>
+                )}
+              </div>
             </div>
 
-            {/* 3 · The closing schedule (real data, D72; STATIC, no island) */}
+            {/* 3 · The closing schedule (real data, D72) as a full-width band
+                (D74): the timezone grid gets room and the time never wraps. */}
             <div
-              className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-7"
-              style={{ "--i": 4 } as CSSProperties}
+              className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-12"
+              style={{ "--i": 5 } as CSSProperties}
             >
               <p className="text-label font-semibold uppercase text-cloud">
                 {timer.label}
               </p>
-              <p className="mt-3 text-lead font-semibold tabular-nums text-paper">
+              <p className="mt-3 text-balance text-lead font-semibold tabular-nums text-paper">
                 {timer.heading}
               </p>
               <p className="mt-2 max-w-prose text-small text-cloud">
                 {timer.note}
               </p>
-              <dl className="mt-5 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+              <dl className="mt-6 grid grid-cols-1 gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
                 {timer.zones.map((zone) => (
                   <div
                     key={zone.region}
-                    className="flex items-baseline justify-between gap-4 border-b border-hairline-dark pb-2"
+                    className="flex items-baseline justify-between gap-4 border-b border-hairline-dark pb-3"
                   >
-                    <dt className="text-small text-cloud">{zone.region}</dt>
-                    <dd className="text-small font-semibold tabular-nums text-paper">
+                    <dt className="min-w-0 text-small text-cloud">
+                      {zone.region}
+                    </dt>
+                    <dd className="whitespace-nowrap text-small font-semibold tabular-nums text-paper">
                       {zone.closing}
                     </dd>
                   </div>
                 ))}
               </dl>
-            </div>
-
-            {/* 4 · The hall of fame (sample social proof) */}
-            <div
-              className="reveal-left border-t border-hairline-dark pt-6 lg:col-span-5"
-              style={{ "--i": 5 } as CSSProperties}
-            >
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="text-label font-semibold uppercase text-cloud">
-                  {hallOfFame.label}
-                </p>
-                <span className="rounded-full bg-ember px-2.5 py-0.5 text-label font-semibold uppercase text-ink">
-                  {sampleTag}
-                </span>
-              </div>
-              {hallOfFame.items.length > 0 ? (
-                <ul className="mt-4 flex flex-col gap-4">
-                  {hallOfFame.items.map((winner) => (
-                    <li
-                      key={winner.handle}
-                      className="border-l-2 border-brand pl-3"
-                    >
-                      <p className="text-body font-semibold text-paper">
-                        {winner.handle}
-                      </p>
-                      <p className="text-small text-cloud">
-                        {winner.edition} · {winner.outcome}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-4 text-body text-cloud">{hallOfFame.empty}</p>
-              )}
             </div>
           </div>
         </div>

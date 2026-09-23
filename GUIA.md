@@ -31,11 +31,11 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
   ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
   a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72) y pulido (D73), a la espera del visto
-  bueno de Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares en rejilla 2×2 (7/5) sobre `ink`**:
-  torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord), **cierre real con tabla de husos**
-  (estático, Sora `tabular-nums`), el botín y el salón de la fama (estos dos con **chip `Ejemplo`**).
-  Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
+- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72), pulido (D73) y reequilibrado (D74), a la
+  espera del visto bueno de Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares sobre `ink`**:
+  torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord) en 7 col con **botín y salón de la
+  fama apilados** en 5 (chip `Ejemplo`), y **cierre real a todo el ancho** con tabla de husos (estático,
+  Sora `tabular-nums`). Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
 - **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — talento, empresas, networking,
   testimonios, noticias y newsletter (las tres primeras son editoriales; las dos bento, ya con D61;
   newsletter, franja `brand`). Punto de partida = commit de D71. Después, la **Fase 5** (repo público,
@@ -259,6 +259,13 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > desaparece la columna apilada que dejaba hueco al pie. (D) la prueba social queda honesta con el chip
 > y el estado vacío listo. **Diferido al gate:** C (numeral de edición `02`) y E (hover de borde).
 > `tsc` + ESLint + `next build` en verde.
+
+> **Hecho (23/09, D74 — arreglo de los defectos visibles de `#torneos`):** sobre la captura se corrige
+> (1) la **tabla de husos** que partía el tiempo en dos líneas (`whitespace-nowrap` en el tiempo,
+> `min-w-0` en la región y rejilla `sm:2 / lg:3`), (2) el **desequilibrio**: la fila 1 pasa a
+> **activo (7) + [botín y salón apilados] (5)** con `lg:justify-between`, y el **cierre va a todo el
+> ancho** (`lg:col-span-12`) como banda, y (3) el **titular huérfano** con `text-balance`.
+> C, E y F siguen diferidos al gate. `tsc` + ESLint + `next build` en verde.
 
 ## 3. Fuentes de verdad (jerarquía)
 

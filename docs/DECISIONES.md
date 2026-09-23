@@ -927,6 +927,22 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
       `specs/10`, `specs/11`, `docs/design-system.md` (§7) y `GUIA.md`.
 
+- **D74.** 23/09, crítica visual de la captura de `#torneos`. **Defectos detectados:** (a) la tabla de
+      husos partía el **tiempo en dos líneas** (`jue 24 ·` / `01:00`) y las regiones largas también;
+      (b) el titular del cierre dejaba `00:00` huérfano; (c) el **2×2 D73 desequilibraba**: el botín
+      (corto) junto a la tarjeta activa y el salón de la fama junto al cierre (largo) dejaban la columna
+      derecha vacía. **Decisión (1+2+3):**
+      (1) **Husos:** `whitespace-nowrap` en el `<dd>` del tiempo, `min-w-0` en la región; la rejilla del
+      `dl` pasa a `sm:grid-cols-2 lg:grid-cols-3` para que cada huso quepa en una línea.
+      (2) **Reequilibrio:** el cierre pasa a **banda a todo el ancho** (`lg:col-span-12`) y la fila 1
+      queda **activo (7) + [botín y salón apilados] (5)** con `lg:justify-between`, así los dos bloques
+      cortos llenan la altura de la tarjeta activa. Sustituye al 2×2 de D73.
+      (3) **Titular del cierre:** `text-balance` (con la banda ancha ya cabe en una línea).
+      **Diferido al gate "vamos a revisar":** C (numeral de edición `02`), E (hover de borde) y
+      F (framing "cierre de la edición #2").
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `sections/Tournaments.tsx`, `specs/10`, `docs/design-system.md` (§7) y `GUIA.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
