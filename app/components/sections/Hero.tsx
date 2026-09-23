@@ -50,10 +50,11 @@ function HeroWord({ word, order }: { word: HeroWord; order: number }) {
  * Hero (section 1, anchor #inicio) — "Plano Cinético" composition (V7/D41):
  * a flat `ink` canvas whose only decoration is the vocabulary D37.1 authorizes
  * — hairline reticle plane, hard-edged light beam, faceted conic light planes
- * (#2), a 10% logo watermark (D43, same shared treatment as Tournaments/
- * Closing) and bracket marginalia (D) — laid out as a 12-column asymmetric
- * editorial grid on lg: the two-line H1 and a real-data meta column share the
- * first row, then sub, the ONE Discord button (R11) and a support line.
+ * (#2), a 6% light-symbol watermark (D43/D90, same shared treatment as
+ * Closing/Audiences) and bracket marginalia (D) — laid out as a 12-column
+ * asymmetric editorial grid on lg: the two-line H1 and a real-data meta column
+ * share the first row, then sub, the ONE Discord button (R11) and a support
+ * line.
  *
  * Layout (D52): the section is a viewport-height flex column whose main block
  * (`flex-1`) is centered vertically (`justify-center` / `lg:content-center`),
@@ -94,8 +95,9 @@ export default async function Hero() {
       className="relative isolate -mt-20 flex min-h-svh flex-col bg-ink text-paper"
     >
       {/* Decorative plane (D40/V7): reticle field + hard-edged light beam,
-          faceted conic light planes (#2) and the 10% logo watermark (D43).
-          aria-hidden + pointer-events-none; sits behind content (-z-10). */}
+          faceted conic light planes (#2) and the 6% light-symbol watermark
+          (D43/D90). aria-hidden + pointer-events-none; sits behind content
+          (-z-10). */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="hero-field absolute inset-x-0 -inset-y-16">
           <div className="hero-field-drift absolute -inset-16" />
@@ -112,16 +114,19 @@ export default async function Hero() {
           <div className="hero-facet-alt absolute inset-0" />
         </div>
 
-        {/* Shared 10% logo watermark (D43), same treatment as Tournaments/
-            Closing: identity without competing with the single CTA (R11). */}
+        {/* Shared 6% light-symbol watermark (D43/D90), same treatment as
+            Closing/Audiences. D90: the gradient symbol's dark end disappeared
+            on `ink`, so the light symbol (solid brand green, the header's dark
+            polarity) is used at 6% — identity without competing with the
+            single CTA (R11). */}
         <Image
-          src="/brand/logo-symbol-gradient.svg"
+          src="/brand/logo-symbol-light.svg"
           alt=""
           aria-hidden="true"
           width={520}
           height={520}
           loading="lazy"
-          className="pointer-events-none absolute -bottom-28 -right-20 opacity-10"
+          className="pointer-events-none absolute -bottom-28 -right-20 opacity-[0.06]"
         />
       </div>
 

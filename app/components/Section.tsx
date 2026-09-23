@@ -37,6 +37,13 @@ interface SectionProps {
    *  sections whose content wrapper holds a `position: sticky` column or a
    *  form — a `transform` ancestor breaks `sticky` and moves controls. */
   textDrift?: boolean;
+  /** Optional positional decoration (e.g. a watermark) rendered as a DIRECT
+   *  child of `<section>`, outside `page-container` and the `text-drift`
+   *  wrapper: a `transform` ancestor would break the decoration's
+   *  `position: absolute`. To sit BEHIND the in-flow content give it `-z-10`
+   *  and add `isolate` via `className` so the negative z-index stays inside
+   *  the section instead of escaping to the page root. */
+  decoration?: ReactNode;
   children: ReactNode;
 }
 
@@ -61,6 +68,7 @@ export default function Section({
   tone,
   className = "",
   textDrift = false,
+  decoration,
   children,
 }: SectionProps) {
   const step = timelineStep(id);
@@ -79,6 +87,7 @@ export default function Section({
         aria-hidden="true"
         className={`section-idle ${tone === "brand" ? "section-idle-ink" : ""}`}
       />
+      {decoration}
       <TimelineRail tone={tone} step={step} />
       <div className="page-container">
         <div

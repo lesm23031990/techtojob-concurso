@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import Section from "@/components/Section";
 import AudienceCta from "@/components/AudienceCta";
 import { IconCode, IconBuilding } from "@/components/icons";
@@ -18,6 +19,13 @@ import { getMessages } from "next-intl/server";
  * rail node (step 3); the section keeps `id="talento"` and the companies cell
  * keeps `id="empresas"` as an optional deep-link. Nav and footer both point at
  * `#talento` (D76) because it is ONE section, not two destinations.
+ *
+ * Decoration (D90): the same 6% light-symbol watermark as the hero and the
+ * closing, rendered through `Section`'s `decoration` slot as a direct child of
+ * `<section>` (outside `page-container`) so its `position: absolute` is
+ * measured against the section, not an ancestor. `isolate` (negative z-index
+ * stays local) plus `overflow-clip` (bleed doesn't cause horizontal scroll)
+ * keep the cells and copy painted above it.
  *
  * Motion (D61/D77): the cells use the bento language — `.reveal-left` on the
  * wrapper (symmetric in/out) plus `.bento-lit-ink` on the card (border
@@ -68,7 +76,28 @@ export default async function Audiences() {
   ];
 
   return (
-    <Section id="talento" headingId="audiences-heading" tone="ink" textDrift>
+    <Section
+      id="talento"
+      headingId="audiences-heading"
+      tone="ink"
+      textDrift
+      className="isolate overflow-clip"
+      /* Light-symbol watermark at 6% (D90): on `ink` the gradient symbol's
+         dark end vanished; the light symbol matches the header's dark
+         polarity. `-z-10` + `isolate` keep it behind the cells without
+         escaping the section; `overflow-clip` contains the bleed. */
+      decoration={
+        <Image
+          src="/brand/logo-symbol-light.svg"
+          alt=""
+          aria-hidden="true"
+          width={520}
+          height={520}
+          loading="lazy"
+          className="pointer-events-none absolute -right-16 -bottom-24 -z-10 opacity-[0.06]"
+        />
+      }
+    >
       <h2
         id="audiences-heading"
         className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
