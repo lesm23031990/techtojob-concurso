@@ -1725,6 +1725,46 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `docs/DECISIONES.md` (esta entrada), `GUIA.md` (§2 tabla de fases, §2.0 handoff
       y §2.1 modo de trabajo).
 
+- **D125.** 23/09, **modo revisión activado por Lorena** ("hazme una auditoría estricta"): se
+      levanta la pausa de D56 y se corren `rules-auditor`, `seo-perf` y `qa-access` en solo-lectura
+      sobre el estado congelado. Veredicto: **código de nivel alto, paquete de entrega incompleto**.
+      Se aplican los arreglos críticos/altos que no dependen del deploy:
+      **(1) Perf/rendimiento** — `NextIntlClientProvider` recibe **solo el namespace `newsletter`**
+      (antes serializaba todo el catálogo al cliente); `HeaderSurface` pasa de `getBoundingClientRect`
+      por frame a **`IntersectionObserver`** con banda de 1px en 104px; `Countdown` deja de tickear
+      fuera de pantalla y con pestaña oculta (`IntersectionObserver` + `visibilitychange`); se
+      **retiran los 7 `will-change: transform`** permanentes de `globals.css`.
+      **(2) A11y** — el guard de `prefers-reduced-motion` añade **`animation-delay: 0s !important`**
+      (sin él, el H1/sub/CTA del hero quedaban invisibles ~0.6s con movimiento reducido); borde del
+      input de newsletter `white/40 → white/50` (2.77:1 → ~3.65:1, WCAG 1.4.11); se quita
+      `newsletter-status` del `aria-describedby` (doble anuncio); el `Ticker` pausa con `hover`.
+      **(3) SEO** — `og:image:alt` **localizado** vía `generateImageMetadata` (antes lo pisaba un
+      `alt` estático) y `twitter:image` corregido a la ruta real `…/opengraph-image/og`; Twitter Card
+      con `site`/`creator`; JSON-LD pasa a **`@graph` Organization + WebSite** con `@id` y **logo
+      PNG raster** (`logo-symbol-positivo.png`; Google ignora SVG); `x-default` en hreflang; `sitemap`
+      con **`lastmod` fijo** y solo ES; cabeceras de seguridad en `next.config.ts`.
+      **(4) J2/contenido** — testimonios sin Lorem ipsum (frases de muestra en español); H1 línea 1
+      pasa a la frase que posiciona *"Comunidad de desarrolladores y empresas tech en español."*
+      (R38; se conserva la línea de marca y el highlight "te conocen"); CTAs de Noticias alineados con
+      su destino real (Discord). **(5) R45/UX** — nav y footer "Empresas" apuntan a **`#empresas`**
+      (antes `#talento`). **(6) J4** — se elimina `IconArrowRight` (sin uso).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en **verde**. **Pendiente (bloqueante):**
+      URL real de deploy en `content.ts:316` (hoy apunta a un dominio ajeno) + capturas + Lighthouse.
+      **Actualizado en:** `app/app/[locale]/layout.tsx`, `components/{HeaderSurface,Countdown,
+      NewsletterForm,Ticker,icons}.tsx`, `components/sections/{Hero,Audiences}.tsx`, `app/content.ts`,
+      `app/app/sitemap.ts`, `app/app/[locale]/opengraph-image.tsx`, `app/messages/{es,en}.json`,
+      `app/app/globals.css`, `app/next.config.ts`, `app/public/brand/logo-symbol-positivo.png`, `README.md`.
+
+- **D126.** 23/09, sobre el bilingüe (ajusta D57): Lorena confirma *"no se pidió en inglés, pero sí
+      dejar listo el sistema para las traducciones"*. **Decisión:** la infraestructura i18n se mantiene
+      **intacta y operativa** (next-intl, `app/[locale]/`, paridad de claves forzada por tipos,
+      handoff en `specs/12-i18n.md`), pero **`/en` deja de anunciarse a buscadores** mientras su copy
+      siga siendo español: `robots: noindex` en la ruta EN y **fuera del `sitemap`/hreflang** (que
+      pasa a `es` + `x-default`). Motivo: un `hreflang="en"` con contenido ES y `lang="en"` es peor que
+      no tenerlo (Google lo lee como duplicado y puede descartar la página). **Reversible en 2 líneas**
+      cuando se traduzca `en.json` (documentado en el README y en `specs/12-i18n.md`).
+      **Actualizado en:** `app/app/[locale]/layout.tsx`, `app/app/sitemap.ts`, `README.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

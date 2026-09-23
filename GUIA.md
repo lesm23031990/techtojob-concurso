@@ -21,10 +21,22 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 | 2. Sistema de diseño | Tokens Tailwind, paleta, tipografía, uso del logo oficial → `docs/design-system.md` | ✅ 22/09 |
 | 3. Construcción | Scaffold + 9 secciones (Audiencias unifica Talento+Empresas, D75) + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 · revisada 23/09 |
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
-| 4b. Blindaje + RE-auditoría | Congelar el diseño aprobado y re-auditar las 61 reglas + Lighthouse + Playwright/axe sobre el estado final + plan de pruebas | ⏳ **próxima sesión** (modo revisión, D124) |
-| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ después del 4b |
+| 4b. Blindaje + RE-auditoría | Re-auditar las 61 reglas + Lighthouse + Playwright/axe sobre el estado final | 🔄 **23/09:** auditoría en solo-lectura corrida (`rules-auditor` + `seo-perf` + `qa-access`) y fixes críticos aplicados (D125/D126); falta Lighthouse/capturas sobre el deploy |
+| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ **bloqueante:** fijar la URL real en `content.ts` (`site.url` hoy apunta a un dominio ajeno) → capturas + Lighthouse + mensaje ENTREGAS |
 
 ### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
+
+- **23/09 (D125/D126) · auditoría estricta aplicada.** `rules-auditor`, `seo-perf` y `qa-access`
+  corrieron en **solo-lectura** sobre el estado congelado. **Hallazgo bloqueante:** `content.ts:316`
+  (`site.url`) apunta a `https://techtojob.vercel.app`, que **hoy sirve la web de OTRO participante**
+  (y `techtojob-landing.vercel.app` también es de otro); **no hay deploy de este repo**, así que
+  canonical/OG/sitemap/JSON-LD apuntan fuera. **No es entregable hasta fijar la URL real.**
+  Aplicado: `loading="lazy"` fuera del hero (R56), `animation-delay: 0s` en el guard de reduced-motion,
+  provider i18n recortado a `newsletter`, `HeaderSurface` con `IntersectionObserver`, `Countdown` con
+  pausa offscreen/pestaña oculta, 7 `will-change` fuera, `og:image:alt` localizado, JSON-LD
+  `@graph` Organization+WebSite + logo PNG, `x-default`, sitemap solo ES con `lastmod` fijo, cabeceras
+  de seguridad, testimonios sin Lorem ipsum, H1 con la frase que posiciona (R38), nav/footer
+  "Empresas" → `#empresas`, `IconArrowRight` fuera. `/en` queda `noindex` (D126). `tsc`+ESLint+`next build` en verde.
 
 > **DISEÑO CERRADO (D88/D98/D100–D107, 23/09): Hero → Newsletter.** Las secciones **Hero, Cómo
 > funciona, Torneos, Audiencias, Networking, Testimonios (D89/D90), Noticias (D98) y Newsletter

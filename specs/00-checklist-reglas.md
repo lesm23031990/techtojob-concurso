@@ -13,7 +13,7 @@
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
 | R01 | "Repo público en GitHub con README" | META | D202 | pendiente — mañana: repo público GitHub |
-| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | pendiente — mañana: deploy + URL real en site.url |
+| R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | **VIOLADA hasta el deploy** — `content.ts:316` (`site.url`) apunta a `https://techtojob.vercel.app`, que sirve la web de OTRO participante; hay que desplegar ESTE repo y fijar la URL real (bloqueante, D125) |
 | R03 | "Capturas de escritorio y móvil" | META | D204 | pendiente — capturas sobre el deploy mañana |
 | R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | pendiente — Lighthouse final sobre el deploy (control local: SEO 100, A11y 100, Perf 76) |
 | R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | en riesgo — queda 1 día para ENTREGAS |
@@ -33,7 +33,7 @@
 | R14 | Publica como empresa: "publicas lo que buscas y accedes a perfiles" | OBL | D29 | cumplida (audit 22/09) — desde D75 vive en el bloque derecho de "Audiencias" (celda `id="empresas"`), con H3 propio y CTA "Buscar talento real" |
 | R15 | Torneos: "Competiciones abiertas como esta" | OBL | D32 | cumplida (audit 22/09) |
 | R16 | Networking: "Canales por área y gente del sector" | OBL | D35, D81 | cumplida (audit 22/09) — **D81 (23/09)** recompone la sección en 3 bloques; la cita sigue cubierta por `networking.channels.label` + `networking.intro` (`es.json`). Re-auditar con QA |
-| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida — **D89/D90/D91:** marquee CSS puro sobre `mist`; 4 tarjetas con avatar (hueco de foto, iniciales honestas), nombre, rol y frase + slot LinkedIn deshabilitado (R43), con **contenido de relleno declarado (Lorem ipsum)** — el brief lo declara "de relleno", no se inventan personas verosímiles. El track visual repetido va `aria-hidden` y el contenido se sirve en una lista `sr-only` que incluye la nota del slot LinkedIn |
+| R17 | Testimonios: 4-5 tarjetas con nombre y frase; "deja sitio" para foto y enlace a perfil (LinkedIn) en versión final | OBL | D38 | cumplida — **D89/D90/D91:** marquee CSS puro sobre `mist`; 4 tarjetas con avatar (hueco de foto, iniciales honestas), nombre, rol y frase + slot LinkedIn deshabilitado (R43), con **frases de muestra en español (D125: sin Lorem ipsum)** — el brief lo declara "de relleno", no se inventan personas verosímiles; el nombre va rotulado como muestra. El track visual repetido va `aria-hidden` y el contenido se sirve en una lista `sr-only` que incluye la nota del slot LinkedIn |
 | R18 | Noticias: "Maqueta tres entradas de ejemplo" | OBL | D41 | cumplida (audit 22/09) |
 | R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44, D100 | cumplida — **D100:** la franja `brand` maciza se retira (la sección pasa a `ink` + panel `coal`); la norma pide *una franja antes del footer*, no un color. El formulario mantiene `label` visible, validación HTML5 y feedback (`role="status"`). **D89/D100:** ya no existe ninguna franja `brand` maciza en el sitio (D44, R26) |
 | R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | cumplida (audit 22/09) |
@@ -63,7 +63,7 @@
 | R34 | "Animaciones libres, pero que no estorben" | OBL | D96 | cumplida — **D89:** el marquee de Testimonios corre ≥180s (transform only, CLS 0) con pausa por `hover`/`focus-within`, control CSS-only y el guard `prefers-reduced-motion` que lo estaciona. **D121:** el bloque del Cierre reutiliza la deriva de la rejilla del hero (28s) y añade estrellas con centelleo propio (5–10s); es decorativo (`aria-hidden` + `pointer-events-none`) y nunca se dibuja sobre el copy (bloque aparte) |
 | R35 | "Variables, funciones, componentes y commits, todo en inglés" (actualización 09/09) | OBL | D261-263 | cumplida — fixes 22/09: commits reworded a inglés (D22) + claves-identificador a inglés (D23) |
 | R36 | "los textos agrupados en un archivo aparte, nunca incrustados por todo el código" → Next: `messages/es.json` | OBL | D269-272 | cumplida (audit 22/09) |
-| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | infraestructura cumplida (D54, commit `1d4cdd0`); **traducción EN aplazada (D57)** con handoff listo en `specs/12-i18n.md`; supersede el "n-a por plazo" de D-14 |
+| R37 | OPCIONAL bilingüe: next-intl, `app/[locale]/`, `generateStaticParams` → ['es','en'], hreflang cruzado, lang correcto, selector "que sea un enlace de verdad, no JS" | EVAL (suma en SEO) | D281-289 | infraestructura cumplida (D54, commit `1d4cdd0`); **traducción EN aplazada (D57)** con handoff listo en `specs/12-i18n.md`; **D126:** `/en` queda `noindex` y fuera del sitemap/hreflang mientras el catálogo EN sea espejo del ES (un hreflang con idioma equivocado resta); reversible en 2 líneas al traducir |
 
 ## E. SEO (contenido y estructura)
 
@@ -76,7 +76,7 @@
 | R42 | "Usa header, nav, main, section, article, footer, button y a donde corresponda" | OBL | D129 | cumplida (audit 22/09) |
 | R43 | "un div con onClick no es un enlace. Si navega, es <a> o <Link>" | NEG | D133 | cumplida (audit 22/09) |
 | R44 | Enlaces con "Texto descriptivo siempre" (❌ "haz clic aquí" · "leer más") | OBL | D139-142 | cumplida (audit 22/09) |
-| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | cumplida — **D90:** `#newsletter` añadido a la barra de escritorio (tier `xl`), además del panel móvil y el footer |
+| R45 | "URLs… con nombres que se entiendan: /ofertas, no /page2" (anclas legibles) | OBL | D144 | cumplida — **D90:** `#newsletter` en la barra de escritorio; **D125:** nav y footer «Empresas» apuntan a `#empresas` (antes `#talento`), así la etiqueta coincide con el destino |
 
 ## F. SEO (metadata, imágenes, fuentes)
 
@@ -92,7 +92,7 @@
 | R53 | Imágenes "WebP o AVIF, nunca un PNG de dos megas" | OBL | D161 | cumplida (audit 22/09) |
 | R54 | "next/image si vas con Next" | OBL | D162 | cumplida (audit 22/09) |
 | R55 | "width y height siempre puestos" | OBL | D163 | cumplida (audit 22/09) |
-| R56 | "loading='lazy' en todo lo que esté por debajo del primer pantallazo, nunca en la imagen del hero" | OBL | D164 | cumplida — fix loading=lazy en Tournaments 22/09 |
+| R56 | "loading='lazy' en todo lo que esté por debajo del primer pantallazo, nunca en la imagen del hero" | OBL | D164 | cumplida — **D125:** fix en Tournaments (22/09) + se retira el `loading="lazy"` que quedaba en la marca de agua del hero (`Hero.tsx`); el resto correcto |
 | R57 | "alt descriptivo de verdad" (❌ genérico, ❌ keyword-stuffing = "spam y penaliza") | OBL | D166-170 | cumplida (audit 22/09) |
 | R58 | "Sora con next/font" | OBL | D176 | cumplida (audit 22/09) |
 | R59 | "Una fuente y tres pesos. No ocho variantes" | OBL | D178 | cumplida (audit 22/09) |
