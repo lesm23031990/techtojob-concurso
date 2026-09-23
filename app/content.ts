@@ -332,9 +332,10 @@ export function navItemsFor(messages: Messages): NavItem[] {
     { href: "#como-funciona", label: messages.nav.links.howItWorks },
     { href: "#torneos", label: messages.nav.links.tournaments },
     { href: "#talento", label: messages.nav.links.talent },
-    // D75/D76: Talent and Companies are ONE split section now, so both nav
-    // entries point to the same anchor (the section heading), not to a cell.
-    { href: "#talento", label: messages.nav.links.companies },
+    // D75: Talent and Companies are ONE split section. D126: "Empresas" now
+    // targets the companies CELL (`#empresas`) so the label matches where the
+    // visitor actually lands, instead of the shared section heading.
+    { href: "#empresas", label: messages.nav.links.companies },
     { href: "#networking", label: messages.nav.links.networking },
     { href: "#testimonios", label: messages.nav.links.testimonials },
     { href: "#noticias", label: messages.nav.links.news },
@@ -377,16 +378,31 @@ export function timelineStep(id: string): number | undefined {
  *  both locales; the message catalog is passed in so the function stays pure. */
 export function organizationJsonLd(baseUrl: string, messages: Messages) {
   return {
-    "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${baseUrl}/#organization`,
     name: site.name,
     url: baseUrl,
-    logo: `${baseUrl}/brand/logo-horizontal.svg`,
+    // Raster PNG (not the SVG lockup): Google's Organization rich result
+    // ignores SVG logos, so the mark shipped for JSON-LD is the official PNG.
+    logo: `${baseUrl}/brand/logo-symbol-positivo.png`,
     sameAs: [
       messages.footer.social.linkedin.href,
       messages.footer.social.x.href,
       messages.footer.social.instagram.href,
     ],
+  };
+}
+
+/** WebSite node for the JSON-LD @graph: ties the brand entity to its site and
+ *  declared language (`inLanguage`). Rendered together with the Organization. */
+export function websiteJsonLd(baseUrl: string, locale: Locale) {
+  return {
+    "@type": "WebSite",
+    "@id": `${baseUrl}/#website`,
+    name: site.name,
+    url: baseUrl,
+    inLanguage: locale,
+    publisher: { "@id": `${baseUrl}/#organization` },
   };
 }
 

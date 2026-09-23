@@ -18,9 +18,28 @@ import { routing } from "@/i18n/routing";
  * and the SVGs are the same brand files served from /public — one source
  * of truth for the whole visual identity.
  */
-export const alt = "TechToJob";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
+const contentType = "image/png";
+
+/** Per-locale, descriptive OG alt (R51/R57). A file-level `export const alt`
+ *  would take precedence over the localized `openGraph.images[].alt` and the
+ *  real description would never reach the rendered `og:image:alt`. */
+export async function generateImageMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const resolved = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
+  return [
+    {
+      id: "og",
+      size,
+      contentType,
+      alt: messagesByLocale[resolved].meta.ogImageAlt,
+    },
+  ];
+}
 
 // Statically analyzable URLs via `new URL(..., import.meta.url)`: keeps the
 // deploy trace scoped to exactly these five files (no process.cwd()).

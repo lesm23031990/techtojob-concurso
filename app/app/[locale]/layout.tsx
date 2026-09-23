@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../globals.css";
-import { messagesByLocale, organizationJsonLd, site } from "@/content";
+import { messagesByLocale, organizationJsonLd, site, websiteJsonLd, type Locale } from "@/content";
 import { routing } from "@/i18n/routing";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -38,9 +38,11 @@ export async function generateMetadata({
   const resolved = hasLocale(routing.locales, locale) ? locale : routing.defaultLocale;
   const { meta } = messagesByLocale[resolved];
   const canonical = resolved === "es" ? "/" : "/en";
-  // The image metadata route lives in this [locale] segment, so its real URL is
-  // prefixed: /es/opengraph-image and /en/opengraph-image.
-  const ogImage = resolved === "es" ? "/es/opengraph-image" : "/en/opengraph-image";
+  // The image metadata route lives in this [locale] segment and, because it
+  // exports `generateImageMetadata`, it is served at `…/opengraph-image/og`
+  // (id "og") — the bare `/opengraph-image` path would 404.
+  const ogImage =
+    resolved === "es" ? "/es/opengraph-image/og" : "/en/opengraph-image/og";
 
   return {
     metadataBase: new URL(site.url),
@@ -49,13 +51,10 @@ export async function generateMetadata({
       template: "%s | TechToJob",
     },
     description: meta.description,
-    alternates: {
-      canonical,
-      languages: {
-        es: "/",
-        en: "/en",
-      },
-    },
+    alternates:
+      resolved === "es"
+        ? { canonical: "/", languages: { es: "/", "x-default": "/" } }
+        : { canonical: "/en" },
     openGraph: {
       type: "website",
       locale: resolved === "es" ? "es_ES" : "en_US",
@@ -74,12 +73,17 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
+      site: "@techtojob",
+      creator: "@techtojob",
       title: meta.title,
       description: meta.description,
       images: [ogImage],
     },
+    // EN keeps this catalog as an i18n-ready MIRROR of ES (no translation yet):
+    // reachable, but noindex until the copy is really translated, so a
+    // mismatched hreflang never counts against the ES page (D126).
     robots: {
-      index: true,
+      index: resolved === "es",
       follow: true,
     },
   };
@@ -103,12 +107,19 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = messagesByLocale[locale];
 
-  // JSON-LD Organization (R52): name, logo, URL and social profiles.
-  const jsonLd = organizationJsonLd(site.url, messages);
+  // JSON-LD @graph (R52): Organization + WebSite so search engines resolve the
+  // brand entity and its site as one graph.
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationJsonLd(site.url, messages),
+      websiteJsonLd(site.url, locale as Locale),
+    ],
+  };
 
   return (
     <html lang={locale} className={`${sora.variable} h-full antialiased`}>
-      <NextIntlClientProvider locale={locale} messages={messages}>
+      <NextIntlClientProvider locale={locale} messages={{ newsletter: messages.newsletter }}>
         <body className="flex min-h-full flex-col">
           {/* Skip link: first tabbable element, revealed on focus only —
               visible text, not hidden keywords (does not violate R60) */}
