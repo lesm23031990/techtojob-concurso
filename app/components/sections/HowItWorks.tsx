@@ -77,10 +77,10 @@ export default async function HowItWorks() {
                 (R25); ink numeral on ember = 6.12:1 (R26-safe). */}
             <span
               aria-hidden="true"
-              className="step-node absolute top-6 -left-7 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full border-2 border-ember bg-paper md:-left-14 lg:top-8 lg:-left-20 lg:h-12 lg:w-12 lg:border-[3px] xl:-left-24"
+              className="step-node absolute top-6 -left-7 grid h-7 w-7 -translate-x-1/2 place-items-center rounded-full border-2 border-ember bg-paper md:-left-14 lg:top-8 lg:-left-20 lg:h-12 lg:w-12 lg:border-[3px] xl:-left-24"
             >
-              <span className="step-node-fill absolute inset-[4px] rounded-full bg-ember lg:inset-[6px]" />
-              <span className="relative z-10 text-label font-bold text-ink lg:text-small">
+              <span className="step-node-fill absolute inset-[3px] rounded-full bg-ember lg:inset-[6px]" />
+              <span className="relative z-10 text-[0.65rem] leading-none font-bold text-ink lg:text-small">
                 {`1.${index + 1}`}
               </span>
             </span>
@@ -112,7 +112,7 @@ export default async function HowItWorks() {
         href={messages.discord.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="reveal-left mt-4 inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        className="reveal-left mt-4 inline-flex min-h-11 items-center gap-1.5 text-small font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink sm:text-body"
       >
         {cta}
         <IconArrowUpRight className="h-4 w-4" aria-hidden="true" />

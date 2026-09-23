@@ -71,7 +71,7 @@ export default async function SiteFooter() {
                       {...(isExternal(link.href)
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      className="inline-flex min-h-11 items-center gap-1 rounded-full text-body font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                      className="inline-flex min-h-11 items-center gap-1 rounded-full text-small font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
                     >
                       {link.text}
                       {isExternal(link.href) && (
@@ -99,7 +99,7 @@ export default async function SiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full text-body font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full text-small font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
                 >
                   {social.text}
                   <IconArrowUpRight className="h-4 w-4" />

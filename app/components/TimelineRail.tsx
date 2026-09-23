@@ -98,11 +98,11 @@ export default function TimelineRail({
         <span className={`absolute -translate-x-1/2 ${MARKER_Y} ${RAIL_X}`}>
           <span
             style={{ "--i": (step ?? 1) - 1 } as CSSProperties}
-            className={`timeline-marker relative grid h-11 w-11 place-items-center rounded-full border-2 text-small font-bold lg:h-14 lg:w-14 lg:border-[3px] ${MARKER_COLOR[tone]}`}
+            className={`timeline-marker relative grid h-9 w-9 place-items-center rounded-full border-2 text-label font-bold lg:h-14 lg:w-14 lg:border-[3px] lg:text-small ${MARKER_COLOR[tone]}`}
           >
             <span
               aria-hidden="true"
-              className="absolute inset-[5px] rounded-full bg-brand lg:inset-[7px]"
+              className="absolute inset-[4px] rounded-full bg-brand lg:inset-[7px]"
             />
             <span className="relative z-10 text-ink">{step}</span>
           </span>

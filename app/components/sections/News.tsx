@@ -85,7 +85,7 @@ async function NewsCard({ item, featured = false }: { item: NewsItem; featured?:
         href={messages.discord.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group/link mt-auto inline-flex min-h-11 items-center gap-1.5 self-start rounded-full font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        className="group/link mt-auto inline-flex min-h-11 items-center gap-1.5 self-start rounded-full text-small font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink sm:text-body"
       >
         {item.cta}
         <IconArrowUpRight className="h-4 w-4 transition-transform duration-300 ease-in-out group-hover/link:translate-x-0.5 motion-reduce:transform-none" />

@@ -244,7 +244,7 @@ export default async function Testimonials() {
             href={messages.discord.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="reveal-left inline-flex min-h-11 items-center gap-1.5 font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            className="reveal-left inline-flex min-h-11 items-center gap-1.5 text-small font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4 hover:decoration-3 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink sm:text-body"
           >
             {messages.testimonials.cta}
             <IconArrowUpRight className="h-4 w-4" aria-hidden="true" />

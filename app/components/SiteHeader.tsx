@@ -120,16 +120,16 @@ export default async function SiteHeader() {
                 alt=""
                 width={24}
                 height={24}
-                priority
+                loading="eager"
                 className="h-6 w-6"
               />
             </span>
             <Image
-              src="/brand/wordmark-duo.svg"
-              alt=""
-              width={178}
-              height={24}
-              priority
+                src="/brand/wordmark-duo.svg"
+                alt=""
+                width={178}
+                height={24}
+                loading="eager"
               className="h-5 w-auto sm:h-6"
             />
           </span>
@@ -145,16 +145,16 @@ export default async function SiteHeader() {
                 alt=""
                 width={24}
                 height={24}
-                priority
+                loading="eager"
                 className="h-6 w-6"
               />
             </span>
             <Image
-              src="/brand/wordmark-ink-duo.svg"
-              alt=""
-              width={178}
-              height={24}
-              priority
+                src="/brand/wordmark-ink-duo.svg"
+                alt=""
+                width={178}
+                height={24}
+                loading="eager"
               className="h-5 w-auto sm:h-6"
             />
           </span>
@@ -213,7 +213,7 @@ export default async function SiteHeader() {
                 <li key={`${item.href}-${item.label}`}>
                   <Link
                     href={item.href}
-                    className="header-menu-link flex min-h-12 items-center rounded-none px-4 text-body font-semibold text-ink hover:bg-mist focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                    className="header-menu-link flex min-h-12 items-center rounded-none px-4 text-small font-semibold text-ink hover:bg-mist focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   >
                     {item.label}
                   </Link>

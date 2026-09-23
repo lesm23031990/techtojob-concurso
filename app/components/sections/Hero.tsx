@@ -93,7 +93,7 @@ export default async function Hero() {
       /* -mt-20 pulls the hero up UNDER the 5rem sticky header so its flat ink
          surface sits behind the header's dark veil: the gradient resolves into
          ink and the bar dissolves into the hero with no seam (D47). */
-      className="relative isolate -mt-20 flex min-h-svh flex-col bg-ink text-paper"
+      className="relative isolate -mt-20 flex flex-col bg-ink text-paper md:min-h-svh"
     >
       {/* Decorative plane (D40/V7): reticle field + hard-edged light beam,
           faceted conic light planes (#2) and the 6% light-symbol watermark
@@ -141,7 +141,7 @@ export default async function Hero() {
             the grid on lg, so it shares row 1 with the meta column. */}
         <h1
           id="hero-heading"
-          className="mt-0 text-display-sm font-bold tracking-tight text-balance sm:text-display lg:col-start-2 lg:col-span-8 lg:mt-0 lg:text-display-lg"
+          className="mt-0 text-display-sm font-bold tracking-tight text-balance sm:text-display md:text-display-md lg:col-start-2 lg:col-span-8 lg:mt-0 lg:text-display-lg"
         >
           <span className="block text-cloud">
             {line1Words.map((word, index) => (
