@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { messages, navItems } from "@/content";
 import DiscordCta from "@/components/DiscordCta";
 
@@ -9,63 +11,151 @@ import DiscordCta from "@/components/DiscordCta";
 const QUICK_LINK_HREFS = ["#como-funciona", "#torneos", "#talento", "#empresas"];
 const quickLinks = navItems.filter((item) => QUICK_LINK_HREFS.includes(item.href));
 
+interface HeroWord {
+  text: string;
+  accent: boolean;
+}
+
+/** Splits a line into words, keeping `accentPhrase` as a single token so its
+ *  brand highlight and underline stay continuous across the reveal. */
+function splitWords(text: string, accentPhrase?: string): HeroWord[] {
+  const toWord = (t: string): HeroWord => ({ text: t, accent: false });
+  if (accentPhrase) {
+    const at = text.indexOf(accentPhrase);
+    if (at >= 0) {
+      const before = text.slice(0, at).trim();
+      const after = text.slice(at + accentPhrase.length).trim();
+      return [
+        ...before.split(/\s+/).filter(Boolean).map(toWord),
+        { text: accentPhrase, accent: true },
+        ...after.split(/\s+/).filter(Boolean).map(toWord),
+      ];
+    }
+  }
+  return text.split(/\s+/).filter(Boolean).map(toWord);
+}
+
+function HeroWord({ word, order }: { word: HeroWord; order: number }) {
+  return (
+    <span className="-mb-[0.18em] inline-block overflow-hidden pb-[0.18em] align-bottom">
+      <span
+        className={`word-rise relative inline-block ${word.accent ? "text-brand" : ""}`}
+        style={{ animationDelay: `${120 + order * 45}ms` }}
+      >
+        {word.text}
+        {word.accent ? (
+          <span
+            aria-hidden="true"
+            className="hero-highlight-line absolute inset-x-0 -bottom-[0.08em] h-px origin-left bg-brand/60"
+          />
+        ) : null}
+      </span>
+    </span>
+  );
+}
+
 /**
- * Hero (section 1, anchor #inicio) — "Editorial Void" composition (V5):
- * a flat `ink` canvas (no gradients, no glow, no tiles, no graph — pure
- * server component, zero client islands) laid out as a 12-column asymmetric
- * editorial grid on lg: an overline folio and a real-data meta column share
- * the top row, the two-line H1 is the gravity center, then sub, the ONE
- * Discord button (R11), a support line and a plain-text quick-nav. On mobile
- * every block flows in DOM order, always left-aligned.
+ * Hero (section 1, anchor #inicio) — "Plano Cinético" composition (V7/D41):
+ * a flat `ink` canvas whose only decoration is the vocabulary D37.1 authorizes
+ * — hairline reticle plane, hard-edged light beam, faceted conic light planes
+ * (#2), a 10% logo watermark (D43, same shared treatment as Tournaments/
+ * Closing) and bracket marginalia (D) — laid out as a 12-column asymmetric
+ * editorial grid on lg: the two-line H1 and a real-data meta column share the
+ * first row, then sub, the ONE Discord button (R11), a support line and a
+ * plain-text quick-nav. The inner container centers its content vertically
+ * (`lg:content-center`) so the block matches the page weight with no empty top
+ * row. On mobile every block flows in DOM order, always left-aligned. Pure
+ * server component, zero client islands.
  *
- * Conversion contract (R11): the Discord button is the ONLY button in the
- * hero. The quick-nav links are real anchors to sections (R43) using the
- * existing descriptive nav labels (R44) — navigation, never a second CTA.
+ * Structure contract: the word-revealed two-line headline is ONE `<h1>` (R40)
+ * and the Discord button is the ONLY button in the hero (R11). The quick-nav
+ * links are real anchors to sections (R43) using the existing descriptive nav
+ * labels (R44) — navigation, never a second CTA.
  *
  * Motion contract:
- * - Entrance cascade: overline → H1 → sub → CTA → support → meta → nav.
- * - The H1 animates TRANSFORM ONLY, never opacity, so the LCP element is
- *   painted at full opacity on the first frame (fast LCP, zero CLS).
- * - The global `prefers-reduced-motion` guard collapses every entrance to
- *   its final state (R34).
+ * - Entrance cascade: H1 → sub → CTA → support → meta → nav.
+ * - The H1 reveals word by word via masked `word-rise`, TRANSFORM ONLY, never
+ *   opacity, so the LCP element is painted at full opacity on the first frame
+ *   (fast LCP, zero CLS). It does not reuse `animate-lift-in` (no duplicated
+ *   transform).
+ * - The reticle plane pans one cell with page scroll and the highlight
+ *   underline draws itself with `animation-timeline: view()`; both default to
+ *   their final state when scroll-driven animations are unsupported.
+ * - The global `prefers-reduced-motion` guard collapses every entrance and
+ *   loop to its final state (R34).
  * - The H1 is real text, never an image (R39/R40).
  */
 export default function Hero() {
   const { hero } = messages;
-  // es.json guarantees `highlight` occurs exactly once in `line2`. Defensive
-  // fallback: if the copy ever changes, line2 renders whole without the
-  // brand accent instead of splitting wrong.
-  const highlightIndex = hero.line2.lastIndexOf(hero.highlight);
-  const hasHighlight = highlightIndex >= 0;
-  const l2Before = hasHighlight ? hero.line2.slice(0, highlightIndex) : hero.line2;
-  const l2After = hasHighlight ? hero.line2.slice(highlightIndex + hero.highlight.length) : "";
+  const line1Words = splitWords(hero.line1);
+  const line2Words = splitWords(hero.line2, hero.highlight);
   return (
     <section
       id="inicio"
       aria-labelledby="hero-heading"
+      data-surface="dark"
       /* -mt-20 pulls the hero up UNDER the 5rem sticky header so its flat ink
-         surface sits behind the header's gradient: the `header-veil` fade
-         resolves into ink and the bar dissolves into the hero with no seam. */
+         surface sits behind the header's dark veil: the gradient resolves into
+         ink and the bar dissolves into the hero with no seam (D47). */
       className="relative isolate -mt-20 bg-ink text-paper"
     >
-      <div className="page-container relative flex min-h-svh flex-col justify-start pt-40 pb-24 lg:grid lg:grid-cols-12 lg:pt-48 lg:pb-32">
-        {/* Overline folio: top-left of the grid on lg, first block on mobile. */}
-        <p className="animate-rise-in text-label font-semibold uppercase tracking-[0.15em] text-cloud [animation-delay:40ms] lg:col-start-2 lg:row-start-1">
-          {hero.overline}
-        </p>
+      {/* Decorative plane (D40/V7): reticle field + hard-edged light beam,
+          faceted conic light planes (#2) and the 10% logo watermark (D43).
+          aria-hidden + pointer-events-none; sits behind content (-z-10). */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div className="hero-field absolute inset-x-0 -inset-y-16">
+          <div className="hero-field-drift absolute -inset-16" />
+        </div>
+        <div className="hero-beam absolute -top-1/4 -left-24 h-[150%] w-px bg-gradient-to-b from-transparent via-brand/25 to-transparent" />
+        <div
+          className="hero-beam absolute -top-1/4 -left-16 h-[150%] w-24 bg-gradient-to-b from-transparent via-brand/[0.06] to-transparent"
+          style={{ animationDelay: "-9s" }}
+        />
 
-        {/* transform-only entrance: no opacity change → LCP painted on frame 1.
-            Two-line editorial split: line1 in `cloud` (7.77:1), line2 in
-            `paper` with the highlight phrase in `brand` (6.17:1). ONE <h1> (R40). */}
+        {/* Faceted light planes (#2, D41): hard-edged conic wedges, no blur. */}
+        <div className="hero-facet-mask absolute -inset-[15%]">
+          <div className="hero-facet absolute inset-0" />
+          <div className="hero-facet-alt absolute inset-0" />
+        </div>
+
+        {/* Shared 10% logo watermark (D43), same treatment as Tournaments/
+            Closing: identity without competing with the single CTA (R11). */}
+        <Image
+          src="/brand/logo-symbol-gradient.svg"
+          alt=""
+          aria-hidden="true"
+          width={520}
+          height={520}
+          loading="lazy"
+          className="pointer-events-none absolute -bottom-28 -right-20 opacity-10"
+        />
+      </div>
+
+      <div className="page-container relative flex min-h-svh flex-col justify-center pt-36 pb-16 lg:grid lg:grid-cols-12 lg:content-center lg:pt-40 lg:pb-20">
+        {/* Word-by-word masked reveal (D40): transform-only, no opacity change
+            → LCP painted on frame 1. Two-line editorial split: line1 in `cloud`
+            (7.77:1), line2 in `paper` with the highlight phrase in `brand`
+            (6.17:1). ONE h1 element with the full copy (R40). First block of
+            the grid on lg, so it shares row 1 with the meta column. */}
         <h1
           id="hero-heading"
-          className="animate-lift-in mt-6 text-display font-bold tracking-tight text-balance [animation-delay:100ms] lg:col-start-2 lg:col-span-7 lg:mt-0 lg:text-display-lg"
+          className="mt-0 text-display font-bold tracking-tight text-balance lg:col-start-2 lg:col-span-8 lg:mt-0 lg:text-display-lg"
         >
-          <span className="block text-cloud">{hero.line1}</span>
+          <span className="block text-cloud">
+            {line1Words.map((word, index) => (
+              <Fragment key={`${word.text}-${index}`}>
+                <HeroWord word={word} order={index} />
+                {" "}
+              </Fragment>
+            ))}
+          </span>
           <span className="block">
-            {l2Before}
-            {hasHighlight ? <span className="text-brand">{hero.highlight}</span> : null}
-            {l2After}
+            {line2Words.map((word, index) => (
+              <Fragment key={`${word.text}-${index}`}>
+                <HeroWord word={word} order={line1Words.length + index} />
+                {" "}
+              </Fragment>
+            ))}
           </span>
         </h1>
 
@@ -73,20 +163,26 @@ export default function Hero() {
           {hero.sub}
         </p>
 
-        <div className="animate-rise-in mt-10 [animation-delay:340ms] lg:col-start-2 lg:mt-12">
-          <DiscordCta size="line" label={hero.cta} />
+        <div className="animate-rise-in mt-10 [animation-delay:340ms] lg:col-start-2 lg:col-span-5 lg:mt-12">
+          <DiscordCta size="hero" label={hero.cta} />
         </div>
 
-        <p className="animate-rise-in mt-6 text-small text-cloud [animation-delay:460ms] lg:col-start-2">
+        <p className="animate-rise-in mt-6 text-small text-cloud [animation-delay:460ms] lg:col-start-2 lg:col-span-5">
           {hero.support}
         </p>
 
         {/* Meta column: 100% real data (no invented figures). Marginalia at
-            the top-right on lg; flows after the support line on mobile. */}
+            the top-right on lg; flows after the support line on mobile. The
+            left rail + node per datum is the "bracket" echo of a tournament
+            bracket (D40) — decorativo. */}
         <aside className="animate-rise-in mt-16 [animation-delay:580ms] lg:col-start-10 lg:col-span-3 lg:row-start-1 lg:mt-0 lg:self-start">
-          <dl className="space-y-6">
+          <dl className="space-y-6 border-l border-white/12 pl-6">
             {hero.meta.map((item) => (
-              <div key={item.label}>
+              <div key={item.label} className="relative">
+                <span
+                  aria-hidden="true"
+                  className="absolute top-2 -left-6 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-brand"
+                />
                 <dt className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
                   {item.label}
                 </dt>
@@ -101,7 +197,7 @@ export default function Hero() {
             stays the button above (R11). */}
         <nav
           aria-label={messages.a11y.quickNavLabel}
-          className="animate-rise-in mt-16 [animation-delay:700ms] lg:col-start-2 lg:col-span-7 lg:mt-12"
+          className="animate-rise-in mt-10 [animation-delay:700ms] lg:col-start-2 lg:col-span-7 lg:mt-12"
         >
           <ul className="flex flex-wrap items-center gap-x-6">
             {quickLinks.map((item, index) => (

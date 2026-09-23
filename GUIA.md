@@ -45,6 +45,60 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 > **QA en pausa (D28):** sin Playwright/Lighthouse/`rules-auditor` hasta tu OK → quedan sin
 > medir el INP del ticker, los contrastes del bento y la re-auditoría de R11 (ticker no-botón)
 > y R26 (verde como texto).
+>
+> **Hecho (22/09 noche, D40 "Plano Cinético"):** pedido de rediseño del hero (mesh con manchas
+> difuminadas + imágenes flotantes del torneo). **No se implementó literal** porque choca con
+> D37.1 (prohibidos "blobs/aurora gradients" y "partículas flotantes"), con R24/R25 (violeta/
+> cian/`#0B0F19`/`#F9FAFB` fuera de la paleta fija) y con J2 (no hay fotos reales del torneo).
+> Se reinterpretó con vocabulario permitido por D37.1: campo de retícula hairline scroll-driven,
+> haz de luz `brand` de bordes duros, marginalia tipo bracket, revelado del H1 por palabra
+> (transform-only) y subrayado cinético continuo bajo la frase de acento. Spec en `specs/10`
+> (§Hero V6). Implementado por `nextjs-builder` en `Hero.tsx` + `globals.css`; **`tsc --noEmit`,
+> ESLint y `next build` en verde (cierre 22/09)**. Modo diseño (D39): sin `rules-auditor`/
+> `qa-access`/`seo-perf` hasta congelar; el motion del H1 y el contraste del haz se miden en el
+> gate de Fase 5.
+>
+> **Hecho (22/09 noche, D41 — iteración V7):** se **elimina el overline** (se apilaba en 5 líneas
+> en `lg`), se añade el **combo #2 cristal facetado** (`conic-gradient` de borde duro en
+> `brand`/`ember` + rotación lenta, cero blur) y **#4 red que se dibuja** (`HeroNetwork.tsx`, SVG
+> server con `stroke-dashoffset`), y se **rebalancea la altura** del hero (`content-center`, padding
+> superior reducido, H1 al frente de la fila con la marginalia). Spec en `specs/10` (§Hero V7);
+> `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D42/D43):** (D42) el apoyo del hero deja de partirse (`lg:col-span-5`) y
+> **todos los botones-píldora pasan a `rounded-none`** (DiscordCta, header completo, newsletter,
+> skip-link; se elimina el anillo `animate-breathe`). (D43) el **header se ensancha**
+> (`page-container-wide`, 80rem), la **red del hero se retira** y en su lugar va la **marca de agua
+> oficial** `logo-symbol-gradient.svg` al 10% (como Torneos/Cierre), y el **CTA gana impacto**
+> (relleno `brand` que barre en `line`; barrido especular + micro-elevación en las rellenas, sin
+> halo ni blur). `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D44/D45):** (D44) el **grid de fondo del hero gana drift continuo** de
+> una celda en 28s, en capa aparte del paneo por scroll (loop sin costura, solo `transform`).
+> (D45) se **retira el recuadro del nav** de escritorio (queda una fila de enlaces sin marco) y la
+> **marca de agua del hero sube a 520×520**. `tsc` + ESLint + `next build` en verde. QA sigue en
+> pausa (D39).
+>
+> **Hecho (22/09 noche, D46):** **un solo estilo de botón Discord en toda la plataforma** —
+> cuadrado relleno `brand`, texto `ink`, barrido especular + micro-elevación, flecha; solo cambia
+> el tamaño (`nav`/`hero`/`block`). Se **retira la variante `line`** del hero (pasa a `size="hero"`)
+> y el botón `hero` sube a `min-h-14 px-8` para más presencia. `tsc` + ESLint + `next build` en
+> verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D47/D47b/D48/D49):** (D47) **header adaptativo** con la isla
+> `HeaderSurface` (la 2.ª isla cliente del sitio): la barra adopta la polaridad de la sección de
+> detrás (crossfade `ink`↔`paper`), el logo cambia a `logo-horizontal.svg` en claro y el CTA recibe
+> borde `ink` sobre claro; la franja `brand` de la newsletter se trata como oscura. (D47b) el
+> **botón ya no "asoma"** fuera de la cabecera: barra sólida al 100% + franja de disolución debajo.
+> (D48) **H1**: se corrigen los **espacios reales** entre palabras (bug a11y/SEO), `lg:col-span-8`
+> y línea 2 acortada a *"Aquí te conocen antes de la vacante."*. (D49) **header alineado al eje de
+> 72rem**, **scrollspy** (`aria-current`) y **hairline de progreso** CSS pura. `tsc` + ESLint +
+> `next build` en verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D50):** rebalance vertical del hero — se compensa el recorte de 80px del
+> header (`-mt-20`) fijando `pt − pb = 80px` para centrar el bloque en el área visible, y se unifica
+> el ritmo interno (`support → quick-nav` a `mt-10` en móvil). `tsc` + ESLint + `next build` en
+> verde. QA sigue en pausa (D39).
 
 ## 3. Fuentes de verdad (jerarquía)
 

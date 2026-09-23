@@ -2,9 +2,9 @@
   "meta": {
     "title": "TechToJob · Comunidad de desarrolladores y empresas tech",
     "description": "TechToJob es una comunidad de desarrolladores y empresas tech en español. Publica tu perfil, participa en torneos, haz networking y entra al Discord ahora.",
-    "ogImageAlt": "Tarjeta social de TechToJob: logo verde apilado sobre fondo carbón junto al lema «Aquí te conocen antes de que exista la vacante.»",
+    "ogImageAlt": "Tarjeta social de TechToJob: logo verde apilado sobre fondo carbón junto al lema «Aquí te conocen antes de la vacante.»",
     "og": {
-      "headline": "Aquí te conocen antes de que exista la vacante.",
+      "headline": "Aquí te conocen antes de la vacante.",
       "support": "Comunidad de desarrolladores y empresas tech en español"
     }
   },
@@ -40,10 +40,9 @@
     "ctaShort": "Entrar al Discord"
   },
   "hero": {
-    "overline": "TechToJob · comunidad técnica en español",
     "highlight": "te conocen",
     "line1": "El fin de la búsqueda pasiva.",
-    "line2": "Aquí te conocen antes de que exista la vacante.",
+    "line2": "Aquí te conocen antes de la vacante.",
     "sub": "No encajamos vacantes con currículos. Vemos a la gente construir, participar y resolver — y dejamos que las conexiones pasen solas.",
     "cta": "Entrar al Discord",
     "support": "Sin formularios. Sin CV en PDF. Sin semanas de espera.",

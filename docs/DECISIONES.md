@@ -334,6 +334,192 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       Implicación operativa: `design-ux` sí puede usarse durante la iteración (es diseño, no
       auditoría); `nextjs-builder` implementa; el orquestador mantiene specs y decisiones.
 
+- **D40.** 22/09 (noche), pedido de rediseño del hero: "mesh gradient animado con manchas
+      difuminadas", "imágenes del torneo flotando" y paleta `#0B0F19`/`#F9FAFB` + violeta/cian.
+      **Conflicto vinculante detectado; resuelto a favor de las bases (AGENTS.md: "las bases ganan")
+      y de la directriz de la owner.** Por qué NO se implementó literal:
+      1. **Manchas difuminadas en movimiento = "blobs/aurora gradients"**, prohibidos por **D37.1**
+         (directriz de Lorena): *"Prohibido: partículas flotantes, blobs/aurora gradients,
+         glassmorphism, cursores con glow"*. El pedido pide exactamente eso; gana D37.
+      2. **Imágenes flotantes del torneo = "partículas flotantes"** (misma prohibición de D37.1);
+         además no hay fotos reales del torneo en el material (prohibido inventar, J2) y R56 pide
+         no cargar peso sobre el primer pantallazo. Las decoraciones flotantes ya se retiraron en
+         D33/D34/D36 ("se veían mal").
+      3. **Colores nuevos** `#0B0F19` (dark) y `#F9FAFB` (light) + tonos violeta/cian **violan
+         R24** ("los tres colores… son fijos y tienen que dominar") y **R25** (solo grises
+         intermedios + UN acento). La landing no tiene modo claro/oscuro: el hero es `ink` por
+         diseño (§7 del design-system).
+      4. **`filter: blur(100px)` animado es caro** (repaints de GPU) y contradice el gate
+         Lighthouse ≥95 y el catálogo de motion (solo `transform`/`opacity`/`box-shadow`).
+      **Resolución — Hero V6 "Plano Cinético" (spec en `specs/10`, §Hero V6):** se conserva la
+      intención (color vivo, movimiento, revelado editorial, tema torneo) con el vocabulario que
+      D37.1 sí autoriza: **campo de retícula hairline** con paneo scroll-driven, **haz de luz**
+      `brand` de bordes duros (no difuminado) en deriva lenta, **marginalia tipo bracket** (raíl +
+      nodo por dato) en lugar de fotos, **revelado por palabra del H1** (transform-only, LCP-safe)
+      y **subrayado cinético** `brand` con `animation-timeline: view()`. Todo CSS puro, cero islas
+      cliente nuevas, Sora-only, paleta R24/R25 y guard `prefers-reduced-motion`.
+      **Estado:** **implementado y compilando** por `nextjs-builder` en
+      `app/components/sections/Hero.tsx` + `app/app/globals.css`; `tsc --noEmit`, ESLint y
+      `next build` **en verde (22/09, cierre de sesión)**. El subrayado del acento se emite como
+      un solo token (la frase "te conocen") para que la regla sea continua. Sigue en **modo
+      diseño (D39)**: el gate de Fase 5 (Lighthouse/axe/rules-auditor) está pendiente (D28) y ahí
+      se miden el LCP del revelado por palabra y el contraste del haz. **Ruta de override:** si
+      Lorena quiere el mesh/blobs de todas formas,       se registra como override explícito de owner y
+      se marca R24/R25/D37 como "violada/en riesgo" en el checklist — no se hace por defecto.
+
+- **D41.** 22/09 (noche), iteración V7 del hero pedida por Lorena (sobre D40): (1) **quitar el
+      overline** que, al no tener `col-span` en `lg`, se apilaba en 5 líneas; (2) implementar el
+      **combo aprobado #2 cristal facetado + #4 red que se dibuja**; (3) **rebalancear la altura**
+      del hero para que no quede un hueco superior.
+      1. **Overline fuera de punta a punta**: `<p>` del hero + campo `overline` de `content.ts` +
+         clave `hero.overline` de `es.json`. Sin texto muerto (R36); el mensaje vive ya en
+         `hero.ticker` y `meta.description`.
+      2. **Cristal facetado**: cuñas `conic-gradient` de **borde duro** en `brand`/`ember` (≤10% de
+         alfa) sobre una máscara radial, con rotación lenta (64s/88s). Es el sustituto legal del
+         "mesh": geometría con bordes, no manchas difuminadas → no viola la prohibición de
+         blobs/aurora de D37.1. Se **descartó `mix-blend-mode`** (el `mask` + `-z-10` aísla el
+         blend y volvía impredecible el resultado); alfa directo = mismo efecto y portable.
+      3. **Red que se dibuja**: `HeroNetwork.tsx` (server, SVG inline `aria-hidden`) con aristas
+         trazándose por `stroke-dashoffset` escalonado + nodos que aparecen + 2 hubs con pulso. Es
+         el "tema torneo" sin fotos (que no existen) y sin decoración flotante prohibida.
+      4. **Rebalance**: `justify-center` en móvil y `lg:content-center` en desktop, padding superior
+         reducido (`pt-28 lg:pt-32`) y el H1 como primer bloque del grid (comparte fila con la
+         marginalia) → se elimina la fila superior vacía que se veía en la captura.
+      **Estado:** implementado por `nextjs-builder`; `tsc --noEmit`, ESLint y `next build` **en
+      verde (22/09)**. Sigue en **modo diseño (D39)**: el gate de Fase 5 (Lighthouse/axe/
+      rules-auditor) está pendiente y debe medir el LCP del revelado/red, el INP del facet rotatorio
+      y el contraste del facet/beam, con `prefers-reduced-motion` activo.
+
+- **D42.** 22/09 (noche), pedido de Lorena: el párrafo de apoyo del hero se rompía en 6 líneas
+      (estaba en una columna de 1/12, sin `col-span`) y el diseño general es **cuadrado**, así que
+      todos los **botones tipo píldora** pasan al lenguaje rectangular. Alcance aplicado:
+      1. **Hero**: `hero.support` y el `div` del CTA ganan `lg:col-span-5` (ya no se parten).
+      2. **`DiscordCta`** variantes `nav`/`hero`/`block`: `rounded-none`, se elimina el anillo
+         respirante (`animate-breathe`, también borrado de `globals.css` por código muerto) y el
+         `scale`/halo de hover. Queda relleno `brand` → `brand-deep`.
+      3. **Header**: logo (foco + tile), marco del nav, enlaces, hamburguesa, panel móvil y enlaces
+         del panel → `rounded-none`.
+      4. **Newsletter** (botón) y **skip-link** → `rounded-none`.
+      Se conservan circulares por semántica (avatar de testimonio, nodo del raíl, puntos del ticker)
+      y los chips de categoría (no son botones). Alineado con D36 (CTA `rounded-none`).
+- **D43.** 22/09 (noche), 3 pedidos de Lorena sobre el hero/header:
+      1. **Header más ancho**: la barra usa un contenedor propio `page-container-wide`
+         (`--container-page-wide: 80rem`, mismas métricas de gutter) para que el nav respire; el
+         resto de la página sigue en 72rem.
+      2. **La red de la esquina del hero "es horrible"** → se **elimina** `HeroNetwork.tsx` (y su
+         CSS/keyframes) y en su lugar se coloca el **mismo logo watermark** que usan las demás
+         secciones oscuras: `logo-symbol-gradient.svg` al `opacity-10`, `-bottom-28 -right-20`,
+         `pointer-events-none`, `loading="lazy"` (copiado de `Tournaments.tsx`/`Closing.tsx`).
+      3. **Impacto del CTA**: la variante `line` del hero ahora se **rellena de `brand` de
+         izquierda a derecha** en hover/focus (texto pasa a `ink`) y sube a `min-h-14 px-6 py-4
+         text-lead font-bold`; las variantes rellenas (`nav`/`hero`/`block`) llevan un **barrido
+         especular** de borde duro (`-skew-x-12 bg-white/25`) más una **micro-elevación**
+         (`-translate-y-0.5`). Todo sin halo, sin blur y solo `transform`/`color` → D37 y R24/R25
+         intactas. `motion-reduce` desactiva barrido/elevación.
+      **Estado:** implementado por `nextjs-builder`; `tsc --noEmit`, ESLint y `next build` **en
+      verde (22/09)**. Sigue en modo diseño (D39): pendiente el gate de Fase 5 (LCP del relleno
+      hover, INP, contraste del estado relleno).
+
+- **D44.** 22/09 (noche), pedido de Lorena: **el grid de fondo del hero se queda, pero debe
+      moverse un poco**. Se añade un **drift continuo** además del paneo por scroll que ya existía,
+      en capas separadas para que ambos `transform` convivan: la capa externa `.hero-field` man-
+      tiene la máscara y el paneo (`animation-timeline: scroll()`); la interna `.hero-field-drift`
+      (sobredimensionada `-inset-16`) lleva el `background-image` y un bucle `field-drift` de 28s
+      que traslada exactamente **una celda (4rem en X e Y)** → como el patrón repite cada 4rem, el
+      loop es **sin costura**. Solo `transform`, `will-change` acotado al layer interno. Motivo del
+      diseño: mantener el "plano vivo" de D40/D41 sin caer en decoración suelta (D37).
+- **D45.** 22/09 (noche), dos ajustes de Lorena:
+      1. **Fuera el recuadro del menú** de escritorio: el `<ul>` del nav pierde `border`/`bg`/`px`/
+         `py` (queda `flex items-center gap-1`); los enlaces conservan su hover subrayado. Motivo:
+         el marco hairline alrededor de las anclas "se ve horrible". El panel del menú móvil
+         (`<details>`) se mantiene: es un desplegable y necesita su superficie.
+      2. **Marca de agua del hero más grande**: `logo-symbol-gradient.svg` pasa de 320×320 a
+         **520×520**, mismo anclaje `-bottom-28 -right-20` y `opacity-10` (D43).
+      **Estado:** implementado por `nextjs-builder`; `tsc --noEmit`, ESLint y `next build` **en
+      verde (22/09)**. QA sigue en pausa (D39).
+
+- **D46.** 22/09 (noche), pedido de Lorena: **los botones que llevan a Discord deben ser iguales
+      en toda la plataforma y llamativos**. Hasta ahora había dos lenguajes: la variante `line`
+      (hairline del hero, D36/D43) y las rellenas `nav`/`hero`/`block`. Se unifica en **un único
+      estilo**: cuadrado `rounded-none`, relleno `brand` con texto `ink` (6.77:1), barrido especular
+      de borde duro (`-skew-x-12 bg-white/30`) + micro-elevación `-translate-y-0.5` + flecha. Solo
+      cambia el tamaño (`nav` compacto / `hero` prominente `min-h-14 px-8` / `block` full-width).
+      **Se retira la variante `line`** por completo y el hero pasa a `size="hero"`. El `hero` sube de
+      `min-h-12 px-7` a `min-h-14 px-8` para ganar presencia (era el objetivo "llamativos").
+      Detalle de accesibilidad: el focus ring es `brand` sobre superficies oscuras y `ink` en el
+      panel móvil (`.block`, sobre `paper`) → cumple R26. R11 intacta (un solo botón por contexto).
+      **Estado:** implementado por `nextjs-builder`; `tsc --noEmit`, ESLint y `next build` **en
+      verde (22/09)**. Sigue en modo diseño (D39); el contraste del estado relleno y el foco se
+      miden en el gate de Fase 5.
+
+- **D47.** 22/09 (noche), pedido de Lorena: **header adaptativo** — arranca con fondo `ink` sólido
+      y, al scrollear, adopta la polaridad de la sección que tiene detrás con un "sombreado amplio"
+      que lo disuelve, más una sombra sutil. Se aprobó la **Opción A (isla mínima)**.
+      1. **Isla `HeaderSurface.tsx`** (`"use client"`, la 2.ª del sitio tras `NewsletterForm`): lee
+         el `data-surface` de la sección que cruza la línea de 72px y publica
+         `data-header-surface`/`data-header-scrolled` en `<html>`. Es **rAF-throttled, no
+         IntersectionObserver**: el *band detection* por `rootMargin` es frágil con alturas de
+         viewport variables; el resultado funcional es el mismo. Progressive enhancement: sin JS el
+         header queda `ink` (legible siempre). **Excepción deliberada a D37.2 (cero islas)** →
+         declarar en el README con el resto del uso de IA.
+      2. **`data-surface` en TODA `<section>`**: centralizado en `Section.tsx` (`paper`/`mist` →
+         `light`; `ink` → `dark`) y añadido a las 3 standalone (`Hero`, `Tournaments`, `Closing`).
+         **`brand` (newsletter) se trata como `dark`** para no hacer desaparecer el CTA `brand`
+         (R26).
+      3. **Barra SÓLIDA (D47b)**: el viejo `header-veil` era opaco solo hasta el 70% y el botón de
+         Discord (centrado, ~18–62px) asomaba por la zona translúcida → "parecía quedar por fuera de
+         la cabecera". Ahora `.header-veil-dark/light` son `background-color` sólido al 100% y el
+         *fade* es una **franja aparte debajo de la barra** (`.header-fade-*`, `top: 100%`, 2.5rem).
+         Crossfade por `opacity` (250ms, CLS 0) entre `ink` y `paper`.
+      4. **Contraste en superficie clara**: nav/iconos pasan a `ink`; el logo cambia a
+         `logo-horizontal.svg` (lockup oficial carbón) y el CTA del header recibe borde `ink`
+         (`ring`/focus) porque `brand` sobre `paper` es 2.04:1 y un control relleno necesita 3:1
+         (WCAG 1.4.11 / R26).
+      **Estado:** implementado por `nextjs-builder`; `tsc`, ESLint y `next build` **en verde**. Sigue
+      en modo diseño (D39); el gate de Fase 5 debe medir contraste de los dos estados (claro/oscuro)
+      y validar que no hay salto perceptible en la transición.
+
+- **D48.** 22/09 (noche), sobre el H1 del hero:
+      1. **Bug de accesibilidad/SEO corregido**: el revelado por palabra (`HeroWord`) separaba solo
+         con `mr-[0.24em]`, así que el `textContent` del `<h1>` no tenía espacios
+         (`Elfindelabúsquedapasiva.`) → un solo ⚠ para lectores de pantalla y buscadores (R39/R40).
+         Ahora hay **espacios reales** (`{" "}` entre palabras vía `Fragment`) y se retiró el margen;
+         el revelado se mantiene.
+      2. **Menos líneas**: el H1 pasa de `lg:col-span-7` a **`lg:col-span-8`** (la meta sigue en
+         10–12) y se **acorta la línea 2** de *"Aquí te conocen antes de que exista la vacante."* a
+         *"Aquí te conocen antes de la vacante."*. `hero.highlight` sigue `"te conocen"`.
+         `meta.og.headline` y `meta.ogImageAlt` se sincronizaron con la frase nueva.
+      La perilla extra (bajar `display-lg` 4.5rem → 4rem) queda disponible si se quiere menos de
+      4 líneas. **Estado:** implementado; `tsc`, ESLint y `next build` en verde.
+
+- **D49.** 22/09 (noche), 3 mejoras al header para maximizar J1/J6 (a pedido de Lorena:
+      "¿qué arreglarías para ganar el concurso?"):
+      1. **Alineación de eje**: el header vuelve de `page-container-wide` (80rem) a
+         `page-container` (**72rem**), el mismo eje que el contenido. El punto medio de 80rem no
+         alineaba con nada (el logo quedaba ~145px a la izquierda del H1); alinear es la jugada más
+         fuerte de disciplina de grilla. Se eliminan el token `--container-page-wide` y la utility
+         (sin código muerto).
+      2. **Scrollspy**: la isla `HeaderSurface` (ya existente) marca el enlace de la sección visible
+         con `aria-current="location"` y limpia el resto; solo escribe cuando cambia. Estilo AA por
+         superficie: en oscuro el activo es `brand` (6.17:1); en claro el texto sigue `ink` y el
+         `brand` va **solo como subrayado** (R26 lo prohíbe como texto sobre `paper`).
+      3. **Hairline de progreso**: `.header-progress`, una línea `brand` de 2px al pie de la barra
+         que crece con el scroll vía `animation-timeline: scroll(root)` (`transform: scaleX`, CSS
+         puro). Conecta el header con la narrativa de línea de tiempo (D32); sin soporte o con
+         reduced-motion queda invisible (no estorba, R34).
+      **Estado:** implementado por `nextjs-builder`; `tsc`, ESLint y `next build` **en verde**. Sigue
+      en modo diseño (D39); el gate de Fase 5 debe verificar contraste del estado activo en ambos
+      temas, que el scrollspy no rompa la navegación por teclado y el INP de la isla.
+
+- **D50.** 22/09 (noche), Lorena notó que **el hueco inferior del hero era mayor que el superior**.
+      Causa: el hero va `-mt-20` (80px por detrás del header) pero el contenedor centraba el
+      contenido sin compensar ese recorte → el bloque quedaba ~24px alto. Se fija
+      **`pt − pb = 80px`** (la altura exacta del header) en ambos breakpoints
+      (`pt-36 pb-16` / `lg:pt-40 lg:pb-20`), que centra el bloque en el área **visible**. Además se
+      unifica el ritmo interno: `support → quick-nav` pasa de `mt-16` a `mt-10` en móvil (el `lg`
+      queda en `mt-12`), para que acompañe al ritmo `sub → CTA`. Solo `Hero.tsx`; server component,
+      sin copy ni colores. `tsc`, ESLint y `next build` en verde.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

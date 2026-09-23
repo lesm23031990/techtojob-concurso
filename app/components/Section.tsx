@@ -14,6 +14,15 @@ const TONE_CLASSES: Record<SectionTone, string> = {
   brand: "bg-brand text-ink",
 };
 
+/** Dark/light polarity per tone for the adaptive header (D47). `brand` is
+ *  treated as dark so the header keeps the brand CTA readable (R26). */
+const TONE_SURFACE: Record<SectionTone, "dark" | "light"> = {
+  paper: "light",
+  mist: "light",
+  ink: "dark",
+  brand: "dark",
+};
+
 interface SectionProps {
   /** Anchor target (specs/10-landing-spec.md, R45). */
   id: string;
@@ -48,6 +57,7 @@ export default function Section({
     <section
       id={id}
       aria-labelledby={headingId}
+      data-surface={TONE_SURFACE[tone]}
       className={`relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
     >
       <TimelineRail tone={tone} step={step} />

@@ -41,7 +41,7 @@ export default function NewsletterForm() {
         </div>
         <button
           type="submit"
-          className="min-h-12 shrink-0 cursor-pointer rounded-full bg-ink px-6 py-3 text-body font-bold text-paper transition-colors duration-150 hover:bg-coal focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink"
+          className="min-h-12 shrink-0 cursor-pointer rounded-none bg-ink px-6 py-3 text-body font-bold text-paper transition-colors duration-150 hover:bg-coal focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-ink"
         >
           {messages.newsletter.button}
         </button>

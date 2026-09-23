@@ -17,6 +17,7 @@ export default function Tournaments() {
     <section
       id="torneos"
       aria-labelledby="torneos-heading"
+      data-surface="dark"
       className="relative isolate overflow-hidden bg-ink py-20 text-paper lg:py-32"
     >
       <Image

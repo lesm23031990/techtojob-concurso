@@ -48,12 +48,12 @@ Regla: `-light` = para fondo oscuro (la variante verde). SVG siempre en runtime;
 
 | # | Ubicación | Archivo exacto (destino) | Fondo | Justificación |
 |---|---|---|---|---|
-| a | **Navbar** | Composición: isotipo `brand/logo-symbol-light.svg` (SímboloNegativo) dentro de un tile `rounded-xl` con borde `brand/40` + wordmark derivado `brand/wordmark-duo.svg` (mismos trazados oficiales, tinta doble: "Tech" `paper`, "ToJob" `brand`) | `ink` oscuro (`header-veil`) | Sobre `ink` la variante oficial es la Negativa verde (6.17:1, §0.1) y ninguna oficial sirve para el wordmark claro: `wordmark-duo` es un **derivado** (D31), no un recoloreo de los originales. Tile `h-10 w-10`, wordmark `h-5 sm:h-6`. Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
-| b | **Hero** | `brand/logo-symbol-light.svg` (SímboloNegativo) como marca de agua decorativa (§6) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). El símbolo verde en grande da identidad sin robar jerarquía |
+| a | **Navbar** | **Adaptativo (D47)**: `data-header-surface="dark"` → composición isotipo `brand/logo-symbol-light.svg` (SímboloNegativo) dentro de un tile cuadrado (`rounded-none`, D42) con borde `brand/40` + wordmark derivado `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`). `data-header-surface="light"` → lockup oficial carbón `brand/logo-horizontal.svg` | `ink`/`paper` según la sección | Sobre `ink` la variante oficial es la Negativa verde (6.17:1, §0.1); en claro manda el lockup oficial Positivo (carbón). El `wordmark-duo` es un **derivado** documentado (D31/D47), no un recoloreo. Tile `h-10 w-10`, wordmark `h-5 sm:h-6`. Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
+| b | **Hero** | `brand/logo-symbol-gradient.svg` (Degradado) como marca de agua decorativa al 10% (D43, igual que Torneos/Cierre) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). La marca de agua en la esquina da identidad sin robar jerarquía |
 | c | **Footer** | `brand/logo-horizontal-light.svg` (v1Negativo) | `ink` oscuro | Verde sobre carbón = 6.17:1 ✅. Alto 32px. Es la única marca del footer |
 | d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); fallback PNG: `logo-symbol.svg` exportado a 180×180 sobre fondo blanco para `apple-touch-icon.png` y a 512×512 con fondo `brand` y símbolo carbón para `icon-512.png` (maskable) | — | El símbolo cuadrado es la única variante legible a 16–32px. Carbón sobre blanco del navegador ✅; nunca Degradado en favicon (las bandas oscuras desaparecen a tamaño miniatura) |
 | e | **Open Graph 1200×630** | Composición estática nueva `app/opengraph-image.png` (builder la exporta, <200 KB): fondo `ink`; `brand/logo-stacked-light.svg` (v2Negativo) a la izquierda ocupando ~45% del alto; a la derecha el H1 del hero en Sora 700 blanco + línea de apoyo; `logo-symbol-gradient.svg` semitransparente como textura en la esquina inferior derecha | `ink` oscuro | v2 (1.8:1) es el único lockup que llena bien el formato OG sin quedar enana; verde sobre carbón legible en miniatura de Facebook/X; verificar en opengraph.xyz (R51) |
-| f | **Marca de agua / fondo** | `brand/logo-symbol-light.svg` al **8% de opacidad** detrás del hero y **`logo-symbol-gradient.svg` al 10%** en la sección de cierre, ambos `aria-hidden`, `pointer-events-none`, decorativos | `ink` oscuro | Refuerza identidad sin texto en imagen (R39) y sin coste de LCP si el builder los prioriza con `priority:false` o los inlinea como SVG decorativo. En secciones claras NO va marca de agua (compite con el texto) |
+| f | **Marca de agua / fondo** | `brand/logo-symbol-gradient.svg` al **10% de opacidad** en hero (D43), Torneos y Cierre, `aria-hidden`, `pointer-events-none`, `loading="lazy"`, decorativo | `ink` oscuro | Refuerza identidad sin texto en imagen (R39) ni coste de LCP (decorativo, no `priority`). En secciones claras NO va marca de agua (compite con el texto) |
 
 ---
 
@@ -163,11 +163,11 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 ### Radius
 | Elemento | Token | Valor |
 |---|---|---|
-| Botones (primario y secundario) | `rounded-full` | pill — eco de las esquinas redondeadas del isotipo, friendly (comunidad, no portal) |
+| Botones (primario y secundario) | `rounded-none` | Esquinas rectas — lenguaje editorial cuadrado (D36/D42). La píldora se descartó: no quedan botones-píldora (solo son circulares el avatar, el nodo del raíl y los puntos del ticker) |
 | Tarjetas (testimonio, noticia) | `--radius-card` | 1rem (16px) |
 | Inputs | `--radius-input` | 0.625rem (10px) |
 | Chips / badges | `rounded-full` | pill |
-| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `line` del hero (D36). Solo en "cómo funciona", testimonios y noticias |
+| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `rounded-none` (D36/D46). Solo en "cómo funciona", testimonios y noticias |
 
 ### Sombras (sutiles — R34 "que no estorben")
 ```css
@@ -178,7 +178,7 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 ```
 - `card` por defecto en tarjetas sobre `paper`/`mist`; `raised` SOLO en hover de tarjeta con enlace.
 - **En superficies `ink`: cero sombras** (no se ven); separar con `--color-coal` de superficie + borde `hairline-dark`.
-- **Excepción (rediseño hero 22/09, D27):** el CTA del hero puede llevar un halo `brand` y escala 1.02 SOLO en hover — es feedback transitorio de asequibilidad, no sombra de reposo; el botón en reposo sigue sin sombra.
+- **CTA (D42/D43/D46):** un único estilo en todo el sitio — cuadrado relleno `brand`, texto `ink`, barrido especular de borde duro (`-skew-x-12 bg-white/30`) + micro-elevación `-translate-y-0.5` en hover. Sin halo ni sombra (nunca glow).
 - El botón primario NO lleva sombra (el color ya domina la jerarquía).
 
 ---
@@ -186,8 +186,9 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 ## 6. Componentes base (patrones, sin código)
 
 ### 6.1 `ButtonPrimary` — CTA "Entrar al Discord de TechToJob" (hero, cierre, nav)
-- Fondo `brand` · texto `ink` peso 700 · pill · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
-- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1). Sin cambio de tamaño del layout.
+- Fondo `brand` · texto `ink` peso 700 · rectangular (`rounded-none`, D42) · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
+- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1) + barrido especular de borde duro (`-skew-x-12 bg-white/25`, 500ms) y micro-elevación `-translate-y-0.5` (D43). Sin halo, sin sombra, sin cambio de tamaño del layout.
+- **Un solo estilo de CTA (D46):** hero, header, menú móvil y cierre comparten exactamente las mismas clases salvo el tamaño (`nav`/`hero`/`block`). La antigua variante `line` (rectángulo hairline) se retiró. El hero mantiene UN solo botón (R11). Focus ring: `brand` sobre superficies oscuras, `ink` en el panel móvil (`paper`), por R26.
 - **Focus-visible:** anillo `outline: 3px solid` — `ink` con `outline-offset: 3px` sobre superficies claras; `brand` sobre superficies oscuras (6.17 ≥3:1 ✅). Nunca `outline-none`.
 - **On ink background (hero/cierre):** es el elemento más llamativo de la pantalla: tamaño de texto `lead`, icono Lucide `ArrowUpRight` 20px, `target="_blank" rel="noopener noreferrer"` + hint sr-only de "se abre en pestaña nueva" (texto en `messages/es.json`, R36).
 - Contraste verificado: 6.77:1 ✅ AA normal y AAA grande.
@@ -214,12 +215,14 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 - `label` visible arriba del input: "Tu correo electrónico" (`ink` 600, `small`) — nunca solo placeholder (J6 "etiquetas en el formulario").
 - Input: fondo `paper`, borde 2px `ink/30`, `radius-input`, `min-height: 48px`, placeholder `slate` (5.57 ✅). Foco: borde `ink` + `outline 3px ink/40 offset 2px`.
 - `type="email" required` (validación HTML5, Q8) + `aria-describedby` apuntando a nodo de error/éxito con `aria-live="polite"`. Mensajes de estado en `messages/es.json`.
-- Botón: fondo `ink`, texto `paper` (12.62 ✅), pill, `min-height: 48px`, hover `coal`. Es el único botón oscuro de la página → invierte el patrón del CTA principal y refuerza que esta franja es secundaria al Discord.
+- Botón: fondo `ink`, texto `paper` (12.62 ✅), rectangular (`rounded-none`, D42), `min-height: 48px`, hover `coal`. Es el único botón oscuro de la página → invierte el patrón del CTA principal y refuerza que esta franja es secundaria al Discord.
 - Alineación móvil: label → input full-width → botón full-width (stack); `sm:` input + botón en fila.
 
 ### 6.6 `Nav` / `SiteHeader`
-- `position: sticky; top: 0` · alto 80px (5rem, en sincronía con el `-mt-20` del hero y el `scroll-padding-top: 6rem`) · superficie `header-veil`: `ink` **opaco hasta el 70%** (donde viven logo y enlaces → su contraste nunca depende del degradado) y degradado a transparente en el 30% inferior. El hero sube por detrás (`-mt-20`), así que el degradado resuelve sobre `ink` y la barra **se pierde en el hero sin costura**; al scrollear queda como un velo oscuro sobre el contenido.
-- Desktop (≥1024): composición de logo (§2a) · enlaces a anclas (`#como-funciona`… R45) en 600 `paper` sobre `ink` (≥8:1), `whitespace-nowrap`, hover subrayado `brand` 2px, targets ≥44px de alto · 5 anclas en `lg` y la 6.ª (`#noticias`) desde `xl` · CTA `ButtonPrimary` compacto con `whitespace-nowrap` — **jamás en 2 líneas** (el nav recorta enlaces, no el botón).
+- `position: sticky; top: 0` · alto 80px (5rem, en sincronía con el `-mt-20` del hero y el `scroll-padding-top: 6rem`). **Barra SÓLIDA al 100%** que adopta la polaridad de la sección que tiene detrás (`data-header-surface` en `<html>`, publicado por la isla `HeaderSurface`, D47). El "sombreado amplio" que la disuelve es una **franja de gradiente por DEBAJO de la barra** (`.header-fade-*`, `top: 100%`, 2.5rem) — así el CTA nunca asoma por una zona translúcida (D47b). Crossfade `ink`↔`paper` de 250ms por `opacity` (CLS 0). Sin JS el header queda `ink` (progressive enhancement).
+- Desktop (≥1024): composición de logo (§2a) · enlaces a anclas (`#como-funciona`… R45) en 600 `paper` sobre `ink` (≥8:1), `whitespace-nowrap`, hover subrayado `brand` 2px, targets ≥44px de alto · 5 anclas en `lg` y la 6.ª (`#noticias`) desde `xl` · CTA `ButtonPrimary` compacto con `whitespace-nowrap` — **jamás en 2 líneas** (el nav recorta enlaces, no el botón). **Sin recuadro** alrededor de las anclas (D45: se retiró el marco hairline); es una fila de enlaces desnuda.
+- El contenedor del header es `page-container` (**72rem, D49**): el MISMO eje que el contenido, para que el logo, el nav y el CTA alineen con la página. Existe un **scrollspy** (`aria-current="location"` en el enlace activo, D49) y una **hairline de progreso** (`.header-progress`, 2px `brand`, `scaleX` con `animation-timeline: scroll(root)`, D49).
+- Estado activo del nav (AA): en superficie oscura el enlace activo es `brand` (6.17:1); en clara el texto sigue `ink` y el `brand` va **solo como subrayado** (R26 prohíbe el verde como texto sobre `paper`).
 - 640–1023: logo + CTA + hamburguesa · <640: logo + hamburguesa (el CTA vive en el panel).
 - Menú desplegable (<1024): panel `paper` a ancho completo, enlaces en pila de 48px + CTA Discord full-width. `<details>` nativo: Enter/Space de serie, cero JS.
 - Enlaces de salto de foco: primer elemento del `body` = "Saltar al contenido" sr-only que se revela al focus (criterio propio de accesibilidad; no es texto oculto con keywords, no viola R60).
@@ -243,8 +246,8 @@ La página se lee como **una línea de tiempo vertical** (D32): el Hero es la pu
 
 | # | Sección | Fondo | Énfasis y rol del verde |
 |---|---|---|---|
-| 0 | Nav | `ink` + `header-veil` | Barra oscura que **se disuelve en el hero** (sin costura) y, al scrollear, queda como velo suave. Enlaces `paper`, logo compuesto (§2a), CTA verde compacto siempre visible |
-| 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia y CTA **hairline** (`DiscordCta size="line"`) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
+| 0 | Nav | **Adaptativo (D47/D49)**: `ink` sobre secciones oscuras y `paper` sobre claras (barra sólida + franja de disolución debajo) | Barra que **se funde con la sección que tiene detrás** (crossfade 250ms) y, al scrollear, suma una hairline de progreso `brand`. Enlaces `paper`/`ink` según superficie, logo compuesto (§2a) o lockup oficial en claro, scrollspy activo y CTA verde compacto siempre visible. Mismo eje 72rem que el contenido |
+| 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia, marca de agua del símbolo al 10% y CTA relleno `brand` (`DiscordCta size="hero"`, estilo único D46) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
 | 2 | Cómo funciona (**paso 1**) | `paper` | **D38 bento asimétrico**: 4 celdas hairline con numeral fantasma y regla `brand` decorativa; el raíl de página la cruza igual que al resto (sin sub-timeline) |
 | 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15) |
 | 4 | Talento (paso 3) | `paper` | H2 `ink` + copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
@@ -289,8 +292,10 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 | 4 | **Reveal de sección y de celda** (`.reveal`, `animation-timeline: view()`, `entry 0%→35%`) | Aparte del contenedor de sección, cada celda bento lleva su propio `.reveal` (D38) | Contenido estático visible |
 | 5 | **Ticker del hero** (`.animate-marquee`, D38): track duplicado, `translateX(0 → −50%)`, 34s lineal infinito | `transform` only; el bloque es `aria-hidden` y no interactivo (R11/R34) | `animation: none` + `transform: none`: el track se estaciona en el origen y se lee solo la primera copia |
 | 6 | **Numeración bento** (`.bento-index`, D38, `animation-timeline: view()`) | Numeral fantasma de cada celda de "cómo funciona": `opacity`/`transform` en un `<span>` interno, decorativo (`aria-hidden`) | Numeral visible en su estado final |
-| 7 | **Hover del CTA primario** (todas las instancias de `DiscordCta`): `scale-[1.02]` + halo `brand` + flecha 2px hacia arriba-derecha, 300ms; en la variante `line` (hero V5) el borde se calienta a `brand` y un subrayado se dibuja de izquierda a derecha | Feedback de asequibilidad del botón, no decorativo | Sin escala ni translate; el cambio de color se mantiene (`motion-reduce:`) |
-| 8 | **Anillo respirante del CTA** (`animate-breathe`, 3.5s, `box-shadow`, solo variantes pill) + subrayado de nav 150ms | Anillo en un `span` hermano: el botón nunca anima en reposo (protege INP/LCP) | Sin anillo; contenido visible; subrayado presente en hover |
+| 7 | **Hover del CTA** (todas las instancias de `DiscordCta`, D42/D43/D46): estilo único relleno `brand` con barrido especular de borde duro (`-skew-x-12 bg-white/30`, 500ms) + micro-elevación `-translate-y-0.5` + flecha 2px | Feedback de asequibilidad del botón, no decorativo. Sin halo ni blur | Sin barrido ni translate (`motion-reduce:`); el cambio de color se mantiene |
+| 8 | **Subrayado de enlaces de nav** (150ms) + hover de enlaces del nav rápido | Header y nav del hero: hover `decoration-brand` 2px | Subrayado presente en hover |
+| 9 | **Grid del hero vivo** (D44): `.hero-field` panea una celda con el scroll (`animation-timeline: scroll()`) y `.hero-field-drift` añade un drift continuo de una celda (4rem en X e Y) en 28s | Capas anidadas para que ambos `transform` convivan; loop sin costura por la periodicidad del patrón; solo `transform` | Grid quieto y completo (el guard global colapsa ambos) |
+| 10 | **Header adaptativo** (D47/D49): crossfade de la barra `ink`↔`paper` (250ms por `opacity`) + hairline de progreso `.header-progress` (`scaleX` con `animation-timeline: scroll(root)`) + scrollspy `aria-current` | Solo color/opacidad/transform, CLS 0; la hairline es CSS puro | Header `ink` fijo (sin JS) y sin hairline; ningún enlace marcado activo |
 
 **Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax **de scroll**,
 autoplay de nada y cualquier animación que retrase el LCP (por eso el H1 no hace fade).

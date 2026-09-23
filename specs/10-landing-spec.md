@@ -38,7 +38,7 @@ exista (Fase 5), según exige R10.
 
 | # | Sección | Ancla | Qué comunica (brief disponible) | Regla |
 |---|---|---|---|---|
-| 0 | Nav (header) | — | logo + enlaces a secciones + CTA Discord | R42 |
+| 0 | Nav (header) | — | **Barra adaptativa (D47/D49)**: adopta la polaridad de la sección de detrás, con logo/nav que cambian de color, **scrollspy** (`aria-current`) y **hairline de progreso**; logo + enlaces a secciones + CTA Discord | R42, R45 |
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
 | 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **Bento asimétrico (D38): 1 celda alta + 2 + 1 ancha, `<ol>` intacto** | R12 |
 | 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva | R15 |
@@ -87,6 +87,61 @@ cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El b
 | **Reveal de celda** | Se reutiliza `.reveal` (ya existente en `globals.css`) en cada celda | R34 |
 
 > **Fuera de alcance:** Talento / Empresas / Networking quedan editoriales (no tienen ítems).
+
+
+## Hero V6 — "Plano Cinético" (D40)
+
+**Motivo:** pedido de rediseño del hero (22/09 noche) con *mesh gradient* animado e imágenes
+flotantes del torneo. **Ambos elementos están vetados**: manchas difuminadas = "blobs/aurora
+gradients" (prohibidos por D37.1) e "imágenes flotantes decorativas" = "partículas flotantes"
+(misma prohibición); además violeta/cian/`#0B0F19`/`#F9FAFB` violan R24/R25 (paleta fija) y no
+existen fotos del torneo en el material (prohibido inventar, J2). Se conserva la **intención**
+(color vivo, movimiento, revelado editorial, tema torneo) con el vocabulario que D37.1 sí admite:
+háirlines de plano, tipografía cinética y numeración.
+
+| Pieza | Spec | Regla |
+|---|---|---|
+| **Campo de retícula** (`hero-field`) | Plano `repeating-linear-gradient` (hairline `rgb(255 255 255 / 0.05)`, celda 64px) en un div absoluto `-inset-y-16`, `aria-hidden` + `pointer-events-none`; `mask-image` lineal para desvanecer hacia el pie. Paneo de una celda (`translate3d(0,-64px,0)`) con `animation-timeline: scroll(root block)`, `animation-range: 0 80vh` | R24/R25 (sin colores nuevos), D37.1 (hairline de plano, no decoración suelta), R34 |
+| **Haz de luz** (`hero-beam`) | Hairline larga (1px) + compañera ancha (6rem) a `brand/25` y `brand/6`, **bordes duros** (gradiente lineal, **cero `blur`**), rotadas 22°; deriva `translate3d` + `rotate` 26s. `will-change: transform` + `backface-visibility: hidden` | D37.1 (prohibido blob/aurora: el haz tiene borde, no difumina), R34 |
+| **Numeral de edición** (marginalia con raíl) | La columna `hero.meta` pasa a **escalera hairline**: borde izquierdo `white/12` + nodo `brand` por dato (eco de *bracket* de torneo). Sustituye a las "imágenes flotantes del torneo" | D37.1 (numeración/hairlines), J2 (sin assets inventados), R56 |
+| **Revelado del H1** (`word-rise`) | H1 partido en palabras; cada una en `overflow-hidden` + `translate3d(0, 115%, 0)`, escalonado 45ms, **transform only, sin opacidad** (protege el LCP; el H1 deja de usar `animate-lift-in` para no duplicar transform). Fallback: si el gate de Fase 5 mide peor LCP, se colapsa al `animate-lift-in` de bloque | R39/R40 (texto real, un solo `h1`), design-system §9 #2, R34 |
+| **Subrayado cinético** (`hero-highlight-line`) | Rule `brand/60` de 1px bajo la palabra destacada que se dibuja con `scaleX` vía `animation-timeline: view()`; sin soporte, visible | D37.1 (tipografía cinética), R34 |
+| **Prohibido en el hero (D40)** | Manchas difuminadas (`filter: blur`), `mesh`/aurora, violeta/cian/`#0B0F19`/`#F9FAFB`, imágenes flotantes | D37.1, R24/R25, R56 |
+
+> Nota (D40): la landing **no tiene selector de tema** claro/oscuro; el hero es una superficie
+> `ink` por diseño (ritmo claro/oscuro, §7). Un "light mode" del hero sería una función nueva →
+> decisión aparte. El sistema `@theme` no define modo oscuro.
+
+### Hero V7 — combo "cristal + red" y limpieza (D41)
+
+Iteración pedida por Lorena sobre el V6: quitar el overline que se apilaba, añadir el combo
+aprobado (#2 cristal facetado + #4 red que se dibuja) y rebalancear la altura.
+
+| Cambio | Spec | Regla/nota |
+|---|---|---|
+| **Overline eliminado** | Se quita el `<p>` folio del hero, el campo `overline` de `content.ts` y la clave `hero.overline` de `es.json` (sin texto muerto). Se veía como 5 líneas en `lg` (sin `col-span`, quedaba en 1/12 de ancho). El mensaje "comunidad técnica en español" sigue en `hero.ticker` y `meta.description` | R36 (texto muerto fuera), D41 |
+| **Cristal facetado (#2)** | `hero-facet-mask` (máscara radial) con `hero-facet` / `hero-facet-alt`: cuñas `conic-gradient` de **borde duro** en `brand`/`ember` (≤10%), rotación `facet-turn` 64s / 88s. **Sin `blur` ni blend modes** (se descartó `mix-blend-mode` por aislamiento del layer decorativo; alfa directo = predecible) | D37.1 (prohibido blob/aurora: hay bordes), R24/R25, R34 |
+| **Red que se dibuja (#4)** | ~~`HeroNetwork.tsx`~~ **retirada en D43** (Lorena: "es horrible"): en su lugar va la **marca de agua oficial** `logo-symbol-gradient.svg` al 10%, abajo-derecha (`-bottom-28 -right-20`, `pointer-events-none`, `loading="lazy"`), idéntica a Torneos/Cierre | D43, J1, R39 |
+| **Rebalance del hero** | Contenedor a `justify-center` + `lg:content-center`, `pt-28 lg:pt-32`, `pb-20 lg:pb-24`; el `<h1>` pasa a ser el primer bloque → comparte fila con la marginalia (se elimina la fila superior vacía) | R38 (sin hueco muerto), J1 |
+
+> Pendiente de Fase 5 (D28/D39): medir LCP del revelado por palabra e INP del facetado rotatorio;
+> verificar contraste del facet/beam y del estado relleno del CTA. Todo es CSS puro, cero islas.
+
+### Ajustes D42–D50
+
+| Ajuste | Spec | Regla/nota |
+|---|---|---|
+| **Soporte del hero** | `hero.support` y el `div` del CTA ganan `lg:col-span-5`: ya no caen en 1/12 y no se parten en 6 líneas | D42, R38 |
+| **Botones cuadrados** | Todas las píldoras → `rounded-none`: `DiscordCta` (sin anillo `animate-breathe`, eliminado del CSS), header completo (logo, enlaces, hamburguesa, panel móvil) y botón del newsletter + skip-link | D42, R24, D36 |
+| **Header más ancho** | El header usa `page-container-wide` (`--container-page-wide: 80rem`); el resto de la página sigue en 72rem | D43, R38 |
+| **Marca de agua del hero** | `logo-symbol-gradient.svg` al 10% abajo-derecha, **520×520** (D45); reemplaza la red retirada | D43/D45, R39 |
+| **Grid vivo** | El grid del hero se mueve: paneo por scroll (capa externa `.hero-field`) + **drift continuo** de una celda (4rem X/Y) en 28s (capa interna `.hero-field-drift`, sobredimensionada `-inset-16`). Loop sin costura; solo `transform` | D44, D37, R34 |
+| **Nav sin recuadro** | El `<ul>` del nav de escritorio pierde borde/fondo/padding (queda `flex items-center gap-1`); enlaces con hover subrayado. El panel del menú móvil se conserva | D45, R42 |
+| **CTA Discord único (D46)** | Un solo estilo en TODO el sitio: cuadrado relleno `brand`, texto `ink` (6.77:1), barrido especular + micro-elevación, flecha. Solo cambia el tamaño (`nav` compacto / `hero` prominente / `block` full-width). Se **retira la variante `line`** (hairline) y el hero pasa a `size="hero"`. Focus ring `ink` en el panel móvil sobre `paper` (R26) | D46, R11, R26, R34 |
+| **Header adaptativo (D47)** | Barra **sólida** que adopta la polaridad de la sección de detrás (`data-header-surface` en `<html>` vía la isla `HeaderSurface`); disolución en una franja de gradiente **debajo** de la barra; logo compuesto en oscuro / `logo-horizontal.svg` en claro; bloque `brand` de la newsletter tratado como `dark`; en claro, CTA con borde `ink` (WCAG 1.4.11) | D47, R24/R25, R26, R34 |
+| **H1 y copy (D48)** | Espacios reales entre palabras del `<h1>` (bug de a11y/SEO); `lg:col-span-8`; línea 2 → *"Aquí te conocen antes de la vacante."* + `meta.og.headline`/`ogImageAlt` sincronizados | D48, R39/R40 |
+| **Header eje + nav vivo (D49)** | Header vuelve al eje `page-container` (72rem) como el contenido; **scrollspy** (`aria-current="location"`, activo `brand` en oscuro / `ink`+subrayado `brand` en claro por R26); **hairline de progreso** `.header-progress` (`scaleX`, `animation-timeline: scroll(root)`, CSS puro) | D49, R42, R45, R34 |
+| **Ritmo vertical del hero (D50)** | `pt − pb = 80px` (altura del header, `-mt-20`) para centrar el bloque en el área visible: `pt-36 pb-16` / `lg:pt-40 lg:pb-20`; `support → quick-nav` pasa a `mt-10` en móvil (ritmo consistente) | D50, J1 |
 
 
 ## Copy

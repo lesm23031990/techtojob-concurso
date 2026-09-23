@@ -53,8 +53,6 @@ export interface HeroMetaItem {
 }
 
 export interface Hero {
-  /** Editorial folio line above the headline (V5). */
-  overline: string;
   /** Highlight phrase of `line2`, rendered in brand — must occur exactly once. */
   highlight: string;
   /** Headline, line 1 (muted `cloud`) — two-line split, still ONE <h1> (R40). */

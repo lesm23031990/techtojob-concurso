@@ -75,7 +75,7 @@ export default function RootLayout({
             visible text, not hidden keywords (does not violate R60) */}
         <a
           href="#contenido"
-          className="sr-only rounded-full bg-brand px-5 py-3 font-semibold text-ink focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60]"
+          className="sr-only rounded-none bg-brand px-5 py-3 font-semibold text-ink focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60]"
         >
           {messages.a11y.skipLink}
         </a>
