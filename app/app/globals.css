@@ -130,7 +130,12 @@
    translucent bottom edge; the "dissolve" is a separate wide gradient strip
    rendered BELOW the bar. Layers crossfade between ink and paper via
    [data-header-surface] on <html> (set by the HeaderSurface island). Default
-   state is dark, so the server render is already correct (CLS 0). */
+   state is dark, so the server render is already correct (CLS 0).
+
+   D94: the dissolve ramps spell out alpha (`rgb(… / 0)`) instead of the
+   `transparent` keyword. `transparent` is "black with alpha 0", so some engines
+   interpolate through gray and leave a faint band (read as "detalles" on the
+   white header); a 5-stop ramp also hides the seam as content scrolls under. */
 .header-veil-layer {
   position: absolute;
   inset: 0;
@@ -159,12 +164,26 @@
 }
 
 .header-fade-dark {
-  background-image: linear-gradient(to bottom, var(--color-ink), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgb(47 52 54 / 1) 0%,
+    rgb(47 52 54 / 0.92) 25%,
+    rgb(47 52 54 / 0.62) 55%,
+    rgb(47 52 54 / 0.22) 82%,
+    rgb(47 52 54 / 0) 100%
+  );
   opacity: 1;
 }
 
 .header-fade-light {
-  background-image: linear-gradient(to bottom, var(--color-paper), transparent);
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 1) 0%,
+    rgb(255 255 255 / 0.92) 25%,
+    rgb(255 255 255 / 0.62) 55%,
+    rgb(255 255 255 / 0.22) 82%,
+    rgb(255 255 255 / 0) 100%
+  );
   opacity: 0;
 }
 
