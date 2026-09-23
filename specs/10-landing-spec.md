@@ -166,6 +166,29 @@ reintegra al **ritmo oscuro** con una tarjeta única, conservando el raíl y su 
 > `Newsletter ink → Cierre ink` se lee como un **único bloque de cierre** (misma excepción que
 > `Cierre → Footer`). Se actualiza la tabla de ritmo y la regla anti-deriva.
 
+## Cierre (`#unete`) — 100vh, "la puerta", luces del hero y remate de marca (D121, 23/09)
+
+**Motivo:** el globo reticulado y la red de D108–D120, y después la retícula + constelación, fueron
+**exploraciones descartadas** por Lorena. Pedido final: *"la animación que quiero replicar en toda
+esta sección es la de las luces esas que están dando vuelta por el hero"*, *"asegúrate de que ocupe
+100vh"*, *"el logo en un cuadrado y más grande… el nombre con el mismo efecto… que este elemento sea
+un todo"* y *"texto centrado llamativo con su respectiva animación de entrada/salida y de
+salida/entrada"*.
+
+| Pieza | Spec | Regla/nota |
+|---|---|---|
+| **Alto** | `flex min-h-svh flex-col justify-center`: la sección ocupa **una pantalla** con el contenido centrado verticalmente (patrón del hero). El bloque del remate baja a `h-[140px] sm:h-[160px] lg:h-[180px]` para que nada desborde | Pedido explícito (*"ocupe 100vh"*); R38 (verificar 360/768/1024/1440 y viewports bajos en el gate) |
+| **Luces** | Fondo a toda la sección con **las MISMAS clases del hero** (`.hero-facet-mask` + `.hero-facet` + `.hero-facet-alt`): cuñas `conic-gradient` de borde duro que rotan **64s y 88s**. No se duplica CSS | Lorena (*"las luces que están dando vuelta por el hero"*); al compartir clases, hero y cierre no pueden divergir; R34 (bucles ≥3.5s, CLS 0) |
+| **"La puerta"** | Dos hojas `ink` con canto `brand` cubren la sección y se **abren con el scroll** (`view()`, solo `translate`), dejando salir la luz hacia el CTA | Literaliza el copy ya aprobado (*"La puerta es el Discord"*, R36: cero copy nuevo); **estado por defecto = abiertas**; rango corto `cover 0% → cover 35%` (a un salto de ancla las hojas ya están abiertas y nunca tapan el CTA); `pointer-events: none` |
+| **Remate** | Lockup oficial del header (D31/D55) en grande: isotipo en tile cuadrado (`border-brand/40 bg-white/5`, `h-16/lg:h-24`) + `wordmark-duo` (`h-7/lg:h-10`), envuelto por un anillo de luz facetada que gira (64s) y respira (9s) | Ortogonal al isotipo y al nombre (*"que este elemento sea un todo"*); el **isotipo no se rota ni se deforma** (R27/R39): gira la luz; assets oficiales reutilizados, sin piezas nuevas |
+| **Texto** | H2 en dos líneas (`cloud`/`paper`), copy y CTA centrados; entran y salen con `.reveal` (fade + `translate`, **se invierte al subir el scroll**) | Pedido explícito (*"entrada/salida y de salida/entrada"*); D62/D63/D77/D102/D106 intactas; R36 (cero copy nuevo) |
+| **Tono** | `brand`, `brand/40`, `white/5` y el acento `ember` al 22% (ya existente); cero colores nuevos | R24/R25; sin `filter: blur` (D37.1/D86) |
+| **Accesibilidad** | Luces, puerta y remate son decorativos (`aria-hidden` + `pointer-events-none`); el foco y el clic pasan siempre | R34/R42; el CTA y el copy no cambian (mismo texto de `messages/{es,en}.json`) |
+| **Limpieza** | Se borraron `ClosingNetwork.tsx`/`ClosingConstellation.tsx` y todo el CSS `.network-*`/`.constellation-*` (incluido `SHOW_GRATICULE`); queda respaldo fuera del repo | R35 (sin código muerto); `overflow-clip` intacto (D63) |
+
+> **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440, contraste del conjunto y
+> confirmación de que la sección no supera una pantalla en viewports bajos.
+
 ## Hero V6 — "Plano Cinético" (D40)
 
 **Motivo:** pedido de rediseño del hero (22/09 noche) con *mesh gradient* animado e imágenes

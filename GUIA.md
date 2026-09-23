@@ -21,15 +21,19 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 | 2. Sistema de diseño | Tokens Tailwind, paleta, tipografía, uso del logo oficial → `docs/design-system.md` | ✅ 22/09 |
 | 3. Construcción | Scaffold + 9 secciones (Audiencias unifica Talento+Empresas, D75) + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 · revisada 23/09 |
 | 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
-| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ 23/09 · **sin auditorías (D56)** |
+| 4b. Blindaje + RE-auditoría | Congelar el diseño aprobado y re-auditar las 61 reglas + Lighthouse + Playwright/axe sobre el estado final + plan de pruebas | ⏳ **próxima sesión** (modo revisión, D124) |
+| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ después del 4b |
 
 ### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
 
 > **DISEÑO CERRADO (D88/D98/D100–D107, 23/09): Hero → Newsletter.** Las secciones **Hero, Cómo
 > funciona, Torneos, Audiencias, Networking, Testimonios (D89/D90), Noticias (D98) y Newsletter
 > (D100–D107)** quedan congeladas: **no se vuelven a tocar sin una decisión nueva.**
-> La **única sección abierta es el Cierre (`#unete`)**; después, el **entregable (Fase 5)** y, cuando
-> Lorena diga *"vamos a revisar"*, el gate de auditoría (D56).
+> El **Cierre (`#unete`) pasó por varias vueltas el 23/09** —globo reticulado y red (D108–D120),
+> retícula + constelación, **todas descartadas**— hasta la versión final **D121/D122** (100vh + "la
+> puerta" + luces del hero + remate de marca + ticker compartido), que Lorena **aprobó** ("diseño
+> totalmente aprobado, todo me encanta"). Después, el
+> **entregable (Fase 5)** y, cuando Lorena diga *"vamos a revisar"*, el gate de auditoría (D56).
 
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
@@ -90,16 +94,55 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   D104). Además, "Cómo funciona" y "Torneos" bajan su escala tipográfica con `.section-tight` (D102).
   Cero copy nuevo, cero islas nuevas, cero colores fuera de la paleta. `tsc` + ESLint + `next build`
   en verde.
-- **PRÓXIMA SESIÓN (handoff):** queda **una sola sección abierta: el CIERRE (`#unete`)** — hoy es el
-  espejo del hero (H2 en dos líneas `cloud`/`paper` + CTA dominante, sin raíl desde D59), así que el
-  trabajo es darle el mismo nivel de criterio que a Newsletter (jerarquía, entrada/salida, hilo
-  animado, `cta-glint` ya heredado por ser CTA `solid`) y decidir si se le da algo propio. Punto de
-  partida: `design-system.md` §7/§9, `specs/10-landing-spec.md` (Cierre) y `docs/DECISIONES.md`
-  D100–D107. **Después del Cierre, el entregable (Fase 5).**
+- **CIERRE (`#unete`): "100vh + la puerta + luces del hero + remate de marca + ticker" (D121/D122,
+  23/09) — ✅ APROBADO por Lorena ("diseño totalmente aprobado, todo me encanta").** Tras varias
+  vueltas exploratorias descartadas (globo reticulado y red, D108–D120; después retícula +
+  constelación), el estado final es: sección de **una pantalla** (`min-h-svh`, contenido centrado) con
+  **las luces facetadas del hero** reutilizadas tal cual, el gesto **"la puerta"** (dos hojas `ink`
+  con canto `brand` que se abren con el scroll, rango corto y `pointer-events-none`), el **remate de
+  marca** (isotipo oficial grande dentro de un anillo de luz que gira y respira) y, como última fila,
+  el **`Ticker` compartido** (mismo componente que cierra el hero, `hidden sm:block`) para que la
+  página abra y cierre con la misma banda. Texto centrado con su reveal bidireccional intacto. Cero
+  colores nuevos, cero `filter: blur`, cero islas cliente. **Refactor registrado:** el ticker se
+  extrajo a `components/Ticker.tsx` tocando el hero (congelado en D88) sin cambiar un píxel (D122).
+  `tsc` + ESLint + `next build` en verde. **Último ajuste (D123):** el desvanecido izquierdo del
+  slider de Testimonios ahora arranca en la **línea de tiempo**, no en el canto de la página.
+  **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y confirmar que el Cierre no
+  supera una pantalla.
+- **PRÓXIMA SESIÓN (handoff, D124): BLINDAJE + TRAZABILIDAD + AUDITORÍA.** El diseño está **aprobado**,
+  así que se vuelve al gate completo y se prepara el entregable. Orden sugerido:
+  0. **⏰ Ojo con la fecha de cierre del Torneo #2** (dato real, D72): entrega **jueves 24 · 00:00
+     México → 08:00 España**. Hoy es miércoles 23, así que **el entregable va primero**: si el tiempo
+     aprieta, se entrega con lo que ya está en verde y la auditoría se cierra después.
+  1. **Commit de congelado** del estado aprobado (working tree actual: Hero/Closing/Ticker/
+     Testimonials/TimelineRail, `globals.css`, docs y specs) para que el veredicto apunte a un SHA.
+  2. **PARTE 0 · Trazabilidad con las BASES y el BRIEF** (petición expresa de Lorena): re-leer
+     `material-concurso/bases-concurso.txt` y `material-concurso/brief.md` (material local, fuera de
+     git) y comprobar, **requisito por requisito**, que (a) **todas** las reglas de las bases están
+     capturadas en `specs/00-checklist-reglas.md` (R01–R61) y que sus **citas textuales son fieles**,
+     (b) no hay **ningún requisito del brief** sin cubrir en `specs/10`/`specs/20`, (c) lo entregado
+     cumple el **formato de entrega** de las bases (qué se envía, dónde y con qué declaración de IA,
+     R07), y (d) **no hay requisitos inventados** (nada en `specs/` sin fuente en las bases o el brief).
+     Salida esperada: matriz **bases/brief → spec → implementación → evidencia** con los huecos
+     marcados. Cualquier hueco se le presenta a Lorena con opciones (regla D124) **antes** de tocar algo.
+  3. **Re-auditoría de las 61 reglas** (rules-auditor, cita textual) sobre el estado congelado — la
+     evidencia de `docs/qa/` es del 22/09 y no cubre el rediseño posterior.
+  4. **Lighthouse + capturas 360/768/1024/1440 + contraste** (qa-access/seo-perf) y medición de
+     CWV (LCP/CLS/INP).
+  5. **Plan de pruebas funcional** (anclas, CTA, formulario, marquee, teclado, reduced-motion).
+  6. **Cerrar pendientes declarados**: R22 ("en riesgo": reorden narrativo + declaración en README),
+     traducción del EN (D57), tipo `Messages` a mano, `--i` inertes.
+  7. **Fase 5**: repo público → deploy Vercel con la URL real en `content.ts` → Lighthouse/capturas
+     sobre el deploy → mensaje al canal ENTREGAS con la declaración de IA (R07).
+  **Regla para los cambios (D124):** cualquier hallazgo se le presenta a Lorena **con opciones
+  equivalentes en diseño** y solo se ejecuta con su OK. Punto de partida del código:
+  `Closing.tsx` + `Ticker.tsx` + `globals.css` (bloques D121–D123) y `docs/DECISIONES.md` D121–D124.
 - **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. Excepción
   registrada: **Audiencias** recibió el watermark en D90 por petición expresa (solo decoración).
-  **Noticias** (D98) y **Newsletter** (D100–D107) también quedan cerradas. El **modo rápido D56**
-  sigue activo (3 agentes, sin auditorías) hasta que digas *"vamos a revisar"*.
+  **Noticias** (D98) y **Newsletter** (D100–D107) también quedan cerradas. El **Cierre (D121/D122/D123)**
+  queda **cerrado y aprobado por Lorena**. Desde la próxima sesión aplica el **modo revisión (D124)**:
+  6 agentes y gate completo, con la regla de que todo cambio de diseño se consulta y se ofrece con
+  opciones equivalentes.
 - **Después, Fase 5 (entregable):** repo público en GitHub → deploy Vercel con URL real en `content.ts`
   (`site.url`) → Lighthouse/capturas → mensaje al canal ENTREGAS con la declaración de IA (R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
@@ -109,6 +152,8 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   **interfaz escrita a mano en `content.ts`**, no se deriva de `es.json`: cada cambio de catálogo
   exige ampliarla (pasó en D107); (2) los `style={{ "--i": n }}` que quedan sobre elementos `.reveal`
   son inertes (el rango volvió a `cover` completo en D77): solo sirven a `.bento-lit`/`.step-node-fill`.
+  *(La deuda (3) —`stroke-dashoffset` en los arcos del Cierre— quedó **cerrada al retirar esa capa en
+  D121**: hoy el catálogo de motion no tiene ninguna propiedad de pintado.)*
 - **Commits (23/09, sesión de newsletter):** `7f8d2a6` (`feat(newsletter): bento panel, console form
   and scannable message`) y `4325e02` (`design(motion): slower reveals, shorter exit, cta glint and
   rail node flash`), más el commit de documentación que cierra este registro
@@ -116,16 +161,33 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   **sin push** (`master` va por delante de `origin/master`; no se tocó el remoto).
   Tag `hero-v1` sobre `b18c3e1`.
 
-### 2.1 Modo de trabajo vigente (D56, 23/09)
+### 2.1 Modo de trabajo vigente (D124, 23/09) — MODO REVISIÓN
 
-**Regla activa hasta que Lorena diga "vamos a revisar":** se trabaja con **3 agentes** y **cero
-auditorías** en todas las tareas y fases, incluida la Fase 5.
+**Regla activa:** con el diseño **aprobado por Lorena**, se vuelve al **gate completo**. **D124
+supersede D56** (el "modo rápido" de 3 agentes queda como historia).
 
-- **Activos:** orquestador (specs, decisiones, coordinación), `design-ux` (criterio visual y
+- **Activos:** los 6 roles — orquestador, `design-ux`, `nextjs-builder`, `rules-auditor`, `qa-access`
+  y `seo-perf` — más Lighthouse, Playwright/axe y capturas de QA.
+- **Gate aplicable (AGENTS.md, "Calidad mínima exigida"):** Lighthouse ≥95 en Performance, SEO y
+  Accessibility (móvil y escritorio); WCAG 2.1 AA; responsive en 360/768/1024/1440; CWV
+  (LCP < 2.5s, CLS < 0.1, INP bajo); `tsc` sin errores y ESLint limpio.
+- **Regla de la owner para los cambios:** cualquier hallazgo que exija tocar el diseño se le presenta
+  **con opciones equivalentes en diseño** y **solo se ejecuta con su OK** (D124).
+- **Objetivo de la sesión:** (a) congelar/commitear el estado aprobado; (b) re-auditar las **61 reglas**
+  con cita textual (la evidencia de `docs/qa/` es del 22/09 y **no** cubre el rediseño posterior:
+  Hero V7, Newsletter D100-D107, Cierre D108-D123); (c) Lighthouse + capturas 360/768/1024/1440 +
+  contraste; (d) plan de pruebas funcional; (e) cerrar pendientes declarados (**R22 en riesgo**,
+  traducción EN de D57, deuda del tipo `Messages`).
+
+> Nota histórica: el bloque siguiente describe el modo rápido D56 que estuvo vigente hasta hoy.
+> **Regla que estaba activa hasta que Lorena dijo "vamos a revisar":** se trabajaba con **3 agentes** y
+> **cero auditorías** en todas las tareas y fases, incluida la Fase 5.
+
+- **Activos (ya no):** orquestador (specs, decisiones, coordinación), `design-ux` (criterio visual y
   copy) y `nextjs-builder` (única mano que escribe en `app/`).
-- **Dormidos hasta el modo revisión:** `rules-auditor`, `qa-access`, `seo-perf`, Lighthouse,
-  Playwright/axe, medición de INP y capturas de QA. Los agentes no se borran: siguen definidos
-  en `.opencode/agent/` con su prompt y modelo intactos.
+- **Dormidos hasta el modo revisión (ya despiertos):** `rules-auditor`, `qa-access`, `seo-perf`,
+  Lighthouse, Playwright/axe, medición de INP y capturas de QA. Los agentes no se borran: siguen
+  definidos en `.opencode/agent/` con su prompt y modelo intactos.
 - **Permitido:** `tsc --noEmit`, ESLint y `next build` (segundos; evitan commitear código roto).
 - **Motivo declarado por Lorena:** los ciclos de auditoría tardaban más que el propio cambio.
 - **Supersede D28 y D39** (que pausaban QA solo mientras el diseño no estuviera congelado); los

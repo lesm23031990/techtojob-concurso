@@ -1510,6 +1510,221 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `tsc`/ESLint/`next build` en verde. **Actualizado en:** `messages/{es,en}.json`,
       `content.ts`, `components/sections/Newsletter.tsx`, `specs/11-contenido.md` (§8).
 
+- **D108.** 23/09, **cierre `#unete`: "constelación viva"**. Lorena pide rediseñar por completo el
+      fondo del Cierre (CTA final de Discord): *"un fondo inmersivo de Red Global Interconectada"*,
+      con estética neón, aportando una imagen de referencia (mapa del mundo azul con arcos y nodos
+      brillantes) y pidiendo expresamente `shadow-[0_0_15px_rgba(34,211,238,0.6)]`, `animate-pulse`/
+      `animate-ping` y un "mapa mundial". **Conflicto vinculante detectado y resuelto con las bases y
+      la owner (AGENTS.md: las bases ganan; D40 como precedente):**
+      1. **Color:** el cian `#22D3EE`/`rgba(34,211,238,…)` **viola R24/R25** (paleta fija
+         `ink`/`brand`/`paper` + grises + 1 acento). Se mapea a **`brand` #84c0bf**, el mismo
+         "verde menta/cian" que ya se aplicó al `cyan-500` del brief en Newsletter
+         (`specs/10` §Newsletter). **Decidido por Lorena: `brand`, cero colores nuevos.**
+      2. **Glow:** el brillo con `filter: blur`/`drop-shadow` está vetado (D37.1/D86). El bloom se
+         construye con **trazos superpuestos de borde duro** (trazo ancho al 9% bajo trazo fino al 45%)
+         y halos de `radial-gradient`/`fill` de bajo alfa: **cero filtros**.
+      3. **Loop y alcance:** `animate-ping` (1s) y `animate-pulse` (2s) **incumplen** el catálogo §9
+         (**bucles ≥3.5s**, R34) → pulsos propios de 4s/6s/9s. Además §7 mantenía el Cierre
+         **estático** ("no añadir movimiento al primer ni al último impacto"): **Lorena aprueba
+         reabrirlo** y se registra aquí (esta entrada supersede esa nota de §7; el guard
+         `prefers-reduced-motion` sigue apagando todo).
+      4. **Estructura:** se descarta el **mapamundi literal** (contornos de continentes = vocabulario
+         gráfico nuevo, sin fuente en el material y con el precedente del rechazo a la red del hero,
+         D43). **Decidido por Lorena: constelación abstracta** con nodos, hubs y arcos que cruzan la
+         pantalla.
+      **Implementación (D108):** `ClosingNetwork.tsx` (Server Component, SVG inline de 26 nodos y 30
+      arcos cuadráticos sobre una banda central de 1440×640) + capa decorativa en `Closing.tsx`
+      (`aria-hidden` + `pointer-events-none`, `absolute inset-0 -z-10` dentro del `isolate` de la
+      sección, `overflow-clip` intacto por D63) con **máscara obligatoria** top/bottom
+      (`.network-field`, degradado transparente 0% → opaco 20% → opaco 78% → transparente 100%). El
+      copy y el `DiscordCta` conservan `z auto` y su contraste AA (12.62:1 `paper` sobre `ink`): la red
+      vive detrás, a baja opacidad. **Cero islas cliente** (D37.2), CLS 0. `stroke-dashoffset` es la
+      **única** propiedad de pintado del catálogo (§9) y se declara como tal. **Implementó el
+      orquestador** por la excepción de D29 (créditos `opencode-go` agotados; modo reserva
+      `deepseek/deepseek-flash` activo). **Verificación (modo rápido D56):** `tsc --noEmit`, ESLint y
+      `next build` en verde. **Saneamiento pendiente:** capturas 360/768/1024/1440 y contraste en el
+      gate "vamos a revisar". **Actualizado en:** `components/sections/Closing.tsx`,
+      `components/sections/ClosingNetwork.tsx`, `app/app/globals.css`, `docs/design-system.md`
+      (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+      **Revisado el mismo día por D109**: el visual deja de ser un fondo `-z-10` detrás del copy
+      (Lorena: *"esta imagen no puede quedar por debajo del texto"*) y pasa a ser un **bloque propio
+      justo debajo del texto**; además el "mundo" pasa de constelación a **globo reticulado**.
+
+- **D109.** 23/09, **cierre `#unete`, revisión del visual de D108** (varias órdenes de Lorena en
+      cadena, todas ejecutadas y verificadas). **Decisión final:** el cierre gana un **globo
+      reticulado** ("la esfera") como visual propio, con estas reglas:
+      1. **Posición:** NO es fondo detrás del copy. Es un **bloque decorativo justo debajo del bloque
+         de texto**, a todo el ancho (full-bleed) y **~90% del ancho de la página** en la base del
+         casquete. `aria-hidden` + `pointer-events-none`, con `.reveal` (entra con el scroll) y la
+         **máscara** `.network-field` (ahora 0% transparente → 10% opaco → 80% opaco → 100%
+         transparente) para fundirse con el `ink`. El CTA sigue por encima del visual (requisito de
+         D108: el botón manda).
+      2. **Geometría:** proyección **ortográfica inclinada 8°** calculada en `ClosingNetwork.tsx`
+         (`cy=1557`, `r=1127`, `viewBox 1440×810`). Como el casquete es poco profundo, la inclinación
+         pequeña es la que deja **varios paralelos** en cuadro (con 15-24° solo quedaba un anillo).
+         El casquete baja lo justo para que **la parte superior (el polo) quede visible** y la altura
+         total siga corta (Lorena: *"baja más la esfera para que la parte superior quede visible"*).
+         Reticula a **5°** (paralelos) y **30°** (meridianos), degradada a la mitad de la paleta.
+      3. **Puntos vs líneas (regla explícita de Lorena):** los **PUNTOS van DENTRO/sobre la esfera**
+         (cada uno es un lat/lon proyectado con la misma función que la retícula, más un **anillo de
+         puntos bordeando el limbo**) y las **LÍNEAS van SIEMPRE FUERA**, conservando la forma que
+         tenían (los 26 anclajes y 30 arcos de D108, verbatim). Se garantiza con una **máscara
+         `closing-outside-globe`**: ninguna línea puede dibujarse sobre el globo; las que van al lado
+         oculto se **cortan en el limbo** y sus extremos quedan como **puntos imaginarios** (no se
+         dibujan los anclajes). Los radios/posiciones se ajustaron a petición suya (bajar la esfera,
+         reducir el radio, ampliar el bloque de animación).
+      4. **Sin cambios de sistema:** cero colores nuevos (R24/R25), cero `filter: blur` (D37.1/D86),
+         bucles ≥3.5s (R34), cero islas cliente (D37.2) y guard `prefers-reduced-motion`. Se retiró el
+         **anillo orbital** que se había probado (quedaba fuera de plano con la escala final).
+      **Verificación (modo rápido D56):** `tsc --noEmit`, ESLint y `next build` en verde tras cada
+      iteración. **Implementó el orquestador** (excepción D29: créditos `opencode-go` agotados).
+      **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y contraste del conjunto.
+      **Actualizado en:** `components/sections/ClosingNetwork.tsx`, `components/sections/Closing.tsx`,
+      `app/app/globals.css` (comentario D109), `docs/design-system.md` (§7/§9),
+      `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+
+- **D121.** 23/09, **cierre `#unete`: 100vh, "la puerta", luces del hero y remate de marca**.
+      Sesión de iteración con Lorena sobre la sección que "debe enamorar". Recorrido y decisión final:
+      1. **Se retira por completo el globo/red de D108-D120** (pedido explícito: *"remueve todo lo
+         referente a la animación que estábamos intentando hacer"*). Se borró `ClosingNetwork.tsx` y
+         **todo** el CSS `.network-*` (incluido el interruptor `SHOW_GRATICULE`); queda **respaldo
+         fuera del repo**. D108-D120 quedan en el log como exploraciones descartadas.
+      2. **Se descarta también la constelación** que se probó después: tras verla, la owner pidió
+         *"la misma animación que está en el header en esta sección"* refiriéndose a **las luces
+         facetadas que giran del hero** (`.hero-facet` / `.hero-facet-alt`). La sección las reutiliza
+         **tal cual** (mismas clases, mismas rotaciones de 64s/88s) como fondo a toda la sección: al
+         compartir clases, hero y cierre no pueden divergir.
+      3. **Alto = 100vh**: la sección pasa a `flex min-h-svh flex-col justify-center` con el contenido
+         centrado verticalmente (patrón del hero), y el bloque del remate se recortó de 260/340/460 a
+         **140/160/180** para que nada desborde una pantalla.
+      4. **"La puerta" (gesto propio, D121)**: el copy aprobado de la sección ya dice *"La puerta es el
+         Discord"*, así que se literaliza. Dos hojas `ink` con canto `brand` cubren la sección y se
+         **abren con el scroll** (`animation-timeline: view()`, solo `translate`), dejando salir la luz
+         hacia el CTA. Detalles: **estado por defecto = abiertas** (sin soporte o con
+         `prefers-reduced-motion` no hay puerta), rango corto **`cover 0% → cover 35%`** (a un salto de
+         ancla —los CTA de Audiencias apuntan a `#unete`— las hojas ya están abiertas y **nunca** tapan
+         el CTA) y `pointer-events: none` para que foco y clic pasen siempre.
+      5. **Remate de marca**: bajo el CTA, el **lockup oficial del header** (D31/D55) en grande —
+         isotipo en tile cuadrado (`border-brand/40 bg-white/5`) + `wordmark-duo`— para que isotipo y
+         nombre pesen igual (petición: *"el logo en un cuadrado y más grande… el nombre con el mismo
+         efecto… que este elemento sea un todo"*). El **isotipo no se rota ni se deforma** (R27/R39):
+         lo que gira es un **anillo de luz facetada que abraza TODO el lockup**, construido con
+         `mask-composite: exclude` (marco de 2px) y una capa cuadrada con `conic-gradient` que rota
+         64s + respira 9s.
+      6. **Texto**: H2 en dos líneas, copy y CTA siguen centrados con su `.reveal` **bidireccional**
+         (entra por abajo, sale por arriba y se invierte al subir): el "entrada/salida y salida/entrada"
+         que pidió (D62/D63/D77/D102/D106 intactas). Cero copy nuevo (R36).
+      **Todo el conjunto** respeta la paleta fija (R24/R25: `brand`, `brand/40`, `white/5`, `ember` al
+      22% como acento ya existente), **cero `filter: blur`** (D37.1/D86), solo `transform`/`opacity`
+      (CLS 0), cero islas cliente (D37.2) y el guard `prefers-reduced-motion` apaga puerta, luces y
+      anillo. **Verificación (modo rápido D56):** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440, contraste del conjunto y
+      confirmación de que la sección no supera una pantalla en viewports bajos.
+      **Actualizado en:** `components/sections/Closing.tsx`, `app/app/globals.css` (bloque D121),
+      `docs/design-system.md` (§7/§9), `specs/10-landing-spec.md` (§Cierre),
+      `specs/00-checklist-reglas.md` (R34), `GUIA.md`.
+
+- **D122.** 23/09, **el ticker del hero pasa a ser compartido y cierra también el Cierre**.
+      Lorena preguntó si quedaría bien añadir "el slider del hero" al pie del Cierre; el orquestador
+      recomendó hacerlo como **bookend** (el Cierre está declarado *espejo del hero*, §7/D35/D59, así
+      que abrir y cerrar con la MISMA banda convierte el espejo en algo literal) y ella dio el OK.
+      **Decisión:** el ticker de D38/D96 se **extrae a `components/Ticker.tsx`** y lo consumen los dos
+      sitios. Consecuencias:
+      1. **Refactor puro del hero (cero cambio visual)**: se mueve su bloque de ticker al componente
+         compartido con **las mismas clases y tokens** (`animate-marquee`, `[--marquee-duration:102s]`,
+         `TICKER_REPEAT = 3`, `border-t border-white/12 py-5`). Así hero y Cierre **no pueden
+         divergir** (mismo criterio que las luces facetadas). **Excepción registrada:** el hero estaba
+         **congelado (D88)**; se autoriza este único refactor por no alterar ni un píxel.
+      2. **En el Cierre va como ÚLTIMA fila**, `hidden sm:block` (el presupuesto de 100vh no aguanta la
+         banda en móviles pequeños). Sigue siendo `aria-hidden`, no interactivo (R11: el CTA Discord
+         sigue siendo el único botón) y hecho solo con tokens ya publicados (R36: cero copy nuevo).
+      3. **Ajuste de alto para mantener 100vh**: el área de contenido del Cierre pasa de `lg:py-32` a
+         **`py-20 lg:py-24`** (excepción puntual al ritmo §5, motivada por la restricción de una
+         pantalla) y el bloque del sello baja a **`h-[150px] sm:h-[170px] lg:h-[200px]`** (el isotipo
+         a `h-14 / lg:h-16`). Cómputo estimado en `lg`: 192 + ~101 (H2) + ~55 (copy) + ~96 (CTA) + 32
+         (mt) + 200 (sello) + ~57 (ticker) ≈ **733 px**, dentro de una pantalla de 768-800.
+      **Verificación (modo rápido D56):** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y confirmar que la sección
+      no supera una pantalla. **Actualizado en:** `components/Ticker.tsx` (nuevo),
+      `components/sections/Hero.tsx` (refactor), `components/sections/Closing.tsx`,
+      `docs/design-system.md` (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+
+- **D123.** 23/09, **el slider de Testimonios arranca en el raíl, no en el canto de la página**.
+      Lorena: *"este slider en vez de desaparecer en el extremo izquierdo de la página debe desaparecer
+      en la línea de tiempo; el comienzo sí está bien así"*. **Decisión:** el desvanecido izquierdo de
+      `.marquee-fade` (D89/D90-7) se **alinea con la x del raíl** en vez de con el borde del viewport.
+      `--fade-x` = `max(<padding del raíl>, calc(50% − 36rem + <padding del raíl>))`, porque el
+      `page-container` está centrado a 72rem y el raíl vive a `left-5 / md:left-8 / lg:left-10` dentro
+      de él; el `max()` cubre los viewports más estrechos que el contenedor, donde el contenedor ocupa
+      el 100% y el raíl queda a su padding. La máscara mantiene su rampa de 96px justo ANTES del raíl
+      (el corte sigue siendo suave) y **el borde derecho queda exactamente como estaba** (95% → 100%),
+      como pidió. Sigue aplicándose solo a la envoltura del track: la banda `brand-soft` y sus
+      hairlines siguen de canto a canto (D89/D90). Es CSS puro y no afecta al marquee ni al guard de
+      `prefers-reduced-motion`. **Verificación (modo rápido D56):** `tsc --noEmit`, ESLint y
+      `next build` en verde. **Pendiente del gate "vamos a revisar":** captura a 768/1024/1440 para
+      confirmar que el arranque cae justo sobre el eje. **Actualizado en:** `app/app/globals.css`
+      (`.marquee-fade`), `docs/design-system.md` (§9 #21).
+      **Ampliación (mismo día, segundo ajuste de Lorena):** *"la banda donde se desliza el slider se
+      debe desaparecer por debajo de la línea de tiempo… del lado izquierdo no va a ver nada"*, *"la
+      línea de tiempo debe quedar encima de este slider"* y *"no olvides el verde difuminado de ese
+      extremo"*. Se aplica: (a) **la BANDA también se funde** hacia el raíl con una rampa de ~160px
+      (más larga que la de las tarjetas, ~96px) y **máscara** —que arrastra también su `box-shadow`,
+      que si no se colaba por debajo del eje—; (b) el **raíl pasa por ENCIMA** del slider vía una prop
+      `className` nueva en `TimelineRail` (`z-20`), usada **solo** en Testimonios, así el resto de las
+      secciones conserva el apilado histórico; (c) a la izquierda del eje queda el `mist` de la
+      sección: ni campo verde, ni hairline, ni sombra. **Remate (tercer ajuste):** *"el punto exacto
+      donde debe desaparecer el slider es la línea de tiempo, no debe atravesarla"* → `--fade-x` pasa
+      a ser el **borde DERECHO del raíl** (la x del eje **+ sus 3px** de `w-[3px]`), de modo que la
+      banda y las tarjetas terminan antes de la línea y el raíl queda sobre el `mist` limpio, sin
+      cruzarse con el slider. **Corrección final:** el difuminado estaba **antes** del raíl (asomaba
+      banda a su izquierda); ahora el corte es limpio EN el raíl (nada a su izquierda) y **el verde
+      entra difuminado hacia la DERECHA** dentro de la banda: rampa de ~160px para el campo y ~96px
+      para las tarjetas, ambas empezando en `--fade-x`. **Cierre del ajuste:** Lorena detectó que el
+      verde del lado izquierdo "no parecía el mismo color"; era el mismo `brand-soft` #dcefee **a
+      opacidad parcial** mezclado con el `mist` #f4f7f7 (menos saturación, no otro tono). Se resuelve
+      dejando **el campo SÓLIDO desde el raíl** (corte limpio en `--fade-x`, sin rampa) y concentrando
+      todo el difuminado de ese extremo en **las tarjetas** (~96px), así el color del campo es idéntico
+      de punta a punta y el borde del corte queda tapado por la propia línea del raíl. **Verificación:**
+      `tsc`/ESLint/`next build` en verde. **Actualizado también en:** `components/TimelineRail.tsx`,
+      `components/sections/Testimonials.tsx`.
+
+- **D124.** 23/09, **cierre de la sesión de diseño y VUELTA AL MODO REVISIÓN (gate completo)**.
+      Lorena: *"aprobado el diseño… ahora vamos a blindarlo para hacer la auditoría, hacer las pruebas y
+      chequear que se cubran todos los requerimientos del torneo… esto lo vamos a hacer en una nueva
+      sesión"*, con una regla de trabajo explícita: *"en dado caso que se necesiten cambiar cosas
+      siempre debes preguntarme y ofrecerme las opciones más parecidas en cuestión de diseño"*.
+      **Decisión:**
+      1. **El diseño queda CERRADO y aprobado por la owner** (Hero → Cierre, incluida la sección del
+         Cierre en su versión D121/D122/D123). A partir de aquí **no se cambia nada de diseño sin su
+         OK**, y cualquier hallazgo de auditoría que exija un cambio se le presenta **con opciones
+         equivalentes en diseño** (nunca una solución que rompa el lenguaje visual), registrando la
+         elegida.
+      2. **Se desactiva el "modo rápido" D56**: vuelven a estar activos `rules-auditor`, `qa-access` y
+         `seo-perf` y **todo el gate** de "Calidad mínima exigida" (AGENTS.md) — Lighthouse ≥95,
+         WCAG 2.1 AA, responsive 360/768/1024/1440, `tsc`/ESLint, CWV (LCP/CLS/INP) — más Playwright/axe.
+         D124 **supersede D56** (aunque D56 seguirá en el log como la regla que estuvo vigente).
+      3. **Alcance de la próxima sesión**: (a) **blindar** = congelar el estado actual; (b) **PARTE 0 ·
+         trazabilidad con las BASES y el BRIEF** (petición expresa de Lorena: *"hay que también revisar
+         si el proyecto se ajusta a las bases y al brief"*): re-leer `material-concurso/bases-concurso.txt`
+         y `material-concurso/brief.md` y comprobar **requisito por requisito** que todas las reglas
+         están capturadas en `specs/00-checklist-reglas.md` (R01–R61) con **citas fieles**, que ningún
+         requisito del brief queda sin cubrir en `specs/10`/`specs/20`, que se cumple el **formato de
+         entrega** de las bases (incluida la declaración de IA, R07) y que **no hay requisitos
+         inventados**; salida: matriz **bases/brief → spec → implementación → evidencia** con los huecos
+         marcados; (c) re-auditar las **61 reglas** con cita textual sobre ese estado (la auditoría de
+         `docs/qa/` es del 22/09 y no cubre el rediseño posterior: Hero V7, Newsletter D100-D107,
+         Cierre D108-D123); (d) Lighthouse + capturas **360/768/1024/1440** y contraste; (e) plan de
+         pruebas funcional; (f) repasar los pendientes declarados: **R22** (reorden narrativo, "en
+         riesgo"), la **traducción del EN (D57)**, el tipo `Messages` a mano y los `--i` inertes.
+      4. **⏰ Fecha límite (dato real, D72):** la entrega del Torneo #2 cierra el **jueves 24 · 00:00
+         México → 08:00 España**. Si el tiempo aprieta, **el entregable va primero** (el estado ya está
+         en verde) y la auditoría se cierra después; se decide con Lorena en la propia sesión.
+      5. **Estado de partida:** working tree con los cambios de esta sesión **sin commitear**
+         (Hero/Closing/Ticker/Testimonials/TimelineRail, `globals.css`, docs, specs). Antes de auditar
+         conviene **un commit de congelado** para que el veredicto apunte a un SHA concreto.
+      **Actualizado en:** `docs/DECISIONES.md` (esta entrada), `GUIA.md` (§2 tabla de fases, §2.0 handoff
+      y §2.1 modo de trabajo).
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
