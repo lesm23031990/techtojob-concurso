@@ -1044,6 +1044,27 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `components/sections/Hero.tsx`, `components/sections/Audiences.tsx`,
       `docs/design-system.md` (§3).
 
+- **D79.** 23/09, Lorena pide la lectura de jurado sobre `#talento`/`#empresas` (*"si tú fueras yo,
+      ¿qué cambiarías?"*). **Revisión contra la rúbrica** (J1 25% · J2 25% · J3 15% · J4 15% · J5 10%
+      · J6 10%; desempate = J1). **Cambios aplicados:**
+      (1) **J1** — los iconos iban sueltos en `brand` sobre `paper` (2.04:1) y se veían lavados: pasan
+      a un **tile** `h-12 w-12` con marco `border-line bg-mist` e icono `text-brand-deep`.
+      (2) **J2** — el CTA de Empresas decía "Buscar talento real" mientras el H3 dice "Publica como
+      empresa": se alinea a **"Publicar vacante"**.
+      (3) **J2** — la intro repetía el H2 ("para quien busca… para quien contrata"): se reescribe para
+      **aportar info nueva** ("Tanto si buscas empleo en tech como si quieres contratar…").
+      (4) **J2 (honestidad)** — microcopy bajo cada CTA: **"Se hace dentro del Discord."** (el botón
+      ancla a `#unete` y no sobre-promete una acción que no puede ejecutar).
+      (5) **J4** — limpieza de código muerto: se retiran los `--i` inline de los elementos `.reveal`/
+      `.reveal-left` (D77 dejó de usarlos); se conservan donde `.bento-lit`/`.step-node-fill` sí los
+      consumen por herencia. Fuera en Audiences, Tournaments, HowItWorks, Testimonials, News,
+      Newsletter, Networking y Closing (con los imports `CSSProperties` que quedaban sin uso).
+      **Pendiente (gate de revisión):** capturas responsive 360/768/1024/1440 y contraste axe (J3/J6).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `components/sections/Audiences.tsx`, `components/sections/{Tournaments,
+      HowItWorks,Testimonials,News,Newsletter,Networking,Closing}.tsx`, `app/messages/{es,en}.json`,
+      `app/content.ts`, `specs/11`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

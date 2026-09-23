@@ -36,21 +36,22 @@
   4. `Llega la oportunidad` — `Cuando alguien busca a alguien, acuerdate de quien ya estaba construyendo.`
 - **Cierre de sección:** `Las oportunidades salen de participar, no de rellenar formularios.`
 
-## 3 · AUDIENCIAS — TALENTO + EMPRESAS *(sección split, D75/D76)*
+## 3 · AUDIENCIAS — TALENTO + EMPRESAS *(sección split, D75/D76/D79)*
 
-- **H2 de sección (nuevo, aprobado por Lorena):** `Para quien busca empleo y para quien contrata`
-- **Intro de sección (nueva, D76, foco SEO):** `Dos caminos dentro de la misma comunidad de desarrolladores y empresas tech en español: publica tu perfil si buscas empleo, o encuentra talento si contratas.`
-- **Bloque izquierdo · badge:** `1` · **icono:** lupa/código (Lucide `code`, decorativo)
+- **H2 de sección (aprobado por Lorena):** `Para quien busca empleo y para quien contrata`
+- **Intro de sección (D79, foco SEO, sin repetir el H2):** `Tanto si buscas empleo en tech como si quieres contratar, este es tu sitio: sin filtros automáticos y sin CVs en el vacío.`
+- **Nota bajo los CTA (D79, honestidad):** `Se hace dentro del Discord.`
+- **Bloque izquierdo · badge:** `1` · **icono:** código (Lucide `code`, decorativo, en tile `mist` con marco)
 - **Bloque izquierdo · eyebrow:** `Para desarrolladores`
 - **Bloque izquierdo · H3:** `Ofrécete como talento`
 - **Bloque izquierdo · copy:** `Publica tu perfil con tu stack, tu nivel y qué buscas. Las empresas de la comunidad lo consultan cuando necesitan a alguien y te escriben directamente. Aquí no hay filtro automático que te descarte antes de que una persona te lea. No hace falta ser senior. Y participar no te cuesta nada.`
-- **Bloque izquierdo · CTA:** `Crear perfil de talento` (variante rellena `brand`; enlaza a `#unete`)
+- **Bloque izquierdo · CTA:** `Crear perfil de talento` (variante rellena `brand`; ancla in-page a `#unete`)
 - **Bloque izquierdo · lista escaneable (D76):** `Tu stack` · `Tu nivel` · `Tu disponibilidad`
-- **Bloque derecho · badge:** `2` · **icono:** edificio (Lucide `building-2`, decorativo)
+- **Bloque derecho · badge:** `2` · **icono:** edificio (Lucide `building-2`, decorativo, en tile `mist` con marco)
 - **Bloque derecho · eyebrow:** `Para empresas`
 - **Bloque derecho · H3:** `Publica como empresa`
 - **Bloque derecho · copy:** `Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real.`
-- **Bloque derecho · CTA:** `Buscar talento real` (variante outline hairline; enlaza a `#unete`)
+- **Bloque derecho · CTA:** `Publicar vacante` (variante outline hairline; ancla in-page a `#unete`) — **D79:** alineado con el H3 (antes "Buscar talento real" contradecía "Publica como empresa")
 - **Bloque derecho · lista escaneable (D76):** `Publica lo que buscas` · `Accede a los perfiles` · `Contexto real, no solo CV`
 
 > Fusión D75: antes eran dos secciones apiladas (`#talento` R13 y `#empresas` R14); ahora una

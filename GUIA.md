@@ -36,11 +36,12 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord) en 7 col con **botín y salón de la
   fama apilados** en 5 (chip `Ejemplo`), y **cierre real a todo el ancho** con tabla de husos (estático,
   Sora `tabular-nums`). Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
-- **Audiencias (Talento + Empresas): REDISEÑADA (23/09, D75/D76), a la espera del visto bueno de
-  Lorena.** Las dos secciones apiladas se fusionan en UNA split sobre `mist` (dos celdas `paper` con
-  badge `1`/`2` e icono), con H2 SEO ("empleo"), intro, listas escaneables y entrada `reveal-left`
-  (ahora más marcada). Los CTA anclan a `#unete` (no hay backend) y los enlaces de nav/footer apuntan
-  todos a `#talento`.
+- **Audiencias (Talento + Empresas): CERRADA (23/09, D75–D79), aprobada por Lorena.** Las dos
+  secciones apiladas se fusionan en UNA split sobre `mist` (dos celdas `paper` con badge `1`/`2`,
+  icono en tile, listas escaneables), H2 SEO, intro sin eco y microcopy honesto ("Se hace dentro del
+  Discord."). Los CTA anclan a `#unete`; nav y footer apuntan a `#talento`. La pasada de jurado (D79)
+  alineó la etiqueta del CTA de Empresas ("Publicar vacante"), dio presencia a los iconos y limpió
+  código muerto (`--i`).**No se vuelve a tocar sin una decisión nueva.**
 - **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — networking, testimonios, noticias y
   newsletter (networking es editorial; las dos bento, ya con D61; newsletter, franja `brand`).
   Punto de partida = commit de D75/D76. Después, la **Fase 5** (repo público,
