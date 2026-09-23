@@ -104,7 +104,41 @@
   },
   "tournaments": {
     "h2": "Torneos",
-    "copy": "De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno."
+    "copy": "De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno.",
+    "mockNote": "Sección de ejemplo: el torneo activo, los premios y los ganadores reales se anuncian en el Discord.",
+    "active": {
+      "label": "Torneo en curso",
+      "title": "Reto de frontend",
+      "challenge": "Diseña y construye una landing accesible con Next.js en una semana.",
+      "status": "Próxima edición",
+      "cta": "Entrar al Discord"
+    },
+    "timer": {
+      "label": "Cierre de entregas",
+      "units": [
+        { "value": "—", "name": "Días" },
+        { "value": "—", "name": "Horas" },
+        { "value": "—", "name": "Minutos" }
+      ]
+    },
+    "prizes": {
+      "label": "El botín",
+      "items": [
+        { "place": "1º", "reward": "Oportunidad laboral con una empresa de la comunidad" },
+        { "place": "2º", "reward": "Hardware y visibilidad en el servidor" }
+      ]
+    },
+    "hallOfFame": {
+      "label": "Salón de la fama",
+      "empty": "Todavía no hay ganadores publicados. El próximo puede ser tuyo.",
+      "items": [
+        {
+          "handle": "@usuario",
+          "edition": "Torneo #1",
+          "outcome": "contratado en una empresa tech"
+        }
+      ]
+    }
   },
   "networking": {
     "h2": "Networking",

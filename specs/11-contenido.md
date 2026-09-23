@@ -46,10 +46,19 @@
 - **H2:** `Publica como empresa`
 - **Copy:** `Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real.`
 
-## 5 · TORNEOS
+## 5 · TORNEOS *(sección ampliada en D71 — maqueta declarada)*
 
 - **H2:** `Torneos`
 - **Copy:** `De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno.`
+- **Nota de maqueta (visible):** `Sección de ejemplo: el torneo activo, los premios y los ganadores reales se anuncian en el Discord.`
+- **Pilar 1 · Torneo en curso:** `Reto de frontend` — `Diseña y construye una landing accesible con Next.js en una semana.` · estado `Próxima edición` · CTA `Entrar al Discord` (rota al mismo enlace único, R11/R44).
+- **Pilar 2 · Tiempo (estático, sin fecha):** `Cierre de entregas` → `— Días · — Horas · — Minutos` (placeholders; sin contador ni plazo inventado).
+- **Pilar 3 · El botín:** `1º — Oportunidad laboral con una empresa de la comunidad` · `2º — Hardware y visibilidad en el servidor`.
+- **Pilar 4 · Salón de la fama:** `@usuario — Torneo #1 · contratado en una empresa tech` (ejemplo) · estado vacío alternativo: `Todavía no hay ganadores publicados. El próximo puede ser tuyo.`
+
+> ⚠️ **Regla de honestidad:** las bases y el brief prohíben cifras, plazos y promesas de empleo
+> inventadas. Todo el bloque va rotulado como ejemplo (`mockNote`) y el CTA sigue siendo Discord.
+> Cuando existan datos reales del torneo, se sustituyen aquí y se retira la nota.
 
 ## 6 · NETWORKING
 

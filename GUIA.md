@@ -31,13 +31,15 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
   ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
   a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **PRÓXIMA SESIÓN: `Torneos` (`#torneos`).** Punto de partida estable = commit `bc548f3`
-  ("scroll reveals, visible rail and como-funciona stepper") **más el commit de D70** (rejilla y
-  jerarquía del resultado de `#como-funciona`). Torneos hoy es una sección oscura
-  (`ink`) con headline en `brand`, marca de agua del símbolo al 10% y su nodo de sección `2`; no tiene
-  ítems, así que **no aplica bento**: decidir si se rediseña (contenido/estructura) o si se le da el
-  mismo tratamiento de entrada que al resto. Pendiente también de revisar: talento, empresas,
-  networking, testimonios, noticias, newsletter.
+- **Torneos: REDISEÑADO (23/09, D71) y a la espera del visto bueno de Lorena.** Deja de ser `h2 +
+  párrafo` y pasa a **4 pilares en rejilla hairline sobre `ink`** (torneo en curso + CTA Discord, tiempo
+  estático D/H/M con Sora `tabular-nums`, el botín y el salón de la fama), todo rotulado como **maqueta
+  declarada** para no inventar cifras, plazos ni ganadores (brief/J2). Sin islas nuevas.
+- **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — talento, empresas, networking,
+  testimonios, noticias y newsletter (las tres primeras son editoriales; las dos bento, ya con D61;
+  newsletter, franja `brand`). Punto de partida = commit de D71. Después, la **Fase 5** (repo público,
+  deploy con URL real en `content.ts` → `site.url`, y mensaje al canal ENTREGAS con la declaración de IA
+  de R07).
 - **Lo que falta:** que Lorena revise el resto de secciones y dé por bueno el conjunto; después, la
   **Fase 5** (repo público, deploy con URL real en `content.ts` → `site.url`, y mensaje al canal
   ENTREGAS con la declaración de IA de R07).
@@ -231,6 +233,15 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > Lorena pidió removerlo ("la línea entre los steppers y el título no me gustan para nada") y se retiró.
 > Cero islas, cero copy nuevo. `tsc` + ESLint + `next build` en verde. Puntos 5–6 (ritmo `lg` y firma)
 > diferidos al gate "vamos a revisar".
+
+> **Hecho (23/09, D71 — rediseño de `#torneos`):** a pedido de Lorena, la sección pasa de `h2 + párrafo`
+> a **4 pilares en rejilla hairline sobre `ink`**: (1) torneo en curso (label + `h3` + reto + CTA
+> `DiscordCta size="nav"` + estado), (2) **tiempo estático** Días/Horas/Minutos con placeholders `—` y
+> Sora `tabular-nums` (sin isla cliente ni fecha → nunca expira, D56), (3) **el botín** (`1º`/`2º` con
+> numerales `brand`) y (4) **salón de la fama** (ejemplo + estado vacío honesto). Todo rotulado con
+> `mockNote` (maqueta declarada) para no inventar cifras, plazos ni ganadores (brief/J2); sin marcas de
+> terceros. Cero islas nuevas; `tsc` + ESLint + `next build` en verde. **Pendiente de visto bueno visual
+> de Lorena.**
 
 ## 3. Fuentes de verdad (jerarquía)
 

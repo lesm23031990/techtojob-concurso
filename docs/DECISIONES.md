@@ -873,6 +873,25 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Pendiente (revisión):** puntos 5 (ritmo `lg`) y 6 (detalle de firma) quedan para el gate
       de "vamos a revisar".
 
+- **D71.** 23/09, rediseño de `#torneos` a pedido de Lorena ("cuatro pilares informativos, minimalista
+      y de alta conversión"). **Decisión (maqueta declarada):** la sección deja de ser `h2 + párrafo` y
+      pasa a una rejilla hairline asimétrica sobre `ink` (se mantiene la polaridad oscura, design-system
+      §7; esquinas rectas, cero sombras, R24/R25):
+      (1) **Torneo en curso** (col 7): label + `h3` + reto en una línea + CTA Discord
+      (`DiscordCta size="nav"`, el único estilo de botón del sitio, D46) + estado "Próxima edición".
+      (2) **Tiempo** estático: fila Días/Horas/Minutos con placeholders `—` y `tabular-nums` de Sora
+      (dígitos monoespaciados SIN añadir una segunda fuente, R58/R59). **Sin isla cliente y sin fecha**:
+      no puede expirar ni mostrar `00:00` (D56).
+      (3) **El botín** (col 5): lista de premios de ejemplo (`1º`/`2º`) con numerales en `brand`.
+      (4) **Salón de la fama** (col 5): ganador de ejemplo + estado vacío honesto alternativo.
+      **Honestidad (brief + J2):** no hay cifras, plazos ni ganadores reales, así que todo va rotulado
+      con `mockNote` visible (patrón de Testimonios/Noticias). Se evitan marcas de terceros y la promesa
+      literal "contratación directa": queda "oportunidad laboral con una empresa de la comunidad".
+      **Cero islas nuevas:** todo es Server Component y CSS. `tsc`, ESLint y `next build` en verde.
+      **Actualizado en:** `app/content.ts` (interfaz `Tournaments`), `app/messages/{es,en}.json`,
+      `app/components/sections/Tournaments.tsx`, `specs/10`, `specs/11`, `docs/design-system.md` (§7)
+      y `GUIA.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

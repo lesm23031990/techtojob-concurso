@@ -41,7 +41,7 @@ exista (Fase 5), según exige R10.
 | 0 | Nav (header) | — | **Barra adaptativa (D47/D49)**: adopta la polaridad de la sección de detrás, con logo/nav que cambian de color, **scrollspy** (`aria-current`) y **hairline de progreso**; logo + enlaces a secciones + CTA Discord | R42, R45 |
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
 | 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **D66 stepper vertical** que reutiliza el raíl de página como track (nodos `1.1`–`1.4`, línea de resultado por paso), `<ol>` intacto | R12 |
-| 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva | R15 |
+| 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva. **D71:** cuatro pilares en rejilla hairline sobre `ink` — torneo en curso + CTA, tiempo estático (D/H/M con `tabular-nums`), el botín y el salón de la fama, todo rotulado como maqueta | R15 |
 | 4 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
 | 5 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
 | 6 | Networking | `#networking` | Canales por área, gente del sector | R16 |

@@ -148,6 +148,57 @@ export interface Newsletter {
   success: string;
 }
 
+export interface TournamentPrize {
+  place: string;
+  reward: string;
+}
+
+export interface TournamentWinner {
+  handle: string;
+  edition: string;
+  outcome: string;
+}
+
+export interface TournamentTimeUnit {
+  value: string;
+  name: string;
+}
+
+/**
+ * "Torneos" (D71). Four pillars: the running tournament, the time slot, the
+ * prizes and the hall of fame. All of it is SAMPLE data declared on the page
+ * (`mockNote`) — same honesty pattern as Testimonios/Noticias; nothing here may
+ * be read as a real deadline, prize or hiring promise (brief + J2).
+ *
+ * The time block is STATIC on purpose: no client island and no date to expire
+ * (D56/D71), so the units ship as placeholders.
+ */
+export interface Tournaments {
+  h2: string;
+  copy: string;
+  mockNote: string;
+  active: {
+    label: string;
+    title: string;
+    challenge: string;
+    status: string;
+    cta: string;
+  };
+  timer: {
+    label: string;
+    units: TournamentTimeUnit[];
+  };
+  prizes: {
+    label: string;
+    items: TournamentPrize[];
+  };
+  hallOfFame: {
+    label: string;
+    empty: string;
+    items: TournamentWinner[];
+  };
+}
+
 export interface FooterLink {
   text: string;
   href: string;
@@ -189,7 +240,7 @@ export interface Messages {
   howItWorks: HowItWorks;
   talent: AudienceSection;
   companies: AudienceSection;
-  tournaments: SimpleSection;
+  tournaments: Tournaments;
   networking: SimpleSection;
   testimonials: Testimonials;
   news: News;
