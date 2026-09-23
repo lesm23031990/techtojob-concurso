@@ -122,6 +122,30 @@ export default function Hero() {
           </ul>
         </nav>
       </div>
+
+      {/* Ticker (D38): full-bleed hairline marquee built only from tokens
+          already published in `hero.meta` (stacks, edition, community
+          language). It duplicates that data, so the whole strip is
+          `aria-hidden` and non-interactive: it is rhythm, never a second CTA
+          (R11) and never duplicated indexable content. The track is rendered
+          twice and shifted -50% for a seamless loop; the reduced-motion guard
+          parks it at origin. */}
+      <div aria-hidden="true" className="overflow-hidden border-t border-white/12 py-5">
+        <div className="animate-marquee flex w-max">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex shrink-0 items-center gap-8 pr-8">
+              {hero.ticker.map((token) => (
+                <span key={token} className="flex items-center gap-8">
+                  <span className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
+                    {token}
+                  </span>
+                  <span className="h-1 w-1 rounded-full bg-brand" />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

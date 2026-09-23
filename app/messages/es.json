@@ -52,6 +52,17 @@
       { "label": "Formato", "value": "Torneos · networking · talento" },
       { "label": "Edición", "value": "Torneo #2 — esta web" },
       { "label": "Stack", "value": "React · Next.js · Laravel · Node · Python · Rust · AWS" }
+    ],
+    "ticker": [
+      "React",
+      "Next.js",
+      "Laravel",
+      "Node",
+      "Python",
+      "Rust",
+      "AWS",
+      "Torneo #2",
+      "Comunidad técnica en español"
     ]
   },
   "howItWorks": {

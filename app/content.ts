@@ -66,6 +66,9 @@ export interface Hero {
   support: string;
   /** Meta column entries (V5): factual label/value pairs, no invented figures. */
   meta: HeroMetaItem[];
+  /** Ticker tokens (D38): derived only from already-published strings, kept
+   *  decorative (aria-hidden) so the hero meta stays the single source. */
+  ticker: string[];
 }
 
 export interface Step {

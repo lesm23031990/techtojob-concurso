@@ -10,10 +10,21 @@ import type { NewsItem } from "@/content";
  * a descriptive link (R44). Since the news feed is a mockup and the only
  * real destination in the whole site is the Discord (R11/Q3), the links
  * honestly point there instead of faking 404s.
+ *
+ * Layout (D38, "Bento Signature"): one featured tall cell (7 cols, row-span
+ * 2) plus two half-height cells (5 cols each) from `lg`; on `sm` the
+ * featured cell spans the full width above the two others. Hairline, square,
+ * shadow-free cells; the editorial marker here is the date/chip row, so no
+ * oversized index numeral is added (it would fight the chip and duplicar la
+ * fecha).
  */
-function NewsCard({ item }: { item: NewsItem }) {
+function NewsCard({ item, featured = false }: { item: NewsItem; featured?: boolean }) {
   return (
-    <article className="flex h-full flex-col gap-3 rounded-card border border-line bg-paper p-6 transition-shadow duration-150 hover:shadow-raised">
+    <article
+      className={`flex h-full flex-col gap-3 border border-line bg-paper transition-colors duration-150 hover:border-ink/30 ${
+        featured ? "p-6 lg:p-10" : "p-6"
+      }`}
+    >
       <div className="flex items-center justify-between gap-4">
         <span className="rounded-full bg-ember px-3 py-1 text-label font-semibold uppercase text-ink">
           {item.category}
@@ -38,6 +49,14 @@ function NewsCard({ item }: { item: NewsItem }) {
   );
 }
 
+/* Featured first story + two stacked (three items, specs/11). At `lg` it is
+   a 12-col bento: 7 (row-span 2) + 5 + 5. */
+const CELL_SPANS = [
+  "sm:col-span-2 lg:col-span-7 lg:row-span-2",
+  "lg:col-span-5",
+  "lg:col-span-5",
+];
+
 export default function News() {
   return (
     <Section id="noticias" headingId="noticias-heading" tone="paper">
@@ -50,9 +69,11 @@ export default function News() {
       <p className="mt-3 max-w-[65ch] text-small text-slate">
         {messages.news.mockNote}
       </p>
-      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {messages.news.items.map((item) => (
-          <NewsCard key={item.title} item={item} />
+      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:auto-rows-fr lg:grid-cols-12">
+        {messages.news.items.map((item, index) => (
+          <div key={item.title} className={`reveal ${CELL_SPANS[index] ?? ""}`}>
+            <NewsCard item={item} featured={index === 0} />
+          </div>
         ))}
       </div>
     </Section>
