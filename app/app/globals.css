@@ -572,7 +572,6 @@
   /* D89: duration is a custom property so the hero keeps 34s and the
      testimonials slider can slow down to 60s without a second utility. */
   animation: marquee var(--marquee-duration, 34s) linear infinite;
-  will-change: transform;
 }
 
 /* D89/D90-7: edge mask of the testimonials marquee (same pattern as
@@ -829,7 +828,6 @@
   background-image:
     repeating-linear-gradient(to right, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4rem),
     repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4rem);
-  will-change: transform;
   animation: field-drift 28s linear infinite;
 }
 
@@ -890,7 +888,6 @@
 /* Light beam: hard-edged plane (linear gradient, CERO blur) drifting slowly.
    will-change is scoped to this one element. */
 .hero-beam {
-  will-change: transform;
   backface-visibility: hidden;
   animation: beam-drift 26s ease-in-out infinite;
 }
@@ -962,7 +959,6 @@
     rgb(244 162 97 / 0.045) 266deg,
     transparent 320deg
   );
-  will-change: transform;
   animation: facet-turn 64s linear infinite;
 }
 
@@ -1120,7 +1116,6 @@
   );
   box-shadow: 0 0 8px 0 var(--idle-color);
   transform: translate3d(-100%, 0, 0);
-  will-change: transform;
   animation: section-travel 6s linear infinite;
 }
 
@@ -1348,6 +1343,11 @@
   *,
   *::before,
   *::after {
+    /* D125: without this, `animation-fill-mode: both` + a positive
+       `animation-delay` keeps entrance elements (hero H1 words, sub, CTA)
+       stuck on their `from` state — invisible for up to ~0.6s — exactly for
+       the user who asked for less motion. Reset the delay too. */
+    animation-delay: 0s !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -1430,7 +1430,6 @@
     #000 88%,
     transparent 94%
   );
-  will-change: transform;
   animation: facet-turn 64s linear infinite;
 }
 
@@ -1479,7 +1478,6 @@
   width: 50%;
   background-color: var(--color-ink);
   pointer-events: none;
-  will-change: transform;
 }
 
 .closing-door-left {

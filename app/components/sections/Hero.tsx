@@ -120,13 +120,15 @@ export default async function Hero() {
             on `ink`, so the light symbol (solid brand green, the header's dark
             polarity) is used at 6% — identity without competing with the
             single CTA (R11). */}
+        {/* No `loading="lazy"` here: this watermark sits above the fold inside
+            the hero, and R56 forbids lazy-loading the first screen. It is a
+            tiny SVG (no LCP cost), so the default eager load is correct. */}
         <Image
           src="/brand/logo-symbol-light.svg"
           alt=""
           aria-hidden="true"
           width={520}
           height={520}
-          loading="lazy"
           className="pointer-events-none absolute -bottom-28 -right-20 opacity-[0.06]"
         />
       </div>

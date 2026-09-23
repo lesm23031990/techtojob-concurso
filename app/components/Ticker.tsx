@@ -29,7 +29,9 @@ export default async function Ticker() {
       aria-hidden="true"
       className="overflow-hidden border-t border-white/12 py-5"
     >
-      <div className="animate-marquee flex w-max [--marquee-duration:102s]">
+      {/* Decorative (aria-hidden) and non-interactive; `hover` pauses it for
+          WCAG 2.2.2 friendliness and the reduced-motion guard parks it. */}
+      <div className="animate-marquee flex w-max hover:[animation-play-state:paused] [--marquee-duration:102s]">
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center gap-8 pr-8">
             {tokens.map((token, index) => (

@@ -39,8 +39,8 @@ export default function NewsletterForm() {
         required
         autoComplete="email"
         placeholder={messages.newsletter.placeholder}
-        aria-describedby="newsletter-note newsletter-status"
-        className="reveal mt-3 min-h-12 w-full rounded-input border border-white/40 bg-ink px-4 text-paper transition-colors duration-200 placeholder:text-cloud/70 focus:border-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        aria-describedby="newsletter-note"
+        className="reveal mt-3 min-h-12 w-full rounded-input border border-white/50 bg-ink px-4 text-paper transition-colors duration-200 placeholder:text-cloud/70 focus:border-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
       />
       <button
         type="submit"
