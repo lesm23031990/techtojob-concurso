@@ -1765,6 +1765,29 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       cuando se traduzca `en.json` (documentado en el README y en `specs/12-i18n.md`).
       **Actualizado en:** `app/app/[locale]/layout.tsx`, `app/app/sitemap.ts`, `README.md`.
 
+- **D127.** 23/09, Lorena sobre la Newsletter: *"no me gustó la animación de entrada… me gustaría que se
+      aplicara a la tarjeta completa, no solo al texto que está dentro"* y *"que la altura sea 100vh"*.
+      **Decisión:** (1) la entrada vuelve a ser **de una sola pieza**: se retiran todos los `reveal-left`
+      internos (eyebrow, h2, copy, `<li>`, sello) y el `reveal` del formulario (label, input, botón,
+      hairline, nota, status) más el `text-drift` de la columna de texto; queda **solo `.panel-in`**
+      sobre el panel, de modo que la tarjeta entra (y sale) como unidad y su contenido no se mueve
+      dentro. (2) La sección pasa a **`md:min-h-svh` con la tarjeta centrada** (no en móvil a
+      propósito: Lorena señaló que en celulares forzar 100vh "no sirve" y apretaba el contenido).
+      Verificado en navegador de producción: 360px → sección 878px de alto natural (panel 728, no
+      forzada); **768px → sección 1024px = viewport, panel centrado (211px arriba/abajo)**.
+      `tsc --noEmit`, ESLint y `next build` en verde. Paleta, copy y R24–R26 intactos.
+      **Actualizado en:** `components/sections/Newsletter.tsx`, `components/NewsletterForm.tsx`.
+
+- **D128.** 23/09, Lorena: *"en pantallas pequeñas las letras grandes del hero ya no se ven bien;
+      deberían ser más pequeñas"*. **Contexto:** el H1 pasó a llevar en la línea 1 la frase de
+      posicionamiento (D125), más larga, y a `text-display` (3rem) en móvil desbordaba en muchas
+      líneas y perdía legibilidad. **Decisión:** nuevo token **`--text-display-sm: 2.25rem`**
+      (line-height 1.1, tracking −0.03em) y el H1 del hero pasa a **`text-display-sm sm:text-display
+      lg:text-display-lg`**. No se toca `--text-display` (3rem) porque también lo usa el Cierre en
+      `lg`; así el Cierre y el desktop quedan igual y **solo encoge el titular en móvil (<640px)**.
+      Verificado en captura a 360px: el H1 cabe legible sin dominar la pantalla.
+      **Actualizado en:** `app/app/globals.css` (tokens), `components/sections/Hero.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

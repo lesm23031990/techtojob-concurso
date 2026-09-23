@@ -1,33 +1,39 @@
-import type { CSSProperties } from "react";
 import Section from "@/components/Section";
 import NewsletterForm from "@/components/NewsletterForm";
 import { getMessages } from "next-intl/server";
 
 /**
- * "Newsletter" (step 7, #newsletter) — D100/D101.
+ * "Newsletter" (step 7, #newsletter) — D100/D101, D127.
  *
  * The former solid `brand` band is gone: the section is `ink` and everything
  * lives inside ONE Bento panel (`coal` + 1px `hairline-dark`), the same cell
  * language as Audiences (D85). The panel follows the landing's editorial
  * grid: 7 columns of text / 5 of form, separated by a vertical hairline at
  * `lg`. A single animated hairline (`.line-idle`, D86) runs through the foot
- * of the form; the panel betters its own entry (`.panel-in`) plus the border
- * lighting (`.bento-lit-ink`), and the breathing ring / top-edge glint were
- * removed as duplicate ornament (D104). Beats enter AND leave with
- * `.reveal-left` (from the timeline rail) staggered by `--i`, and the form
- * rises with `.reveal`. Palette untouched: `brand` stays as button fill, rail
- * fill, node and focus ring; no new colors, no new copy (R24/R25, R26, R36).
+ * of the form; the panel carries its own entry (`.panel-in`) plus the border
+ * lighting (`.bento-lit-ink`).
+ *
+ * D127 (Lorena): the entrance belongs to the WHOLE CARD, not to the text
+ * inside it. The per-beat `.reveal-left` and the `text-drift` on the text
+ * column were removed, so the panel is the ONLY moving piece; its inner copy
+ * stays still while the card enters. The section is also a full viewport from
+ * tablet up (`md:min-h-svh`, so the frame never squeezes the card on phones),
+ * with the card centered, matching the Hero and the Closing.
+ * Palette untouched (R24/R25/R26, R36): `brand` stays as button fill, rail
+ * fill, node and focus ring; no new colors, no new copy.
  */
 export default async function Newsletter() {
   const messages = await getMessages();
   return (
-    <Section id="newsletter" headingId="newsletter-heading" tone="ink">
+    <Section
+      id="newsletter"
+      headingId="newsletter-heading"
+      tone="ink"
+      className="flex flex-col md:min-h-svh md:justify-center"
+    >
       <div className="panel-in bento-lit-ink relative grid grid-cols-1 gap-10 border border-hairline-dark bg-coal p-6 lg:grid-cols-12 lg:gap-0 lg:p-10">
-        <div className="text-drift lg:col-span-7 lg:pr-12">
-          <p
-            className="reveal-left flex items-center gap-2.5 text-label font-semibold uppercase text-brand"
-            style={{ "--i": 0 } as CSSProperties}
-          >
+        <div className="lg:col-span-7 lg:pr-12">
+          <p className="flex items-center gap-2.5 text-label font-semibold uppercase text-brand">
             <span
               aria-hidden="true"
               className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
@@ -36,15 +42,11 @@ export default async function Newsletter() {
           </p>
           <h2
             id="newsletter-heading"
-            className="reveal-left mt-4 text-h2 font-bold text-balance lg:text-h2-lg"
-            style={{ "--i": 1 } as CSSProperties}
+            className="mt-4 text-h2 font-bold text-balance lg:text-h2-lg"
           >
             {messages.newsletter.h2}
           </h2>
-          <p
-            className="reveal-left mt-6 max-w-[65ch] text-body text-cloud"
-            style={{ "--i": 2 } as CSSProperties}
-          >
+          <p className="mt-6 max-w-[65ch] text-body text-cloud">
             {messages.newsletter.copy}
           </p>
 
@@ -53,7 +55,7 @@ export default async function Newsletter() {
             {messages.newsletter.items.map((item) => (
               <li
                 key={item}
-                className="reveal-left flex items-baseline gap-3 border-t border-hairline-dark py-3 text-body text-paper"
+                className="flex items-baseline gap-3 border-t border-hairline-dark py-3 text-body text-paper"
               >
                 <span
                   aria-hidden="true"
@@ -65,7 +67,7 @@ export default async function Newsletter() {
           </ul>
 
           {/* D107: el sello ("sin relleno y sin spam") cierra como ancla de la promesa (patrón D70). */}
-          <p className="reveal-left mt-6 max-w-[65ch] border-l-[3px] border-brand pl-3 text-lead font-semibold text-paper">
+          <p className="mt-6 max-w-[65ch] border-l-[3px] border-brand pl-3 text-lead font-semibold text-paper">
             {messages.newsletter.seal}
           </p>
         </div>

@@ -141,7 +141,7 @@ export default async function Hero() {
             the grid on lg, so it shares row 1 with the meta column. */}
         <h1
           id="hero-heading"
-          className="mt-0 text-display font-bold tracking-tight text-balance lg:col-start-2 lg:col-span-8 lg:mt-0 lg:text-display-lg"
+          className="mt-0 text-display-sm font-bold tracking-tight text-balance sm:text-display lg:col-start-2 lg:col-span-8 lg:mt-0 lg:text-display-lg"
         >
           <span className="block text-cloud">
             {line1Words.map((word, index) => (

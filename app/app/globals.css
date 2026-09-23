@@ -36,6 +36,9 @@
      utilities; the -lg tokens are the ≥1024px step, applied as lg:text-*.
      Display scale bumped 22/09 for the hero redesign (premium minimalism:
      the H1 is the visual gravity center of the first screen). */
+  --text-display-sm: 2.25rem;
+  --text-display-sm--line-height: 1.1;
+  --text-display-sm--letter-spacing: -0.03em;
   --text-display: 3rem;
   --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.04em;
