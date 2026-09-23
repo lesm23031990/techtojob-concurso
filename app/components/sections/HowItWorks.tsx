@@ -19,6 +19,12 @@ import { IconArrowUpRight } from "@/components/icons";
  * button (R11). One column on purpose: a journey reads top-to-bottom, which an
  * asymmetric grid was fighting (the old bento left ~350px of dead space).
  *
+ * Layout (D70, reopens D66–D69): the copy column runs to grid column 12 (no
+ * empty lane between title and text) and the RESULT becomes the visual anchor
+ * (`lead` + 3px `brand` bar) while the description drops to `slate`, so the
+ * promise outranks the explanation. A hairline (`.step-link`) joins each node
+ * to its step and lights up `slate → brand` as the step enters the viewport.
+ *
  * Motion (D69, supersedes D62→D68 for this section): every text block enters
  * with `.reveal-left` — it slides in FROM THE RAIL (left → right), so each step
  * looks like it comes off the timeline. The node's inner fill lights up with
@@ -59,6 +65,17 @@ export default async function HowItWorks() {
             style={{ "--i": index } as CSSProperties}
             className="relative border-t border-line py-8 first:border-t-0 lg:py-10"
           >
+            {/* D70: hairline from the node to its step so the rail READS as the
+                step's origin (decorative, aria-hidden). It lights up `slate → brand`
+                as the step enters the viewport (`.step-link`, same `cover`/`--i`
+                pattern as the node fill), giving a sense of progress: steps already
+                reached stay lit, upcoming ones stay muted. Widths/offsets cancel
+                the `Section` indent minus the node radius, per breakpoint. */}
+            <span
+              aria-hidden="true"
+              className="step-link absolute top-[2.625rem] -left-[0.625rem] h-px w-[0.625rem] md:-left-[2.375rem] md:w-[2.375rem] lg:top-[3.5rem] lg:-left-[3.5rem] lg:w-[3.5rem] xl:-left-[4.5rem] xl:w-[4.5rem]"
+            />
+
             {/* Step node on the page rail (decorative: order lives in the <ol>).
                 Round, double-circle (outer ring + inner disc with a paper gap)
                 and bigger than the section marker so the steps read first. The
@@ -74,13 +91,16 @@ export default async function HowItWorks() {
               </span>
             </span>
 
-            <div className="lg:grid lg:grid-cols-12 lg:gap-x-8">
+            <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
               <h3 className="reveal-left text-h3 font-semibold text-balance lg:col-span-4 lg:text-h3-lg">
                 {step.title}
               </h3>
-              <div className="reveal-left mt-3 lg:col-span-6 lg:col-start-6 lg:mt-0">
-                <p className="max-w-prose text-body">{step.text}</p>
-                <p className="mt-4 border-l-2 border-brand pl-3 text-body font-semibold text-ink">
+              {/* D70: the copy runs to column 12 (no empty lane, no dead space)
+                  and the RESULT is the visual anchor — description drops to
+                  `slate`, the promise takes `lead` + a 3px `brand` bar. */}
+              <div className="reveal-left mt-3 lg:col-span-8 lg:mt-0">
+                <p className="max-w-prose text-body text-slate">{step.text}</p>
+                <p className="mt-4 max-w-prose border-l-[3px] border-brand pl-3 text-lead font-semibold text-ink">
                   {step.result}
                 </p>
               </div>

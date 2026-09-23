@@ -106,18 +106,21 @@ pieza**; Lorena pidió que los elementos vayan apareciendo **uno a uno** al scro
 | **Fallbacks** | Sin soporte de `animation-timeline` o con `prefers-reduced-motion` → contenido visible y estático | WCAG 2.3.3 |
 
 
-## Stepper de "Cómo funciona" (D66/D67/D69)
+## Stepper de "Cómo funciona" (D66/D67/D69/D70)
 
 Sustituye al bento D38 **solo en esta sección** (los de Testimonios y Noticias siguen igual). El raíl
 de página se reutiliza como track: no se dibuja una segunda línea.
 
 | Pieza | Spec | Regla/nota |
 |---|---|---|
-| **Estructura** | `<ol>` de una columna; cada `<li>` = paso (nodo + `h3` + descripción + **línea de resultado** con barra `brand`). En `lg` cada paso se parte en 2 columnas (título 4 col · texto 6 col) | R12 (recorrido de 4 pasos); orden DOM = orden visual (R32) |
+| **Estructura** | `<ol>` de una columna; cada `<li>` = paso (nodo + `h3` + descripción + **línea de resultado** con barra `brand`). En `lg` cada paso se parte en 2 columnas (título 4 col · texto 8 col, D70) | R12 (recorrido de 4 pasos); orden DOM = orden visual (R32) |
 | **Nodo de paso** | Círculo doble (anillo + disco interior con separación `paper`) sobre el raíl; `1.1`–`1.4`; **36px móvil / 48px `lg`**; acento **`ember`** (R25); numeral `ink` (6.12:1 ✅ R26) | `aria-hidden` (el orden lo da el `<ol>`); `-left-*` cancela el indent de `Section` |
 | **Nodo de sección** (D67) | Círculo **doble** con disco `brand`; **44px móvil / 56px `lg`** (mayor que el de paso); numeral `ink` sobre `brand` (6.77:1) | Mismo `TimelineRail` para todas las secciones |
 | **Raíl** (D65/D67) | Base `slate` de **3px** (`w-[3px]`); relleno de progreso `brand` | 5.57:1 sobre `paper` |
 | **Entrada desde el raíl** (D69) | Todo el texto de la sección (H2, intro, título + descripción + resultado de cada paso, cierre y enlace) usa `.reveal-left` (`step-in-left`, `translateX(-2.5rem) → 0`) con el `cover`/`--i`/easing de `.reveal`: cada paso "sale" de la línea de tiempo. El hero conserva su revelado palabra a palabra | Solo `transform`/`opacity` (CLS 0); sin overflow horizontal; sin soporte o `prefers-reduced-motion` → estático |
+| **Jerarquía del resultado** (D70) | La descripción es `text-slate` (secundaria) y el `result` pasa a `text-lead font-semibold text-ink` con barra `border-l-[3px] border-brand`: la promesa ("lo que ganas") manda sobre la explicación | R36/J2 (copy ya aprobado, sin inventar); R24/R25 |
+| **Conector nodo→paso** (D70) | Hairline decorativa (`aria-hidden`, `.step-link`) del nodo `1.x` al título; ancho/offset por breakpoint para cancelar el indent de `Section` menos el radio del nodo. Se enciende `slate/40 → brand` al entrar el paso (`link-lit`, `view()`, rango `cover` + `--i`, fallback estático): avance legible | R34 (paint de 1px, sin reflow; `prefers-reduced-motion` lo apaga); R32 (decorativa) |
+| **Columnas** (D70) | `h3` 4 col + texto `lg:col-span-8` (sin `col-start`), `lg:gap-x-12`: se cierra el carril vacío de la col 5 y los ~190px muertos a la derecha | R38 (verificar 360/768/1024/1440) |
 | **Enlace final** | `TextLink` al Discord (nunca botón, R11) con `IconArrowUpRight` + hint sr-only de pestaña nueva | R44 (texto descriptivo) |
 | **Copy** | Líneas de resultado + `cta` aprobadas por Lorena; viven en `messages/{es,en}.json` (`Step.result`, `HowItWorks.cta`) | R36; sin cifras inventadas (J2) |
 

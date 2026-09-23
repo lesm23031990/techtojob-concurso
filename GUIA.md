@@ -27,18 +27,25 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
-- **"Cómo funciona": DISEÑO CERRADO Y APROBADO por Lorena (23/09, D66–D69).** Stepper vertical que
-  reutiliza el raíl como track (nodos `1.1`–`1.4` en `ember`, doble círculo; línea de resultado por
-  paso; enlace de texto al Discord), raíl de 3px y entrada deslizando desde el raíl. **No se vuelve a
-  tocar sin una decisión nueva** (checkpoint de retorno natural: commit de cierre de esta iteración).
-- **Lo que falta:** que Lorena revise **el resto de secciones** de la landing (el cuerpo:
-  torneos, talento, empresas, networking, testimonios, noticias, newsletter) y dar
-  por bueno el conjunto; después, la **Fase 5** (repo público, deploy con URL real en `content.ts`
-  → `site.url`, y mensaje en el canal ENTREGAS con la declaración de IA de R07).
+- **"Cómo funciona": DISEÑO CERRADO (23/09, D66–D69) y REABIERTO ese mismo día con D70** (Lorena pidió
+  "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto, el resultado pasa a
+  ancla de jerarquía, y un conector nodo→paso se enciende con el scroll. **No se vuelve a tocar sin una
+  decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
+- **PRÓXIMA SESIÓN: `Torneos` (`#torneos`).** Punto de partida estable = commit `bc548f3`
+  ("scroll reveals, visible rail and como-funciona stepper") **más el commit de D70** (rejilla,
+  jerarquía del resultado y conector de `#como-funciona`). Torneos hoy es una sección oscura
+  (`ink`) con headline en `brand`, marca de agua del símbolo al 10% y su nodo de sección `2`; no tiene
+  ítems, así que **no aplica bento**: decidir si se rediseña (contenido/estructura) o si se le da el
+  mismo tratamiento de entrada que al resto. Pendiente también de revisar: talento, empresas,
+  networking, testimonios, noticias, newsletter.
+- **Lo que falta:** que Lorena revise el resto de secciones y dé por bueno el conjunto; después, la
+  **Fase 5** (repo público, deploy con URL real en `content.ts` → `site.url`, y mensaje al canal
+  ENTREGAS con la declaración de IA de R07).
 - **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
   `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado.
-- Los 17 commits del 23/09 están **solo en local**: `master` va 17 por delante de `origin/master`
-  y no se hizo push por decisión de Lorena (D60).
+- Los commits del 23/09 están **solo en local**: `master` va **20 por delante de `origin/master`**
+  y no se hizo push por decisión de Lorena (D60). Etiqueta `hero-v1` sobre `b18c3e1`; no hay tag para
+  "Cómo funciona" (se ofreció `how-it-works-v1`, pendiente de OK).
 
 ### 2.1 Modo de trabajo vigente (D56, 23/09)
 
@@ -215,6 +222,16 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > `translateX −40 → 0`, `.reveal-left`), como si cada paso saliera de la línea de tiempo. Se retiran
 > el revelado palabra a palabra de la sección (el hero conserva el suyo) y `.reveal-down`/
 > `.word-drop-view`/`.word-rise-view`. Verificado: sin overflow horizontal.
+
+> **Hecho (23/09, D70 — reapertura de `#como-funciona`):** a pedido de Lorena ("¿qué le falta para ser
+> el ganador indiscutible?") y con el diagnóstico del orquestador como jurado, se aplican 4 ajustes:
+> texto a `lg:col-span-8` + `lg:gap-x-12` (cierra el hueco título↔texto y el carril vacío), la
+> descripción baja a `slate` y el **resultado** sube a `text-lead` + barra `border-l-[3px] brand`
+> (la promesa manda), se añade un **conector** hairline del nodo al título y este **se enciende**
+> `slate/40 → brand` con el scroll (`.step-link` + `link-lit`, `view()`/`cover`/`--i`). Cero islas,
+> cero copy nuevo. `tsc` + ESLint + `next build` en verde. Sin Playwright (D56): la alineación del
+> conector se calculó por métricas, pendiente de revisión visual de Lorena; puntos 5–6 diferidos al
+> gate "vamos a revisar".
 
 ## 3. Fuentes de verdad (jerarquía)
 

@@ -853,6 +853,31 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `app/app/globals.css`, `sections/HowItWorks.tsx`,
       `specs/10-landing-spec.md` (§D66/D67/D69), `docs/design-system.md` (§9) y `GUIA.md`.
 
+- **D70.** 23/09, Lorena reabre `#como-funciona` (pregunta "¿qué le falta para ganar?") y aprueba
+      los 4 ajustes propuestos por el orquestador como jurado. **Reabre D66–D69** (que daban la
+      sección por cerrada). **Decisión:**
+      (1) **Cerrar el hueco título↔texto:** el texto pasa de `lg:col-span-6 lg:col-start-6` a
+      `lg:col-span-8` (sin `col-start`) y el grid a `lg:gap-x-12`; el `h3` sigue en `col-span-4`.
+      Antes quedaba libre la columna 5 y ~190 px muertos dentro del contenedor.
+      (2) **El resultado manda:** la descripción baja a `text-slate` y el `result` sube a
+      `text-lead font-semibold text-ink` con barra `border-l-[3px] border-brand`; la promesa
+      ("lo que ganas") deja de leerse como nota al pie. Sin copy nuevo (J2 intacto).
+      (3) **Conector nodo→paso:** hairline `<span class="step-link" aria-hidden>` desde el nodo
+      `1.x` hasta el título del paso (ancho/offset calculados por breakpoint para cancelar el
+      indent de `Section` menos el radio del nodo).
+      (4) **Avance percibido:** el conector se enciende `slate/40 → brand` al entrar el paso en el
+      viewport (keyframe `link-lit`, `animation-timeline: view()`, rango `cover` + `--i`, mismo
+      easing y fallback estático que el resto). Los pasos alcanzados quedan encendidos; los
+      pendientes, apagados.
+      **Riesgo asumido:** sin Playwright (D56) la alineación del conector se calculó por métricas
+      de los márgenes, no se midió en navegador; pendiente de revisión visual de Lorena. Plan B si
+      molesta en móvil: ocultarlo bajo `md`.
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde (modo rápido D56).
+      **Actualizado en:** `app/components/sections/HowItWorks.tsx`, `app/app/globals.css`,
+      `specs/10-landing-spec.md` (§Stepper), `docs/design-system.md` (§6.8, §9) y `GUIA.md`.
+      **Pendiente (revisión):** puntos 5 (ritmo `lg`) y 6 (detalle de firma) quedan para el gate
+      de "vamos a revisar".
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
