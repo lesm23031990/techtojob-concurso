@@ -266,9 +266,10 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
   `lg:gap-x-12`) para cerrar el carril vacío; la descripción baja a `text-slate` y el **resultado**
   sube a `text-lead font-semibold text-ink` con barra `border-l-[3px] border-brand` — la promesa
   manda sobre la explicación.
-- **Conector (D70):** hairline `.step-link` del nodo al título; se enciende `slate/40 → brand` al
-  entrar el paso (`link-lit`, `view()` + `cover` + `--i`), marcando avance.
-- **Motion (D69/D70):** todo el texto entra con `.reveal-left` (`translateX(-2.5rem) → 0`, desde el raíl);
+- **Conector (D70):** se propuso una hairline nodo→título que se encendía al scrollear; **Lorena la
+  rechazó** (*"la línea entre los steppers y el título no me gustan para nada"*) y se retiró el mismo
+  día. No existe: el raíl no se une a los títulos.
+- **Motion (D69):** todo el texto entra con `.reveal-left` (`translateX(-2.5rem) → 0`, desde el raíl);
   el nodo se enciende con `.step-node-fill` (`cover` + `--i`). CSS puro, sin islas.
 - **El lenguaje de celda bento D38/D61 (`.bento-reveal`/`.bento-lit`/`.bento-index`, con hover
   `scale-[1.02]` y sin `cursor-pointer`) sigue vivo en Testimonios (7/5/5/7) y Noticias (7+5/5).**
@@ -286,7 +287,7 @@ La página se lee como **una línea de tiempo vertical** (D32): el Hero es la pu
 |---|---|---|---|
 | 0 | Nav | **Adaptativo (D47/D49)**: `ink` sobre secciones oscuras y `paper` sobre claras (barra sólida + franja de disolución debajo) | Barra que **se funde con la sección que tiene detrás** (crossfade 250ms) y, al scrollear, suma una hairline de progreso `brand`. Enlaces `paper`/`ink` según superficie, el MISMO composite tile+wordmark en ambas polaridades (§2a/§2.2), scrollspy activo y CTA verde compacto siempre visible. Eje full-bleed con gutters del sistema (D53) |
 | 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia, marca de agua del símbolo al 10% y CTA relleno `brand` (`DiscordCta size="hero"`, estilo único D46) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
-| 2 | Cómo funciona (**paso 1**) | `paper` | **D66 stepper vertical** que reutiliza el raíl como track: nodos dobles `1.1`–`1.4` en `ember`, título + descripción + **línea de resultado**; el raíl de página la cruza igual que al resto (sin sub-timeline). **D70:** texto a 8 col, resultado como ancla y conector nodo→título que se enciende con el scroll |
+| 2 | Cómo funciona (**paso 1**) | `paper` | **D66 stepper vertical** que reutiliza el raíl como track: nodos dobles `1.1`–`1.4` en `ember`, título + descripción + **línea de resultado**; el raíl de página la cruza igual que al resto (sin sub-timeline). **D70:** texto a 8 col y resultado como ancla de jerarquía |
 | 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15) |
 | 4 | Talento (paso 3) | `paper` | H2 `ink` + copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
 | 5 | Empresas (paso 4) | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
@@ -338,7 +339,6 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 | 11 | **Entrada de celda bento** (`.bento-reveal`, D61/D63/D64): fade-in + `translateY(2.5rem)` → 0 con `animation-timeline: view()` y rango `cover`; stagger determinista por `--i` desplazando el `animation-range` (con `view()` el `animation-delay` se ignora) | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas | Celda estática visible en su estado final |
 | 12 | **Iluminación de celda bento** (`.bento-lit`, D61): borde `line → brand` conforme la celda entra en el viewport, escalonado por `--i`; hover `scale-[1.02]` + `border-brand` (+ `bg-mist` en secciones `paper`) con `duration-300 ease-in-out` | Borde **duro, sin blur ni halo** (D43); `brand` sobre `paper` es decorativo (2.04:1), nunca texto (R26) | Borde en reposo (`line`); el hover conserva el cambio de color (sin escala) |
 | 13 | **Entrada desde el raíl** (`.reveal-left`, D69; solo `#como-funciona`): `translateX(-2.5rem) → 0` + fundido con `view()` (rango `cover`, `--i`, easing `cubic-bezier(0.2,0.9,0.2,1)`) — cada paso parece salir de la línea de tiempo | Solo `transform`/`opacity` (CLS 0); no genera overflow horizontal | Contenido estático visible en su estado final |
-| 14 | **Conector nodo→paso** (`.step-link`, D70; solo `#como-funciona`): la hairline se enciende `slate/40 → brand` con `view()` (rango `cover`, `--i`, mismo easing) al entrar el paso en el viewport | Anima `background-color` de una línea de 1px (paint, sin reflow ni CLS); el resto del motion de la sección sigue siendo `transform`/`opacity` | Conector visible en `brand` (estado final) |
 
 **Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax **de scroll**,
 autoplay de nada y cualquier animación que retrase el LCP (por eso el H1 no hace fade).

@@ -28,12 +28,12 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 - **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
   (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
 - **"Cómo funciona": DISEÑO CERRADO (23/09, D66–D69) y REABIERTO ese mismo día con D70** (Lorena pidió
-  "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto, el resultado pasa a
-  ancla de jerarquía, y un conector nodo→paso se enciende con el scroll. **No se vuelve a tocar sin una
-  decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
+  "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
+  ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
+  a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
 - **PRÓXIMA SESIÓN: `Torneos` (`#torneos`).** Punto de partida estable = commit `bc548f3`
-  ("scroll reveals, visible rail and como-funciona stepper") **más el commit de D70** (rejilla,
-  jerarquía del resultado y conector de `#como-funciona`). Torneos hoy es una sección oscura
+  ("scroll reveals, visible rail and como-funciona stepper") **más el commit de D70** (rejilla y
+  jerarquía del resultado de `#como-funciona`). Torneos hoy es una sección oscura
   (`ink`) con headline en `brand`, marca de agua del símbolo al 10% y su nodo de sección `2`; no tiene
   ítems, así que **no aplica bento**: decidir si se rediseña (contenido/estructura) o si se le da el
   mismo tratamiento de entrada que al resto. Pendiente también de revisar: talento, empresas,
@@ -224,14 +224,13 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > `.word-drop-view`/`.word-rise-view`. Verificado: sin overflow horizontal.
 
 > **Hecho (23/09, D70 — reapertura de `#como-funciona`):** a pedido de Lorena ("¿qué le falta para ser
-> el ganador indiscutible?") y con el diagnóstico del orquestador como jurado, se aplican 4 ajustes:
-> texto a `lg:col-span-8` + `lg:gap-x-12` (cierra el hueco título↔texto y el carril vacío), la
-> descripción baja a `slate` y el **resultado** sube a `text-lead` + barra `border-l-[3px] brand`
-> (la promesa manda), se añade un **conector** hairline del nodo al título y este **se enciende**
-> `slate/40 → brand` con el scroll (`.step-link` + `link-lit`, `view()`/`cover`/`--i`). Cero islas,
-> cero copy nuevo. `tsc` + ESLint + `next build` en verde. Sin Playwright (D56): la alineación del
-> conector se calculó por métricas, pendiente de revisión visual de Lorena; puntos 5–6 diferidos al
-> gate "vamos a revisar".
+> el ganador indiscutible?") y con el diagnóstico del orquestador como jurado, se aplican 2 ajustes:
+> texto a `lg:col-span-8` + `lg:gap-x-12` (cierra el hueco título↔texto y el carril vacío) y la
+> descripción baja a `slate` mientras el **resultado** sube a `text-lead` + barra `border-l-[3px] brand`
+> (la promesa manda). **Rechazado el mismo día:** el conector hairline nodo→título (`step-link`/`link-lit`);
+> Lorena pidió removerlo ("la línea entre los steppers y el título no me gustan para nada") y se retiró.
+> Cero islas, cero copy nuevo. `tsc` + ESLint + `next build` en verde. Puntos 5–6 (ritmo `lg` y firma)
+> diferidos al gate "vamos a revisar".
 
 ## 3. Fuentes de verdad (jerarquía)
 

@@ -531,37 +531,6 @@
   }
 }
 
-/* ── Conector nodo→paso (D70) ────────────────────────────────────────────
-   Hairline que une el nodo `1.x` del raíl con el título de su paso. Se
-   enciende `slate/40 → brand` cuando el paso entra en el viewport (mismo
-   `cover`/`--i`/easing que el resto), de modo que los pasos ya alcanzados
-   quedan encendidos y los pendientes apagados: lectura de avance sin JS.
-   Anima solo `background-color` (paint de 1px, sin reflow). Estado por
-   defecto = final: sin `animation-timeline` o con `prefers-reduced-motion`
-   el conector se ve `brand`. El ancho/offset lo da el JSX por breakpoint. */
-.step-link {
-  background-color: var(--color-brand);
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .step-link {
-      animation: link-lit cubic-bezier(0.2, 0.9, 0.2, 1) both;
-      animation-timeline: view();
-      animation-range: cover 0% cover calc(12% + var(--i, 0) * 4%);
-    }
-  }
-}
-
-@keyframes link-lit {
-  from {
-    background-color: rgb(95 106 109 / 0.4);
-  }
-  to {
-    background-color: var(--color-brand);
-  }
-}
-
 /* ── Hero V6 "Plano Cinético" (D40) ──────────────────────────────────────
    Vocabulario permitido por D37.1: hairline de plano + tipografía cinética.
    Prohibido: blobs/aurora (manchas con blur), glassmorphism y colores fuera
