@@ -132,7 +132,11 @@ export default async function Testimonials() {
       data-header-tint="true"
       className="relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
-      <TimelineRail tone="mist" step={timelineStep("testimonios")} />
+      <TimelineRail
+        tone="mist"
+        step={timelineStep("testimonios")}
+        className="z-20"
+      />
       <span aria-hidden="true" className="section-sheen" />
       <span aria-hidden="true" className="section-idle section-idle-ember" />
 

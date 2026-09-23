@@ -11,6 +11,9 @@ interface TimelineRailProps {
    * — that simply renders an empty marker, same as before.
    */
   step: number | undefined;
+  /** D123: extra classes for the rail's root. Used by Testimonios to lift the
+   *  rail ABOVE its full-bleed marquee band (`z-20`). */
+  className?: string;
 }
 
 /** Horizontal coordinates mirror `page-container` metrics (gutter 20/32/40px)
@@ -70,10 +73,22 @@ const MARKER_COLOR: Record<SectionTone, string> = {
  *
  * D105: each marker publishes its 0-based position as `--i` so the idle node
  * glow (`node-flash`) travels down the rail instead of flashing in sync.
+ *
+ * D123: `className` is an escape hatch for the ONE case where the rail must sit
+ * ABOVE a full-bleed element of its own section — Testimonios, whose marquee
+ * band would otherwise cover the rail (`z-20`). Default is unchanged, so every
+ * other section keeps the historical stacking.
  */
-export default function TimelineRail({ tone, step }: TimelineRailProps) {
+export default function TimelineRail({
+  tone,
+  step,
+  className = "",
+}: TimelineRailProps) {
   return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute inset-0 ${className}`}
+    >
       <div className="page-container relative h-full">
         {/* Rail segment — full section height (continuity across sections). */}
         <div className={`absolute inset-y-0 w-[3px] ${RAIL_X} ${RAIL_COLOR[tone]}`}>
