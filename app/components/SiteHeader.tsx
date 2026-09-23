@@ -207,7 +207,7 @@ export default async function SiteHeader() {
               ))}
             </ul>
             <div className="mt-3 border-t border-line pt-3 sm:hidden">
-              <DiscordCta size="block" label={messages.discord.cta} />
+              <DiscordCta size="block" label={messages.discord.ctaShort} />
             </div>
           </nav>
         </details>
