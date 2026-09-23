@@ -105,7 +105,7 @@
   "tournaments": {
     "h2": "Torneos",
     "copy": "De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno.",
-    "mockNote": "Los premios y el ganador son de ejemplo: el torneo, su reto y la fecha de cierre son los reales del Torneo #2.",
+    "sampleTag": "Ejemplo",
     "active": {
       "label": "Torneo en curso",
       "title": "Torneo #2 — la landing de TechToJob",

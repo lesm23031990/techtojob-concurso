@@ -31,10 +31,10 @@ historial de commits y esta documentación son parte de la evaluación del jurad
   "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
   ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
   a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **Torneos: REDISEÑADO (23/09, D71) y ampliado con datos reales (D72), a la espera del visto bueno de
-  Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares en rejilla hairline sobre `ink`**: torneo
-  real (`Torneo #2 — la landing de TechToJob` + CTA Discord), **cierre real con tabla de husos**
-  (estático, Sora `tabular-nums`), el botín y el salón de la fama (estos dos, **maqueta declarada**).
+- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72) y pulido (D73), a la espera del visto
+  bueno de Lorena.** Deja de ser `h2 + párrafo` y pasa a **4 pilares en rejilla 2×2 (7/5) sobre `ink`**:
+  torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord), **cierre real con tabla de husos**
+  (estático, Sora `tabular-nums`), el botín y el salón de la fama (estos dos con **chip `Ejemplo`**).
   Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
 - **PRÓXIMA SESIÓN: revisar el resto del cuerpo con Lorena** — talento, empresas, networking,
   testimonios, noticias y newsletter (las tres primeras son editoriales; las dos bento, ya con D61;
@@ -251,6 +251,14 @@ auditorías** en todas las tareas y fases, incluida la Fase 5.
 > quedaría expirado para el jurado). Premios y ganador siguen como **maqueta declarada** (`mockNote`
 > acotada). Además, la entrada de `#torneos` pasa a **`.reveal-left`**, la misma animación que
 > `#como-funciona` (pedido de Lorena). `tsc` + ESLint + `next build` en verde.
+
+> **Hecho (23/09, D73 — pulido de `#torneos` tras crítica de jurado):** se aplican A + B + D.
+> (A) el `mockNote` del pie se sustituye por un **chip `Ejemplo`** (`ember`/`ink`) junto al rótulo de
+> "El botín" y "Salón de la fama", para que un lector rápido no los tome por reales (J2). (B) la rejilla
+> pasa a **2×2 (7/5 + 7/5)**: el cierre deja de estar dentro de la tarjeta activa y tiene bloque propio;
+> desaparece la columna apilada que dejaba hueco al pie. (D) la prueba social queda honesta con el chip
+> y el estado vacío listo. **Diferido al gate:** C (numeral de edición `02`) y E (hover de borde).
+> `tsc` + ESLint + `next build` en verde.
 
 ## 3. Fuentes de verdad (jerarquía)
 

@@ -50,16 +50,16 @@
 
 - **H2:** `Torneos`
 - **Copy:** `De vez en cuando, la comunidad juega: un reto real, entregas abiertas y un jurado con criterios públicos. Sirven para aprender, para tener algo que enseñar en tu próxima entrevista y para que te conozcan. Lo que gana se usa de verdad. Esta misma web salió de uno.`
-- **Nota de maqueta (visible):** `Los premios y el ganador son de ejemplo: el torneo, su reto y la fecha de cierre son los reales del Torneo #2.`
+- **Etiqueta de ejemplo (inline, D73):** chip `Ejemplo` (`ember`/`ink`) junto al rótulo de los bloques "El botín" y "Salón de la fama". Sustituye a la nota al pie.
 - **Pilar 1 · Torneo en curso (real, D72):** `Torneo #2 — la landing de TechToJob` — `Diseña y construye esta landing con Next.js, TypeScript y Tailwind. Solo frontend y SEO.` · estado `Abierto a cualquiera del servidor` · CTA `Entrar al Discord` (enlace único, R11/R44).
 - **Pilar 2 · Cierre de entregas (real, estático, D72):** titular `Miércoles 23, 23:59 (México) — cierre definitivo jueves 24, 00:00`; nota `Cerramos cuando sea medianoche en México, que es el último en cerrar.`; tabla de husos: México `jue 24 · 00:00` · Colombia/Perú/Ecuador `01:00` · Venezuela/Bolivia `02:00` · Argentina/Uruguay/Chile `03:00` · Canarias `07:00` · España peninsular `08:00`. **Sin contador vivo** (hoy es el cierre; quedaría expirado).
 - **Pilar 3 · El botín *(maqueta)*:** `1º — Oportunidad laboral con una empresa de la comunidad` · `2º — Hardware y visibilidad en el servidor`.
 - **Pilar 4 · Salón de la fama *(maqueta)*:** `@usuario — Torneo #1 · contratado en una empresa tech` (ejemplo) · estado vacío alternativo: `Todavía no hay ganadores publicados. El próximo puede ser tuyo.`
 
 > ⚠️ **Regla de honestidad:** las bases y el brief prohíben cifras, plazos y promesas de empleo
-> inventadas. El torneo y su fecha son **reales** (D72); premios y ganador van **rotulados como
-> ejemplo** (`mockNote`) y el CTA sigue siendo Discord. Cuando existan premios/ganadores reales, se
-> sustituyen aquí y se retira la nota.
+> inventadas. El torneo y su fecha son **reales** (D72); premios y ganador van marcados **inline** con
+> el chip `Ejemplo` (D73) y el CTA sigue siendo Discord. Cuando existan premios/ganadores reales, se
+> sustituyen aquí y se retira el chip.
 
 ## 6 · NETWORKING
 

@@ -911,6 +911,22 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
       `specs/00` (fecha/husos), `specs/10`, `specs/11`, `docs/design-system.md` (§7, §9) y `GUIA.md`.
 
+- **D73.** 23/09, tras la crítica de jurado sobre `#torneos`, Lorena aprueba **A + B + D** (C y E se
+      difieren). **Decisión:**
+      (A) **Etiqueta de ejemplo INLINE:** se retira el `mockNote` del pie y, en su lugar, los bloques
+      "botín" y "salón de la fama" llevan un **chip `Ejemplo`** (`bg-ember` + texto `ink`, 6.12:1 ✅)
+      junto a su rótulo, para que un lector rápido no los tome por reales (J2).
+      (B) **Rejilla 2×2 (7/5 + 7/5):** el cierre deja de vivir DENTRO de la tarjeta activa y pasa a su
+      propio bloque; quedan activo+botín (fila 1) y cierre+salón (fila 2), con `lg:gap-y-12`. Se elimina
+      la columna derecha apilada que dejaba hueco al pie y cada pilar respira como bloque.
+      (D) **Prueba social honesta:** el ganador sigue siendo de ejemplo pero ahora va marcado con el
+      chip; el estado vacío honesto queda listo para cuando no haya datos.
+      **Diferido al gate "vamos a revisar":** C (numeral de edición `02` como marginalia) y E (hover de
+      borde `line→brand` en los bloques).
+      **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
+      **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
+      `specs/10`, `specs/11`, `docs/design-system.md` (§7) y `GUIA.md`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

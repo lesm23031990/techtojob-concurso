@@ -169,9 +169,10 @@ export interface TournamentZone {
  * schedule, the prizes and the hall of fame.
  *
  * The active tournament, its challenge and the closing date are the REAL
- * Torneo #2 facts (D72); prizes and winners are still SAMPLE data declared on
- * the page (`mockNote`) — same honesty pattern as Testimonios/Noticias; nothing
- * here may be read as a real prize or hiring promise (brief + J2).
+ * Torneo #2 facts (D72); prizes and winners are still SAMPLE data, flagged
+ * inline with `sampleTag` on their blocks (D73) — same honesty pattern as
+ * Testimonios/Noticias; nothing here may be read as a real prize or hiring
+ * promise (brief + J2).
  *
  * The closing schedule is STATIC on purpose: no client island and no date to
  * expire (D56/D71/D72), so it can never read "00:00:00" after the deadline.
@@ -179,7 +180,9 @@ export interface TournamentZone {
 export interface Tournaments {
   h2: string;
   copy: string;
-  mockNote: string;
+  /** Inline badge that flags a block as sample data (D73), shown on the prizes
+   *  and hall-of-fame labels so a fast reader cannot mistake them for real. */
+  sampleTag: string;
   active: {
     label: string;
     title: string;
