@@ -90,9 +90,9 @@ El proceso completo es auditable en el historial de commits y en `docs/`.
 ## Fuentes y créditos
 
 - **Logo**: kit oficial de marca proporcionado por TechToJob (`app/public/brand/`). El resto de
-  variantes se sirven **sin modificar**. Dos archivos son **derivados documentados** sobre los
+  variantes se sirven **sin modificar**. Tres archivos son **derivados documentados** sobre los
   contornos oficiales (mismo `viewBox`, solo cambian los rellenos), usados en el composite del
-  header: `wordmark-duo.svg` (D31) y `wordmark-ink.svg` (D55).
+  header: `wordmark-duo.svg` (D31), `wordmark-ink.svg` (D55) y `wordmark-ink-duo.svg` (D97).
 - **Tipografía**: Sora (Google Fonts, OFL) cargada con `next/font`; pesos 400/600/700.
 - **Iconos**: SVG dibujados a mano en `app/components/icons.tsx` (sin librerías).
 - **Paleta**: carbón `#2f3436`, verde `#84c0bf`, blanco `#ffffff` + grises y un acento, según el brief.

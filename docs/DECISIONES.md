@@ -1345,6 +1345,48 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificación:** `tsc`/ESLint/`next build` en verde; HTML con 27 tokens por copia.
       **Actualizado en:** `components/sections/Hero.tsx`.
 
+- **D97.** 23/09, Lorena: *"to Job debe ir en azul quizás convenga colocarle un borde para que se
+      vea en el fondo blanco"*. **Decisión:** en el lockup claro del header, el wordmark pasa del
+      monocromo carbón (`wordmark-ink`, D55) a un **derivado nuevo** `wordmark-ink-duo.svg`: mismos
+      contornos oficiales, `Tech` en `#303436` y `toJob` en `brand #84c0bf` con un **contorno fino
+      carbón** (`stroke-width: 3` en unidades del viewBox) para que el verde pálido se lea sobre
+      blanco. El texto va en `alt=""` + `aria-hidden` (el nombre accesible es el `aria-label` del
+      enlace) y el logotipo está exento del mínimo de contraste de texto (WCAG 1.4.3). El header
+      oscuro y el footer siguen con `wordmark-duo`; **ningún archivo oficial se altera**.
+      **Verificación:** `tsc`/ESLint/`next build` en verde. **Actualizado en:**
+      `app/public/brand/wordmark-ink-duo.svg`, `components/SiteHeader.tsx`, `README.md`,
+      `docs/design-system.md`.
+
+- **D98.** 23/09, Lorena: *"vamos con la sección noticias… no la vamos a rediseñar, su estructura
+      tal cual está bien… agregar las animaciones de entrada y salida, los puntos o detalles
+      naranjas estratégicos, contraste, animaciones de hover, las líneas animadas ubicadas en sitios
+      estratégicos y una imagen en la noticia grande"*; y ante el coste de buscar asset externo:
+      *"si es mucho rollo la imagen colocar el mismo logo de techtojob"*. **Decisión:** sin tocar la
+      estructura (bento 7+5/5, tres entradas de maqueta R18): (1) **entrada/salida** con
+      `.reveal-left` en h2, nota y el wrapper de cada celda + `.bento-lit` en la tarjeta — el mismo
+      lenguaje que las secciones de arriba; (2) **naranjas**: punto `ember` en el `mockNote` y punto
+      `ember` con pulso `.animate-activity` en la placa destacada; (3) **hover/contraste**:
+      `.sheen-sweep`, `hover:shadow-glow`, zoom del símbolo y flecha del enlace; (4) **líneas**:
+      nueva prop `Section idleAccent` → `.section-idle-ember` + divisor `.line-idle-ember` sobre el
+      grid; (5) **imagen**: placa editorial en la celda destacada con el **símbolo oficial**
+      `logo-symbol-gradient.svg` sobre la retícula `.news-field` — decorativa (`aria-hidden` +
+      `alt=""`), `loading="lazy"`, `width`/`height` explícitos (R55/R56), sin assets de terceros ni
+      afirmar nada sobre una noticia de maqueta. Se **mantiene `textDrift`**: la placa deriva
+      0.375rem con el contenido (uniforme, no parallax de capas). **Verificación:**
+      `tsc`/ESLint/`next build` en verde. **Actualizado en:** `components/sections/News.tsx`,
+      `components/Section.tsx`, `app/app/globals.css`, `docs/design-system.md`.
+
+- **D99.** 23/09, Lorena: *"tengo la percepción de que la página al 90% se ve mucho mejor ¿podemos
+      ajustar las fuentes a ese tamaño o eso viola algún lineamiento del torneo?"*. **Decisión:** las
+      bases fijan la **fuente (Sora) y el nº de pesos**, no el tamaño (R24/R28/R58/R59), así que no
+      se viola nada; se aplica una **escala global suave del 94%** con `html { font-size: 94% }`.
+      Como Tailwind v4 es `rem`, esto reduce de forma **uniforme** texto y espaciado (el efecto
+      "zoom 90%" que prefería, sin el 90% puro): `display` desktop ≈67.7px, `h2` ≈37.6px, `body`
+      ≈15px, `small` ≈13.2px, `label` ≈11.3px; los targets de 44px quedan en ≈41px (sobre el mínimo
+      AA de 24px) y el texto sigue reescalable al 200% (WCAG 1.4.4). Sora y sus 3 pesos intactos.
+      **Verificación:** `tsc`/ESLint/`next build` en verde; repaso responsive 360/768/1024/1440.
+      **Actualizado en:** `app/app/globals.css`, `docs/design-system.md` §4.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
