@@ -1320,6 +1320,31 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificación:** `tsc`/ESLint/`next build` en verde; HTML con `z-10` en los dos badges.
       **Actualizado en:** `components/sections/Audiences.tsx`.
 
+- **D94.** 23/09, Lorena: *"mejora el degradado del header para blanco, a veces se ven detalles"*.
+      **Decisión:** las franjas de disolución `.header-fade-light`/`.header-fade-dark` dejan de usar la
+      palabra clave `transparent` (que en algunos navegadores interpola a través de negro-alfa-0 y deja
+      una banda gris tenue) y pasan a **paradas con alfa explícito** (`rgb(255 255 255 / …)` y
+      `rgb(47 52 54 / …)`) en una rampa de **5 paradas** (1 → 0.92 → 0.62 → 0.22 → 0) más suave.
+      No cambian tamaño (2.5rem), posición, `opacity`, las capas `veil`, el `box-shadow` ni las reglas
+      D92 de `data-header-tint`. **Verificación:** `tsc`/ESLint/`next build` en verde; CSS compilado sin
+      `transparent` en esas reglas. **Actualizado en:** `app/app/globals.css`.
+
+- **D95.** 23/09, Lorena: *"también falta en el menú superior 'los testimonios'"*.
+      **Decisión:** `#testimonios` entra en la barra de navegación de escritorio (`DESKTOP_NAV_HREFS`) en
+      el tier `xl`, junto a `#networking` y `#newsletter` (ya estaba en el panel móvil y en el footer).
+      Orden visible: Cómo funciona, Torneos, Talento, Empresas, Networking, **Testimonios**, Noticias,
+      Newsletter. Cubre R45. **Verificación:** `tsc`/ESLint/`next build` en verde; HTML con el `<li>` de
+      `#testimonios` en el nav de escritorio. **Actualizado en:** `components/SiteHeader.tsx`.
+
+- **D96.** 23/09, Lorena: *"asegúrate de que el slider del header tampoco deje huecos"*.
+      **Decisión:** el ticker del hero (el marquee bajo el header, `aria-hidden`) tenía el mismo bug de
+      bucle que el slider de Testimonios: dos copias de 9 tokens → media pista más estrecha que el
+      viewport → hueco al final del ciclo. Se aplica el mismo criterio: cada mitad repite el set
+      `TICKER_REPEAT=3` (27 tokens por copia) y `[--marquee-duration:102s]` conserva la velocidad
+      lineal (~40px/s = 34s × 3). Al ser `aria-hidden`, repetir no afecta a lectores de pantalla.
+      **Verificación:** `tsc`/ESLint/`next build` en verde; HTML con 27 tokens por copia.
+      **Actualizado en:** `components/sections/Hero.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
