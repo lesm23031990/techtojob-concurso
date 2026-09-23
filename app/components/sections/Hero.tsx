@@ -1,15 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Fragment } from "react";
-import { messages, navItems } from "@/content";
+import { messages } from "@/content";
 import DiscordCta from "@/components/DiscordCta";
-
-/** Quick-nav links below the support line: real anchor links to the sections
- *  they name (R43/R45), styled as plain uppercase text — never pills or
- *  buttons — so the Discord CTA stays the only button on the first screen
- *  (R11). Labels reuse the existing nav strings (R36). */
-const QUICK_LINK_HREFS = ["#como-funciona", "#torneos", "#talento", "#empresas"];
-const quickLinks = navItems.filter((item) => QUICK_LINK_HREFS.includes(item.href));
 
 interface HeroWord {
   text: string;
@@ -61,19 +53,20 @@ function HeroWord({ word, order }: { word: HeroWord; order: number }) {
  * (#2), a 10% logo watermark (D43, same shared treatment as Tournaments/
  * Closing) and bracket marginalia (D) — laid out as a 12-column asymmetric
  * editorial grid on lg: the two-line H1 and a real-data meta column share the
- * first row, then sub, the ONE Discord button (R11), a support line and a
- * plain-text quick-nav. The inner container centers its content vertically
- * (`lg:content-center`) so the block matches the page weight with no empty top
- * row. On mobile every block flows in DOM order, always left-aligned. Pure
- * server component, zero client islands.
+ * first row, then sub, the ONE Discord button (R11) and a support line.
+ *
+ * Layout (D52): the section is a viewport-height flex column whose main block
+ * (`flex-1`) is centered vertically (`justify-center` / `lg:content-center`),
+ * so it matches the page weight with no empty top row; the hero then closes
+ * with the ticker band as its last child. The section links live in the
+ * header, so the hero carries no quick-nav. On mobile every block flows in
+ * DOM order, always left-aligned. Pure server component, zero client islands.
  *
  * Structure contract: the word-revealed two-line headline is ONE `<h1>` (R40)
- * and the Discord button is the ONLY button in the hero (R11). The quick-nav
- * links are real anchors to sections (R43) using the existing descriptive nav
- * labels (R44) — navigation, never a second CTA.
+ * and the Discord button is the ONLY button in the hero (R11).
  *
  * Motion contract:
- * - Entrance cascade: H1 → sub → CTA → support → meta → nav.
+ * - Entrance cascade: H1 → sub → CTA → support → meta.
  * - The H1 reveals word by word via masked `word-rise`, TRANSFORM ONLY, never
  *   opacity, so the LCP element is painted at full opacity on the first frame
  *   (fast LCP, zero CLS). It does not reuse `animate-lift-in` (no duplicated
@@ -97,7 +90,7 @@ export default function Hero() {
       /* -mt-20 pulls the hero up UNDER the 5rem sticky header so its flat ink
          surface sits behind the header's dark veil: the gradient resolves into
          ink and the bar dissolves into the hero with no seam (D47). */
-      className="relative isolate -mt-20 bg-ink text-paper"
+      className="relative isolate -mt-20 flex min-h-svh flex-col bg-ink text-paper"
     >
       {/* Decorative plane (D40/V7): reticle field + hard-edged light beam,
           faceted conic light planes (#2) and the 10% logo watermark (D43).
@@ -131,7 +124,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="page-container relative flex min-h-svh flex-col justify-center pt-36 pb-16 lg:grid lg:grid-cols-12 lg:content-center lg:pt-40 lg:pb-20">
+      <div className="page-container relative flex flex-1 flex-col justify-center pt-36 pb-16 lg:grid lg:grid-cols-12 lg:content-center lg:pt-40 lg:pb-20">
         {/* Word-by-word masked reveal (D40): transform-only, no opacity change
             → LCP painted on frame 1. Two-line editorial split: line1 in `cloud`
             (7.77:1), line2 in `paper` with the highlight phrase in `brand`
@@ -191,32 +184,6 @@ export default function Hero() {
             ))}
           </dl>
         </aside>
-
-        {/* Quick-nav: plain uppercase text links, ≥44px targets (J6), `cloud`
-            on ink 7.77:1, hover `brand` 6.17:1. The ONE conversion action
-            stays the button above (R11). */}
-        <nav
-          aria-label={messages.a11y.quickNavLabel}
-          className="animate-rise-in mt-10 [animation-delay:700ms] lg:col-start-2 lg:col-span-7 lg:mt-12"
-        >
-          <ul className="flex flex-wrap items-center gap-x-6">
-            {quickLinks.map((item, index) => (
-              <li key={item.href} className="flex items-center gap-x-6">
-                {index > 0 ? (
-                  <span aria-hidden="true" className="text-cloud/40">
-                    ·
-                  </span>
-                ) : null}
-                <Link
-                  href={item.href}
-                  className="inline-flex min-h-11 items-center text-label font-semibold uppercase tracking-[0.15em] whitespace-nowrap text-cloud underline-offset-4 transition-colors duration-150 hover:text-brand hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
 
       {/* Ticker (D38): full-bleed hairline marquee built only from tokens

@@ -60,7 +60,7 @@ export default function SiteHeader() {
       <div aria-hidden="true" className="header-veil-layer header-veil-light" />
       <div aria-hidden="true" className="header-fade-layer header-fade-dark" />
       <div aria-hidden="true" className="header-fade-layer header-fade-light" />
-      <div className="page-container relative flex h-20 items-center justify-between gap-4">
+      <div className="relative flex h-20 items-center justify-between gap-6 px-5 md:px-8 lg:px-10">
         <Link
           href="#inicio"
           aria-label={messages.a11y.logoLabel}
@@ -108,7 +108,7 @@ export default function SiteHeader() {
             a real list of anchors (no fake search field: this site has no
             backend). */}
         <nav aria-label={messages.a11y.navLabel} className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-2">
             {desktopNavItems.map((item) => (
               <li key={item.href} className={item.wideOnly ? "hidden xl:block" : undefined}>
                 <Link

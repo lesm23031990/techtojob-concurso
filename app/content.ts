@@ -19,7 +19,6 @@ export interface A11y {
   skipLink: string;
   mainLabel: string;
   navLabel: string;
-  quickNavLabel: string;
   footerNavLabel: string;
   mobileNavLabel: string;
   menuOpen: string;

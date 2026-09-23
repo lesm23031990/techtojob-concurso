@@ -127,7 +127,7 @@ aprobado (#2 cristal facetado + #4 red que se dibuja) y rebalancear la altura.
 > Pendiente de Fase 5 (D28/D39): medir LCP del revelado por palabra e INP del facetado rotatorio;
 > verificar contraste del facet/beam y del estado relleno del CTA. Todo es CSS puro, cero islas.
 
-### Ajustes D42–D50
+### Ajustes D42–D52
 
 | Ajuste | Spec | Regla/nota |
 |---|---|---|
@@ -142,6 +142,8 @@ aprobado (#2 cristal facetado + #4 red que se dibuja) y rebalancear la altura.
 | **H1 y copy (D48)** | Espacios reales entre palabras del `<h1>` (bug de a11y/SEO); `lg:col-span-8`; línea 2 → *"Aquí te conocen antes de la vacante."* + `meta.og.headline`/`ogImageAlt` sincronizados | D48, R39/R40 |
 | **Header eje + nav vivo (D49)** | Header vuelve al eje `page-container` (72rem) como el contenido; **scrollspy** (`aria-current="location"`, activo `brand` en oscuro / `ink`+subrayado `brand` en claro por R26); **hairline de progreso** `.header-progress` (`scaleX`, `animation-timeline: scroll(root)`, CSS puro) | D49, R42, R45, R34 |
 | **Ritmo vertical del hero (D50)** | `pt − pb = 80px` (altura del header, `-mt-20`) para centrar el bloque en el área visible: `pt-36 pb-16` / `lg:pt-40 lg:pb-20`; `support → quick-nav` pasa a `mt-10` en móvil (ritmo consistente) | D50, J1 |
+| **Fila de salida del hero (D51)** | ~~Variante A~~ **superseded por D52**: el quick-nav se elimina; el hero cierra con el ticker | D52, R11 |
+| **Hero cierra con el ticker (D52)** | Se elimina el quick-nav del hero (y `quickNavLabel` de `content.ts`/`es.json`). El hero queda bloque principal `flex-1` centrado + ticker como último hijo. Enlaces de sección solo en el header | D52, R36, R11 |
 
 
 ## Copy

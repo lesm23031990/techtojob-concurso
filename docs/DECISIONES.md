@@ -520,6 +520,32 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       queda en `mt-12`), para que acompañe al ritmo `sub → CTA`. Solo `Hero.tsx`; server component,
       sin copy ni colores. `tsc`, ESLint y `next build` en verde.
 
+- **D51.** 22/09 (noche), pedido de Lorena: **variante A** — anclar el quick-nav del hero como
+      **fila de salida** al pie, separada del bloque principal. Antes de experimentar se creó el
+      **commit de checkpoint `b796176`** ("adaptive header, unified CTA and hero polish D41–D50")
+      para poder volver exacto al diseño aprobado con `git revert`.
+      1. La `<section>` del hero pasa a **columna flex a viewport** (`flex min-h-svh flex-col`) y el
+         bloque principal (`H1 → sub → CTA → support → meta`) queda en **`flex-1` centrado**.
+      2. El quick-nav sale del bloque centrado y pasa a su propio `page-container` + `<nav>` con
+         `border-t border-white/12 py-5`, **entre la hairline propia y la del ticker** → banda de
+         salida. Sigue siendo `<nav>` real (R42) con anclas descriptivas (R43/R44) y el Discord el
+         único botón (R11); los `href` no cambian, así que el **scrollspy del header sigue
+         funcionando**.
+      3. **Grid de fondo intacto** (4rem, `field-drift` 4rem/28s, `-inset-16`) y ticker sin cambios,
+         según lo pedido.
+      **Estado:** implementado por `nextjs-builder`; `tsc`, ESLint y `next build` **en verde**. Sigue
+      en modo diseño (D39); el gate de Fase 5 debe evaluar el hero en 360/768/1024/1440 (que la
+      fila de salida no apriete en móvil, donde los 4 anclas pueden pasar a 2 líneas) y confirmar la
+      jerarquía H1→CTA.
+
+- **D52.** 22/09 (noche), Lorena: la fila de salida del hero no le gusta; prefiere que el hero
+      **cierre con la banda del ticker** (el marquee animado). Se **elimina el quick-nav** del hero
+      (y con él `QUICK_LINK_HREFS`/`quickLinks`, el import de `Link`/`navItems` y la clave
+      `a11y.quickNavLabel` de `content.ts`/`es.json`, sin texto muerto). Los enlaces de sección
+      viven solo en el header. El hero queda: bloque principal centrado (`flex-1`) y **ticker como
+      último hijo** de la `<section>`. Grid de 4rem y decorativos intactos. Supersede la variante A
+      de D51. `tsc`, ESLint y `next build` en verde.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

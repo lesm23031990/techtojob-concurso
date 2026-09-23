@@ -99,6 +99,16 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 > header (`-mt-20`) fijando `pt − pb = 80px` para centrar el bloque en el área visible, y se unifica
 > el ritmo interno (`support → quick-nav` a `mt-10` en móvil). `tsc` + ESLint + `next build` en
 > verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D51 — variante A):** el quick-nav del hero pasa a **fila de salida** al pie
+> (bloque principal `H1→CTA` centrado en `flex-1`, nav separado con su hairline, entre esta y la
+> del ticker). Grid de 4rem y ticker intactos. **Checkpoint `b796176`** creado antes de
+> experimentar → el diseño aprobado se recupera con `git revert`. `tsc` + ESLint + `next build` en
+> verde. QA sigue en pausa (D39).
+>
+> **Hecho (22/09 noche, D52):** a pedido de Lorena, se **elimina el quick-nav** del hero (no le
+> gustaba la fila de salida) y el hero **cierra con la banda del ticker**; sin texto muerto
+> (`quickNavLabel` fuera). `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
 
 ## 3. Fuentes de verdad (jerarquía)
 
