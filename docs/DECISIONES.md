@@ -257,6 +257,83 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `cloud`/`brand`) y decisión de Lorena sobre el H1 editorial propuesto aparte
       ("El empleo llega a quien ya estaba construyendo." — aún NO aplicado).
 
+- **D36.** 22/09, rediseño radical del hero a pedido de Lorena (referente: sofisticación editorial
+      de cosmos.so; rechaza el V4 por "genérico, saturado de iconos flotantes"): **"Vacío
+      Editorial" V5**, commit `a2964e6`.
+      1. **Conflicto tipográfico y su resolución (bases ganan):** el brief pedía serif de alta
+         costura (Ogg/Chronicle) + mono (JetBrains) → viola R24 ("la tipografía es fija… Sora"),
+         R28, R58 y R59 ("Una fuente y tres pesos. No ocho variantes"), y arriesga J1 (25%).
+         Lorena eligió **Sora-only**: el contraste se logra con peso/escala/tracking (display 700
+         −0.045em vs etiquetas 600 uppercase 0.15em). Cero familias nuevas.
+      2. **Grid asimétrico 12 col** (H1 cols 2–8, col 1 vacía, metadatos cols 10–12, anclaje al
+         tercio superior): rompe el centrado de landing genérica. Móvil: una columna, SIEMPRE a la
+         izquierda.
+      3. **Fondo ink plano** (#2f3436 — ni #F9F9F9 ni #000: colores fuera de tokens R24/R25). Se
+         eliminan glows, tiles flotantes y el canvas del grafo (`HeroGraph`/`HeroTiles` borradas;
+         el hero V5 es server component puro, cero islas cliente).
+      4. **CTA hairline** (`DiscordCta size="line"`): rectángulo de borde 1px, sin píldora, sin
+         relleno; hover = flecha desliza + subrayado `brand` que se dibuja. Sigue siendo el ÚNICO
+         botón del hero (R11) y el `<a>` real al Discord (R43).
+      5. **Copy propio anti-copia (J2/D248):** H1 "El fin de la búsqueda pasiva. / Aquí te
+         conocen antes de que exista la vacante." — abandona el ejemplo orientativo del brief que
+         el V4 usaba literal. Metadatos 100% reales (sin cifras inventadas). `meta.og.headline`
+         y `ogImageAlt` sincronizados.
+- **D37.** 22/09, **directriz de diseño vinculante de Lorena** (owner, no regla del concurso):
+      "Nada de landings comunes ni de tendencias de diseño viejas. Diseño sofisticado, minimalista,
+      funcional, muy estético, **arquitectónico**, que parezca que tiene **mucha vida, movimiento y
+      dinamismo**; tendencia de diseño web **2026**; tan impactante que quien la visite quiera
+      invertir y conocer TechToJob."
+      Traducción a restricciones operativas (para que sea verificable y no choque con las bases):
+      1. **Dinamismo 2026 = motion por scroll y micro-interacciones, NO decoración suelta**:
+         line-mask reveals, tipografía cinética, marquee de stacks, columna sticky, numeración de
+         índice, hairlines de plano. Prohibido: partículas flotantes, blobs/aurora gradients,
+         glassmorphism, cursores con glow (tendencias 2021-2024 ya saturadas y vetadas por Lorena).
+      2. **Todo CSS puro** (`animation-timeline: view()` + transiciones): cero islas cliente nuevas
+         → protege Lighthouse ≥95 (gate AGENTS.md), INP y el precedente D30 (nada de three.js).
+      3. **Respeta las 61 reglas**: Sora-only (D36.1), paleta fija R24/R25, R34 "animaciones que no
+         estorben" + `prefers-reduced-motion`, cero cifras/contenidos inventados (J2/D7).
+      4. Criterio de impacto honesto: la landing debe dar sensación de **sistema vivo** (estado
+         "en curso", ticker, ritmo al scrollear), no de maqueta estática.
+- **D38.** 22/09, a pedido de Lorena: **"Bento Signature"** — la página se leía uniforme (todas
+      las secciones del cuerpo eran `h2 + párrafo`), y el referente cosmos.so se percibe "vivo"
+      por **ritmo**, no por decoración. Se aplica bento **solo donde ya existen varios ítems**
+      (así no se inventa contenido, J2/R36):
+      1. **Hero ticker** (marquee CSS puro): franja hairline bajo el hero con tokens reales ya
+         publicados (los 7 stacks de `hero.meta`, "Torneo #2", "Comunidad técnica en español").
+         Se añade `hero.ticker: string[]` en `messages/es.json` como **derivado** de strings ya
+         existentes — cero datos nuevos. El bloque es `aria-hidden` (duplica info de `hero.meta`)
+         y **no es un control**: R11 intacta (el Discord sigue siendo el único botón).
+      2. **"Cómo funciona" → bento asimétrico** (12 col): 1 celda alta dominante + 2 apiladas +
+         1 ancha de cierre, con numeral de índice sobredimensionado. Se conserva el `<ol>` y su
+         orden; el sub-timeline central de D32 se **retira** (la spec de la línea de tiempo se
+         actualiza para no contradecirse).
+      3. **Testimonios → bento 7/5/5/7** con las mismas 4 celdas-semántica (`figure`/
+         `blockquote`/`figcaption`), avatar y slot LinkedIn deshabilitado intactos (R17/R43).
+      4. **Noticias → bento 7+5/5** (1 destacada alta + 2), conservando `article`, `<time>`,
+         chip `ember` y enlace descriptivo (R18/R44).
+      5. **Lenguaje de celda bento:** borde hairline 1px, **esquinas rectas** (continuidad
+         editorial con el CTA `rounded-none` de D36; se sustituye el uso de `--radius-card` +
+         sombra en estas dos secciones), sin relleno en claro, `bg-paper` sobre `mist`.
+      6. **Motion nuevo (CSS puro, D37.2):** `.marquee` (≥30s, `transform` only, pausa con
+         `reduced-motion`) y `.bento-index` (`animation-timeline: view()`, `transform`/`opacity`
+         en un `<span>` interno). El resto reusa `.reveal`. Cero islas cliente nuevas.
+      7. **Fuera de alcance (a propósito):** Talento / Empresas / Networking quedan editoriales
+         (no tienen ítems; convertirlas a bento obligaría a inventar copy). Toda la página en
+         bento se descarta por repetitivo y por canibalizar la Fase 5.
+      Implementó el orquestador por la excepción de D29 (créditos `opencode-go` agotados; modo
+      reserva `deepseek/deepseek-flash` activo en `.opencode/agent/*`). Pendiente (D28): que
+      `design-ux` sincronice `docs/design-system.md` §5/§6/§9 (celdas sin `radius-card`, piezas
+      3 y 9 ya retiradas en D36) y que el QA reactive re-audite R11 (ticker no-botón), R26
+      (verde), R40 (único `h1`) y R44.
+- **D39.** 22/09, criterio de Lorena (owner): **mientras el diseño esté en iteración, no se
+      invocan los agentes de verificación** (`rules-auditor`, `qa-access`, `seo-perf`,
+      Lighthouse/Playwright/axe). Se reservan para **cuando el diseño esté definido y congelado**:
+      ahí sí corren completos y su veredicto manda. Amplía D28 (QA en pausa) de "hero" a "todo el
+      diseño en curso" y evita gastar ciclos auditando algo que va a cambiar. El gate de
+      AGENTS.md NO se elimina: sigue pendiente antes de cerrar la Fase 5.
+      Implicación operativa: `design-ux` sí puede usarse durante la iteración (es diseño, no
+      auditoría); `nextjs-builder` implementa; el orquestador mantiene specs y decisiones.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

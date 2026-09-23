@@ -66,6 +66,16 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
   de `opencode-go` agotados), donde el orquestador implementó directamente.
 - Los reportes de auditoría citan textual la regla del concurso que motiva el hallazgo.
 
+### Modo diseño (mientras el diseño no esté congelado)
+- Durante la definición de diseño solo actúan **`design-ux`** (propuesta y criterio visual) y
+  **`nextjs-builder`** (implementación). El orquestador mantiene specs y decisiones.
+- **Prohibido invocar** `rules-auditor`, `qa-access`, `seo-perf` y cualquier herramienta de
+  verificación (Lighthouse, Playwright, axe) en esta etapa: auditan diseño congelado y su
+  veredicto manda solo entonces. Evita gastar ciclos en algo que va a cambiar.
+- Al congelar el diseño, el gate de calidad de este archivo vuelve a aplicar completo antes de
+  cerrar la Fase 5.
+- Origen: D39 en `docs/DECISIONES.md`; amplía D28 (QA en pausa).
+
 ### Modelos de los agentes (arquitectura dual)
 - **Primario: `opencode-go`**, con el modelo afinado de cada agente (kimi-k3 para el builder,
   glm-5.3 para diseño, qwen3.8-flash para spec/QA/auditoría/SEO).

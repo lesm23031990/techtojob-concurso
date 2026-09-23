@@ -34,6 +34,17 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 > re-auditoría de R22 (reorden) y R11 (píldoras-ancla vs "un solo botón"). Implementó el
 > orquestador por agotamiento de créditos de `opencode-go` (D29). La declaración del reorden para
 > el README (R10) está redactada en D32 y se sube en la Fase 5.
+>
+> **Pendiente (22/09, D38 "Bento Signature"):** a pedido de Lorena, las secciones del cuerpo
+> dejan de ser uniformes (`h2 + párrafo`) y ganan ritmo con el lenguaje de tendencia 2026:
+> **ticker** marquee bajo el hero + **bento asimétrico** en "Cómo funciona" (7+5+5+12),
+> Testimonios (7/5/5/7) y Noticias (destacada + 2), todo CSS puro (cero islas cliente),
+> Sora-only, paleta fija y `prefers-reduced-motion`. Talento / Empresas / Networking quedan
+> editoriales (no tienen ítems: convertirlas obligaría a inventar copy). Implementado y
+> compilando (`tsc` + ESLint + `next build` en verde) por el orquestador (excepción D29).
+> **QA en pausa (D28):** sin Playwright/Lighthouse/`rules-auditor` hasta tu OK → quedan sin
+> medir el INP del ticker, los contrastes del bento y la re-auditoría de R11 (ticker no-botón)
+> y R26 (verde como texto).
 
 ## 3. Fuentes de verdad (jerarquía)
 
@@ -41,7 +52,7 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
 3. `AGENTS.md` — reglas de proceso y gates de calidad.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D33);
+Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D38);
 nada de lo construido se asumió sin fuente.
 
 ## 4. Método: spec-driven + multiagente
@@ -58,6 +69,6 @@ declarado en el README, como piden las bases.
 |---|---|
 | "Cumple las 61 reglas" | `docs/qa/2026-09-22-rules-audit-1.md` (regla → estado → evidencia → acción) |
 | "Calidad medida, no prometida" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, capturas Playwright) |
-| "Por qué se decidió X" | `docs/DECISIONES.md` (26 decisiones fechadas con motivo) |
+| "Por qué se decidió X" | `docs/DECISIONES.md` (38 decisiones fechadas con motivo) |
 | "El sistema de diseño es real" | `docs/design-system.md` + tokens en `app/app/globals.css` |
 | "Los textos viven aparte del código" | `app/messages/es.json` (única fuente de copy visible) |

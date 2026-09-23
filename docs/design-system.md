@@ -149,7 +149,7 @@ Nota de escala: la fila `display` se reescaló el 22/09 para el rediseño del he
 - **Container máximo:** `72rem` (1152px), centrado (`mx-auto`).
 - **Gutters:** móvil `1.25rem` (20px) · `md:` `2rem` · `lg:` `2.5rem`. En 360px el contenido nunca toca el borde.
 - **Breakpoints de verificación (J3):** 360 / 768 / 1024 / 1440 — defaults de Tailwind (`sm 640, md 768, lg 1024, xl 1280`).
-- **Grids por sección:** pasos de "cómo funciona" → **timeline vertical** (apilado con conector por debajo de `xl`; alternado alrededor de una espina central en `xl`) · testimonios `1 → sm:2 → lg:4` (4 tarjetas) · noticias `1 → lg:3` · footer `1 → sm:2 → lg:4` bloques.
+- **Grids por sección (sync D38 "Bento Signature"):** "cómo funciona" → **bento asimétrico** `7 (row-span 2) + 5 + 5 + 12` desde `lg`, 2 columnas en `md`, 1 en móvil `<ol>` intacto · testimonios `7/5/5/7` desde `lg` (2×2 en `sm`) · noticias `7 (row-span 2) + 5 + 5` desde `lg` (destacada a ancho completo en `sm`) · footer `1 → sm:2 → lg:4` bloques. El sub-timeline de "cómo funciona" (D32) queda retirado.
 - **Raíl de la línea de tiempo (D32):** eje en el borde izquierdo del `page-container` (mismas métricas de gutter), 1px, `inset-y-0` por sección para que la línea sea continua. El contenido se indenta para dejarlo pasar: `pl-7 md:pl-14 lg:pl-20 xl:pl-24` (en 360px quedan ~288px útiles). Raíl y nodos son decorativos (`aria-hidden`).
 
 ### Escala vertical (ritmo entre secciones)
@@ -167,6 +167,7 @@ Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-
 | Tarjetas (testimonio, noticia) | `--radius-card` | 1rem (16px) |
 | Inputs | `--radius-input` | 0.625rem (10px) |
 | Chips / badges | `rounded-full` | pill |
+| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `line` del hero (D36). Solo en "cómo funciona", testimonios y noticias |
 
 ### Sombras (sutiles — R34 "que no estorben")
 ```css
@@ -243,14 +244,14 @@ La página se lee como **una línea de tiempo vertical** (D32): el Hero es la pu
 | # | Sección | Fondo | Énfasis y rol del verde |
 |---|---|---|---|
 | 0 | Nav | `ink` + `header-veil` | Barra oscura que **se disuelve en el hero** (sin costura) y, al scrollear, queda como velo suave. Enlaces `paper`, logo compuesto (§2a), CTA verde compacto siempre visible |
-| 1 | **Hero (puerta)** | **`ink`** | **D35 "Recruit en tinta"**: H1 en dos líneas editoriales — pregunta en `cloud` (7.77:1), respuesta en `paper` con la palabra final en `brand` (6.17:1). Debajo: sub, el ÚNICO botón verde (R11), píldoras-ancla outline (nav real, no CTAs) y muro de stacks en texto `cloud`. Glow al 50% y muro de tiles flotantes (D34) al 60%: escenario plano donde manda la tipografía. Campo de grafos mouse-reactivo activo. Sin chip de eyebrow (D33/D35) y sin raíl |
-| 2 | Cómo funciona (**paso 1**) | `paper` | El recorrido: 4 hitos numerados en verde con el raíl de página abriéndose en sub-timeline; la única saturación en claro |
+| 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia y CTA **hairline** (`DiscordCta size="line"`) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
+| 2 | Cómo funciona (**paso 1**) | `paper` | **D38 bento asimétrico**: 4 celdas hairline con numeral fantasma y regla `brand` decorativa; el raíl de página la cruza igual que al resto (sin sub-timeline) |
 | 3 | **Torneos (paso 2)** | **`ink`** | Sección "juego" y **prueba de que la comunidad está viva**: headline en `brand` 700 sobre oscuro (6.17 ✅) + símbolo de agua `gradient` al 10% (R15) |
-| 4 | Talento (paso 3) | `paper` | H2 `ink` + iconografía Lucide en `brand`/`ink` mixta; copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
+| 4 | Talento (paso 3) | `paper` | H2 `ink` + copy en 65ch (eyebrow "Para desarrolladores" + borde superior `line`) |
 | 5 | Empresas (paso 4) | `mist` | Mismo patrón que talento; el tinte marca el cambio de audiencia (dev → empresa) sin oscuridad |
-| 6 | Networking (paso 5) | `paper` | Vuelta a lectura tranquila; iconos de canales en `brand` |
-| 7 | Testimonios (paso 6) | `mist` | 4 `paper` cards flotando sobre tinte con `shadow-card`; avatares con fondo verde |
-| 8 | Noticias (paso 7) | `paper` | 3 cards; el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
+| 6 | Networking (paso 5) | `paper` | Vuelta a lectura tranquila; sin bento (no tiene ítems: D38 lo deja editorial) |
+| 7 | Testimonios (paso 6) | `mist` | **D38 bento 7/5/5/7**: celdas `paper` hairline sin sombra; avatar `brand`, comilla fantasma y slot LinkedIn deshabilitado (R17/R43) |
+| 8 | Noticias (paso 7) | `paper` | **D38 bento 1 destacada + 2** (hairline); el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
 | 9 | **Newsletter (paso 8)** | **`brand` (franja verde)** | La franja ES el color: todo el texto `ink` sobre verde. Único bloque verde macizo → no compite con el CTA (pre-footer, R19/D44). El raíl cruza en `ink/20` para no desaparecer |
 | 10 | **Cierre (meta)** | **`ink`** | Espejo del hero (D35): H2 en dos líneas (`cloud` + `paper`) + el mismo botón verde dominante, y el nodo final del raíl. Marca de agua `logo-symbol-gradient` al 10%. Último impacto = misma acción que el primer impacto (R20) |
 | 11 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo `horizontal-light`. Legal con la nota honesta de specs/11 |
@@ -272,29 +273,29 @@ Regla anti-deriva: **nunca dos secciones oscuras seguidas salvo cierre→footer*
 
 ## 9. Movimiento — catálogo vigente (R34: "que no estorben")
 
-> **Nota de revisión (22/09, D30/D32/D33):** el criterio original de "máximo 3 microanimaciones"
-> era propio, no de las bases. Con el rediseño del hero y la línea de tiempo el catálogo creció a
-> 8 piezas. Lo que R34 exige —que no estorben— se mantiene por diseño: todos los bucles son
-> lentos (≥3.5s), solo animan `transform`/`opacity`/`box-shadow`/`canvas`, ninguno cambia el
+> **Nota de revisión (22/09, D30 → D38):** el criterio original de "máximo 3 microanimaciones"
+> era propio, no de las bases. Lo que R34 exige —que no estorben— se mantiene por diseño: los
+> bucles son lentos (≥3.5s), solo animan `transform`/`opacity`/`box-shadow`, ninguno cambia el
 > layout (CLS 0), ninguno toca el copy ni el CTA, y el guard global `prefers-reduced-motion` los
-> apaga todos (el campo de grafos pasa a un frame estático).
+> apaga todos. **D36 retiró** el campo de grafos (isla cliente), los glows y el muro de tiles
+> flotantes del hero; **D38** añadió el ticker del hero y la numeración de las celdas bento.
+> Todo es CSS puro: cero islas cliente nuevas.
 
 | # | Qué | Spec | Fallback `reduced-motion` |
 |---|---|---|---|
 | 1 | **Entrada del header** (`animate-header-in`, 500ms): baja `-0.75rem` + fundido | Primer beat de la cascada (`transform`/`opacity` → CLS 0). El H1 es el elemento LCP, no el header | Header visible de inmediato |
-| 2 | **Entrada del hero** (H1, sub, CTA, apoyo: escalonado 100→460ms) | El **H1 anima solo `transform`**, nunca `opacity`: el elemento LCP se pinta opaco en el primer frame | Todo el contenido visible de entrada, en su estado final |
-| 3 | **Campo de grafos del hero** (`HeroGraph`, isla cliente) | Canvas 2D con **3 capas de profundidad** y clusters de 4–5 vértices: **puntitos luminosos** (núcleo de 1.8/2.2/2.6px de radio + halo a 2.6× con 18% del alpha) unidos por **aristas de 1.5px** (alpha ≤0.30). Cada grafo mide **~300px** (spread 0.21) y deriva en su propia órbita (18–42px, ~14–26s); twinkle por nodo, parallax por capa (10/20/36) y campo local que empuja/enciende cerca del cursor (radio 240 / empuje 24). Sesgo suave fuera de la columna central + **dip elíptico 560×320 a piso 0.15** protegiendo el copy. DPR ≤1.5, 6/8/10 clusters según ancho, pausa fuera de pantalla/pestaña oculta | Un único frame estático; sin `requestAnimationFrame` ni listeners de puntero |
-| 4 | **Glow del hero** (rim `glow-brand-edge` + `glow-pulse` 7s en una esquina + `drift` 18s en otra + lavado superior) | Luz que **entra desde los bordes**: el gradiente es transparente en el centro (el copy no se ensucia) y sube hacia los bordes; los halos de esquina sangran hacia adentro. Nada de destello centro→extremos. Opacidades tales que el H1 mantiene ≥8:1 y el subtítulo ≥4.5:1 | Luz fija (pulso colapsado) |
-| 5 | **Línea de tiempo vertical** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | El relleno `brand` crece con el scroll y cada nodo se enciende al entrar en vista. Un segmento por sección → la línea se ve continua | Línea dibujada completa y nodos activos |
-| 6 | **Sub-timeline de "Cómo funciona"** (misma técnica `view()` en los hitos) | Los 4 pasos alternan alrededor de una espina central en `xl`; por debajo se apilan con conector | Contenido estático visible |
-| 7 | **Hover del CTA primario** (todas las instancias de `DiscordCta`): `scale-[1.02]` + halo `brand` + flecha 2px hacia arriba-derecha, 300ms | Feedback de asequibilidad del botón, no decorativo | Sin escala ni translate; el cambio de color se mantiene |
-| 8 | **Anillo respirante del CTA** (`animate-breathe`, 3.5s, `box-shadow`) + reveal de sección (`.reveal`) + subrayado de nav 150ms | Anillo en un `span` hermano: el botón nunca anima en reposo (protege INP/LCP) | Sin anillo; contenido visible; subrayado presente en hover |
-| 9 | **Muro de tiles flotantes** (`HeroTiles`, D34; opacidad global 60% desde D35) | 15 fichas inclinadas en 3 capas (ghost/glass/brand-coal) con deriva `tile-drift` solo `transform` (≥14s, delays escalonados). Decorativo: `aria-hidden`, `pointer-events-none`, z-0 fuera de la columna de copy; en móvil solo 2 ghosts en las esquinas inferiores | Tiles estáticos en su posición base |
+| 2 | **Entrada del hero** (H1, sub, CTA, apoyo, meta, nav: escalonado 100→700ms) | El **H1 anima solo `transform`** (`animate-lift-in`), nunca `opacity`: el elemento LCP se pinta opaco en el primer frame | Todo el contenido visible de entrada, en su estado final |
+| 3 | **Línea de tiempo vertical** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | El relleno `brand` crece con el scroll y cada nodo se enciende al entrar en vista. Un segmento por sección → la línea se ve continua | Línea dibujada completa y nodos activos |
+| 4 | **Reveal de sección y de celda** (`.reveal`, `animation-timeline: view()`, `entry 0%→35%`) | Aparte del contenedor de sección, cada celda bento lleva su propio `.reveal` (D38) | Contenido estático visible |
+| 5 | **Ticker del hero** (`.animate-marquee`, D38): track duplicado, `translateX(0 → −50%)`, 34s lineal infinito | `transform` only; el bloque es `aria-hidden` y no interactivo (R11/R34) | `animation: none` + `transform: none`: el track se estaciona en el origen y se lee solo la primera copia |
+| 6 | **Numeración bento** (`.bento-index`, D38, `animation-timeline: view()`) | Numeral fantasma de cada celda de "cómo funciona": `opacity`/`transform` en un `<span>` interno, decorativo (`aria-hidden`) | Numeral visible en su estado final |
+| 7 | **Hover del CTA primario** (todas las instancias de `DiscordCta`): `scale-[1.02]` + halo `brand` + flecha 2px hacia arriba-derecha, 300ms; en la variante `line` (hero V5) el borde se calienta a `brand` y un subrayado se dibuja de izquierda a derecha | Feedback de asequibilidad del botón, no decorativo | Sin escala ni translate; el cambio de color se mantiene (`motion-reduce:`) |
+| 8 | **Anillo respirante del CTA** (`animate-breathe`, 3.5s, `box-shadow`, solo variantes pill) + subrayado de nav 150ms | Anillo en un `span` hermano: el botón nunca anima en reposo (protege INP/LCP) | Sin anillo; contenido visible; subrayado presente en hover |
 
 **Prohibido explícitamente** (criterio propio + R34): scroll-jacking, parallax **de scroll**,
 autoplay de nada y cualquier animación que retrase el LCP (por eso el H1 no hace fade).
-Sí está permitida la reacción **al puntero** dentro del hero (el campo de grafos): no secuestra
-el scroll, no mueve contenido y se apaga con `reduced-motion`.
+Los reveals con `animation-timeline: view()` no son parallax: no desplazan contenido respecto
+del scroll ni secuestran la navegación, y su estado por defecto (sin soporte) es el final.
 
 ---
 

@@ -40,13 +40,13 @@ exista (Fase 5), según exige R10.
 |---|---|---|---|---|
 | 0 | Nav (header) | — | logo + enlaces a secciones + CTA Discord | R42 |
 | 1 | Hero | `#inicio` | Qué es TechToJob, por qué no es un portal de empleo más. **Un solo CTA: entrar al Discord** (link real, pendiente Q3) | R11 |
-| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **Acá el raíl de página se abre en el sub-timeline de pasos** | R12 |
+| 2 | Cómo funciona | `#como-funciona` | Recorrido paso a paso: llegas → perfil → oportunidad (4 pasos). **Bento asimétrico (D38): 1 celda alta + 2 + 1 ancha, `<ol>` intacto** | R12 |
 | 3 | **Torneos** (movida del #5) | `#torneos` | Competiciones abiertas como esta: la prueba de que la comunidad está viva | R15 |
 | 4 | Ofrécete como talento | `#talento` | Publicar perfil: stack, nivel, disponibilidad | R13 |
 | 5 | Publica como empresa | `#empresas` | Publicar búsqueda, acceder a perfiles | R14 |
 | 6 | Networking | `#networking` | Canales por área, gente del sector | R16 |
-| 7 | Testimonios | `#testimonios` | 4-5 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales) | R17 |
-| 8 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo) | R18 |
+| 7 | Testimonios | `#testimonios` | 4 tarjetas: nombre + frase (maqueta declarada); **diseño reserva sitio para foto + enlace a perfil LinkedIn** (slot de avatar circular + icono/link deshabilitado visualmente listo para datos reales). **Bento 7/5/5/7 (D38)** | R17 |
+| 8 | Noticias | `#noticias` | 3 entradas de ejemplo (fecha, título, resumen, link descriptivo). **Bento 1 destacada alta + 2 (D38)** | R18 |
 | 9 | Newsletter | `#newsletter` | Formulario email con label visible, validación HTML5 + feedback; franja antes del footer | R19 |
 | 10 | Cierre | `#unete` | Último empujón: repetir CTA Discord (nodo "meta" del raíl) | R20 |
 | 11 | Footer | — | Enlaces por bloques (secciones, comunidad, legal), redes (Q5), copyright | R21 |
@@ -63,12 +63,31 @@ como **meta**. Orden narrativo de arriba. Especificación:
 | **Nodo** | Círculo de 28px centrado en el raíl, alineado con el `h2` de la sección (`top-20 lg:top-32`, que es el padding de la sección). Contiene el numeral del paso (aria-hidden). Se activa al entrar en vista | **Sin etiqueta de texto**: el rótulo del paso ES el `h2` de la sección → no se duplica contenido (R36/SEO) |
 | **Variantes de nodo** | `step` (secciones) y `goal` (Cierre: círculo de 40px relleno `brand`). El hero **no lleva raíl** ni nodo: es la puerta y el viaje arranca en el paso 1 | — |
 | **Tones** | Claro: raíl `line` + relleno `brand` + nodo `border-brand`/`bg-paper`/`text-ink`. `ink`: raíl `white/12` + relleno/nodo `brand`. Franja `brand` (newsletter): raíl `ink/20`, relleno y nodo `ink` | Todas las combinaciones se mantienen dentro de la paleta fija (R24/R25) |
-| **Sub-timeline** | En "Cómo funciona" el raíl de página se desvanece y los 4 pasos pasan a un timeline **central alternado** (`xl`), apilado con espina izquierda por debajo de `xl`. Títulos: los ya existentes en `es.json` | R12; sin copy nuevo (R36) |
+| **Sub-timeline** | ~~En "Cómo funciona" el raíl se abre en un timeline central alternado.~~ **Sustituido por D38:** "Cómo funciona" no abre sub-timeline: el raíl cruza la sección igual que el resto y los 4 pasos se disponen en **bento asimétrico** (ver §Bento). Se conserva el `<ol>` con la secuencia real | R12; sin copy nuevo (R36) |
 | **Anchos** | Raíl completo desde `xl` (1280+); compacto (mismo raíl, contenido con `pl-7`) entre 360 y 1279. Verificar que las rejillas de 4 y 3 columnas no se aprieten | R38 (responsive 360/768/1024/1440) |
 
 > **Pendiente de auditoría:** el reorden deja obsoleta la línea previa de R22 en
 > `specs/00-checklist-reglas.md` ("orden del brief sin cambios") → debe re-auditarse cuando se
 > reactive el QA (D28).
+
+## Bento grid y motion (D38 — "Bento Signature")
+
+**Motivo (D37 + D38):** las secciones del cuerpo eran uniformes (`h2 + párrafo`); el referente
+cosmos.so se percibe "vivo" por **ritmo y movimiento**, no por decoración. El bento se aplica
+**solo donde ya hay varios ítems** para no inventar contenido (J2/R36).
+
+| Pieza | Spec | Regla/nota |
+|---|---|---|
+| **Lenguaje de celda** | Borde hairline 1px, **esquinas rectas** (continuidad editorial con el CTA `rounded-none` de D36), sin sombra. En sección `paper`: celda transparente `border-line`. En sección `mist`: celda `bg-paper border-line` | R24/R25 (paleta fija); sustituye `--radius-card`+`shadow-card` SOLO en estas dos secciones |
+| **Numeración de índice** | Las celdas de "Cómo funciona" muestran un numeral sobredimensionado (posición en el `<ol>`), decorativo (`aria-hidden`, tinta fantasma `ink/15` — R26 prohíbe el verde como texto sobre `paper`). En Testimonios el marcador es la comilla editorial y en Noticias la fila fecha+chip: no se añade numeral para no duplicar información | R34; no duplica contenido |
+| **Grid** | 12 columnas desde `lg`; móvil/tablet: una columna apilada en orden DOM. "Cómo funciona": 7 (row-span 2) + 5 + 5 + 12. Testimonios: 7/5/5/7. Noticias: 7 (row-span 2) + 5 + 5 | R38; verificar 360/768/1024/1440 |
+| **Hero ticker** | Marquee CSS puro bajo el hero (`border-t` hairline, `text-label` uppercase `cloud`, separador `brand`), con tokens reales ya publicados (stacks de `hero.meta`, "Torneo #2", "Comunidad técnica en español"). Track duplicado para bucle continuo. `aria-hidden` (duplica `hero.meta`) y **no interactivo** | R11 (no es CTA), R36 (strings en `es.json` como `hero.ticker`, derivados), R34 |
+| **`.marquee`** | `transform: translateX(0 → −50%)` lineal, ≥30s, `infinite`; `reduced-motion` lo detiene en reposo | D37.2 (CSS puro, cero islas) |
+| **`.bento-index`** | `animation-timeline: view()`; escala/opacidad del numeral al entrar en vista, en un `<span>` interno para no pelear con el posicionamiento | D37.2; fallback: numeral visible |
+| **Reveal de celda** | Se reutiliza `.reveal` (ya existente en `globals.css`) en cada celda | R34 |
+
+> **Fuera de alcance:** Talento / Empresas / Networking quedan editoriales (no tienen ítems).
+
 
 ## Copy
 
