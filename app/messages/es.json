@@ -252,7 +252,13 @@
   },
   "newsletter": {
     "h2": "El parte de la semana, los lunes",
-    "copy": "Un correo cada lunes con las ofertas nuevas de la comunidad, los torneos que se abren y lo que merecía la pena leer esta semana. Sin relleno y sin spam: te bajas cuando quieras.",
+    "copy": "Un correo cada lunes con:",
+    "items": [
+      "Las ofertas nuevas de la comunidad",
+      "Los torneos que se abren",
+      "Lo que merecía la pena leer esta semana"
+    ],
+    "seal": "Sin relleno y sin spam: te bajas cuando quieras.",
     "label": "Tu correo electrónico",
     "placeholder": "tu@correo.com",
     "button": "Quiero el correo de los lunes",

@@ -172,6 +172,10 @@ export interface News {
 export interface Newsletter {
   h2: string;
   copy: string;
+  /** Things that arrive each Monday, rendered as a scannable list (D107). */
+  items: string[];
+  /** Closing promise line, the "sin relleno y sin spam" seal (D107). */
+  seal: string;
   label: string;
   placeholder: string;
   button: string;
