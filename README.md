@@ -59,8 +59,8 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 |---|---|
 | `next build` + `tsc --noEmit` + ESLint | ✅ 0 errores |
 | Auditoría de las 61 reglas del concurso (`docs/qa/2026-09-22-rules-audit-1.md`) | ✅ tras fixes R35/R56 |
-| Lighthouse móvil (SEO / Accesibilidad / Rendimiento) | ⏳ a medir sobre el deploy final (última medición local: SEO 100 · A11y 100 · Perf 76 en `docs/qa/2026-09-22/`) |
-| Responsive 360 / 768 / 1024 / 1440 | ⏳ capturas a generar sobre el deploy final |
+| Lighthouse móvil (SEO / Accesibilidad / Rendimiento) | ✅ PageSpeed Insights sobre el deploy: **Perf 99 · SEO 100 · A11y 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
+| Responsive 360 / 768 / 1024 / 1440 | ✅ capturas sobre el deploy en `docs/qa/2026-09-23/` |
 | Auditorías, Lighthouse y Playwright | ⏸ **en pausa desde el 23/09 (D56)**; la evidencia vigente es la del 22/09 en `docs/qa/` |
 | Metadata API + OG 1200×630 + Twitter Card + JSON-LD Organization + sitemap + robots | ✅ |
 | WCAG 2.1 AA: semántica, jerarquía H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ |
