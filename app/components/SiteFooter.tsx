@@ -31,9 +31,9 @@ export default async function SiteFooter() {
 
   return (
     <footer className="border-t border-hairline-dark bg-ink text-paper">
-      <div className="page-container py-16">
+      <div className="page-container py-8 sm:py-16">
         {/* decorative brand mark — the same header composite as the ink state (§2a/§2c, D58) */}
-        <span aria-hidden="true" className="flex items-center gap-2.5">
+        <span aria-hidden="true" className="hidden items-center gap-2.5 sm:flex">
           <span className="grid h-10 w-10 shrink-0 place-items-center rounded-none border border-brand/40 bg-white/5">
             <Image
               src="/brand/logo-symbol-light.svg"
@@ -56,14 +56,14 @@ export default async function SiteFooter() {
 
         <nav
           aria-label={messages.a11y.footerNavLabel}
-          className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4"
+          className="mt-7 grid grid-cols-2 gap-x-5 gap-y-6 sm:mt-10 sm:gap-10 lg:grid-cols-4"
         >
           {blocks.map((block) => (
             <div key={block.title}>
               <h2 className="text-small font-semibold uppercase tracking-label text-paper">
                 {block.title}
               </h2>
-              <ul className="mt-4 space-y-1">
+              <ul className="mt-2 space-y-1 sm:mt-4">
                 {block.links.map((link) => (
                   <li key={link.text}>
                     <a
@@ -88,7 +88,7 @@ export default async function SiteFooter() {
           ))}
         </nav>
 
-        <div className="mt-12 border-t border-hairline-dark pt-8">
+        <div className="mt-8 border-t border-hairline-dark pt-5 sm:mt-12 sm:pt-8">
           <h2 className="text-small font-semibold uppercase tracking-label text-paper">
             {messages.footer.social.title}
           </h2>
@@ -110,9 +110,9 @@ export default async function SiteFooter() {
           </ul>
         </div>
 
-        <div className="mt-12 border-t border-hairline-dark pt-8">
+        <div className="mt-8 border-t border-hairline-dark pt-5 sm:mt-12 sm:pt-8">
           <p className="text-small">{messages.footer.credits}</p>
-          <p id="legal-nota" className="mt-3 max-w-[65ch] scroll-mt-24 text-small text-paper">
+          <p id="legal-nota" className="mt-1.5 max-w-[65ch] scroll-mt-24 text-small text-paper sm:mt-3">
             {messages.footer.legalNote}
           </p>
         </div>

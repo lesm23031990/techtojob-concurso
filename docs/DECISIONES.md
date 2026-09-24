@@ -1940,6 +1940,40 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `tsc`/ESLint/`next build` en verde.
       **Actualizado en:** `components/sections/Testimonials.tsx`.
 
+- **D140.** 23/09, Lorena: *"disminuye todos los espacios del footer en pantallas para moviles"*.
+      **Decisión:** se reduce solo el ritmo vertical del footer en móvil, dejando el escritorio
+      intacto (los valores base pasan a ser los pequeños y el valor anterior se restaura desde `sm`).
+      `py-16` → `py-10 sm:py-16`; nav `mt-10` → `mt-8 sm:mt-10` y `gap-10` → `gap-7 sm:gap-10`;
+      listas `mt-4` → `mt-3 sm:mt-4`; bloques social y legales `mt-12 … pt-8` → `mt-9 … pt-6
+      sm:mt-12 sm:pt-8`; nota legal `mt-3` → `mt-2 sm:mt-3`. **No se tocan** los *touch targets*
+      (`min-h-11`), los `focus-visible`, los tamaños de texto ni los `sr-only`: son requisitos de
+      accesibilidad. `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/SiteFooter.tsx`.
+
+- **D141.** 23/09, Lorena: *"en el footer coloca dos columnas por filas en pantallas moviles"*.
+      **Decisión:** los 4 bloques de enlaces del footer pasan a **2 columnas ya en móvil**
+      (`grid-cols-2` base), con `gap-x-5` horizontal (para dar ancho útil a 360px) y `gap-y-7`
+      vertical; desde `sm` se mantiene `sm:gap-10` y en `lg` siguen las 4 columnas. Se elimina
+      `sm:grid-cols-2` por redundante. **No se tocan** `min-h-11`, `focus-visible`, tamaños de
+      texto ni `sr-only`. `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/SiteFooter.tsx`.
+
+- **D142.** 23/09, Lorena: *"puedes quitar el logo del footer en pantallas moviles"*.
+      **Decisión:** el bloque decorativo de marca del footer pasa de `flex` a `hidden … sm:flex`:
+      se oculta por debajo de `sm` y vuelve desde `sm`. El elemento y sus imágenes se conservan
+      en el DOM con su `aria-hidden`, `alt=""`, dimensiones y `loading="lazy"` intactos (decorativo,
+      sin impacto en el contenido accesible). `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/SiteFooter.tsx`.
+
+- **D143.** 23/09, Lorena: *"reduce un poco mas el espaciado"* (footer móvil). **Decisión:** segunda
+      pasada de reducción **solo en móvil** sobre D140/D141, con los `sm:`/`lg:` intactos:
+      `py-10` → `py-8`; nav `mt-8` → `mt-7` y `gap-y-7` → `gap-y-6`; listas `mt-3` → `mt-2`;
+      bloques social/legales `mt-9 … pt-6` → `mt-8 … pt-5`; nota legal `mt-2` → `mt-1.5`.
+      **No se tocan** `min-h-11`, `focus-visible`, tamaños de texto, `sr-only`, el logo
+      `hidden … sm:flex` (D142) ni la rejilla de 2 columnas móvil (D141). `tsc`/ESLint/`next build`
+      en verde.
+      **Actualizado en:** `components/SiteFooter.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
