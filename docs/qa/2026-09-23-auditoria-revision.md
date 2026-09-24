@@ -67,3 +67,25 @@ before closing Phase 5.
 - **Responsive (D130/D131):** smaller steppers and links on mobile; hero at 100vh from `md`.
 - **Pending measurement:** Lighthouse **mobile + desktop** on the deploy and responsive screenshots
   (next step of Phase 5).
+
+## Close 23/09 (night, final measurement)
+
+The measurements below close findings 2, 3 and 5 of the table above:
+
+- **R03 CLOSED — responsive captures on the deploy:** `docs/qa/2026-09-23/deploy-mobile-360.png`,
+  `deploy-tablet-768.png`, `deploy-desktop-1024.png`, `deploy-desktop-1440.png`.
+- **R04/R61 CLOSED — mobile Lighthouse on the deploy (PageSpeed Insights, i.e. Lighthouse running
+  on Google servers):** **Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100**
+  (FCP 1.0 s · LCP 2.1 s · TBT 60 ms · CLS 0). Evidence:
+  `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png`. This meets R61 (SEO 100, a11y+performance > 90)
+  and the stricter AGENTS.md gate (≥95).
+- **Measurement caveat (important):** the **local** Lighthouse CLI runs kept in this folder
+  (`lighthouse-mobile.json` 42, `lighthouse-mobile.report.json` 67, `lighthouse-desktop.json` 97,
+  `lighthouse-desktop.report.json` 55) are **not representative and must not be used as the deliverable
+  capture**: the tool itself reports *"the tested device appears to have a slower CPU than Lighthouse
+  expects. This can negatively affect your performance score"*. The variance matches the TBT noise
+  already recorded in D137. The CLI JSON/HTML are kept as raw evidence only; the **authoritative figure
+  is the PageSpeed one**.
+- The `Performance ❌` row in the *Verdict* table above reflects the state **during** the audit
+  (22/09 localhost, pre-redesign). The final state is the one in this section and in
+  `specs/00-checklist-reglas.md`.

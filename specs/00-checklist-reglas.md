@@ -12,11 +12,11 @@
 
 | # | Regla (cita) | Tipo | Fuente | Estado |
 |---|---|---|---|---|
-| R01 | "Repo público en GitHub con README" | META | D202 | pendiente — mañana: repo público GitHub |
+| R01 | "Repo público en GitHub con README" | META | D202 | cumplida — repo **público** verificado (`gh repo view`: `visibility: PUBLIC`) en https://github.com/lesm23031990/techtojob-concurso; el README incluye IA, fuentes, créditos y el orden declarado |
 | R02 | "Enlace a la web desplegada (Cloudflare Pages o Vercel, las dos gratis)" | META | D203 | cumplida — deploy en Vercel: **https://techtojob-concurso.vercel.app** (`site.url` en `app/content.ts`, D129) |
-| R03 | "Capturas de escritorio y móvil" | META | D204 | pendiente — capturas sobre el deploy mañana |
-| R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | pendiente — Lighthouse final sobre el deploy (control local: SEO 100, A11y 100, Perf 76) |
-| R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | en riesgo — queda 1 día para ENTREGAS |
+| R03 | "Capturas de escritorio y móvil" | META | D204 | cumplida — capturas sobre el deploy en `docs/qa/2026-09-23/`: `deploy-desktop-1440.png`, `deploy-desktop-1024.png`, `deploy-tablet-768.png`, `deploy-mobile-360.png` |
+| R04 | "Captura de Lighthouse" (modo móvil, adjunta la captura) | META | D205, D190 | cumplida — captura de **PageSpeed Insights** (Lighthouse en servidores de Google) en `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png`: **Perf 99 · A11y 100 · BP 100 · SEO 100** (FCP 1.0 s · LCP 2.1 s · TBT 60 ms · CLS 0). Nota: los runs del CLI **local** (Perf 42/67) no son válidos como entrega; la propia herramienta advierte de una CPU más lenta de lo esperado (D137) |
+| R05 | "Todo en 📦│ENTREGAS antes del miércoles 23 a las 23:59" | META | D207 | **pendiente de confirmar (humana):** el mensaje está listo en `docs/qa/2026-09-23/mensaje-entregas.md` (repo + web + capturas + Lighthouse + declaración de IA); falta confirmar la publicación en ENTREGAS antes del cierre |
 | R06 | "Si vais dos [pareja], decidlo al entregar" | META | D209 | n-a (participación solitaria) |
 | R07 | Uso de IA: "Solo pedimos que lo digas al entregar" | META | D102 | cumplida en README (§Declaración de uso de IA); repetir en el mensaje de ENTREGAS |
 | R08 | "Tienes que entender y poder defender lo que entregas" | OBL | D102-103 | pendiente (humana: repasar specs/11 + design-system antes de defender) |
@@ -38,7 +38,7 @@
 | R19 | Newsletter: formulario; "Va mejor en una franja antes del footer que arriba" | OBL | D44, D100 | cumplida — **D100:** la franja `brand` maciza se retira (la sección pasa a `ink` + panel `coal`); la norma pide *una franja antes del footer*, no un color. El formulario mantiene `label` visible, validación HTML5 y feedback (`role="status"`). **D89/D100:** ya no existe ninguna franja `brand` maciza en el sitio (D44, R26) |
 | R20 | Cierre: "Último empujón antes del footer" | OBL | D47 | cumplida (audit 22/09) |
 | R21 | Footer: "Enlaces por bloques, redes y legal" | OBL | D50 | cumplida (audit 22/09) |
-| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | **en riesgo** - reordenada 22/09 (D32) para narrar como linea de tiempo (Torneos del #5 al #3); hero primero y footer ultimo intactos; declaracion R10 pendiente en el README; RE-AUDITAR al reactivar QA |
+| R22 | "El orden es orientativo menos el hero y el footer" | OBL | D54 | cumplida — reordenada 22/09 (D32) para narrar como línea de tiempo; **hero primero y footer último intactos**; el reorden ya está **declarado en el README** (§What the landing contains + D32/D38), que es lo que pedía R10 |
 | R23 | Objetivo general: "explicar qué somos, a quién le sirve y conseguir que la gente entre al Discord" | EVAL | D3 | cumplida (audit 22/09) |
 
 ## C. Identidad de marca
@@ -97,7 +97,7 @@
 | R58 | "Sora con next/font" | OBL | D176 | cumplida (audit 22/09) |
 | R59 | "Una fuente y tres pesos. No ocho variantes" | OBL | D178 | cumplida (audit 22/09) |
 | R60 | "No escondas texto lleno de keywords con hidden, opacity-0 o tamaño cero" | NEG | D184 | cumplida (audit 22/09) |
-| R61 | Lighthouse móvil: "SEO en 100 / Accesibilidad y rendimiento por encima de 90" | META/EVAL | D192-193 | pendiente — medir sobre el deploy; gate interno AGENTS.md ≥95/95/95 |
+| R61 | Lighthouse móvil: "SEO en 100 / Accesibilidad y rendimiento por encima de 90" | META/EVAL | D192-193 | cumplida — **PageSpeed Insights móvil** sobre el deploy: **SEO 100 · Accesibilidad 100 · Rendimiento 99** (supera el >90 exigido y el ≥95 del gate interno de AGENTS.md). Evidencia: `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png`. Nota: el CLI local mide peor (42/67) por CPU lenta, no por el sitio (D137) |
 
 ## G. Rúbrica (pesos oficiales)
 
@@ -111,14 +111,14 @@
 | J6 | Accesibilidad y rendimiento ("Contraste, textos alternativos, navegación con teclado, etiquetas en el formulario, imágenes optimizadas") | 10% | D225 |
 | J7 | "Si hay empate, decide el criterio de diseño" | — | D227 |
 
-## Preguntas abiertas (actualizadas 22/09 tarde)
+## Preguntas abiertas (actualizadas 23/09)
 
 | # | Pregunta | Estado |
 |---|---|---|
 | Q1 | Contenido de `brief-techtojob.md` | ✅ resuelto → `material-concurso/bases/brief.md` |
 | Q2 | Archivos del logo | ✅ resuelto → `marca/TechToJob/` (SVG/PNG/PDF completos) |
 | Q3 | Enlace de invitación al Discord | ✅ resuelto → oficial del brief `discord.gg/h9FFgKdkRd` (D18) |
-| Q4 | URL de despliegue final | ⏳ se resuelve mañana al deploy Vercel (actualizar site.url + rebuild) |
+| Q4 | URL de despliegue final | ✅ resuelto → **https://techtojob-concurso.vercel.app** (`site.url` en `app/content.ts`, D129) |
 | Q5 | Redes sociales | ✅ resuelto → LinkedIn/X/Instagram @techtojob (brief) |
 | Q6 | Enlaces legales del footer | 🟡 maquetados con nota honesta (D19); confirmar en CHARLA |
 | Q7 | Propiedad del código | 🟢 sin LICENSE (D5); bases no declaran cesión |
