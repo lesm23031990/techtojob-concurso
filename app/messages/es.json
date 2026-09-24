@@ -107,7 +107,7 @@
   "companies": {
     "eyebrow": "Para empresas",
     "h2": "Publica como empresa",
-    "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos cribar CVs a ciegas, más contexto real.",
+    "copy": "Cuenta lo que buscas y accede a los perfiles de la comunidad. Aquí ves a la gente participar, construir y resolver antes de llamar a nadie a una entrevista. Menos enviar CVs a ciegas, más contexto real.",
     "highlights": ["Publica lo que buscas", "Accede a los perfiles", "Contexto real, no solo CV"],
     "cta": "Publicar vacante"
   },
@@ -190,7 +190,7 @@
     }
   },
   "testimonials": {
-    "h2": "Lo que se dice dentro",
+    "h2": "Lo que se dice dentro de la comunidad",
     "sub": "Testimonios de muestra. Los reales se recogen en el servidor antes de publicar.",
     "items": [
       {
@@ -251,7 +251,7 @@
     ]
   },
   "newsletter": {
-    "h2": "El parte de la semana, los lunes",
+    "h2": "Recibe el email de la semana",
     "copy": "Un correo cada lunes con:",
     "items": [
       "Las ofertas nuevas de la comunidad",
@@ -261,13 +261,13 @@
     "seal": "Sin relleno y sin spam: te bajas cuando quieras.",
     "label": "Tu correo electrónico",
     "placeholder": "tu@correo.com",
-    "button": "Quiero el correo de los lunes",
+    "button": "Quiero el correo",
     "note": "Solo un correo a la semana. Nada más.",
-    "success": "Recibido: el parte de los lunes ya cuenta contigo. (Maqueta: esta web aún no envía correos; el destino del formulario se definirá tras el torneo.)"
+    "success": "Recibido: el servicio de envío de emails de los lunes ya cuenta contigo. (Maqueta: esta web aún no envía correos; el destino del formulario se definirá tras el torneo.)"
   },
   "closing": {
     "line1": "Ya sabes cómo funciona.",
-    "line2": "Lo que falta es que entres.",
+    "line2": "Lo que falta es que ingreses.",
     "copy": "Hay gente del sector al otro lado del enlace, construyendo cosas ahora mismo. La puerta es el Discord.",
     "cta": "Entrar al Discord de TechToJob"
   },
