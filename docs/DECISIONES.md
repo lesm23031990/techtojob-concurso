@@ -1919,6 +1919,27 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       bucles idle/facetas (sacrificando algo de "vida").
       **Actualizado en:** `components/Ticker.tsx`, `components/sections/Testimonials.tsx`.
 
+- **D138.** 23/09, Lorena: *"quédate solo con las animaciones más sencillas en móvil"* y *"remueve
+      todas las animaciones de entrada y salida en móvil; que quede solo la del slider, el hero y el
+      cierre"*. **Decisión:** se marca con `motion-body` cada sección del cuerpo (`Section`-based +
+      Torneos + Testimonios) y, **por debajo de `lg`**, se apagan con `animation: none` las
+      entradas/salidas y los bucles idle: `.reveal`, `.reveal-left`, `.reveal-enter`, `.bento-*`,
+      `.bento-index`, `.step-node-fill`, `.section-idle`, `.animate-activity`, `.line-idle::after`,
+      `.card-idle::after`, `.cta-glint::after`, `.timeline-marker::after`, `.step-node::after`, más la
+      entrada del header y su hairline de progreso. **Se conservan en móvil:** el marquee (slider), el
+      Hero (incl. su grid estático) y el Cierre. Complementa D138-hero (grid drift solo desde `lg`).
+      **Actualizado en:** `components/Section.tsx`, `components/sections/{Tournaments,Testimonials}.tsx`,
+      `app/app/globals.css`.
+
+- **D139.** 23/09, Lorena: *"el slider de Testimonios en pantallas pequeñas no se ve bien; cámbialo
+      solo para móviles"*. **Decisión:** el marquee full-bleed se limita a **`lg` en adelante**
+      (`hidden lg:block`); por debajo de `lg` la misma lista de 4 testimonios se muestra como
+      **lista vertical estática** (sin movimiento ni recorte), dentro de `page-container` e indentada
+      para no pisar el raíl. La lista móvil va `aria-hidden` (decorativa) y el contenido accesible
+      sigue siendo la lista `sr-only` (patrón existente). El control de pausa solo aparece en `lg+`.
+      `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/sections/Testimonials.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

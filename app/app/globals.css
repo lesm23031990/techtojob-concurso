@@ -144,6 +144,35 @@
   contain-intrinsic-size: auto 1100px;
 }
 
+/* D138 · Mobile: only the lightest motion survives. On phones the BODY sections
+   (`motion-body`: Section-based ones + Torneos + Testimonios) drop every
+   entrance/exit and idle loop — they cost load-time layout/paint and read
+   badly at that size. Kept on mobile: the marquee slider, the Hero, the Closing
+   and the timeline rail progress. Header entrance/progress also stop. */
+@media (width < 64rem) {
+  .motion-body .reveal,
+  .motion-body .reveal-left,
+  .motion-body .reveal-enter,
+  .motion-body .bento-reveal,
+  .motion-body .bento-lit,
+  .motion-body .bento-lit-ink,
+  .motion-body .bento-index,
+  .motion-body .step-node-fill,
+  .motion-body .section-idle,
+  .motion-body .animate-activity,
+  .animate-header-in,
+  .header-progress {
+    animation: none !important;
+  }
+  .motion-body .line-idle::after,
+  .motion-body .card-idle::after,
+  .motion-body .cta-glint::after,
+  .motion-body .timeline-marker::after,
+  .motion-body .step-node::after {
+    animation: none !important;
+  }
+}
+
 /* ── Adaptive header (D47) ──────────────────────────────────────────────
    The bar itself is SOLID (full 80px) so the CTA never pokes through a
    translucent bottom edge. The polarity crossfades between ink and paper via

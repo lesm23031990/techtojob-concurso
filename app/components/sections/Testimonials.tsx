@@ -131,7 +131,7 @@ export default async function Testimonials() {
       id="testimonios"
       aria-labelledby="testimonios-heading"
       data-surface="light"
-      className="cv-auto relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
+      className="motion-body cv-auto relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
       <TimelineRail tone="mist" step={timelineStep("testimonios")} />
       <span aria-hidden="true" className="section-sheen" />
@@ -160,7 +160,7 @@ export default async function Testimonials() {
             />
             <span>{messages.testimonials.sub}</span>
           </p>
-          <div className="reveal-left mt-6 flex items-center gap-3">
+          <div className="reveal-left mt-6 hidden items-center gap-3 lg:flex">
             <span
               aria-hidden="true"
               className="h-1.5 w-1.5 shrink-0 rounded-full bg-ember"
@@ -202,8 +202,9 @@ export default async function Testimonials() {
         {messages.testimonials.linkedinSlotTitle}. {messages.testimonials.linkedinSlotHint}
       </p>
 
-      {/* Full-bleed slider: spans the whole viewport and layers over the rail (D89). */}
-      <div className="marquee-block reveal relative z-10 mt-8">
+      {/* Full-bleed slider (lg+ only; on phones the marquee read badly, so it is
+          replaced by a static list below). Layers over the rail (D136). */}
+      <div className="marquee-block reveal relative z-10 mt-8 hidden lg:block">
         <div className="testimonial-band py-6">
           <div className="overflow-hidden">
             <div
@@ -231,6 +232,19 @@ export default async function Testimonials() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* D139 · Mobile: below `lg` the same cards are shown as a plain vertical
+          list (no motion, no clipping). Decorative (`aria-hidden`): the `sr-only`
+          list above is the accessible source of truth. */}
+      <div className="page-container mt-8 lg:hidden">
+        <ul aria-hidden="true" className="flex flex-col gap-4 pl-7 md:pl-14">
+          {items.map((item) => (
+            <li key={item.name}>
+              <TestimonialCard item={item} />
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Narrative bridge (D90): a descriptive TEXT LINK to the Discord, never a

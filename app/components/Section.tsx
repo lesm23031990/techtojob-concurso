@@ -88,7 +88,7 @@ export default function Section({
       id={id}
       aria-labelledby={headingId}
       data-surface={TONE_SURFACE[tone]}
-      className={`relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
+      className={`motion-body relative ${TONE_CLASSES[tone]} py-20 lg:py-32 ${className}`}
     >
       <span
         aria-hidden="true"
