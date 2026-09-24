@@ -99,7 +99,7 @@ export default async function Audiences() {
     >
       <h2
         id="audiences-heading"
-        className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal-left text-h2 font-bold text-pretty lg:text-h2-lg"
       >
         {h2}
       </h2>
@@ -143,14 +143,14 @@ export default async function Audiences() {
                   </p>
                   <h3
                     id={audience.headingId}
-                    className="mt-2 text-h3 font-bold text-balance text-paper lg:text-h3-lg"
+                    className="mt-2 text-h3 font-bold text-pretty text-paper lg:text-h3-lg"
                   >
                     {audience.title}
                   </h3>
                 </div>
                 {/* Framed tile gives the icon real visual weight (D79/D85): on
                     `coal` the brand glyph needs the raised frame to read. */}
-                <span className="grid h-12 w-12 shrink-0 place-items-center border border-hairline-dark bg-white/5 text-brand">
+                <span className="grid h-12 w-12 shrink-0 place-items-center border border-hairline-dark bg-white/5 text-paper">
                   <audience.Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110 motion-reduce:transform-none" />
                 </span>
               </div>

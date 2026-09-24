@@ -35,7 +35,7 @@ export default async function Closing() {
       id="unete"
       aria-labelledby="unete-heading"
       data-surface="dark"
-      className="relative isolate flex min-h-svh flex-col overflow-clip bg-ink text-paper"
+      className="cv-auto relative isolate flex min-h-svh flex-col overflow-clip bg-ink text-paper"
     >
       {/* D121: the hero's turning lights, reused verbatim (same three classes,
           same 64s/88s rotation), spanning the WHOLE section as its background.
@@ -73,7 +73,7 @@ export default async function Closing() {
                 answer in `paper`. ONE <h2>, one text node per line (R41). */}
             <h2
               id="unete-heading"
-              className="reveal max-w-4xl text-h2 font-bold text-balance lg:text-display"
+              className="reveal max-w-4xl text-h2 font-bold text-pretty lg:text-display"
             >
               <span className="block text-cloud">{closing.line1}</span>
               <span className="block">{closing.line2}</span>

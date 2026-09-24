@@ -79,7 +79,7 @@ async function NewsCard({ item, featured = false }: { item: NewsItem; featured?:
           {item.date}
         </time>
       </div>
-      <h3 className="text-h3 font-bold text-balance lg:text-h3-lg">{item.title}</h3>
+      <h3 className="text-h3 font-bold text-pretty lg:text-h3-lg">{item.title}</h3>
       <p className="text-body">{item.summary}</p>
       <a
         href={messages.discord.url}
@@ -111,14 +111,15 @@ export default async function News() {
       headingId="noticias-heading"
       tone="paper"
       idleAccent="ember"
+      className="cv-auto"
     >
       <h2
         id="noticias-heading"
-        className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal-left text-h2 font-bold text-pretty lg:text-h2-lg"
       >
         {messages.news.h2}
       </h2>
-      <p className="reveal-left mt-3 flex max-w-[65ch] items-baseline gap-2.5 text-small text-slate">
+      <p className="reveal-left mt-3 flex max-w-[65ch] items-baseline gap-2.5 text-small text-ink">
         <span
           aria-hidden="true"
           className="h-1.5 w-1.5 shrink-0 translate-y-[0.15em] rounded-full bg-ember"

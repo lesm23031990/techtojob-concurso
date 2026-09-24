@@ -29,13 +29,13 @@ export default async function Networking() {
   const { h2, intro, channels, speed, market } = messages.networking;
 
   return (
-    <Section id="networking" headingId="networking-heading" tone="paper">
+    <Section id="networking" headingId="networking-heading" tone="paper" className="cv-auto">
       <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
         {/* Left column: entrance-only reveal (sticky-safe, D82). */}
         <div className="reveal-enter lg:col-span-5 lg:sticky lg:top-32 lg:self-start">
           <h2
             id="networking-heading"
-            className="text-h2 font-bold text-balance lg:text-h2-lg"
+            className="text-h2 font-bold text-pretty lg:text-h2-lg"
           >
             {h2}
           </h2>

@@ -136,6 +136,14 @@
   }
 }
 
+/* D135 · Perf (TBT): sections far below the fold skip style/layout until they
+   approach the viewport; `auto <size>` estimates from the last rendered size,
+   so there is no CLS once measured. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1100px;
+}
+
 /* ── Adaptive header (D47) ──────────────────────────────────────────────
    The bar itself is SOLID (full 80px) so the CTA never pokes through a
    translucent bottom edge. The polarity crossfades between ink and paper via
@@ -317,48 +325,9 @@
   }
 }
 
-/* ── D103 · Entrada del panel de Newsletter ───────────────────────────────
-   El "cuadro" del newsletter entra como una pieza más, con dos ajustes propios:
-   recorrido más corto (1rem en vez de 2.5rem, es una superficie grande) y
-   VENTANA MÁS CORTA EN PORCENTAJE (26% en lugar del 38% de `.reveal`). El
-   motivo es geométrico: en `view()` el rango `cover` dura (viewport + alto del
-   elemento), así que el 38% sobre un panel de ~650px lo dejaría a media tinta
-   hasta que su borde superior subiera a ~190px del viewport; con el 26% el
-   panel ya está opaco con el borde a ~350px (zona de lectura). En píxeles, la
-   entrada del panel (~350px de scroll) es MÁS LARGA que la de un titular
-   (~280px), que es lo que la autora pidió: más lenta y apreciable, sin que el
-   cuadro quede translúcido mientras se lee. La meseta de salida sube a 92% con
-   el resto de los bloques (D106). Solo `opacity`/`transform`
-   (CLS 0); sin soporte de `animation-timeline` o con `prefers-reduced-motion`
-   el panel se ve completo y estático. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .panel-in {
-      animation: panel-in cubic-bezier(0.2, 0.9, 0.2, 1) both;
-      animation-timeline: view();
-      animation-range: cover;
-    }
-  }
-}
-
-@keyframes panel-in {
-  0% {
-    opacity: 0;
-    transform: translate(0, 1rem);
-  }
-  26% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  92% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(0, -1.5rem);
-  }
-}
+/* D136: the Newsletter card uses the shared `.reveal-left` (it slides in from
+   the timeline rail, like every other section); the bespoke `.panel-in` and its
+   keyframes were removed. */
 
 /* Networking (D81): slow "live" dot that signals fast answers. Decorative only
    (aria-hidden). 3.6s honours the motion catalogue (loops ≥3.5s) and the global

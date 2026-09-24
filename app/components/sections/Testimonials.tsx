@@ -129,13 +129,9 @@ export default async function Testimonials() {
       id="testimonios"
       aria-labelledby="testimonios-heading"
       data-surface="light"
-      className="relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
+      className="cv-auto relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
-      <TimelineRail
-        tone="mist"
-        step={timelineStep("testimonios")}
-        className="z-20"
-      />
+      <TimelineRail tone="mist" step={timelineStep("testimonios")} />
       <span aria-hidden="true" className="section-sheen" />
       <span aria-hidden="true" className="section-idle section-idle-ember" />
 
@@ -151,7 +147,7 @@ export default async function Testimonials() {
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="testimonios-heading"
-            className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
+            className="reveal-left text-h2 font-bold text-pretty lg:text-h2-lg"
           >
             {messages.testimonials.h2}
           </h2>

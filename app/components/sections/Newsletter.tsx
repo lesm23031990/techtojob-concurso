@@ -10,8 +10,8 @@ import { getMessages } from "next-intl/server";
  * language as Audiences (D85). The panel follows the landing's editorial
  * grid: 7 columns of text / 5 of form, separated by a vertical hairline at
  * `lg`. A single animated hairline (`.line-idle`, D86) runs through the foot
- * of the form; the panel carries its own entry (`.panel-in`) plus the border
- * lighting (`.bento-lit-ink`).
+ * of the form; the panel carries its own entry (`.reveal`: it rises from below)
+ * plus the border lighting (`.bento-lit-ink`).
  *
  * D127 (Lorena): the entrance belongs to the WHOLE CARD, not to the text
  * inside it. The per-beat `.reveal-left` and the `text-drift` on the text
@@ -31,7 +31,7 @@ export default async function Newsletter() {
       tone="ink"
       className="flex flex-col md:min-h-svh md:justify-center"
     >
-      <div className="panel-in bento-lit-ink relative grid grid-cols-1 gap-10 border border-hairline-dark bg-coal p-6 lg:grid-cols-12 lg:gap-0 lg:p-10">
+      <div className="reveal bento-lit-ink relative grid grid-cols-1 gap-10 border border-hairline-dark bg-coal p-6 lg:grid-cols-12 lg:gap-0 lg:p-10">
         <div className="lg:col-span-7 lg:pr-12">
           <p className="flex items-center gap-2.5 text-label font-semibold uppercase text-paper">
             <span
@@ -42,7 +42,7 @@ export default async function Newsletter() {
           </p>
           <h2
             id="newsletter-heading"
-            className="mt-4 text-h2 font-bold text-balance lg:text-h2-lg"
+            className="mt-4 text-h2 font-bold text-pretty lg:text-h2-lg"
           >
             {messages.newsletter.h2}
           </h2>

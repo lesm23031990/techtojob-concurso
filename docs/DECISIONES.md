@@ -1876,6 +1876,36 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `app/app/globals.css`, `components/sections/{Hero,Closing,Audiences,Newsletter,Tournaments}.tsx`,
       `components/{NewsletterForm,SiteFooter,Ticker,Countdown}.tsx`.
 
+- **D135.** 23/09, Lorena: *"no debe quedar ni un texto verde"* (chequeo final). **Decisión:** se
+      revisa todo el código: el último `text-brand` de un componente era el **icono** de la tarjeta de
+      Audiencias → pasa a `text-paper`. Los demás usos de `brand` son **decoración** (relleno de
+      botones, bordes, subrayados, `outline`, hilos idle), nunca color de letra. `text-cloud`
+      sobrevive **solo** en las letras gigantes (H1 del hero, su acento, línea 1 del cierre).
+      **Perf (mismo bloque):** para reducir el TBT (Style & Layout) se cambian los 14 `text-balance`
+      por **`text-pretty`** (mucho más barato en Chrome) y se añade **`.cv-auto`**
+      (`content-visibility: auto` + `contain-intrinsic-size: auto 1100px`) a las secciones bajas
+      (Networking, Testimonios, Noticias, Newsletter, Cierre) para que el navegador no calcule su
+      layout hasta acercarse al viewport. `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/components/sections/Audiences.tsx`, `app/app/globals.css`,
+      `components/sections/{Hero,Closing,HowItWorks,Networking,News,Newsletter,Testimonials,Tournaments}.tsx`.
+
+- **D136.** 23/09, Lorena: *"por qué Newsletter nunca tiene la animación de entrada; hazla aparecer
+      desde abajo"* y *"el slider de Testimonios va encima de la línea de tiempo (steppers)"*.
+      **Decisión:**
+      (1) **Entrada de Newsletter = `.reveal`** (sube desde abajo, `opacity` + `translateY`), la misma
+      animación compartida de los "beats". Se retira la animación propia `.panel-in` y también el
+      `cv-auto` de esa sección: **causa de que no se viera** — `content-visibility: auto` la saca del
+      render hasta acercarse al viewport, así que el timeline `view()` del panel arrancaba ya pasado
+      su tramo de entrada y saltaba al estado final sin animar.
+      (2) **Slider de Testimonios sobre el raíl:** se quita el `z-20` del `TimelineRail` de esa
+      sección (el marquee `z-10` queda por encima) y, al quedar sin uso, se **elimina la prop
+      `className`** de `TimelineRail`. El nodo numerado de la sección sigue visible arriba; el raíl
+      pasa por detrás de la banda del slider.
+      (3) **Noticias:** el texto de la nota de maqueta pasa de `text-slate` a `text-ink` (negro).
+      `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `components/sections/{Newsletter,Testimonials,News}.tsx`,
+      `components/TimelineRail.tsx`, `app/app/globals.css`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)

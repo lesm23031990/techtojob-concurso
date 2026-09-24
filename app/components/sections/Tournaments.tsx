@@ -51,7 +51,7 @@ export default async function Tournaments() {
         <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="torneos-heading"
-            className="reveal-left text-h2 font-bold text-ink text-balance lg:text-h2-lg"
+            className="reveal-left text-h2 font-bold text-ink text-pretty lg:text-h2-lg"
           >
             {h2}
           </h2>
@@ -73,7 +73,7 @@ export default async function Tournaments() {
                 </span>
                 {active.label}
               </p>
-              <h3 className="mt-3 text-h3 font-semibold text-balance text-ink lg:text-h3-lg">
+              <h3 className="mt-3 text-h3 font-semibold text-pretty text-ink lg:text-h3-lg">
                 {active.title}
               </h3>
               <p className="mt-3 max-w-prose text-body text-slate">
@@ -172,7 +172,7 @@ export default async function Tournaments() {
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ember" />
                 {timer.label}
               </p>
-              <p className="mt-3 text-balance text-lead font-semibold tabular-nums text-ink">
+              <p className="mt-3 text-pretty text-lead font-semibold tabular-nums text-ink">
                 {timer.heading}
               </p>
               <p className="mt-2 max-w-prose text-small text-slate">

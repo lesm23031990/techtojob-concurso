@@ -51,7 +51,7 @@ export default async function HowItWorks() {
     >
       <h2
         id="como-funciona-heading"
-        className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
+        className="reveal-left text-h2 font-bold text-pretty lg:text-h2-lg"
       >
         {h2}
       </h2>
@@ -85,7 +85,7 @@ export default async function HowItWorks() {
             </span>
 
             <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
-              <h3 className="reveal-left text-h3 font-semibold text-balance lg:col-span-4 lg:text-h3-lg">
+              <h3 className="reveal-left text-h3 font-semibold text-pretty lg:col-span-4 lg:text-h3-lg">
                 {step.title}
               </h3>
               {/* D70: the copy runs to column 12 (no empty lane, no dead space)
