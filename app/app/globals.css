@@ -700,12 +700,20 @@
 
 /* Continuous grid drift (D44): the pattern repeats every 4rem, so translating
    exactly one cell loops seamlessly. Slow (28s) and transform-only, on a layer
-   oversized by -inset-16 so no edge is ever exposed. */
+   oversized by -inset-16 so no edge is ever exposed.
+   D138 · Perf: it only runs from `lg` up. On phones a full-screen, always-on
+   animated layer was pure Rendering/Other cost for a barely-visible effect;
+   mobile gets the same grid, static. */
 .hero-field-drift {
   background-image:
     repeating-linear-gradient(to right, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4rem),
     repeating-linear-gradient(to bottom, rgb(255 255 255 / 0.05) 0 1px, transparent 1px 4rem);
-  animation: field-drift 28s linear infinite;
+}
+
+@media (width >= 64rem) {
+  .hero-field-drift {
+    animation: field-drift 28s linear infinite;
+  }
 }
 
 @keyframes field-drift {
