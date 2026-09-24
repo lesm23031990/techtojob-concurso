@@ -126,16 +126,16 @@ techtojob-concurso/
 
 ## Estado actual
 
-**FASES 1–4 completadas (22/09/2026):** specs con 61 reglas trazadas, design system con tokens,
-landing completa en `app/` (11 secciones + SEO técnico), auditoría rules-auditor pasada 1 con
-fixes aplicados (R35 commits+identificadores, R56 lazy, J6 aria-label footer) y evidencia QA
-en `docs/qa/`. Historial reescrito local antes del primer push (D22) — sin remote aún, seguro.
-**Queda FASE 5 (23/09):** repo público GitHub → deploy Vercel con URL real en `content.ts`
-(`site.url`) → Lighthouse + capturas sobre el deploy → mensaje al canal ENTREGAS con
-declaración de IA (R07).
-**Modo vigente (D56, 23/09):** Fase 5 se ejecuta **sin auditorías**: solo orquestador +
-`design-ux` + `nextjs-builder`. Lighthouse/Playwright/`rules-auditor`/`qa-access`/`seo-perf`
-se reactivan **solo** cuando Lorena diga "vamos a revisar". Nota: la rama `backup/pre-reword`
-ya se borró (22/09) porque sus
-blobs contenían el invite no oficial; el historial quedó reescrito con `filter-branch` y
-verificado con `git grep` sobre `rev-list --all` → 0 ocurrencias.
+**FASES 1–5 completadas (23/09/2026):** specs con 61 reglas trazadas, sistema de diseño con tokens
+(`docs/design-system.md`), landing completa en `app/` (Next.js App Router + TS estricto + Tailwind,
+11 secciones + SEO técnico) y **entrega publicada**: repo público
+(`github.com/lesm23031990/techtojob-concurso`) + deploy en
+**https://techtojob-concurso.vercel.app**.
+
+**Verificación final (sobre el deploy):** `tsc --noEmit`, ESLint y `next build` en verde; Lighthouse
+**móvil** con **SEO 100 · Accesibilidad 100 · Best Practices 100**. Evidencia de capturas
+(360/768/1024/1440) y reportes en `docs/qa/2026-09-23/`.
+
+**Modo de trabajo:** el "modo rápido" (D56) sirvió para iterar el diseño con 3 roles; al reactivarse
+la revisión (D124) se ejecutaron `rules-auditor`, `seo-perf` y `qa-access` sobre el estado final, con
+los hallazgos y fixes en `docs/qa/2026-09-23-auditoria-revision.md` y `docs/DECISIONES.md` (D125–D139).

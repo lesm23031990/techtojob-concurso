@@ -1793,7 +1793,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       deploy desde el repo público). Se fija en `content.ts` → `site.url`, con lo que canonical,
       `metadataBase`, `og:url`, `og:image`, hreflang (`es` + `x-default`), `sitemap.xml`, `robots.txt`
       y el `url`/`logo` del JSON-LD pasan a apuntar al dominio propio (antes apuntaban a
-      `techtojob.vercel.app`, que sirve la web de OTRO participante — causa confirmada del
+      `el dominio placeholder ajeno`, que sirve la web de OTRO participante — causa confirmada del
       **SEO 92** medido por Lorena en DevTools; al corregirlo debe volver a 100). README actualizado
       con la URL real. **Extra de rendimiento:** los 4 SVGs del logo del header pasan de `priority`
       (generaban 4 `<link rel="preload" as="image">`, dos de ellos ocultos, compitiendo con la fuente)

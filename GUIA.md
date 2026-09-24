@@ -28,7 +28,7 @@ historial de commits y esta documentación son parte de la evaluación del jurad
 
 - **23/09 (D125/D126) · auditoría estricta aplicada.** `rules-auditor`, `seo-perf` y `qa-access`
   corrieron en **solo-lectura** sobre el estado congelado. **Hallazgo bloqueante:** `content.ts:316`
-  (`site.url`) apunta a `https://techtojob.vercel.app`, que **hoy sirve la web de OTRO participante**
+  (`site.url`) apunta a `un dominio placeholder ajeno`, que **hoy sirve la web de OTRO participante**
   (y `techtojob-landing.vercel.app` también es de otro); **no hay deploy de este repo**, así que
   canonical/OG/sitemap/JSON-LD apuntan fuera. **No es entregable hasta fijar la URL real.**
   Aplicado: `loading="lazy"` fuera del hero (R56), `animation-delay: 0s` en el guard de reduced-motion,

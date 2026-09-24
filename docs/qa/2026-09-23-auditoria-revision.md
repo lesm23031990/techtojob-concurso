@@ -22,7 +22,7 @@ Código de nivel alto, **paquete de entrega incompleto**. Bloqueante: **no hay d
 
 | # | Hallazgo | Criterio | Estado |
 |---|---|---|---|
-| 1 | `content.ts:316` `site.url` = `https://techtojob.vercel.app` sirve la web de OTRO participante (verificado); `techtojob-landing.vercel.app` también es de otro | R02/R49/R50/R51/R52 | ✅ **CERRADO** — deploy real en `https://techtojob-concurso.vercel.app` y `site.url` corregido (D129); canonical/hreflang/OG/sitemap/JSON-LD verificados |
+| 1 | `content.ts:316` `site.url` = `un dominio placeholder ajeno` sirve la web de OTRO participante (verificado); `techtojob-landing.vercel.app` también es de otro | R02/R49/R50/R51/R52 | ✅ **CERRADO** — deploy real en `https://techtojob-concurso.vercel.app` y `site.url` corregido (D129); canonical/hreflang/OG/sitemap/JSON-LD verificados |
 | 2 | Sin capturas desktop/móvil | R03/J3 | **ABIERTO** |
 | 3 | Lighthouse móvil = Perf 76, medido en localhost y pre-rediseño | R61/J6 | **ABIERTO** — remedir sobre el deploy |
 | 4 | `loading="lazy"` en la imagen del hero | R56 | ✅ corregido (`Hero.tsx`) |
