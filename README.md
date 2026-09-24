@@ -26,9 +26,10 @@ npm run dev
 
 ## Qué contiene la landing
 
-Hero con un único CTA (entrar al Discord) → Cómo funciona (4 pasos) → Torneos → Talento → Empresas →
-Networking → Testimonios (de muestra, con slot honesto para LinkedIn) → Noticias (maqueta declarada)
-→ Newsletter (franja pre-footer) → Cierre → Footer por bloques.
+Hero con un único CTA (entrar al Discord) → Cómo funciona (4 pasos) → Torneos (con contador de
+cierre) → Audiencias (talento y empresas, como dos caminos paralelos) → Networking → Testimonios
+(de muestra, con slot honesto para LinkedIn) → Noticias (maqueta declarada) → Newsletter → Cierre →
+Footer por bloques.
 
 **Sobre el orden (R10):** las bases dejan el orden del cuerpo como orientativo y solo fijan el hero
 al principio y el footer al final. Se reordenó a propósito para que la página se lea como una
@@ -58,12 +59,26 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 | Gate | Estado |
 |---|---|
 | `next build` + `tsc --noEmit` + ESLint | ✅ 0 errores |
-| Auditoría de las 61 reglas del concurso (`docs/qa/2026-09-22-rules-audit-1.md`) | ✅ tras fixes R35/R56 |
-| Lighthouse móvil (SEO / Accesibilidad / Rendimiento) | ✅ PageSpeed Insights sobre el deploy: **Perf 99 · SEO 100 · A11y 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
+| Auditoría de las 61 reglas del concurso | ✅ inicial (22/09) + revisión (23/09) — `docs/qa/2026-09-22-rules-audit-1.md`, `docs/qa/2026-09-23-auditoria-revision.md` |
+| `rules-auditor` + `seo-perf` + `qa-access` | ✅ ejecutados en modo revisión (`docs/qa/2026-09-23-auditoria-revision.md`) |
+| Lighthouse móvil sobre el deploy | ✅ PageSpeed Insights: **Perf 99 · SEO 100 · Accesibilidad 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
 | Responsive 360 / 768 / 1024 / 1440 | ✅ capturas sobre el deploy en `docs/qa/2026-09-23/` |
-| Auditorías, Lighthouse y Playwright | ⏸ **en pausa desde el 23/09 (D56)**; la evidencia vigente es la del 22/09 en `docs/qa/` |
-| Metadata API + OG 1200×630 + Twitter Card + JSON-LD Organization + sitemap + robots | ✅ |
-| WCAG 2.1 AA: semántica, jerarquía H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ |
+| Metadata API + OG 1200×630 + Twitter Card + JSON-LD (Organization + WebSite) + sitemap + robots | ✅ |
+| WCAG 2.1 AA: semántica, H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ (Lighthouse Accessibility 100) |
+
+## Evidencia (sobre el deploy)
+
+**Lighthouse móvil — PageSpeed Insights (Lighthouse en servidores de Google): Performance 99 · Accesibilidad 100 · Best Practices 100 · SEO 100**
+
+![PageSpeed Insights móvil — 99/100/100/100](docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png)
+
+**Capturas responsive (360 / 768 / 1024 / 1440):**
+
+| Móvil 360 | Tablet 768 | Escritorio 1024 | Escritorio 1440 |
+|---|---|---|---|
+| ![Móvil 360](docs/qa/2026-09-23/deploy-mobile-360.png) | ![Tablet 768](docs/qa/2026-09-23/deploy-tablet-768.png) | ![Escritorio 1024](docs/qa/2026-09-23/deploy-desktop-1024.png) | ![Escritorio 1440](docs/qa/2026-09-23/deploy-desktop-1440.png) |
+
+> Reportes completos (JSON/HTML) y decisiones en `docs/qa/` y `docs/DECISIONES.md`.
 
 ## Mapa del repo
 
@@ -82,11 +97,9 @@ Los agentes escribieron y auditaron código bajo especificaciones derivadas de l
 concurso; la dirección de producto, las decisiones de copy y la revisión final son humanas.
 El proceso completo es auditable en el historial de commits y en `docs/`.
 
-> **Modo de trabajo actual (D56):** desde el 23/09 el ciclo se redujo a **3 roles** (orquestador,
-> diseño UX y construcción) y las auditorías/Lighthouse quedaron **en pausa declarada**; los
-> agentes de QA, SEO y auditoría siguen definidos en `.opencode/agent/`. La evidencia de calidad
-> publicada es la de la Fase 4 (22/09) y los fixes posteriores se validan con `tsc`, ESLint y
-> `next build`.
+> **Verificación final:** antes de entregar se corrió una pasada de revisión con `rules-auditor`,
+> `seo-perf` y `qa-access` (acciones de revisión y control de calidad) sobre el estado congelado;
+> sus hallazgos y fixes están en `docs/qa/2026-09-23-auditoria-revision.md` y en `docs/DECISIONES.md`.
 
 ## Fuentes y créditos
 

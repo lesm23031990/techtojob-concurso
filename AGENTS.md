@@ -69,29 +69,14 @@ Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto e
 - `nextjs-builder` es el único que escribe en `app/`. Excepción registrada: D29 (créditos
   de `opencode-go` agotados), donde el orquestador implementó directamente.
 - Los reportes de auditoría citan textual la regla del concurso que motiva el hallazgo.
-- **Modo rápido vigente (D56):** `rules-auditor`, `qa-access` y `seo-perf` están **dormidos**;
-  no se invocan hasta que Lorena diga "vamos a revisar". Los roles de abajo siguen vigentes
-  para cuando eso ocurra.
-
-### Modo rápido: 3 agentes, cero auditorías (REGLA VIGENTE por defecto)
-- **Vigente desde D56 (23/09/2026) y hasta que Lorena diga "vamos a revisar" o cambie la
-  decisión.** No tiene fecha de caducidad: aplica a **toda** tarea y a **todas** las fases,
-  incluida la Fase 5 (entrega).
-- **Solo 3 roles activos:** el orquestador (specs, decisiones, coordinación), **`design-ux`**
-  (criterio visual y copy) y **`nextjs-builder`** (única mano que escribe en `app/`).
-- **Prohibido invocar** `rules-auditor`, `qa-access`, `seo-perf`, y cualquier herramienta de
-  verificación: Lighthouse, Playwright/axe, auditorías de contraste, medición de INP, capturas
-  de QA. Motivo declarado: el ciclo de auditoría tardaba más que el propio cambio y frenaba el
-  avance; Lorena prioriza iterar.
-- Los agentes pausados **no se borran**: siguen definidos en `.opencode/agent/` y su prompt,
-  permisos y modelo intactos. Solo quedan dormidos hasta el modo revisión.
-- **Permitido en este modo** (no es auditoría ni agente): `tsc --noEmit`, ESLint y `next build`
-  — verificaciones locales de segundos que evitan commitear código roto. Nada más.
-- **Al activar el modo revisión** (Lorena dice "vamos a revisar"): vuelve a aplicar completo el
-  gate "Calidad mínima exigida" + Fase 5, con `rules-auditor`, `qa-access` y `seo-perf` sobre el
-  estado congelado en ese momento.
-- Origen: D56 en `docs/DECISIONES.md`; **supersede D28 y D39** (que pausaban QA solo mientras el
-  diseño no estuviera congelado y reactivaban el gate al congelarlo).
+- **Modo de trabajo (histórico):** durante la iteración de diseño se trabajó en **modo rápido**
+  (D56) —3 roles: orquestador, `design-ux` y `nextjs-builder`— para no frenar el avance.
+  **Al reactivarse la revisión (D124)** se ejecutó la pasada completa de `rules-auditor`,
+  `seo-perf` y `qa-access` sobre el estado final; hallazgos y fixes en
+  `docs/qa/2026-09-23-auditoria-revision.md` y `docs/DECISIONES.md` (D125–D139). La entrega se
+  cierra con el gate de **"Calidad mínima exigida"** verificado.
+- `rules-auditor` y `qa-access` **no editan código**: auditan y reportan a `docs/qa/`.
+  `nextjs-builder` es la mano que escribe en `app/`.
 
 ### Modelos de los agentes (arquitectura dual)
 - **Primario: `opencode-go`**, con el modelo afinado de cada agente (kimi-k3 para el builder,
