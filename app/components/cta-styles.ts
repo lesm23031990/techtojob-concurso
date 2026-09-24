@@ -53,7 +53,7 @@ export function ctaVariantClasses(
 
 /** Classes shared by the anchor and the inert button. */
 export const CTA_BASE =
-  "relative isolate inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-none font-bold whitespace-nowrap transition-[background-color,border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 motion-reduce:transform-none focus-visible:outline-3 focus-visible:outline-offset-3";
+  "relative isolate inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-none font-bold whitespace-nowrap transition-[background-color,border-color,box-shadow] duration-200 focus-visible:outline-3 focus-visible:outline-offset-3";
 
 /** Focus ring per surface: `brand` on dark, `ink` on light (R26). */
 export function ctaFocusRing(onLight: boolean): string {

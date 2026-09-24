@@ -32,7 +32,7 @@ function HeroWord({ word, order }: { word: HeroWord; order: number }) {
   return (
     <span className="-mb-[0.18em] inline-block overflow-hidden pb-[0.18em] align-bottom">
       <span
-        className={`word-rise relative inline-block ${word.accent ? "text-brand" : ""}`}
+        className={`word-rise relative inline-block ${word.accent ? "text-cloud" : ""}`}
         style={{ animationDelay: `${120 + order * 45}ms` }}
       >
         {word.text}
@@ -161,7 +161,7 @@ export default async function Hero() {
           </span>
         </h1>
 
-        <p className="animate-rise-in mt-8 max-w-[46ch] text-lead text-cloud [animation-delay:220ms] lg:col-start-2 lg:col-span-5 lg:mt-10 lg:text-lead-lg">
+        <p className="animate-rise-in mt-8 max-w-[46ch] text-lead text-paper [animation-delay:220ms] lg:col-start-2 lg:col-span-5 lg:mt-10 lg:text-lead-lg">
           {hero.sub}
         </p>
 
@@ -169,7 +169,7 @@ export default async function Hero() {
           <DiscordCta size="hero" label={hero.cta} />
         </div>
 
-        <p className="animate-rise-in mt-6 text-small text-cloud [animation-delay:460ms] lg:col-start-2 lg:col-span-5">
+        <p className="animate-rise-in mt-6 text-small text-paper [animation-delay:460ms] lg:col-start-2 lg:col-span-5">
           {hero.support}
         </p>
 
@@ -185,7 +185,7 @@ export default async function Hero() {
                   aria-hidden="true"
                   className="absolute top-2 -left-6 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-ember"
                 />
-                <dt className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
+                <dt className="text-label font-semibold uppercase tracking-[0.15em] text-paper">
                   {item.label}
                 </dt>
                 <dd className="mt-1 text-small text-paper">{item.value}</dd>

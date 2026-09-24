@@ -102,8 +102,6 @@ export default async function SiteHeader() {
       <HeaderSurface />
       <div aria-hidden="true" className="header-veil-layer header-veil-dark" />
       <div aria-hidden="true" className="header-veil-layer header-veil-light" />
-      <div aria-hidden="true" className="header-fade-layer header-fade-dark" />
-      <div aria-hidden="true" className="header-fade-layer header-fade-light" />
       <div className="relative flex h-20 items-center justify-between gap-2 px-5 md:gap-6 md:px-8 lg:gap-3 lg:px-10 xl:gap-6">
         <Link
           href="#inicio"

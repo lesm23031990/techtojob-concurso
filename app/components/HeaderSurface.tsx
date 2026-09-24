@@ -11,11 +11,6 @@ import { useEffect } from "react";
  * scroll listener now only toggles the `scrolled` flag (a cheap `scrollY`
  * read). No visible UI; server default is dark (the hero is ink) so the first
  * paint is already correct. Without JS the header stays ink.
- *
- * D92: alongside the polarity it publishes `data-header-tint`, true when the
- * section under the bar is a BLUE tint (`mist`/`brand-soft`) — the header then
- * drops its bottom shadow and dissolve band. Absent attribute → "false", so
- * `paper`/dark sections keep the usual treatment.
  */
 export default function HeaderSurface() {
   useEffect(() => {
@@ -32,20 +27,14 @@ export default function HeaderSurface() {
     );
 
     let lastSurface = "";
-    let lastTint = "";
     let lastScrolled = "";
 
     const apply = (section: HTMLElement | null) => {
       const surface = section?.dataset.surface === "light" ? "light" : "dark";
-      const tint = section?.dataset.headerTint === "true" ? "true" : "false";
       const currentId = section?.id ?? "";
       if (surface !== lastSurface) {
         root.dataset.headerSurface = surface;
         lastSurface = surface;
-      }
-      if (tint !== lastTint) {
-        root.dataset.headerTint = tint;
-        lastTint = tint;
       }
       // Only the FIRST link that matches gets marked: Talent and Companies are
       // one section, so marking every match would light up two nav items.

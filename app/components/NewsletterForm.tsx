@@ -28,7 +28,7 @@ export default function NewsletterForm() {
     <form onSubmit={handleSubmit} className="flex flex-col">
       <label
         htmlFor="newsletter-email"
-        className="text-label font-semibold uppercase text-cloud"
+        className="text-label font-semibold uppercase text-paper"
       >
         {messages.newsletter.label}
       </label>
@@ -40,11 +40,11 @@ export default function NewsletterForm() {
         autoComplete="email"
         placeholder={messages.newsletter.placeholder}
         aria-describedby="newsletter-note"
-        className="mt-3 min-h-12 w-full rounded-input border border-white/50 bg-ink px-4 text-paper transition-colors duration-200 placeholder:text-cloud/70 focus:border-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="mt-3 min-h-12 w-full rounded-input border border-white/50 bg-ink px-4 text-paper transition-colors duration-200 placeholder:text-paper/50 focus:border-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand"
       />
       <button
         type="submit"
-        className="group relative isolate mt-3 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-none bg-brand px-6 py-3 text-body font-bold whitespace-nowrap text-ink ring-1 ring-ink/10 transition-[background-color,border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:bg-brand-deep hover:shadow-glow-cta focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand motion-reduce:transform-none"
+        className="group relative isolate mt-3 inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-none bg-brand px-6 py-3 text-body font-bold whitespace-nowrap text-ink ring-1 ring-ink/10 transition-[background-color,border-color,box-shadow] duration-200 hover:bg-brand-deep hover:shadow-glow-cta focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-brand"
       >
         <span
           aria-hidden="true"
@@ -55,7 +55,7 @@ export default function NewsletterForm() {
       <div aria-hidden="true" className="line-idle mt-6 h-px w-full bg-white/10" />
       <p
         id="newsletter-note"
-        className="mt-3 flex items-start gap-2.5 text-small text-cloud/80"
+        className="mt-3 flex items-start gap-2.5 text-small text-paper"
       >
         <span
           aria-hidden="true"
@@ -68,7 +68,7 @@ export default function NewsletterForm() {
         id="newsletter-status"
         role="status"
         aria-live="polite"
-        className="mt-2 text-small text-brand"
+        className="mt-2 text-small text-paper"
       >
         {submitted ? messages.newsletter.success : ""}
       </p>

@@ -42,7 +42,7 @@ async function NewsCard({ item, featured = false }: { item: NewsItem; featured?:
   const messages = await getMessages();
   return (
     <article
-      className={`bento-lit card-idle group relative flex h-full flex-col gap-3 border border-line bg-paper transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand hover:bg-mist hover:shadow-glow ${
+      className={`bento-lit card-idle group relative flex h-full flex-col gap-3 border border-line bg-paper transition-[background-color,border-color,box-shadow] duration-300 ease-in-out hover:border-brand hover:bg-mist hover:shadow-glow ${
         featured ? "p-6 lg:p-10" : "p-6"
       }`}
     >
@@ -110,7 +110,6 @@ export default async function News() {
       id="noticias"
       headingId="noticias-heading"
       tone="paper"
-      textDrift
       idleAccent="ember"
     >
       <h2

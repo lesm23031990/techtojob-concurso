@@ -118,7 +118,7 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={`${sora.variable} h-full antialiased`}>
+    <html lang={locale} className={`${sora.variable} h-full`}>
       <NextIntlClientProvider locale={locale} messages={{ newsletter: messages.newsletter }}>
         <body className="flex min-h-full flex-col">
           {/* Skip link: first tabbable element, revealed on focus only —

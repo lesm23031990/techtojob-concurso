@@ -30,7 +30,7 @@ export default async function SiteFooter() {
   ];
 
   return (
-    <footer className="border-t border-hairline-dark bg-ink text-cloud">
+    <footer className="border-t border-hairline-dark bg-ink text-paper">
       <div className="page-container py-16">
         {/* decorative brand mark — the same header composite as the ink state (§2a/§2c, D58) */}
         <span aria-hidden="true" className="flex items-center gap-2.5">
@@ -71,7 +71,7 @@ export default async function SiteFooter() {
                       {...(isExternal(link.href)
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      className="inline-flex min-h-11 items-center gap-1 rounded-full text-small font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
+                      className="inline-flex min-h-11 items-center gap-1 rounded-full text-small font-semibold text-paper transition-colors duration-150 hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
                     >
                       {link.text}
                       {isExternal(link.href) && (
@@ -99,7 +99,7 @@ export default async function SiteFooter() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full text-small font-semibold text-cloud transition-colors duration-150 hover:text-brand focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
+                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full text-small font-semibold text-paper transition-colors duration-150 hover:underline focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-brand sm:text-body"
                 >
                   {social.text}
                   <IconArrowUpRight className="h-4 w-4" />
@@ -112,7 +112,7 @@ export default async function SiteFooter() {
 
         <div className="mt-12 border-t border-hairline-dark pt-8">
           <p className="text-small">{messages.footer.credits}</p>
-          <p id="legal-nota" className="mt-3 max-w-[65ch] scroll-mt-24 text-small text-cloud">
+          <p id="legal-nota" className="mt-3 max-w-[65ch] scroll-mt-24 text-small text-paper">
             {messages.footer.legalNote}
           </p>
         </div>

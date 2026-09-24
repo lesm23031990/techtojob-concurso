@@ -55,7 +55,7 @@ export default async function Networking() {
 
         {/* Right column: the three concepts, split by 1px hairlines. They use
             `.reveal-left` (D85) so each block slides out of the rail. */}
-        <div className="mt-10 lg:col-span-7 lg:mt-0 text-drift">
+        <div className="mt-10 lg:col-span-7 lg:mt-0">
           <article className="reveal-left border-t border-line py-8 first:border-t-0 first:pt-0 lg:py-10">
             <h3 className="flex items-center gap-2 text-label font-semibold uppercase text-slate">
               <span
@@ -68,7 +68,7 @@ export default async function Networking() {
               {channels.items.map((item) => (
                 <li
                   key={item}
-                  className="rounded-full border border-line px-3 py-1.5 text-small text-ink opacity-70 transition-opacity duration-300 hover:opacity-100"
+                  className="rounded-full border border-line px-3 py-1.5 text-small text-ink transition-colors duration-300 hover:border-brand"
                 >
                   {item}
                 </li>

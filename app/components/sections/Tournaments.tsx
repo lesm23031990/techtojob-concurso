@@ -42,14 +42,13 @@ export default async function Tournaments() {
       id="torneos"
       aria-labelledby="torneos-heading"
       data-surface="light"
-      data-header-tint="true"
       className="section-tight relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
       <TimelineRail tone="mist" step={timelineStep("torneos")} />
       <span aria-hidden="true" className="section-sheen" />
       <span aria-hidden="true" className="section-idle section-idle-ember" />
       <div className="page-container">
-        <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24 text-drift">
+        <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="torneos-heading"
             className="reveal-left text-h2 font-bold text-ink text-balance lg:text-h2-lg"

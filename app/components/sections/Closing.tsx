@@ -78,7 +78,7 @@ export default async function Closing() {
               <span className="block text-cloud">{closing.line1}</span>
               <span className="block">{closing.line2}</span>
             </h2>
-            <p className="reveal mt-6 max-w-2xl text-lead text-cloud">
+            <p className="reveal mt-6 max-w-2xl text-lead text-paper">
               {closing.copy}
             </p>
             <div className="reveal mt-10">

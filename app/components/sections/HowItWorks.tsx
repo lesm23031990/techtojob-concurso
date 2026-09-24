@@ -47,7 +47,6 @@ export default async function HowItWorks() {
       id="como-funciona"
       headingId="como-funciona-heading"
       tone="paper"
-      textDrift
       className="section-tight"
     >
       <h2

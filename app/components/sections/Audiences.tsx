@@ -80,7 +80,6 @@ export default async function Audiences() {
       id="talento"
       headingId="audiences-heading"
       tone="ink"
-      textDrift
       className="isolate overflow-clip"
       /* Light-symbol watermark at 6% (D90): on `ink` the gradient symbol's
          dark end vanished; the light symbol matches the header's dark
@@ -104,7 +103,7 @@ export default async function Audiences() {
       >
         {h2}
       </h2>
-      <p className="reveal-left mt-3 max-w-[65ch] text-body text-cloud lg:text-lead">
+      <p className="reveal-left mt-3 max-w-[65ch] text-body text-paper lg:text-lead">
         {intro}
       </p>
 
@@ -119,7 +118,7 @@ export default async function Audiences() {
             <article
               id={audience.id}
               aria-labelledby={audience.headingId}
-              className="bento-lit-ink card-idle group relative flex h-full flex-col border border-hairline-dark bg-coal p-6 pt-12 transition-[transform,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand hover:shadow-glow lg:p-8 lg:pt-14"
+              className="bento-lit-ink card-idle group relative flex h-full flex-col border border-hairline-dark bg-coal p-6 pt-12 transition-[border-color,box-shadow] duration-300 ease-in-out hover:border-brand hover:shadow-glow lg:p-8 lg:pt-14"
             >
               <span aria-hidden="true" className="sheen-sweep" />
               {/* Numbered badge echoing the rail node (D67); its ink ring cuts
@@ -135,7 +134,7 @@ export default async function Audiences() {
 
               <div className="relative flex items-start justify-between gap-6">
                 <div>
-                  <p className="flex items-center gap-2 text-label font-semibold uppercase text-cloud">
+                  <p className="flex items-center gap-2 text-label font-semibold uppercase text-paper">
                     <span
                       aria-hidden="true"
                       className="h-1.5 w-1.5 rounded-full bg-ember"
@@ -156,7 +155,7 @@ export default async function Audiences() {
                 </span>
               </div>
 
-              <p className="relative mt-4 max-w-[65ch] text-body text-cloud">
+              <p className="relative mt-4 max-w-[65ch] text-body text-paper">
                 {audience.copy}
               </p>
 
@@ -166,7 +165,7 @@ export default async function Audiences() {
                 {audience.highlights.map((highlight) => (
                   <li
                     key={highlight}
-                    className="rounded-full border border-hairline-dark px-3 py-1 text-small text-cloud"
+                    className="rounded-full border border-hairline-dark px-3 py-1 text-small text-paper"
                   >
                     {highlight}
                   </li>
@@ -188,7 +187,7 @@ export default async function Audiences() {
                 />
                 {/* Honest context: the button does not promise an action it
                     cannot perform; it says where it happens (D79). */}
-                <p className="mt-3 text-small text-cloud">{ctaNote}</p>
+                <p className="mt-3 text-small text-paper">{ctaNote}</p>
               </div>
             </article>
           </div>

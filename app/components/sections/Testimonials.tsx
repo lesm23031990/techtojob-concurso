@@ -67,7 +67,7 @@ import type { Testimonial } from "@/content";
 async function TestimonialCard({ item }: { item: Testimonial }) {
   const messages = await getMessages();
   return (
-    <figure className="card-idle group relative flex h-full flex-col border border-ink/10 bg-paper p-5 transition-[transform,background-color,border-color,box-shadow] duration-300 ease-in-out hover:scale-[1.02] hover:border-brand">
+    <figure className="card-idle group relative flex h-full flex-col border border-ink/10 bg-paper p-5 transition-[background-color,border-color,box-shadow] duration-300 ease-in-out hover:border-brand">
       {/* Delicate hard-edged sheen on hover (D76), same motif as the CTA and the
           audiences cards; `.sheen-sweep` clips itself, so no `overflow` here. */}
       <span aria-hidden="true" className="sheen-sweep" />
@@ -129,7 +129,6 @@ export default async function Testimonials() {
       id="testimonios"
       aria-labelledby="testimonios-heading"
       data-surface="light"
-      data-header-tint="true"
       className="relative isolate overflow-clip bg-mist py-20 text-ink lg:py-32"
     >
       <TimelineRail
@@ -149,7 +148,7 @@ export default async function Testimonials() {
       />
 
       <div className="marquee-head page-container">
-        <div className="pl-7 text-drift md:pl-14 lg:pl-20 xl:pl-24">
+        <div className="pl-7 md:pl-14 lg:pl-20 xl:pl-24">
           <h2
             id="testimonios-heading"
             className="reveal-left text-h2 font-bold text-balance lg:text-h2-lg"
@@ -208,7 +207,7 @@ export default async function Testimonials() {
       {/* Full-bleed slider: spans the whole viewport and layers over the rail (D89). */}
       <div className="marquee-block reveal relative z-10 mt-8">
         <div className="testimonial-band py-6">
-          <div className="marquee-fade overflow-hidden">
+          <div className="overflow-hidden">
             <div
               aria-hidden="true"
               className="marquee-track animate-marquee flex w-max [--marquee-duration:180s] hover:[animation-play-state:paused] focus-within:[animation-play-state:paused]"

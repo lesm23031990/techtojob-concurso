@@ -39,7 +39,7 @@ export default async function Ticker() {
                 key={`${copy}-${index}-${token}`}
                 className="flex items-center gap-8"
               >
-                <span className="text-label font-semibold uppercase tracking-[0.15em] text-cloud">
+                <span className="text-label font-semibold uppercase tracking-[0.15em] text-paper">
                   {token}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-ember" />

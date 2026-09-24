@@ -21,7 +21,7 @@
   /* Intermediate grays (allowed by R25) */
   --color-mist: #f4f7f7; /* tinted light section background       */
   --color-line: #dfe6e6; /* borders/dividers on light surfaces    */
-  --color-slate: #5f6a6d; /* secondary text on light surfaces     */
+  --color-slate: #474d4f; /* secondary text on light surfaces (dark gray) */
   --color-cloud: #c3cdcd; /* secondary text on dark surfaces      */
   --color-coal: #3a4144; /* raised card surface on ink background */
   --color-hairline-dark: rgb(255 255 255 / 0.12); /* dividers on ink */
@@ -45,7 +45,7 @@
   --text-display-md: 2.75rem;
   --text-display-md--line-height: 1.05;
   --text-display-md--letter-spacing: -0.035em;
-  --text-display-lg: 4rem;
+  --text-display-lg: 3.5rem;
   --text-display-lg--line-height: 1.0;
   --text-display-lg--letter-spacing: -0.04em;
 
@@ -116,7 +116,7 @@
   }
 
   body {
-    @apply bg-paper font-sans text-ink antialiased;
+    @apply bg-paper font-sans text-ink;
   }
 }
 
@@ -138,15 +138,14 @@
 
 /* ── Adaptive header (D47) ──────────────────────────────────────────────
    The bar itself is SOLID (full 80px) so the CTA never pokes through a
-   translucent bottom edge; the "dissolve" is a separate wide gradient strip
-   rendered BELOW the bar. Layers crossfade between ink and paper via
-   [data-header-surface] on <html> (set by the HeaderSurface island). Default
-   state is dark, so the server render is already correct (CLS 0).
+   translucent bottom edge. The polarity crossfades between ink and paper via
+   [data-header-surface] on <html> (set by the HeaderSurface island); default is
+   dark, so the server render is already correct (CLS 0).
 
-   D94: the dissolve ramps spell out alpha (`rgb(… / 0)`) instead of the
-   `transparent` keyword. `transparent` is "black with alpha 0", so some engines
-   interpolate through gray and leave a faint band (read as "detalles" on the
-   white header); a 5-stop ramp also hides the seam as content scrolls under. */
+   D132: NO separator under the bar — neither the old 2.5rem dissolve gradient
+   nor a hairline. Lorena found the strip looked bad, so the header just changes
+   polarity: at the top it blends into the hero, and when scrolled the solid bar
+   meets the content with a clean edge (no shadow, no band). */
 .header-veil-layer {
   position: absolute;
   inset: 0;
@@ -164,62 +163,12 @@
   opacity: 0;
 }
 
-.header-fade-layer {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  height: 2.5rem;
-  pointer-events: none;
-  transition: opacity 250ms ease;
+[data-header-surface="light"] .header-veil-dark {
+  opacity: 0;
 }
 
-.header-fade-dark {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(47 52 54 / 1) 0%,
-    rgb(47 52 54 / 0.92) 25%,
-    rgb(47 52 54 / 0.62) 55%,
-    rgb(47 52 54 / 0.22) 82%,
-    rgb(47 52 54 / 0) 100%
-  );
+[data-header-surface="light"] .header-veil-light {
   opacity: 1;
-}
-
-.header-fade-light {
-  background-image: linear-gradient(
-    to bottom,
-    rgb(255 255 255 / 1) 0%,
-    rgb(255 255 255 / 0.92) 25%,
-    rgb(255 255 255 / 0.62) 55%,
-    rgb(255 255 255 / 0.22) 82%,
-    rgb(255 255 255 / 0) 100%
-  );
-  opacity: 0;
-}
-
-[data-header-surface="light"] .header-veil-dark,
-[data-header-surface="light"] .header-fade-dark {
-  opacity: 0;
-}
-
-[data-header-surface="light"] .header-veil-light,
-[data-header-surface="light"] .header-fade-light {
-  opacity: 1;
-}
-
-[data-header-surface="light"][data-header-scrolled="true"] .header-veil-light {
-  box-shadow: 0 18px 40px -24px rgb(47 52 54 / 0.32);
-}
-
-/* D92: en las superficies AZULES (`mist`) el header claro no proyecta sombra
-   inferior ni franja de disolución (sobre azul se veían como una mancha
-   gris/blanca). Blanco y oscuro conservan el tratamiento de siempre. */
-[data-header-surface="light"][data-header-tint="true"] .header-veil-light {
-  box-shadow: none;
-}
-[data-header-surface="light"][data-header-tint="true"] .header-fade-light {
-  opacity: 0;
 }
 
 /* Logo swap: the same tile+wordmark composite in both polarities (D55). */
@@ -252,12 +201,9 @@
   color: var(--color-ink);
 }
 
-/* Scrollspy active link (D49). On dark, brand text is 6.17:1; on light we never
-   use brand as text (R26) — ink text with a brand underline as decoration. */
-[data-header-surface="dark"] .header-nav-link[aria-current="location"] {
-  color: var(--color-brand);
-}
-
+/* Scrollspy active link (D49/D134). No green text anywhere: the active state is
+   only the brand UNDERLINE (decoration, allowed); the dark polarity now keeps
+   the same ink/paper text colour as the rest. */
 [data-header-surface="light"] .header-nav-link[aria-current="location"] {
   color: var(--color-ink);
 }
@@ -580,52 +526,8 @@
   animation: marquee var(--marquee-duration, 34s) linear infinite;
 }
 
-/* D89/D90-7: edge mask of the testimonials marquee (same pattern as
-   `.hero-field`), so the cards dissolve. It sits on an INNER wrapper around the
-   track only — never on `.testimonial-band`, whose green field and `border-block`
-   must reach the viewport edges.
-   D123: tanto la BANDA como las tarjetas desaparecen a la IZQUIERDA DEL RAÍL de
-   la línea de tiempo: a la izquierda del eje no queda nada (ni campo, ni
-   hairline, ni sombra), y el borde derecho se queda igual que estaba (95% →
-   100%). `--fade-x` es el **borde DERECHO** del raíl: la x del raíl (el
-   `page-container` centrado a 72rem, `50% − 36rem`, más el `left` del raíl —
-   1.25 / 2 / 2.5rem según breakpoint, con `max()` para los viewports más
-   estrechos que el contenedor) **más sus 3px de ancho**, para que el slider
-   termine ANTES de la línea y no la atraviese. */
-.marquee-block {
-  --fade-x: calc(max(1.25rem, calc(50% - 34.75rem)) + 3px);
-}
-
-@media (width >= 48rem) {
-  .marquee-block {
-    --fade-x: calc(max(2rem, calc(50% - 34rem)) + 3px);
-  }
-}
-
-@media (width >= 64rem) {
-  .marquee-block {
-    --fade-x: calc(max(2.5rem, calc(50% - 33.5rem)) + 3px);
-  }
-}
-
-.marquee-fade {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    transparent var(--fade-x),
-    #000 calc(var(--fade-x) + 96px),
-    #000 95%,
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    transparent var(--fade-x),
-    #000 calc(var(--fade-x) + 96px),
-    #000 95%,
-    transparent 100%
-  );
-}
+/* D133: no edge mask on the testimonials marquee — Lorena disliked the side
+   gradient, so the cards are no longer dissolved at the edges. */
 
 /* D89: pause/resume of the testimonials marquee, CSS-only (hidden checkbox,
    no client island). Sibling order in the JSX: input → `.marquee-head` (which
@@ -1058,31 +960,9 @@
    cero JS. El guard global de `prefers-reduced-motion` (final del archivo)
    neutraliza ambos efectos. */
 
-/* A) Deriva de TEXTO con el scroll (catálogo §9 #17).
-   Va en un WRAPPER del contenido — jamás en los nodos con `.reveal`/
-   `.reveal-left` (ya animan `transform`) ni en imágenes/marcas de agua.
-   Recorrido mínimo: ±0.375rem (0.75rem totales), sin salida ni fundido:
-   NUNCA toca `opacity`, solo acompaña (al subir, se invierte). Estado por
-   defecto = posición natural → sin soporte o con reduced-motion el texto
-   queda quieto y completo. Alcance: pasos 2–8; NO en hero/cierre/footer. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .text-drift {
-      animation: text-drift linear both;
-      animation-timeline: view();
-      animation-range: cover;
-    }
-  }
-}
-
-@keyframes text-drift {
-  from {
-    transform: translate3d(0, 0.375rem, 0);
-  }
-  to {
-    transform: translate3d(0, -0.375rem, 0);
-  }
-}
+/* D133: the scroll-linked text drift was removed — a continuous fractional
+   translate kept the copy on a composited layer and made it look soft. Text
+   now stays at its natural position, so it renders crisp. */
 
 /* ── D84/D86 · Vida idle de secciones, líneas y bordes ───────────────────
    El brillo usa el VERDE de marca (`brand`), igual que el hilo de sección, e

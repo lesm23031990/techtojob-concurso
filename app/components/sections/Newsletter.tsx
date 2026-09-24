@@ -33,7 +33,7 @@ export default async function Newsletter() {
     >
       <div className="panel-in bento-lit-ink relative grid grid-cols-1 gap-10 border border-hairline-dark bg-coal p-6 lg:grid-cols-12 lg:gap-0 lg:p-10">
         <div className="lg:col-span-7 lg:pr-12">
-          <p className="flex items-center gap-2.5 text-label font-semibold uppercase text-brand">
+          <p className="flex items-center gap-2.5 text-label font-semibold uppercase text-paper">
             <span
               aria-hidden="true"
               className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
@@ -46,7 +46,7 @@ export default async function Newsletter() {
           >
             {messages.newsletter.h2}
           </h2>
-          <p className="mt-6 max-w-[65ch] text-body text-cloud">
+          <p className="mt-6 max-w-[65ch] text-body text-paper">
             {messages.newsletter.copy}
           </p>
 

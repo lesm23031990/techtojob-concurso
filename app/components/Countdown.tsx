@@ -76,8 +76,8 @@ export default function Countdown({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   const onLight = surface === "light";
-  const digitTone = onLight ? "text-ink" : "text-brand";
-  const labelTone = onLight ? "text-slate" : "text-cloud";
+  const digitTone = onLight ? "text-ink" : "text-paper";
+  const labelTone = onLight ? "text-slate" : "text-paper";
 
   useEffect(() => {
     const node = containerRef.current;
