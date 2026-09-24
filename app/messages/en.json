@@ -43,7 +43,7 @@
     "highlight": "te conocen",
     "line1": "Comunidad de desarrolladores y empresas tech en español.",
     "line2": "Aquí te conocen antes de la vacante.",
-    "sub": "No encajamos vacantes con currículos. Vemos a la gente construir, participar y resolver — y dejamos que las conexiones pasen solas.",
+    "sub": "No emparejamos vacantes con currículos. Vemos a la gente construir, participar y resolver — y dejamos que las conexiones pasen solas.",
     "cta": "Entrar al Discord",
     "support": "Sin formularios. Sin CV en PDF. Sin semanas de espera.",
     "meta": [
@@ -177,7 +177,7 @@
         "#IT & Support",
         "#Business & Leadership"
       ],
-      "note": "Responde tus áreas y obtienes acceso a sus canales y roles."
+      "note": "Responde con tus áreas y obtienes acceso a sus canales y roles."
     },
     "speed": {
       "label": "Respuestas en minutos",
@@ -236,7 +236,7 @@
         "category": "Torneos",
         "date": "07/09/2026",
         "dateIso": "2026-09-07",
-        "title": "Torneo #2 abierto: la landing de TechToJob se decide a retos",
+        "title": "Torneo #2 abierto: la landing de TechToJob se decide por retos",
         "summary": "Cualquiera del servidor puede participar. El jurado publica criterios. La ganadora se convierte en la web oficial.",
         "cta": "Ver las bases en el Discord"
       },

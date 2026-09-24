@@ -121,7 +121,9 @@ export default async function Testimonials() {
   /* Every half repeats the set so it always overflows the viewport; both halves
      stay identical, so the −50% loop is seamless (D90-6). */
   const items = messages.testimonials.items;
-  const REPEAT = 3;
+  /* D137 · Perf: 2 repeats already make each half wider than any common
+     viewport (8 cards × 20rem ≈ 2.7k px); 3 was redundant DOM. */
+  const REPEAT = 2;
   const repeated = Array.from({ length: REPEAT }, () => items).flat();
 
   return (

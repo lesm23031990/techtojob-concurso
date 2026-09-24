@@ -1906,6 +1906,19 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `components/sections/{Newsletter,Testimonials,News}.tsx`,
       `components/TimelineRail.tsx`, `app/app/globals.css`.
 
+- **D137.** 23/09 · **Performance (TBT).** Con SEO/A11y/Best-Practices/CLS ya en 100, el único
+      parámetro bajo es Rendimiento, y el anillo marca **TBT** como culpable; el desglose mostró
+      **Style & Layout ~1.8 s** y **Other ~2.0 s** con **Script Evaluation 371 ms** → el costo es
+      **DOM/capas**, no JS. **Primera pasada (riesgo bajo):** se reduce el DOM de los marquees, que
+      son el grueso de los nodos duplicados: **ticker `TICKER_REPEAT` 3 → 2** y **Testimonios
+      `REPEAT` 3 → 2** (24 → 16 tarjetas). Cada mitad sigue siendo más ancha que cualquier viewport
+      común (~2.5k px el ticker, ~2.7k px los testimonios), así que el bucle −50% no expone huecos.
+      **Nota de medición:** el número varía mucho según la carga de la máquina (TBT observado 640 ms
+      vs 4130 ms en escritorio); el baseline limpio y la re-medición quedan documentados en
+      `docs/qa/2026-09-23/`. Si la pasada 1 no basta, la siguiente palanca es apagar en móvil los
+      bucles idle/facetas (sacrificando algo de "vida").
+      **Actualizado en:** `components/Ticker.tsx`, `components/sections/Testimonials.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
