@@ -142,7 +142,7 @@ export default async function Testimonials() {
       <input
         id="testimonios-pausa"
         type="checkbox"
-        className="marquee-toggle sr-only motion-reduce:hidden"
+        className="marquee-toggle sr-only max-lg:hidden motion-reduce:hidden"
       />
 
       <div className="marquee-head page-container">
