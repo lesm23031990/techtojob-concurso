@@ -1,439 +1,439 @@
-# GUIA — Mapa del proyecto TechToJob Landing
+# GUIA — TechToJob Landing project map
 
-> Documento de proceso: cómo se planificó, construyó y auditó esta entrega.
-> Actualizado: 23/09/2026.
+> Process document: how this deliverable was planned, built and audited.
+> Updated: 23/09/2026.
 
-## 1. Qué es esto
+## 1. What this is
 
-Landing page para el **Torneo #2 de TechToJob** (premio: oferta de empleo). El código, el
-historial de commits y esta documentación son parte de la evaluación del jurado: se priorizó
-"qué puntúa ante un jurado técnico" sobre "qué es más rápido de hacer".
+Landing page for the **TechToJob Tournament #2** (prize: a job offer). The code, the
+commit history and this documentation are part of the jury's evaluation: we prioritized
+"what scores well with a technical jury" over "what is fastest to do".
 
-- Stack exigido por las bases: Next.js (App Router) + TypeScript + Tailwind — solo frontend + SEO.
-- Idioma del sitio: español. Identificadores, commits y docs técnicos: inglés/español según
-  la regla de "código en inglés" de las bases.
+- Stack required by the rules: Next.js (App Router) + TypeScript + Tailwind — frontend + SEO only.
+- Site language: Spanish. Identifiers, commits and technical docs: English/Spanish according to
+  the rules' "code in English" rule.
 
-## 2. Fases y estado
+## 2. Phases and status
 
-| Fase | Qué | Estado |
+| Phase | What | Status |
 |---|---|---|
-| 1. Especificación | Bases del concurso → `specs/` (checklist de 61 reglas, landing spec, contenido, requisitos, rúbrica) | ✅ 22/09 |
-| 2. Sistema de diseño | Tokens Tailwind, paleta, tipografía, uso del logo oficial → `docs/design-system.md` | ✅ 22/09 |
-| 3. Construcción | Scaffold + 9 secciones (Audiencias unifica Talento+Empresas, D75) + capa content-as-data + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 · revisada 23/09 |
-| 4. Auditoría | rules-auditor (61 reglas, cita textual) + fixes R35/R56 + Lighthouse + capturas QA | ✅ 22/09 (evidencia en `docs/qa/`) |
-| 4b. Blindaje + RE-auditoría | Re-auditar las 61 reglas + Lighthouse + Playwright/axe sobre el estado final | 🔄 **23/09:** auditoría en solo-lectura corrida (`rules-auditor` + `seo-perf` + `qa-access`) y fixes críticos aplicados (D125/D126); falta Lighthouse/capturas sobre el deploy |
-| 5. Entrega | Repo público + deploy + mensaje al canal ENTREGAS con declaración de IA y capturas | ⏳ **bloqueante:** fijar la URL real en `content.ts` (`site.url` hoy apunta a un dominio ajeno) → capturas + Lighthouse + mensaje ENTREGAS |
+| 1. Specification | Contest rules → `specs/` (checklist of 61 rules, landing spec, content, requirements, rubric) | ✅ 22/09 |
+| 2. Design system | Tailwind tokens, palette, typography, use of the official logo → `docs/design-system.md` | ✅ 22/09 |
+| 3. Build | Scaffold + 9 sections (Audiencias unifies Talento+Empresas, D75) + content-as-data layer + metadata/OG/JSON-LD/sitemap/robots | ✅ 22/09 · reviewed 23/09 |
+| 4. Audit | rules-auditor (61 rules, verbatim citation) + R35/R56 fixes + Lighthouse + QA screenshots | ✅ 22/09 (evidence in `docs/qa/`) |
+| 4b. Hardening + RE-audit | Re-audit the 61 rules + Lighthouse + Playwright/axe over the final state | 🔄 **23/09:** read-only audit run (`rules-auditor` + `seo-perf` + `qa-access`) and critical fixes applied (D125/D126); Lighthouse/screenshots on the deploy still pending |
+| 5. Delivery | Public repo + deploy + message to the ENTREGAS channel with AI disclosure and screenshots | ⏳ **blocking:** set the real URL in `content.ts` (`site.url` currently points to a third-party domain) → screenshots + Lighthouse + ENTREGAS message |
 
-### 2.0 Dónde se retoma (cierre de la sesión del 23/09)
+### 2.0 Where we resume (close of the 23/09 session)
 
-- **23/09 (D125/D126) · auditoría estricta aplicada.** `rules-auditor`, `seo-perf` y `qa-access`
-  corrieron en **solo-lectura** sobre el estado congelado. **Hallazgo bloqueante:** `content.ts:316`
-  (`site.url`) apunta a `un dominio placeholder ajeno`, que **hoy sirve la web de OTRO participante**
-  (y `techtojob-landing.vercel.app` también es de otro); **no hay deploy de este repo**, así que
-  canonical/OG/sitemap/JSON-LD apuntan fuera. **No es entregable hasta fijar la URL real.**
-  Aplicado: `loading="lazy"` fuera del hero (R56), `animation-delay: 0s` en el guard de reduced-motion,
-  provider i18n recortado a `newsletter`, `HeaderSurface` con `IntersectionObserver`, `Countdown` con
-  pausa offscreen/pestaña oculta, 7 `will-change` fuera, `og:image:alt` localizado, JSON-LD
-  `@graph` Organization+WebSite + logo PNG, `x-default`, sitemap solo ES con `lastmod` fijo, cabeceras
-  de seguridad, testimonios sin Lorem ipsum, H1 con la frase que posiciona (R38), nav/footer
-  "Empresas" → `#empresas`, `IconArrowRight` fuera. `/en` queda `noindex` (D126). `tsc`+ESLint+`next build` en verde.
+- **23/09 (D125/D126) · strict audit applied.** `rules-auditor`, `seo-perf` and `qa-access`
+  ran in **read-only** mode over the frozen state. **Blocking finding:** `content.ts:316`
+  (`site.url`) points to `a third-party placeholder domain`, which **today serves the site of ANOTHER participant**
+  (and `techtojob-landing.vercel.app` also belongs to someone else); **there is no deploy of this repo**, so
+  canonical/OG/sitemap/JSON-LD point outside. **It is not deliverable until the real URL is set.**
+  Applied: `loading="lazy"` outside the hero (R56), `animation-delay: 0s` in the reduced-motion guard,
+  i18n provider trimmed to `newsletter`, `HeaderSurface` with `IntersectionObserver`, `Countdown` with
+  offscreen/hidden-tab pause, 7 `will-change` removed, localized `og:image:alt`, JSON-LD
+  `@graph` Organization+WebSite + PNG logo, `x-default`, sitemap ES-only with fixed `lastmod`, security
+  headers, testimonials without Lorem ipsum, H1 with the positioning phrase (R38), nav/footer
+  "Empresas" → `#empresas`, `IconArrowRight` removed. `/en` stays `noindex` (D126). `tsc`+ESLint+`next build` in green.
 
-> **DISEÑO CERRADO (D88/D98/D100–D107, 23/09): Hero → Newsletter.** Las secciones **Hero, Cómo
-> funciona, Torneos, Audiencias, Networking, Testimonios (D89/D90), Noticias (D98) y Newsletter
-> (D100–D107)** quedan congeladas: **no se vuelven a tocar sin una decisión nueva.**
-> El **Cierre (`#unete`) pasó por varias vueltas el 23/09** —globo reticulado y red (D108–D120),
-> retícula + constelación, **todas descartadas**— hasta la versión final **D121/D122** (100vh + "la
-> puerta" + luces del hero + remate de marca + ticker compartido), que Lorena **aprobó** ("diseño
-> totalmente aprobado, todo me encanta"). Después, el
-> **entregable (Fase 5)** y, cuando Lorena diga *"vamos a revisar"*, el gate de auditoría (D56).
+> **DESIGN CLOSED (D88/D98/D100–D107, 23/09): Hero → Newsletter.** The sections **Hero, Cómo
+> funciona, Torneos, Audiencias, Networking, Testimonios (D89/D90), Noticias (D98) and Newsletter
+> (D100–D107)** are frozen: **they are not touched again without a new decision.**
+> The **Cierre (`#unete`) went through several rounds on 23/09** —wireframe globe and net (D108–D120),
+> reticle + constellation, **all discarded**— until the final version **D121/D122** (100vh + "the
+> door" + hero lights + brand sign-off + shared ticker), which Lorena **approved** ("design
+> fully approved, I love everything"). After that, the
+> **deliverable (Phase 5)** and, once Lorena says *"let's review"*, the audit gate (D56).
 
-- **Hero, header y footer: aprobados por Lorena.** Existe el **punto de retorno local `hero-v1`**
-  (D60) sobre el commit `b18c3e1`; el hero no se vuelve a tocar sin una decisión nueva.
-- **"Cómo funciona": DISEÑO CERRADO (23/09, D66–D69) y REABIERTO ese mismo día con D70** (Lorena pidió
-  "¿qué le falta para ganar?"): texto a 8 col para cerrar el hueco título↔texto y el resultado como
-  ancla de jerarquía. El conector nodo→título que se probó fue **rechazado y retirado**. **No se vuelve
-  a tocar sin una decisión nueva** (los puntos 5 ritmo `lg` y 6 firma quedan para el gate de revisión).
-- **Torneos: REDISEÑADO (23/09, D71), con datos reales (D72), pulido (D73), reequilibrado (D74) y
-  superficie final `mist` (D87). DISEÑO CERRADO (D88).** Deja de ser `h2 + párrafo` y pasa a **4 pilares**:
-  torneo real (`Torneo #2 — la landing de TechToJob` + CTA Discord) en 7 col con **botín y salón de la
-  fama apilados** en 5 (chip `Ejemplo`), y **cierre real a todo el ancho** con tabla de husos (estático,
-  Sora `tabular-nums`). Entradas con `.reveal-left` (la misma que `#como-funciona`). Sin islas nuevas.
-- **Audiencias (Talento + Empresas): CERRADA (23/09, D75–D79), aprobada por Lorena.** Las dos
-  secciones apiladas se fusionan en UNA split sobre `mist` (dos celdas `paper` con badge `1`/`2`,
-  icono en tile, listas escaneables), H2 SEO, intro sin eco y microcopy honesto ("Se hace dentro del
-  Discord."). Los CTA anclan a `#unete`; nav y footer apuntan a `#talento`. La pasada de jurado (D79)
-  alineó la etiqueta del CTA de Empresas ("Publicar vacante"), dio presencia a los iconos y limpió
-  código muerto (`--i`).**No se vuelve a tocar sin una decisión nueva.**
-- **Torneos: contador en vivo añadido (D80)** en el hueco de la tarjeta del torneo (entre el reto y el
-  CTA): `Countdown`, la 2.ª isla cliente del sitio, con estado "Entregas cerradas." al expirar.
-  **Pendiente del gate de revisión:** capturas responsive y contraste (J3/J6).
-- **Networking: rediseño asimétrico (D81)** — el párrafo monolítico pasa a título + intro `lg:sticky`
-  a la izquierda y tres bloques a la derecha (canales por área como píldoras, respuestas en minutos
-  con punto `brand` de actividad, y el mercado oculto como ancla). **Se conserva el tono `paper`** por
-  decisión de Lorena; hovers solo por opacidad. Contenido en `messages.networking` (R36).
-  **Pendiente del gate de revisión:** capturas responsive 360/768/1024/1440 y contraste (J3/J6).
-- **Networking: contenido real + ember + isotipo (D82/D83)** — las 4 píldoras inventadas pasan a las
-  **8 áreas reales del Discord** (`#Development`, `#Data & AI`…), con nota de acceso a canales/roles;
-  punto `ember` en cada eyebrow, isotipo oficial bajo el título y entrada `.reveal-enter` en la
-  columna sticky. **D85:** la columna derecha entra con `.reveal-left`.
-- **Movimiento global + ritmo cromático + vida idle (D84/D85/D86/D87)** — deriva de texto con el scroll
-  (`.text-drift`, 7 secciones), hilo ambiental por sección (`.section-idle`), **Torneos `mist`** y
-  **Audiencias `ink`** (CTA con `surface`), **Testimonios `mist`** (el mismo azul claro que Torneos:
-  `mist` `#f4f7f7`, NO `brand-soft`, que queda reservado sin uso — D87) y brillos idle de líneas y
-  bordes (`.line-idle`/`.card-idle`) con acento **`ember`** en Torneos (glints + puntos + pulso en
-  "Torneo en curso"). Detalle en `design-system.md` §3/§3.1/§7/§9 y `DECISIONES.md` D82–D87.
-- **Testimonios: marquee + banda + watermarks + nav (D89/D90, 23/09)** — la sección deja el bento
-  7/5/5/7 y pasa a un **slider horizontal CSS puro full-bleed** sobre `mist`, dentro de una **banda
-  `brand-soft`** (hairlines, sombra y relieve; el desvanecido de bordes va solo en las tarjetas).
-  Track duplicado `−50%` con `REPEAT=3` (sin huecos en ningún viewport), pausa por `hover`/`focus`
-  + control CSS-only, tarjetas `paper` (borde `ink/10`), `.reveal`/`.reveal-left`, dos puntos `ember`
-  y enlace de cierre al Discord (texto, R11). Las **marcas de agua** de Hero, Audiencias (nueva) y
-  Cierre pasan de `logo-symbol-gradient` a `logo-symbol-light` al **6%**. `#newsletter` entra en la
-  **nav de escritorio** (tier `xl`). Detalle en `DECISIONES.md` D89/D90 y `design-system.md`
-  §6.4/§7/§9. `tsc` + ESLint + `next build` en verde.
-- **Newsletter rediseñada de punta a punta (D100–D107, 23/09) — sección CERRADA, pendiente solo tu
-  visto bueno visual.** Por petición de Lorena se retira la franja `brand` maciza: la sección pasa a
-  **`ink`** y todo el bloque vive en **UN panel Bento** `coal` + hairline (D100), con la rejilla 7/5 y
-  hairline vertical (D101). El formulario se rehace como **columna "consola"**: overline de label,
-  input a ancho completo (`border-white/40` = 3.37:1, WCAG 1.4.11) y **botón cuadrado a ancho
-  completo** (D101 — el `rounded-lg` de D100 se revirtió al verlo en pantalla). El mensaje deja de ser
-  un párrafo y pasa a **estructura escaneable** con las mismas palabras del copy aprobado: lead +
-  `<ul>` de 3 items + sello "sin relleno y sin spam" (D107). Movimiento: **entrada del panel**
-  (`.panel-in`), **destello idle de los CTA rellenos** (`.cta-glint`) y **halo de los nodos del raíl**
-  (`.node-flash`, con el acento propio de cada familia y fase escalonada por `--i`) (D103/D105); la
-  **entrada/salida se ralentiza** (entrada 22%→38%) y luego **la salida se acorta** (meseta 84%→92%)
-  (D102/D106); y se **poda ornamento** del panel (fuera `.card-idle` y el glint del borde superior,
-  D104). Además, "Cómo funciona" y "Torneos" bajan su escala tipográfica con `.section-tight` (D102).
-  Cero copy nuevo, cero islas nuevas, cero colores fuera de la paleta. `tsc` + ESLint + `next build`
-  en verde.
-- **CIERRE (`#unete`): "100vh + la puerta + luces del hero + remate de marca + ticker" (D121/D122,
-  23/09) — ✅ APROBADO por Lorena ("diseño totalmente aprobado, todo me encanta").** Tras varias
-  vueltas exploratorias descartadas (globo reticulado y red, D108–D120; después retícula +
-  constelación), el estado final es: sección de **una pantalla** (`min-h-svh`, contenido centrado) con
-  **las luces facetadas del hero** reutilizadas tal cual, el gesto **"la puerta"** (dos hojas `ink`
-  con canto `brand` que se abren con el scroll, rango corto y `pointer-events-none`), el **remate de
-  marca** (isotipo oficial grande dentro de un anillo de luz que gira y respira) y, como última fila,
-  el **`Ticker` compartido** (mismo componente que cierra el hero, `hidden sm:block`) para que la
-  página abra y cierre con la misma banda. Texto centrado con su reveal bidireccional intacto. Cero
-  colores nuevos, cero `filter: blur`, cero islas cliente. **Refactor registrado:** el ticker se
-  extrajo a `components/Ticker.tsx` tocando el hero (congelado en D88) sin cambiar un píxel (D122).
-  `tsc` + ESLint + `next build` en verde. **Último ajuste (D123):** el desvanecido izquierdo del
-  slider de Testimonios ahora arranca en la **línea de tiempo**, no en el canto de la página.
-  **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y confirmar que el Cierre no
-  supera una pantalla.
-- **PRÓXIMA SESIÓN (handoff, D124): BLINDAJE + TRAZABILIDAD + AUDITORÍA.** El diseño está **aprobado**,
-  así que se vuelve al gate completo y se prepara el entregable. Orden sugerido:
-  0. **⏰ Ojo con la fecha de cierre del Torneo #2** (dato real, D72): entrega **jueves 24 · 00:00
-     México → 08:00 España**. Hoy es miércoles 23, así que **el entregable va primero**: si el tiempo
-     aprieta, se entrega con lo que ya está en verde y la auditoría se cierra después.
-  1. **Commit de congelado** del estado aprobado (working tree actual: Hero/Closing/Ticker/
-     Testimonials/TimelineRail, `globals.css`, docs y specs) para que el veredicto apunte a un SHA.
-  2. **PARTE 0 · Trazabilidad con las BASES y el BRIEF** (petición expresa de Lorena): re-leer
-     `material-concurso/bases-concurso.txt` y `material-concurso/brief.md` (material local, fuera de
-     git) y comprobar, **requisito por requisito**, que (a) **todas** las reglas de las bases están
-     capturadas en `specs/00-checklist-reglas.md` (R01–R61) y que sus **citas textuales son fieles**,
-     (b) no hay **ningún requisito del brief** sin cubrir en `specs/10`/`specs/20`, (c) lo entregado
-     cumple el **formato de entrega** de las bases (qué se envía, dónde y con qué declaración de IA,
-     R07), y (d) **no hay requisitos inventados** (nada en `specs/` sin fuente en las bases o el brief).
-     Salida esperada: matriz **bases/brief → spec → implementación → evidencia** con los huecos
-     marcados. Cualquier hueco se le presenta a Lorena con opciones (regla D124) **antes** de tocar algo.
-  3. **Re-auditoría de las 61 reglas** (rules-auditor, cita textual) sobre el estado congelado — la
-     evidencia de `docs/qa/` es del 22/09 y no cubre el rediseño posterior.
-  4. **Lighthouse + capturas 360/768/1024/1440 + contraste** (qa-access/seo-perf) y medición de
-     CWV (LCP/CLS/INP).
-  5. **Plan de pruebas funcional** (anclas, CTA, formulario, marquee, teclado, reduced-motion).
-  6. **Cerrar pendientes declarados**: R22 ("en riesgo": reorden narrativo + declaración en README),
-     traducción del EN (D57), tipo `Messages` a mano, `--i` inertes.
-  7. **Fase 5**: repo público → deploy Vercel con la URL real en `content.ts` → Lighthouse/capturas
-     sobre el deploy → mensaje al canal ENTREGAS con la declaración de IA (R07).
-  **Regla para los cambios (D124):** cualquier hallazgo se le presenta a Lorena **con opciones
-  equivalentes en diseño** y solo se ejecuta con su OK. Punto de partida del código:
-  `Closing.tsx` + `Ticker.tsx` + `globals.css` (bloques D121–D123) y `docs/DECISIONES.md` D121–D124.
-- **Freeze vigente:** **Hero → Networking cerradas** (D88); no se tocan sin decisión nueva. Excepción
-  registrada: **Audiencias** recibió el watermark en D90 por petición expresa (solo decoración).
-  **Noticias** (D98) y **Newsletter** (D100–D107) también quedan cerradas. El **Cierre (D121/D122/D123)**
-  queda **cerrado y aprobado por Lorena**. Desde la próxima sesión aplica el **modo revisión (D124)**:
-  6 agentes y gate completo, con la regla de que todo cambio de diseño se consulta y se ofrece con
-  opciones equivalentes.
-- **Después, Fase 5 (entregable):** repo público en GitHub → deploy Vercel con URL real en `content.ts`
-  (`site.url`) → Lighthouse/capturas → mensaje al canal ENTREGAS con la declaración de IA (R07).
-- **Pendiente declarado:** la **traducción del EN** (D57) — el handoff está listo en
-  `specs/12-i18n.md` y `/en` sirve hoy el catálogo ES como placeholder declarado (por eso
-  `messages/en.json` mantiene el texto en español, incluidos los nuevos `items`/`seal`).
-- **Deuda técnica declarada (para el gate "vamos a revisar"):** (1) el tipo `Messages` es una
-  **interfaz escrita a mano en `content.ts`**, no se deriva de `es.json`: cada cambio de catálogo
-  exige ampliarla (pasó en D107); (2) los `style={{ "--i": n }}` que quedan sobre elementos `.reveal`
-  son inertes (el rango volvió a `cover` completo en D77): solo sirven a `.bento-lit`/`.step-node-fill`.
-  *(La deuda (3) —`stroke-dashoffset` en los arcos del Cierre— quedó **cerrada al retirar esa capa en
-  D121**: hoy el catálogo de motion no tiene ninguna propiedad de pintado.)*
-- **Commits (23/09, sesión de newsletter):** `7f8d2a6` (`feat(newsletter): bento panel, console form
-  and scannable message`) y `4325e02` (`design(motion): slower reveals, shorter exit, cta glint and
-  rail node flash`), más el commit de documentación que cierra este registro
-  (`docs: record D100-D107 and sync design system, specs and guide`). Working tree **limpio**;
-  **sin push** (`master` va por delante de `origin/master`; no se tocó el remoto).
-  Tag `hero-v1` sobre `b18c3e1`.
+- **Hero, header and footer: approved by Lorena.** There is a **local return point `hero-v1`**
+  (D60) on commit `b18c3e1`; the hero is not touched again without a new decision.
+- **"Cómo funciona": DESIGN CLOSED (23/09, D66–D69) and REOPENED that same day with D70** (Lorena asked
+  "what is it missing to win?"): text at 8 cols to close the title↔text gap and the result as a
+  hierarchy anchor. The node→title connector that was tried was **rejected and removed**. **It is not
+  touched again without a new decision** (points 5, `lg` rhythm, and 6, signature, remain for the review gate).
+- **Torneos: REDESIGNED (23/09, D71), with real data (D72), polished (D73), rebalanced (D74) and
+  final `mist` surface (D87). DESIGN CLOSED (D88).** It stops being `h2 + paragraph` and becomes **4 pillars**:
+  real tournament (`Torneo #2 — la landing de TechToJob` + Discord CTA) in 7 cols with **prize and hall of
+  fame stacked** in 5 (chip `Ejemplo`), and **real full-width close** with a time-zone table (static,
+  Sora `tabular-nums`). Entries with `.reveal-left` (the same as `#como-funciona`). No new islands.
+- **Audiencias (Talento + Empresas): CLOSED (23/09, D75–D79), approved by Lorena.** The two
+  stacked sections merge into ONE split over `mist` (two `paper` cells with badge `1`/`2`,
+  icon in a tile, scannable lists), SEO H2, intro without echo and honest microcopy ("Se hace dentro del
+  Discord."). The CTAs anchor to `#unete`; nav and footer point to `#talento`. The jury pass (D79)
+  aligned the Empresas CTA label ("Publicar vacante"), gave the icons presence and cleaned up dead
+  code (`--i`).**It is not touched again without a new decision.**
+- **Torneos: live countdown added (D80)** in the gap of the tournament card (between the challenge and the
+  CTA): `Countdown`, the site's 2nd client island, with the state "Entregas cerradas." on expiry.
+  **Pending from the review gate:** responsive screenshots and contrast (J3/J6).
+- **Networking: asymmetric redesign (D81)** — the monolithic paragraph becomes title + `lg:sticky` intro
+  on the left and three blocks on the right (channels by area as pills, replies in minutes
+  with a `brand` activity dot, and the hidden market as anchor). **The `paper` tone is kept** by
+  Lorena's decision; hovers only by opacity. Content in `messages.networking` (R36).
+  **Pending from the review gate:** responsive screenshots 360/768/1024/1440 and contrast (J3/J6).
+- **Networking: real content + ember + isotipo (D82/D83)** — the 4 invented pills become the
+  **8 real Discord areas** (`#Development`, `#Data & AI`…), with a note on channel/role access;
+  `ember` dot on each eyebrow, official isotipo under the title and `.reveal-enter` entry in the
+  sticky column. **D85:** the right column enters with `.reveal-left`.
+- **Global motion + chromatic rhythm + idle life (D84/D85/D86/D87)** — text drift with the scroll
+  (`.text-drift`, 7 sections), ambient thread per section (`.section-idle`), **Torneos `mist`** and
+  **Audiencias `ink`** (CTA with `surface`), **Testimonios `mist`** (the same light blue as Torneos:
+  `mist` `#f4f7f7`, NOT `brand-soft`, which stays reserved and unused — D87) and idle glows of lines and
+  borders (`.line-idle`/`.card-idle`) with **`ember`** accent in Torneos (glints + dots + pulse on
+  "Torneo en curso"). Details in `design-system.md` §3/§3.1/§7/§9 and `DECISIONES.md` D82–D87.
+- **Testimonios: marquee + band + watermarks + nav (D89/D90, 23/09)** — the section leaves the bento
+  7/5/5/7 and becomes a **pure-CSS full-bleed horizontal slider** over `mist`, inside a **`brand-soft`
+  band** (hairlines, shadow and relief; the edge fade applies only to the cards).
+  Duplicated track `−50%` with `REPEAT=3` (no gaps on any viewport), pause on `hover`/`focus`
+  + CSS-only control, `paper` cards (`ink/10` border), `.reveal`/`.reveal-left`, two `ember` dots
+  and a closing link to Discord (text, R11). The **watermarks** of Hero, Audiencias (new) and
+  Cierre go from `logo-symbol-gradient` to `logo-symbol-light` at **6%**. `#newsletter` joins the
+  **desktop nav** (`xl` tier). Details in `DECISIONES.md` D89/D90 and `design-system.md`
+  §6.4/§7/§9. `tsc` + ESLint + `next build` in green.
+- **Newsletter redesigned end to end (D100–D107, 23/09) — section CLOSED, only your
+  visual sign-off pending.** At Lorena's request the solid `brand` strip is removed: the section becomes
+  **`ink`** and the whole block lives in **ONE Bento panel** `coal` + hairline (D100), with the 7/5 grid and
+  vertical hairline (D101). The form is remade as a **"console" column**: label overline,
+  full-width input (`border-white/40` = 3.37:1, WCAG 1.4.11) and **full-width square
+  button** (D101 — the `rounded-lg` of D100 was reverted on seeing it on screen). The message stops being
+  a paragraph and becomes a **scannable structure** with the same words as the approved copy: lead +
+  `<ul>` of 3 items + a "no filler and no spam" seal (D107). Motion: **panel entry**
+  (`.panel-in`), **idle glint of the filled CTAs** (`.cta-glint`) and **halo of the rail nodes**
+  (`.node-flash`, with each family's own accent and phase staggered by `--i`) (D103/D105); the
+  **entry/exit slows down** (entry 22%→38%) and then **the exit is shortened** (plateau 84%→92%)
+  (D102/D106); and **ornament is pruned** from the panel (`.card-idle` and the top border glint removed,
+  D104). Also, "Cómo funciona" and "Torneos" lower their type scale with `.section-tight` (D102).
+  Zero new copy, zero new islands, zero colors outside the palette. `tsc` + ESLint + `next build`
+  in green.
+- **CIERRE (`#unete`): "100vh + the door + hero lights + brand sign-off + ticker" (D121/D122,
+  23/09) — ✅ APPROVED by Lorena ("design fully approved, I love everything").** After several
+  discarded exploratory rounds (wireframe globe and net, D108–D120; then reticle +
+  constellation), the final state is: a **single-screen** section (`min-h-svh`, centered content) with
+  **the hero's faceted lights** reused as-is, the **"the door"** gesture (two `ink` leaves
+  with a `brand` edge that open with the scroll, short range and `pointer-events-none`), the **brand
+  sign-off** (large official isotipo inside a ring of light that spins and breathes) and, as the last row,
+  the **shared `Ticker`** (the same component that closes the hero, `hidden sm:block`) so the
+  page opens and closes with the same band. Centered text with its bidirectional reveal intact. Zero
+  new colors, zero `filter: blur`, zero client islands. **Registered refactor:** the ticker was
+  extracted to `components/Ticker.tsx` touching the hero (frozen in D88) without changing a pixel (D122).
+  `tsc` + ESLint + `next build` in green. **Last tweak (D123):** the left fade of the
+  Testimonios slider now starts at the **timeline**, not at the page edge.
+  **Pending from the "let's review" gate:** screenshots 360/768/1024/1440 and confirming that the Cierre does not
+  exceed one screen.
+- **NEXT SESSION (handoff, D124): HARDENING + TRACEABILITY + AUDIT.** The design is **approved**,
+  so we return to the full gate and prepare the deliverable. Suggested order:
+  0. **⏰ Watch the Tournament #2 closing date** (real data, D72): deadline **Thursday 24 · 00:00
+     Mexico → 08:00 Spain**. Today is Wednesday 23, so **the deliverable comes first**: if time
+     is tight, deliver with what is already green and close the audit afterwards.
+  1. **Freeze commit** of the approved state (current working tree: Hero/Closing/Ticker/
+     Testimonials/TimelineRail, `globals.css`, docs and specs) so the verdict points to a SHA.
+  2. **PART 0 · Traceability with the RULES and the BRIEF** (Lorena's express request): re-read
+     `material-concurso/bases-concurso.txt` and `material-concurso/brief.md` (local material, outside
+     git) and check, **requirement by requirement**, that (a) **all** the rules of the rules are
+     captured in `specs/00-checklist-reglas.md` (R01–R61) and that their **verbatim quotes are faithful**,
+     (b) no **requirement of the brief** is left uncovered in `specs/10`/`specs/20`, (c) what is delivered
+     meets the **delivery format** of the rules (what is sent, where and with what AI disclosure,
+     R07), and (d) **there are no invented requirements** (nothing in `specs/` without a source in the rules or the brief).
+     Expected output: a **rules/brief → spec → implementation → evidence** matrix with the gaps
+     marked. Any gap is presented to Lorena with options (rule D124) **before** touching anything.
+  3. **Re-audit of the 61 rules** (rules-auditor, verbatim citation) over the frozen state — the
+     `docs/qa/` evidence is from 22/09 and does not cover the later redesign.
+  4. **Lighthouse + screenshots 360/768/1024/1440 + contrast** (qa-access/seo-perf) and CWV
+     measurement (LCP/CLS/INP).
+  5. **Functional test plan** (anchors, CTAs, form, marquee, keyboard, reduced-motion).
+  6. **Close declared pending items**: R22 ("at risk": narrative reorder + README disclosure),
+     EN translation (D57), hand-written `Messages` type, inert `--i`.
+  7. **Phase 5**: public repo → Vercel deploy with the real URL in `content.ts` → Lighthouse/screenshots
+     on the deploy → message to the ENTREGAS channel with the AI disclosure (R07).
+  **Rule for changes (D124):** any finding is presented to Lorena **with design-equivalent
+  options** and is only executed with her OK. Code starting point:
+  `Closing.tsx` + `Ticker.tsx` + `globals.css` (D121–D123 blocks) and `docs/DECISIONES.md` D121–D124.
+- **Current freeze:** **Hero → Networking closed** (D88); not touched without a new decision. Recorded
+  exception: **Audiencias** received the watermark in D90 at express request (decoration only).
+  **Noticias** (D98) and **Newsletter** (D100–D107) are also closed. The **Cierre (D121/D122/D123)**
+  is **closed and approved by Lorena**. From the next session the **review mode (D124)** applies:
+  6 agents and full gate, with the rule that every design change is consulted and offered with
+  equivalent options.
+- **Then, Phase 5 (deliverable):** public repo on GitHub → Vercel deploy with the real URL in `content.ts`
+  (`site.url`) → Lighthouse/screenshots → message to the ENTREGAS channel with the AI disclosure (R07).
+- **Declared pending item:** the **EN translation** (D57) — the handoff is ready in
+  `specs/12-i18n.md` and `/en` today serves the ES catalog as a declared placeholder (which is why
+  `messages/en.json` keeps the text in Spanish, including the new `items`/`seal`).
+- **Declared technical debt (for the "let's review" gate):** (1) the `Messages` type is a
+  **hand-written interface in `content.ts`**, not derived from `es.json`: every catalog change
+  requires extending it (happened in D107); (2) the `style={{ "--i": n }}` left on `.reveal` elements
+  are inert (the range went back to full `cover` in D77): they only serve `.bento-lit`/`.step-node-fill`.
+  *(Debt (3) —`stroke-dashoffset` in the Cierre arcs— was **closed by removing that layer in
+  D121**: today the motion catalog has no paint properties.)*
+- **Commits (23/09, newsletter session):** `7f8d2a6` (`feat(newsletter): bento panel, console form
+  and scannable message`) and `4325e02` (`design(motion): slower reveals, shorter exit, cta glint and
+  rail node flash`), plus the documentation commit that closes this record
+  (`docs: record D100-D107 and sync design system, specs and guide`). Working tree **clean**;
+  **no push** (`master` is ahead of `origin/master`; the remote was not touched).
+  Tag `hero-v1` on `b18c3e1`.
 
-### 2.1 Modo de trabajo vigente (D124, 23/09) — MODO REVISIÓN
+### 2.1 Current working mode (D124, 23/09) — REVIEW MODE
 
-**Regla activa:** con el diseño **aprobado por Lorena**, se vuelve al **gate completo**. **D124
-supersede D56** (el "modo rápido" de 3 agentes queda como historia).
+**Active rule:** with the design **approved by Lorena**, we return to the **full gate**. **D124
+supersedes D56** (the "fast mode" of 3 agents remains as history).
 
-- **Activos:** los 6 roles — orquestador, `design-ux`, `nextjs-builder`, `rules-auditor`, `qa-access`
-  y `seo-perf` — más Lighthouse, Playwright/axe y capturas de QA.
-- **Gate aplicable (AGENTS.md, "Calidad mínima exigida"):** Lighthouse ≥95 en Performance, SEO y
-  Accessibility (móvil y escritorio); WCAG 2.1 AA; responsive en 360/768/1024/1440; CWV
-  (LCP < 2.5s, CLS < 0.1, INP bajo); `tsc` sin errores y ESLint limpio.
-- **Regla de la owner para los cambios:** cualquier hallazgo que exija tocar el diseño se le presenta
-  **con opciones equivalentes en diseño** y **solo se ejecuta con su OK** (D124).
-- **Objetivo de la sesión:** (a) congelar/commitear el estado aprobado; (b) re-auditar las **61 reglas**
-  con cita textual (la evidencia de `docs/qa/` es del 22/09 y **no** cubre el rediseño posterior:
-  Hero V7, Newsletter D100-D107, Cierre D108-D123); (c) Lighthouse + capturas 360/768/1024/1440 +
-  contraste; (d) plan de pruebas funcional; (e) cerrar pendientes declarados (**R22 en riesgo**,
-  traducción EN de D57, deuda del tipo `Messages`).
+- **Active:** the 6 roles — orchestrator, `design-ux`, `nextjs-builder`, `rules-auditor`, `qa-access`
+  and `seo-perf` — plus Lighthouse, Playwright/axe and QA screenshots.
+- **Applicable gate (AGENTS.md, "Minimum required quality"):** Lighthouse ≥95 in Performance, SEO and
+  Accessibility (mobile and desktop); WCAG 2.1 AA; responsive at 360/768/1024/1440; CWV
+  (LCP < 2.5s, CLS < 0.1, low INP); `tsc` without errors and clean ESLint.
+- **Owner's rule for changes:** any finding that requires touching the design is presented
+  **with design-equivalent options** and **only executed with her OK** (D124).
+- **Session goal:** (a) freeze/commit the approved state; (b) re-audit the **61 rules**
+  with verbatim citation (the `docs/qa/` evidence is from 22/09 and does **not** cover the later redesign:
+  Hero V7, Newsletter D100-D107, Cierre D108-D123); (c) Lighthouse + screenshots 360/768/1024/1440 +
+  contrast; (d) functional test plan; (e) close declared pending items (**R22 at risk**,
+  EN translation of D57, `Messages` type debt).
 
-> Nota histórica: el bloque siguiente describe el modo rápido D56 que estuvo vigente hasta hoy.
-> **Regla que estaba activa hasta que Lorena dijo "vamos a revisar":** se trabajaba con **3 agentes** y
-> **cero auditorías** en todas las tareas y fases, incluida la Fase 5.
+> Historical note: the following block describes the fast mode D56 that was in force until today.
+> **Rule that was active until Lorena said "let's review":** we worked with **3 agents** and
+> **zero audits** in all tasks and phases, including Phase 5.
 
-- **Activos (ya no):** orquestador (specs, decisiones, coordinación), `design-ux` (criterio visual y
-  copy) y `nextjs-builder` (única mano que escribe en `app/`).
-- **Dormidos hasta el modo revisión (ya despiertos):** `rules-auditor`, `qa-access`, `seo-perf`,
-  Lighthouse, Playwright/axe, medición de INP y capturas de QA. Los agentes no se borran: siguen
-  definidos en `.opencode/agent/` con su prompt y modelo intactos.
-- **Permitido:** `tsc --noEmit`, ESLint y `next build` (segundos; evitan commitear código roto).
-- **Motivo declarado por Lorena:** los ciclos de auditoría tardaban más que el propio cambio.
-- **Supersede D28 y D39** (que pausaban QA solo mientras el diseño no estuviera congelado); los
-  cierres "QA en pausa (D39)" de las iteraciones anteriores quedan como historia.
-- **Consecuencia asumida:** la Fase 5 se cierra sin medición de Lighthouse/Playwright; al activar
-  el modo revisión esos checks corren de una sola pasada sobre el estado congelado.
+- **Active (no longer):** orchestrator (specs, decisions, coordination), `design-ux` (visual criteria and
+  copy) and `nextjs-builder` (the only hand that writes in `app/`).
+- **Dormant until review mode (now awake):** `rules-auditor`, `qa-access`, `seo-perf`,
+  Lighthouse, Playwright/axe, INP measurement and QA screenshots. The agents are not deleted: they remain
+  defined in `.opencode/agent/` with their prompt and model intact.
+- **Allowed:** `tsc --noEmit`, ESLint and `next build` (seconds; they prevent committing broken code).
+- **Reason stated by Lorena:** the audit cycles took longer than the change itself.
+- **Supersedes D28 and D39** (which paused QA only while the design was not frozen); the
+  "QA paused (D39)" closings of the previous iterations remain as history.
+- **Assumed consequence:** Phase 5 closes without Lighthouse/Playwright measurement; on activating
+  review mode those checks run in a single pass over the frozen state.
 
-> **Pendiente (22/09):** la landing se reordena y se lee como **línea de tiempo vertical** (D32).
-> El hero pasó por dos iteraciones más el mismo día: **D34 "Cosmos en tinta"** (muro de tiles
-> flotantes decorativos + nav pill + símbolo sobre el H1) y **D35 "Recruit en tinta"** (H1 partido
-> en dos líneas editoriales, glows al 50%, tiles al 60%, píldoras-ancla + muro de stacks, cierre
-> espejado). El campo de grafos vuelve a estar siempre activo (el flag `SHOW_GRAPH` se retiró).
-> Todo está implementado y compilando (`tsc` + ESLint + `next build` en verde), pero **QA en pausa
-> por decisión de Lorena (D28)**: nada de Playwright/Lighthouse/`rules-auditor` hasta su
-> autorización explícita → quedan sin medir el INP del canvas, los contrastes del glow y la
-> re-auditoría de R22 (reorden) y R11 (píldoras-ancla vs "un solo botón"). Implementó el
-> orquestador por agotamiento de créditos de `opencode-go` (D29). La declaración del reorden para
-> el README (R10) está redactada en D32 y se sube en la Fase 5.
+> **Pending (22/09):** the landing is reordered and reads as a **vertical timeline** (D32).
+> The hero went through two more iterations the same day: **D34 "Cosmos en tinta"** (wall of floating
+> decorative tiles + nav pill + symbol above the H1) and **D35 "Recruit en tinta"** (H1 split
+> into two editorial lines, glows at 50%, tiles at 60%, anchor-pills + stack wall, mirrored
+> close). The graph field is always active again (the `SHOW_GRAPH` flag was removed).
+> Everything is implemented and compiling (`tsc` + ESLint + `next build` in green), but **QA paused
+> by Lorena's decision (D28)**: no Playwright/Lighthouse/`rules-auditor` until her
+> explicit authorization → the canvas INP, the glow contrasts and the
+> re-audit of R22 (reorder) and R11 (anchor-pills vs "a single button") remain unmeasured. The
+> orchestrator implemented it due to `opencode-go` credit exhaustion (D29). The reorder disclosure for
+> the README (R10) is drafted in D32 and goes up in Phase 5.
 >
-> **Pendiente (22/09, D38 "Bento Signature"):** a pedido de Lorena, las secciones del cuerpo
-> dejan de ser uniformes (`h2 + párrafo`) y ganan ritmo con el lenguaje de tendencia 2026:
-> **ticker** marquee bajo el hero + **bento asimétrico** en "Cómo funciona" (7+5+5+12),
-> Testimonios (7/5/5/7) y Noticias (destacada + 2), todo CSS puro (cero islas cliente),
-> Sora-only, paleta fija y `prefers-reduced-motion`. Talento / Empresas / Networking quedan
-> editoriales (no tienen ítems: convertirlas obligaría a inventar copy). Implementado y
-> compilando (`tsc` + ESLint + `next build` en verde) por el orquestador (excepción D29).
-> **QA en pausa (D28):** sin Playwright/Lighthouse/`rules-auditor` hasta tu OK → quedan sin
-> medir el INP del ticker, los contrastes del bento y la re-auditoría de R11 (ticker no-botón)
-> y R26 (verde como texto).
+> **Pending (22/09, D38 "Bento Signature"):** at Lorena's request, the body sections
+> stop being uniform (`h2 + paragraph`) and gain rhythm with the 2026 trend language:
+> **ticker** marquee under the hero + **asymmetric bento** in "Cómo funciona" (7+5+5+12),
+> Testimonios (7/5/5/7) and Noticias (featured + 2), all pure CSS (zero client islands),
+> Sora-only, fixed palette and `prefers-reduced-motion`. Talento / Empresas / Networking stay
+> editorial (they have no items: converting them would force inventing copy). Implemented and
+> compiling (`tsc` + ESLint + `next build` in green) by the orchestrator (exception D29).
+> **QA paused (D28):** no Playwright/Lighthouse/`rules-auditor` until your OK → the ticker
+> INP, the bento contrasts and the re-audit of R11 (ticker non-button)
+> and R26 (green as text) remain unmeasured.
 >
-> **Hecho (22/09 noche, D40 "Plano Cinético"):** pedido de rediseño del hero (mesh con manchas
-> difuminadas + imágenes flotantes del torneo). **No se implementó literal** porque choca con
-> D37.1 (prohibidos "blobs/aurora gradients" y "partículas flotantes"), con R24/R25 (violeta/
-> cian/`#0B0F19`/`#F9FAFB` fuera de la paleta fija) y con J2 (no hay fotos reales del torneo).
-> Se reinterpretó con vocabulario permitido por D37.1: campo de retícula hairline scroll-driven,
-> haz de luz `brand` de bordes duros, marginalia tipo bracket, revelado del H1 por palabra
-> (transform-only) y subrayado cinético continuo bajo la frase de acento. Spec en `specs/10`
-> (§Hero V6). Implementado por `nextjs-builder` en `Hero.tsx` + `globals.css`; **`tsc --noEmit`,
-> ESLint y `next build` en verde (cierre 22/09)**. Modo diseño (D39): sin `rules-auditor`/
-> `qa-access`/`seo-perf` hasta congelar; el motion del H1 y el contraste del haz se miden en el
-> gate de Fase 5.
+> **Done (22/09 night, D40 "Plano Cinético"):** hero redesign request (mesh with blurred
+> stains + floating tournament images). **It was not implemented literally** because it clashes with
+> D37.1 (forbidden "blobs/aurora gradients" and "floating particles"), with R24/R25 (violet/
+> cyan/`#0B0F19`/`#F9FAFB` outside the fixed palette) and with J2 (there are no real tournament photos).
+> It was reinterpreted with vocabulary allowed by D37.1: scroll-driven hairline reticle field,
+> `brand` light beam with hard edges, bracket-style marginalia, H1 reveal by word
+> (transform-only) and a continuous kinetic underline under the accent phrase. Spec in `specs/10`
+> (§Hero V6). Implemented by `nextjs-builder` in `Hero.tsx` + `globals.css`; **`tsc --noEmit`,
+> ESLint and `next build` in green (22/09 close)**. Design mode (D39): no `rules-auditor`/
+> `qa-access`/`seo-perf` until freeze; the H1 motion and the beam contrast are measured in the
+> Phase 5 gate.
 >
-> **Hecho (22/09 noche, D41 — iteración V7):** se **elimina el overline** (se apilaba en 5 líneas
-> en `lg`), se añade el **combo #2 cristal facetado** (`conic-gradient` de borde duro en
-> `brand`/`ember` + rotación lenta, cero blur) y **#4 red que se dibuja** (`HeroNetwork.tsx`, SVG
-> server con `stroke-dashoffset`), y se **rebalancea la altura** del hero (`content-center`, padding
-> superior reducido, H1 al frente de la fila con la marginalia). Spec en `specs/10` (§Hero V7);
-> `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D41 — V7 iteration):** the **overline is removed** (it stacked in 5 lines
+> at `lg`), the **faceted glass combo #2** is added (`conic-gradient` with hard edge in
+> `brand`/`ember` + slow rotation, zero blur) and **#4 a net that draws itself** (`HeroNetwork.tsx`, SVG
+> server with `stroke-dashoffset`), and the hero **height is rebalanced** (`content-center`, reduced top
+> padding, H1 at the front of the row with the marginalia). Spec in `specs/10` (§Hero V7);
+> `tsc` + ESLint + `next build` in green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D42/D43):** (D42) el apoyo del hero deja de partirse (`lg:col-span-5`) y
-> **todos los botones-píldora pasan a `rounded-none`** (DiscordCta, header completo, newsletter,
-> skip-link; se elimina el anillo `animate-breathe`). (D43) el **header se ensancha**
-> (`page-container-wide`, 80rem), la **red del hero se retira** y en su lugar va la **marca de agua
-> oficial** `logo-symbol-gradient.svg` al 10% (como Torneos/Cierre), y el **CTA gana impacto**
-> (relleno `brand` que barre en `line`; barrido especular + micro-elevación en las rellenas, sin
-> halo ni blur). `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D42/D43):** (D42) the hero support stops splitting (`lg:col-span-5`) and
+> **all pill buttons become `rounded-none`** (DiscordCta, full header, newsletter,
+> skip-link; the `animate-breathe` ring is removed). (D43) the **header widens**
+> (`page-container-wide`, 80rem), the **hero net is removed** and in its place goes the **official
+> watermark** `logo-symbol-gradient.svg` at 10% (like Torneos/Cierre), and the **CTA gains impact**
+> (`brand` fill that sweeps to `line`; specular sweep + micro-elevation on the filled ones, without
+> halo or blur). `tsc` + ESLint + `next build` in green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D44/D45):** (D44) el **grid de fondo del hero gana drift continuo** de
-> una celda en 28s, en capa aparte del paneo por scroll (loop sin costura, solo `transform`).
-> (D45) se **retira el recuadro del nav** de escritorio (queda una fila de enlaces sin marco) y la
-> **marca de agua del hero sube a 520×520**. `tsc` + ESLint + `next build` en verde. QA sigue en
-> pausa (D39).
+> **Done (22/09 night, D44/D45):** (D44) the **hero background grid gains continuous drift**
+> of one cell in 28s, in a separate layer from the scroll pan (seamless loop, `transform` only).
+> (D45) the **desktop nav box is removed** (leaving a row of links without a frame) and the
+> **hero watermark goes up to 520×520**. `tsc` + ESLint + `next build` in green. QA still
+> paused (D39).
 >
-> **Hecho (22/09 noche, D46):** **un solo estilo de botón Discord en toda la plataforma** —
-> cuadrado relleno `brand`, texto `ink`, barrido especular + micro-elevación, flecha; solo cambia
-> el tamaño (`nav`/`hero`/`block`). Se **retira la variante `line`** del hero (pasa a `size="hero"`)
-> y el botón `hero` sube a `min-h-14 px-8` para más presencia. `tsc` + ESLint + `next build` en
-> verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D46):** **a single Discord button style across the whole platform** —
+> square `brand` fill, `ink` text, specular sweep + micro-elevation, arrow; only the size changes
+> (`nav`/`hero`/`block`). The `line` variant is **removed** from the hero (it becomes `size="hero"`)
+> and the `hero` button goes up to `min-h-14 px-8` for more presence. `tsc` + ESLint + `next build` in
+> green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D47/D47b/D48/D49):** (D47) **header adaptativo** con la isla
-> `HeaderSurface` (la 2.ª isla cliente del sitio): la barra adopta la polaridad de la sección de
-> detrás (crossfade `ink`↔`paper`), el logo cambia a `logo-horizontal.svg` en claro y el CTA recibe
-> borde `ink` sobre claro; la franja `brand` de la newsletter se trata como oscura. (D47b) el
-> **botón ya no "asoma"** fuera de la cabecera: barra sólida al 100% + franja de disolución debajo.
-> (D48) **H1**: se corrigen los **espacios reales** entre palabras (bug a11y/SEO), `lg:col-span-8`
-> y línea 2 acortada a *"Aquí te conocen antes de la vacante."*. (D49) **header alineado al eje de
-> 72rem**, **scrollspy** (`aria-current`) y **hairline de progreso** CSS pura. `tsc` + ESLint +
-> `next build` en verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D47/D47b/D48/D49):** (D47) **adaptive header** with the `HeaderSurface` island
+> (the site's 2nd client island): the bar adopts the polarity of the section behind it
+> (`ink`↔`paper` crossfade), the logo switches to `logo-horizontal.svg` on light and the CTA receives
+> an `ink` border on light; the newsletter's `brand` strip is treated as dark. (D47b) the
+> **button no longer "peeks out"** beyond the header: solid bar at 100% + dissolve strip below.
+> (D48) **H1**: the **real spaces** between words are fixed (a11y/SEO bug), `lg:col-span-8`
+> and line 2 shortened to *"Aquí te conocen antes de la vacante."*. (D49) **header aligned to the 72rem
+> axis**, **scrollspy** (`aria-current`) and pure-CSS **progress hairline**. `tsc` + ESLint +
+> `next build` in green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D50):** rebalance vertical del hero — se compensa el recorte de 80px del
-> header (`-mt-20`) fijando `pt − pb = 80px` para centrar el bloque en el área visible, y se unifica
-> el ritmo interno (`support → quick-nav` a `mt-10` en móvil). `tsc` + ESLint + `next build` en
-> verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D50):** vertical rebalance of the hero — the header's 80px crop is offset
+> (`-mt-20`) by fixing `pt − pb = 80px` to center the block in the visible area, and the internal
+> rhythm is unified (`support → quick-nav` at `mt-10` on mobile). `tsc` + ESLint + `next build` in
+> green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D51 — variante A):** el quick-nav del hero pasa a **fila de salida** al pie
-> (bloque principal `H1→CTA` centrado en `flex-1`, nav separado con su hairline, entre esta y la
-> del ticker). Grid de 4rem y ticker intactos. **Checkpoint `b796176`** creado antes de
-> experimentar → el diseño aprobado se recupera con `git revert`. `tsc` + ESLint + `next build` en
-> verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D51 — variant A):** the hero quick-nav becomes an **exit row** at the foot
+> (main block `H1→CTA` centered in `flex-1`, nav separated with its hairline, between this one and the
+> ticker's). 4rem grid and ticker intact. **Checkpoint `b796176`** created before
+> experimenting → the approved design is recovered with `git revert`. `tsc` + ESLint + `next build` in
+> green. QA still paused (D39).
 >
-> **Hecho (22/09 noche, D52):** a pedido de Lorena, se **elimina el quick-nav** del hero (no le
-> gustaba la fila de salida) y el hero **cierra con la banda del ticker**; sin texto muerto
-> (`quickNavLabel` fuera). `tsc` + ESLint + `next build` en verde. QA sigue en pausa (D39).
+> **Done (22/09 night, D52):** at Lorena's request, the **quick-nav is removed** from the hero (she didn't
+> like the exit row) and the hero **closes with the ticker band**; no dead text
+> (`quickNavLabel` removed). `tsc` + ESLint + `next build` in green. QA still paused (D39).
 
-> **Hecho (23/09, D54/D55/D57):** (D54) **i18n ES/EN** con next-intl: `/` sirve ES y `/en` sirve
-> EN (`as-needed`, sin detección automática), hreflang cruzado en metadata y sitemap, OG por
-> locale, selector de idioma como **enlace real** en header y panel móvil; textos solo en
-> `messages/{es,en}.json` con paridad forzada por tipos. La **traducción real del EN queda
-> aplazada (D57)** con handoff documentado en `specs/12-i18n.md`. (D55) el logo del header pasa a
-> **composite simétrico tile+wordmark** en ambas polaridades, con el derivado
-> `brand/wordmark-ink.svg` (mismos contornos oficiales, relleno carbón) para que el estado claro
-> pese igual que el oscuro. `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, D54/D55/D57):** (D54) **ES/EN i18n** with next-intl: `/` serves ES and `/en` serves
+> EN (`as-needed`, no automatic detection), cross hreflang in metadata and sitemap, OG per
+> locale, language selector as a **real link** in header and mobile panel; texts only in
+> `messages/{es,en}.json` with parity enforced by types. The **real EN translation remains
+> postponed (D57)** with a handoff documented in `specs/12-i18n.md`. (D55) the header logo becomes a
+> **symmetric composite tile+wordmark** in both polarities, with the derivative
+> `brand/wordmark-ink.svg` (same official outlines, charcoal fill) so the light state
+> weighs the same as the dark one. `tsc` + ESLint + `next build` in green.
 
-> **Hecho (23/09, ajustes pedidos por Lorena):** (D56) el ciclo queda en **3 agentes sin
-> auditorías** hasta que ella diga "vamos a revisar". (D57) la **traducción del EN se aplaza** con
-> handoff listo para el equipo oficial. (D58) el **logo del footer** pasa a ser el composite del
-> header en polaridad oscura (con `loading="lazy"` y decorativo). (D59) se **quita el raíl y el nodo
-> del Cierre**, que ahora va centrado, y con ello se retira la variante `goal` de `TimelineRail`.
-> Además, el CTA del menú móvil usa la etiqueta corta ("Entrar al Discord"), y se corrige la falta
-> ortográfica del copy ("acuérdate"). Todo con `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, adjustments requested by Lorena):** (D56) the cycle settles at **3 agents without
+> audits** until she says "let's review". (D57) the **EN translation is postponed** with
+> a handoff ready for the official team. (D58) the **footer logo** becomes the header composite in dark
+> polarity (with `loading="lazy"` and decorative). (D59) the **rail and node of the Cierre are removed**,
+> which is now centered, and with that the `goal` variant of `TimelineRail` is removed.
+> Also, the mobile menu CTA uses the short label ("Entrar al Discord"), and the spelling
+> mistake in the copy is fixed ("acuérdate"). All with `tsc` + ESLint + `next build` in green.
 
-> **Hecho (23/09, D61 — "bento vivo"):** a pedido de Lorena, los tres bentos D38 ("Cómo funciona",
-> Testimonios y Noticias) ganan **entrada escalonada** (fade-in + slide-up) e **iluminación
-> secuencial de borde** (`line → brand`, borde duro sin blur) al entrar en viewport, y un **hover**
-> de `scale-[1.02]` + contraste con `duration-300 ease-in-out`. Se eligió la **Opción B** (sin línea
-> física: el raíl de página D32 ya cuenta el recorrido) y se descartó Framer Motion por D17/D95
-> (cero librerías de UI, cero islas cliente): todo es CSS nativo `animation-timeline: view()`.
-> Sin `cursor-pointer` (las celdas no son enlaces). `tsc --noEmit` + ESLint + `next build` en verde.
+> **Done (23/09, D61 — "bento vivo"):** at Lorena's request, the three D38 bentos ("Cómo funciona",
+> Testimonios and Noticias) gain **staggered entry** (fade-in + slide-up) and **sequential border
+> illumination** (`line → brand`, hard edge without blur) on entering the viewport, and a **hover**
+> of `scale-[1.02]` + contrast with `duration-300 ease-in-out`. **Option B** was chosen (no physical
+> line: the D32 page rail already tracks the journey) and Framer Motion was discarded by D17/D95
+> (zero UI libraries, zero client islands): everything is native CSS `animation-timeline: view()`.
+> No `cursor-pointer` (the cells are not links). `tsc --noEmit` + ESLint + `next build` in green.
 
-> **Hecho (23/09, D62 — "entrada por elemento"):** a pedido de Lorena, el reveal deja de ser **de
-> bloque** (sección entera) y pasa a ser **por elemento**: en las 9 secciones del cuerpo los "beats"
-> (h2, intro, tarjetas, CTA) aparecen uno a uno al scrollear con un fade-in + desplazamiento de
-> **12px** y escalonado vía `--i`. CSS nativo `animation-timeline: view()` (cero JS), reutilizando
-> el keyframe `step-in` de D61; `reveal-in` retirado. Hero excluido (su H1 no hace fade: es el LCP)
-> y footer excluido. `tsc --noEmit` + ESLint + `next build` en verde.
+> **Done (23/09, D62 — "entry per element"):** at Lorena's request, the reveal stops being **per
+> block** (whole section) and becomes **per element**: in the 9 body sections the "beats"
+> (h2, intro, cards, CTA) appear one by one when scrolling with a fade-in + a **12px**
+> offset and staggering via `--i`. Native CSS `animation-timeline: view()` (zero JS), reusing
+> the `step-in` keyframe from D61; `reveal-in` removed. Hero excluded (its H1 does not fade: it is the LCP)
+> and footer excluded. `tsc --noEmit` + ESLint + `next build` in green.
 
-> **Fix (23/09, D63 — "las animaciones no se veían"):** Lorena reportó no ver las entradas de
-> sección. Diagnóstico con navegador real (Playwright): las animaciones estaban montadas pero
-> (1) el rango `entry` se medía sobre el **alto del elemento** → un h2 lo completaba en ~11px de
-> scroll (imperceptible), y (2) `overflow-hidden` en **Torneos y Cierre** creaba un scroll container
-> que **congelaba** el timeline `view()` → esas secciones nunca animaban. Fix: rango a fase `cover`
-> (relativo al viewport, `cover 0% → calc(20% + --i*4%)` ≈ 162–280px) y `overflow-hidden` →
-> `overflow-clip`. Re-medido: las 9 secciones animan y el CTA del Cierre llega a opacidad 1.
-> `tsc --noEmit` + ESLint + `next build` en verde.
+> **Fix (23/09, D63 — "the animations were not visible"):** Lorena reported not seeing the section
+> entries. Diagnosis with a real browser (Playwright): the animations were mounted but
+> (1) the `entry` range was measured over the **element height** → an h2 completed it in ~11px of
+> scroll (imperceptible), and (2) `overflow-hidden` in **Torneos and Cierre** created a scroll container
+> that **froze** the `view()` timeline → those sections never animated. Fix: range to the `cover` phase
+> (relative to the viewport, `cover 0% → calc(20% + --i*4%)` ≈ 162–280px) and `overflow-hidden` →
+> `overflow-clip`. Re-measured: the 9 sections animate and the Cierre CTA reaches opacity 1.
+> `tsc --noEmit` + ESLint + `next build` in green.
 
-> **Ajuste (23/09, D64 — "más bruscas"):** Lorena pide entradas más contundentes. Recorrido de
-> **40px** (`translateY(2.5rem)`, antes 12px), rango más corto (`cover 12% + --i*4%`, antes 20-28%)
-> y easing `cubic-bezier(0.2, 0.9, 0.2, 1)` (antes `linear`). Medido: el fade dura **56–96px** de
-> scroll (antes 162–264px) con **40px** de desplazamiento real. Solo `transform`/`opacity` (CLS 0)
-> y sigue cubierto por `prefers-reduced-motion`. `tsc --noEmit` + ESLint + `next build` en verde.
+> **Tweak (23/09, D64 — "sharper"):** Lorena asks for more forceful entries. Travel of
+> **40px** (`translateY(2.5rem)`, formerly 12px), shorter range (`cover 12% + --i*4%`, formerly 20-28%)
+> and easing `cubic-bezier(0.2, 0.9, 0.2, 1)` (formerly `linear`). Measured: the fade lasts **56–96px** of
+> scroll (formerly 162–264px) with **40px** of real displacement. Only `transform`/`opacity` (CLS 0)
+> and still covered by `prefers-reduced-motion`. `tsc --noEmit` + ESLint + `next build` in green.
 
-> **Fix (23/09, D65 — raíl visible):** Lorena: *"la línea de tiempo vertical no se ve"*. Medido: el
-> relleno SÍ animaba (401→1358px con el scroll); el problema era contraste/grosor (base `line` 1px =
-> 1.27:1; relleno `brand` 1px = 2.04:1). Fix **global** en `TimelineRail`: base `slate` a **2px**
-> (**5.57:1** sobre `paper`), `white/25` sobre `ink` y `ink/30` en la franja green. Verificado en
-> navegador (`rgb(95,106,109)`, 2px) + captura. Reversible con dos tokens. `next build` en verde.
+> **Fix (23/09, D65 — visible rail):** Lorena: *"the vertical timeline is not visible"*. Measured: the
+> fill DID animate (401→1358px with the scroll); the problem was contrast/thickness (base `line` 1px =
+> 1.27:1; `brand` fill 1px = 2.04:1). **Global** fix in `TimelineRail`: `slate` base to **2px**
+> (**5.57:1** over `paper`), `white/25` over `ink` and `ink/30` on the green strip. Verified in
+> a browser (`rgb(95,106,109)`, 2px) + screenshot. Reversible with two tokens. `next build` in green.
 
-> **Hecho (23/09, D66/D67/D68 — rediseño de `#como-funciona`):** aprobado por Lorena el rediseño de
-> `design-ux`: el bento D38 se retira **solo en esta sección** y pasa a **stepper vertical** que
-> reutiliza el raíl de página como track (nodos de paso `1.1`–`1.4`, con **línea de resultado** por
-> paso y enlace de texto al Discord; el bento sigue en Testimonios/Noticias). (D66) El H2 y los
-> títulos usan **revelado palabra a palabra** (el `word-rise` del hero adaptado a scroll con
-> `overflow-clip`, no `overflow-hidden`). (D67) raíl a **3px** y nodos de sección (los `1,2,3…`) a
-> **círculo doble** y **44/56px**, por encima de los nodos de paso (36/48px, `ember`). (D68) la
-> entrada de la sección se invierte a **desde arriba** (`step-in-down` + `word-drop`) porque el
-> slide-up iba en el mismo sentido que el scroll y no se percibía. Medido en `lg`: raíl 3px, nodo de
-> sección 56px, nodo de paso 48px; el párrafo baja de `−40 → 0`. Nota: el guard `prefers-reduced-motion`
-> sigue apagando todo (Lorena lo tiene activo en su sistema → por eso no las ve; no es un bug).
-> `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, D66/D67/D68 — redesign of `#como-funciona`):** approved by Lorena the redesign by
+> `design-ux`: the D38 bento is removed **only in this section** and becomes a **vertical stepper** that
+> reuses the page rail as a track (`1.1`–`1.4` step nodes, with a **result line** per
+> step and a text link to Discord; the bento stays in Testimonios/Noticias). (D66) The H2 and the
+> titles use **word-by-word reveal** (the hero's `word-rise` adapted to scroll with
+> `overflow-clip`, not `overflow-hidden`). (D67) rail to **3px** and section nodes (the `1,2,3…`) to
+> **double circle** and **44/56px**, above the step nodes (36/48px, `ember`). (D68) the
+> section entry is inverted to **from above** (`step-in-down` + `word-drop`) because the
+> slide-up went in the same direction as the scroll and was not perceived. Measured at `lg`: rail 3px, section
+> node 56px, step node 48px; the paragraph drops from `−40 → 0`. Note: the `prefers-reduced-motion`
+> guard still turns everything off (Lorena has it active on her system → that is why she doesn't see them; it is not a bug).
+> `tsc` + ESLint + `next build` in green.
 >
-> **Ajuste (23/09, D69):** Lorena no quedó conforme con la caída (D68) y eligió la **Opción A**:
-> toda la entrada de `#como-funciona` pasa a **deslizar desde el raíl** (izquierda → derecha,
-> `translateX −40 → 0`, `.reveal-left`), como si cada paso saliera de la línea de tiempo. Se retiran
-> el revelado palabra a palabra de la sección (el hero conserva el suyo) y `.reveal-down`/
-> `.word-drop-view`/`.word-rise-view`. Verificado: sin overflow horizontal.
+> **Tweak (23/09, D69):** Lorena was not satisfied with the drop (D68) and chose **Option A**:
+> the entire entry of `#como-funciona` becomes a **slide from the rail** (left → right,
+> `translateX −40 → 0`, `.reveal-left`), as if each step came out of the timeline. The word-by-word
+> reveal of the section is removed (the hero keeps its own) along with `.reveal-down`/
+> `.word-drop-view`/`.word-rise-view`. Verified: no horizontal overflow.
 
-> **Hecho (23/09, D70 — reapertura de `#como-funciona`):** a pedido de Lorena ("¿qué le falta para ser
-> el ganador indiscutible?") y con el diagnóstico del orquestador como jurado, se aplican 2 ajustes:
-> texto a `lg:col-span-8` + `lg:gap-x-12` (cierra el hueco título↔texto y el carril vacío) y la
-> descripción baja a `slate` mientras el **resultado** sube a `text-lead` + barra `border-l-[3px] brand`
-> (la promesa manda). **Rechazado el mismo día:** el conector hairline nodo→título (`step-link`/`link-lit`);
-> Lorena pidió removerlo ("la línea entre los steppers y el título no me gustan para nada") y se retiró.
-> Cero islas, cero copy nuevo. `tsc` + ESLint + `next build` en verde. Puntos 5–6 (ritmo `lg` y firma)
-> diferidos al gate "vamos a revisar".
+> **Done (23/09, D70 — reopening of `#como-funciona`):** at Lorena's request ("what is it missing to be
+> the undisputed winner?") and with the orchestrator's diagnosis as jury, 2 tweaks are applied:
+> text to `lg:col-span-8` + `lg:gap-x-12` (closes the title↔text gap and the empty lane) and the
+> description drops to `slate` while the **result** rises to `text-lead` + a `border-l-[3px] brand`
+> bar (the promise leads). **Rejected the same day:** the hairline connector node→title (`step-link`/`link-lit`);
+> Lorena asked to remove it ("I really don't like the line between the steppers and the title") and it was removed.
+> Zero islands, zero new copy. `tsc` + ESLint + `next build` in green. Points 5–6 (`lg` rhythm and signature)
+> deferred to the "let's review" gate.
 
-> **Hecho (23/09, D71 — rediseño de `#torneos`):** a pedido de Lorena, la sección pasa de `h2 + párrafo`
-> a **4 pilares en rejilla hairline sobre `ink`**: (1) torneo en curso (label + `h3` + reto + CTA
-> `DiscordCta size="nav"` + estado), (2) **tiempo estático** Días/Horas/Minutos con placeholders `—` y
-> Sora `tabular-nums` (sin isla cliente ni fecha → nunca expira, D56), (3) **el botín** (`1º`/`2º` con
-> numerales `brand`) y (4) **salón de la fama** (ejemplo + estado vacío honesto). Todo rotulado con
-> `mockNote` (maqueta declarada) para no inventar cifras, plazos ni ganadores (brief/J2); sin marcas de
-> terceros. Cero islas nuevas; `tsc` + ESLint + `next build` en verde. **Pendiente de visto bueno visual
-> de Lorena.**
+> **Done (23/09, D71 — redesign of `#torneos`):** at Lorena's request, the section goes from `h2 + paragraph`
+> to **4 pillars in a hairline grid over `ink`**: (1) tournament in progress (label + `h3` + challenge + CTA
+> `DiscordCta size="nav"` + status), (2) **static time** Days/Hours/Minutes with `—` placeholders and
+> Sora `tabular-nums` (no client island or date → never expires, D56), (3) **the prize** (`1º`/`2º` with
+> `brand` numerals) and (4) **hall of fame** (example + honest empty state). All labeled with
+> `mockNote` (declared mockup) so as not to invent figures, deadlines or winners (brief/J2); no third-party
+> brands. Zero new islands; `tsc` + ESLint + `next build` in green. **Pending Lorena's visual
+> sign-off.**
 
-> **Hecho (23/09, D72 — datos reales del Torneo #2 en `#torneos`):** Lorena aportó el anuncio real de
-> cierre/entrega y eligió la opción A. El **torneo en curso es el real** (`Torneo #2 — la landing de
-> TechToJob`) y el bloque de **tiempo** deja los placeholders para mostrar el **cierre real + tabla de
-> husos** (México jue 24 · 00:00 → España · 08:00), en **estático** (hoy es el cierre: un contador vivo
-> quedaría expirado para el jurado). Premios y ganador siguen como **maqueta declarada** (`mockNote`
-> acotada). Además, la entrada de `#torneos` pasa a **`.reveal-left`**, la misma animación que
-> `#como-funciona` (pedido de Lorena). `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, D72 — real Tournament #2 data in `#torneos`):** Lorena provided the real closing/delivery
+> announcement and chose option A. The **tournament in progress is the real one** (`Torneo #2 — la landing de
+> TechToJob`) and the **time** block leaves behind the placeholders to show the **real close + time-zone
+> table** (Mexico Thu 24 · 00:00 → Spain · 08:00), in **static** (today is the close: a live counter
+> would be expired for the jury). Prizes and winner remain as a **declared mockup** (`mockNote`
+> trimmed). Also, the entry of `#torneos` becomes **`.reveal-left`**, the same animation as
+> `#como-funciona` (Lorena's request). `tsc` + ESLint + `next build` in green.
 
-> **Hecho (23/09, D73 — pulido de `#torneos` tras crítica de jurado):** se aplican A + B + D.
-> (A) el `mockNote` del pie se sustituye por un **chip `Ejemplo`** (`ember`/`ink`) junto al rótulo de
-> "El botín" y "Salón de la fama", para que un lector rápido no los tome por reales (J2). (B) la rejilla
-> pasa a **2×2 (7/5 + 7/5)**: el cierre deja de estar dentro de la tarjeta activa y tiene bloque propio;
-> desaparece la columna apilada que dejaba hueco al pie. (D) la prueba social queda honesta con el chip
-> y el estado vacío listo. **Diferido al gate:** C (numeral de edición `02`) y E (hover de borde).
-> `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, D73 — polish of `#torneos` after jury criticism):** A + B + D are applied.
+> (A) the footer `mockNote` is replaced by an **`Ejemplo` chip** (`ember`/`ink`) next to the label of
+> "El botín" and "Salón de la fama", so that a quick reader does not take them as real (J2). (B) the grid
+> becomes **2×2 (7/5 + 7/5)**: the close stops being inside the active card and has its own block;
+> the stacked column that left a gap at the foot disappears. (D) the social proof stays honest with the chip
+> and the empty state ready. **Deferred to the gate:** C (edition numeral `02`) and E (border hover).
+> `tsc` + ESLint + `next build` in green.
 
-> **Hecho (23/09, D74 — arreglo de los defectos visibles de `#torneos`):** sobre la captura se corrige
-> (1) la **tabla de husos** que partía el tiempo en dos líneas (`whitespace-nowrap` en el tiempo,
-> `min-w-0` en la región y rejilla `sm:2 / lg:3`), (2) el **desequilibrio**: la fila 1 pasa a
-> **activo (7) + [botín y salón apilados] (5)** con `lg:justify-between`, y el **cierre va a todo el
-> ancho** (`lg:col-span-12`) como banda, y (3) el **titular huérfano** con `text-balance`.
-> C, E y F siguen diferidos al gate. `tsc` + ESLint + `next build` en verde.
+> **Done (23/09, D74 — fix of the visible defects of `#torneos`):** on top of the screenshot, we fix
+> (1) the **time-zone table** that split the time into two lines (`whitespace-nowrap` on the time,
+> `min-w-0` on the region and grid `sm:2 / lg:3`), (2) the **imbalance**: row 1 becomes
+> **active (7) + [prize and hall stacked] (5)** with `lg:justify-between`, and the **close goes full
+> width** (`lg:col-span-12`) as a band, and (3) the **orphan headline** with `text-balance`.
+> C, E and F remain deferred to the gate. `tsc` + ESLint + `next build` in green.
 
-## 3. Fuentes de verdad (jerarquía)
+## 3. Sources of truth (hierarchy)
 
-1. Bases oficiales del concurso y brief (material de entrada, no versionado por privacidad).
-2. `specs/` — requisitos reescritos y verificables, cada uno con cita de la regla (R01–R61).
-3. `AGENTS.md` — reglas de proceso y gates de calidad.
+1. Official contest rules and brief (input material, not versioned for privacy).
+2. `specs/` — rewritten and verifiable requirements, each with a citation of the rule (R01–R61).
+3. `AGENTS.md` — process rules and quality gates.
 
-Los vacíos de información se registraron como preguntas en `docs/DECISIONES.md` (D1–D60);
-nada de lo construido se asumió sin fuente.
+Information gaps were recorded as questions in `docs/DECISIONES.md` (D1–D60);
+nothing built was assumed without a source.
 
-## 4. Método: spec-driven + multiagente
+## 4. Method: spec-driven + multi-agent
 
-Ninguna línea de código se escribió sin spec previa, y ninguna sección se dio por terminada
-sin pasar el auditor de reglas. El trabajo lo ejecutaron 6 roles (definidos en
-`.opencode/agent/`): orquestador/spec, diseño UX, constructor (único con permisos en `app/`),
-SEO/rendimiento, QA de accesibilidad y auditor implacable de las bases. El uso de IA está
-declarado en el README, como piden las bases.
+No line of code was written without a prior spec, and no section was considered finished
+without passing the rules auditor. The work was carried out by 6 roles (defined in
+`.opencode/agent/`): orchestrator/spec, UX design, builder (the only one with permissions in `app/`),
+SEO/performance, accessibility QA and relentless auditor of the rules. AI use is
+disclosed in the README, as the rules require.
 
-> Desde el **23/09 (D56)** el ciclo se simplificó a **3 roles** (orquestador, `design-ux`,
-> `nextjs-builder`) y sin auditorías, para priorizar avance; ver §2.1. Al decir Lorena
-> "vamos a revisar" se reactivan los 6 roles y el gate de calidad completo.
+> Since **23/09 (D56)** the cycle was simplified to **3 roles** (orchestrator, `design-ux`,
+> `nextjs-builder`) and without audits, to prioritize progress; see §2.1. When Lorena says
+> "let's review", the 6 roles and the full quality gate are reactivated.
 
-## 5. Dónde está cada evidencia
+## 5. Where each piece of evidence is
 
-| Afirmación | Prueba |
+| Claim | Proof |
 |---|---|
-| "Cumple las 61 reglas" | `docs/qa/2026-09-22-rules-audit-1.md` (regla → estado → evidencia → acción) |
-| "Calidad medida, no prometida" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, capturas Playwright) |
-| "Por qué se decidió X" | `docs/DECISIONES.md` (60 decisiones fechadas, D1–D60) |
-| "El sistema de diseño es real" | `docs/design-system.md` + tokens en `app/app/globals.css` |
-| "Los textos viven aparte del código" | `app/messages/es.json` (única fuente de copy visible) |
+| "It meets the 61 rules" | `docs/qa/2026-09-22-rules-audit-1.md` (rule → status → evidence → action) |
+| "Quality measured, not promised" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, Playwright screenshots) |
+| "Why X was decided" | `docs/DECISIONES.md` (60 dated decisions, D1–D60) |
+| "The design system is real" | `docs/design-system.md` + tokens in `app/app/globals.css` |
+| "The texts live apart from the code" | `app/messages/es.json` (single source of visible copy) |

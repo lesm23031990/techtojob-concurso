@@ -1,126 +1,126 @@
 # TechToJob Concurso — Landing Page
 
-## Contexto del proyecto
+## Project context
 
-Concurso cuyo premio es una **oferta de empleo**. La entrega es una landing page.
-El código, el repo y el historial de commits SON parte de la evaluación del jurado.
+A contest whose prize is a **job offer**. The deliverable is a landing page.
+The code, the repo and the commit history ARE part of the jury's evaluation.
 
-**Regla de oro:** cada decisión técnica o de diseño se toma preguntando
-"¿qué puntúa ante un jurado técnico?" — no "qué es más rápido de hacer".
+**Golden rule:** every technical or design decision is made by asking
+"what scores well with a technical jury?" — not "what is fastest to do".
 
-## Stack obligatorio (definido por las bases del concurso)
+## Mandatory stack (defined by the contest rules)
 
-- Next.js (App Router) + TypeScript estricto
+- Next.js (App Router) + strict TypeScript
 - Tailwind CSS
-- Deploy local en Fase 3 (el destino de entrega se confirma en `specs/`)
+- Local deploy in Phase 3 (the delivery target is confirmed in `specs/`)
 
-## Fuentes de verdad (jerarquía)
+## Sources of truth (hierarchy)
 
-1. `material-concurso/bases/` — reglas oficiales del concurso (NUNCA contradecirlas)
-2. `specs/` — especificaciones derivadas y aprobadas
-3. `AGENTS.md` — este archivo (reglas de proceso)
+1. `material-concurso/bases/` — official contest rules (NEVER contradict them)
+2. `specs/` — derived and approved specifications
+3. `AGENTS.md` — this file (process rules)
 
-Si dos fuentes se contradicen: **las bases ganan**, y se registra el conflicto en `docs/DECISIONES.md`.
+If two sources conflict: **the rules win**, and the conflict is recorded in `docs/DECISIONES.md`.
 
-## Reglas innegociables
+## Non-negotiable rules
 
-### Alcance
-- Este concurso es **solo frontend + SEO**. NO existe backend propio en este proyecto:
-  sin APIs, sin bases de datos, sin servidores Node. Todo lo dinámico es del lado del cliente
-  o generación estática de Next.js (SSG/ISR).
-- No inventar requisitos: si una regla no está en `material-concurso/`, NO existe.
-  Ante ambigüedad, preguntar a Lorena, no asumir.
+### Scope
+- This contest is **frontend + SEO only**. There is NO backend of our own in this project:
+  no APIs, no databases, no Node servers. Everything dynamic is client-side
+  or Next.js static generation (SSG/ISR).
+- Do not invent requirements: if a rule is not in `material-concurso/`, it does NOT exist.
+  When in doubt, ask Lorena, don't assume.
 
-### Repo público (el jurado lo va a leer)
-- `material-concurso/` está en `.gitignore` — NUNCA entra al repo (capturas de Discord
-  con usernames y mensajes de terceros). Solo salen hacia `specs/` requirements reescritos,
-  sin datos personales ni material gráfico ajeno.
-- Commits pequeños, frecuentes, mensaje convencional (`feat:`, `fix:`, `design:`, `seo:`, `docs:`...).
-  Prohibido: "initial commit" con 80 archivos, force-push, mensajes vacíos.
-- Jamás secretos, tokens ni emails personales en código, commits o historial.
-- Sin archivo LICENSE hasta confirmar propiedad del código en las bases.
+### Public repo (the jury will read it)
+- `material-concurso/` is in `.gitignore` — it NEVER enters the repo (Discord screenshots
+  with usernames and third-party messages). Only rewritten requirements go out to `specs/`,
+  with no personal data or third-party graphic material.
+- Small, frequent commits, conventional message (`feat:`, `fix:`, `design:`, `seo:`, `docs:`...).
+  Forbidden: "initial commit" with 80 files, force-push, empty messages.
+- Never secrets, tokens or personal emails in code, commits or history.
+- No LICENSE file until ownership of the code is confirmed in the rules.
 
-### Calidad mínima exigida (gate de toda entrega)
-> Este gate **NO se ejecuta por defecto**. Solo se activa cuando Lorena dice "vamos a revisar"
-> (ver *Modo rápido* más abajo). Es el listón que la entrega debe alcanzar en ese momento, no una
-> tarea de cada cambio.
+### Minimum required quality (gate for every deliverable)
+> This gate is **NOT run by default**. It is only activated when Lorena says "let's review"
+> (see *Fast mode* below). It is the bar the deliverable must reach at that moment, not a
+> task for every change.
 
-- Lighthouse ≥ 95 en Performance, SEO y Accessibility (móvil y escritorio)
-- Accesibilidad WCAG 2.1 AA: semántica HTML, roles ARIA cuando toque, contraste,
-  navegación por teclado, `alt` reales, jerarquía de encabezados correcta
-- Responsive mobile-first verificado (360px, 768px, 1024px, 1440px)
-- TypeScript sin `any`, sin errores de `tsc --noEmit`, ESLint limpio
-- Server Components por defecto; `"use client"` solo donde justifique
-- Core Web Vitals: LCP < 2.5s, CLS < 0.1, INP bajo; fuentes con `next/font`;
-  imágenes con `next/image`
-- Metadata API completa + Open Graph + JSON-LD + `sitemap.ts` + `robots.ts`
+- Lighthouse ≥ 95 in Performance, SEO and Accessibility (mobile and desktop)
+- WCAG 2.1 AA accessibility: HTML semantics, ARIA roles where appropriate, contrast,
+  keyboard navigation, real `alt` text, correct heading hierarchy
+- Verified mobile-first responsive design (360px, 768px, 1024px, 1440px)
+- TypeScript without `any`, no `tsc --noEmit` errors, clean ESLint
+- Server Components by default; `"use client"` only where justified
+- Core Web Vitals: LCP < 2.5s, CLS < 0.1, low INP; fonts with `next/font`;
+  images with `next/image`
+- Complete Metadata API + Open Graph + JSON-LD + `sitemap.ts` + `robots.ts`
 
-### Proceso (SDD: spec-driven development)
-- Nada de código sin spec escrita en `specs/`. Orden de fases:
-  1. Ingesta del material de Discord → `specs/`
-  2. Sistema de diseño → `docs/design-system.md` + tokens Tailwind
-  3. Scaffold Next.js en `app/`
-  4. Implementación por secciones (en modo revisión: `rules-auditor` + `qa-access`)
-  5. Pulido SEO + evidencia de QA en `docs/qa/` + README final (solo en modo revisión)
+### Process (SDD: spec-driven development)
+- No code without a spec written in `specs/`. Phase order:
+  1. Ingest the Discord material → `specs/`
+  2. Design system → `docs/design-system.md` + Tailwind tokens
+  3. Next.js scaffold in `app/`
+  4. Implementation by sections (in review mode: `rules-auditor` + `qa-access`)
+  5. SEO polish + QA evidence in `docs/qa/` + final README (review mode only)
 
-### Roles de trabajo
-- Los agentes y sus permisos están definidos en `opencode.json` + `.opencode/agent/`.
-- `rules-auditor` y `qa-access` NO editan código: solo auditan y reportan a `docs/qa/`.
-- `nextjs-builder` es el único que escribe en `app/`. Excepción registrada: D29 (créditos
-  de `opencode-go` agotados), donde el orquestador implementó directamente.
-- Los reportes de auditoría citan textual la regla del concurso que motiva el hallazgo.
-- **Modo de trabajo (histórico):** durante la iteración de diseño se trabajó en **modo rápido**
-  (D56) —3 roles: orquestador, `design-ux` y `nextjs-builder`— para no frenar el avance.
-  **Al reactivarse la revisión (D124)** se ejecutó la pasada completa de `rules-auditor`,
-  `seo-perf` y `qa-access` sobre el estado final; hallazgos y fixes en
-  `docs/qa/2026-09-23-auditoria-revision.md` y `docs/DECISIONES.md` (D125–D139). La entrega se
-  cierra con el gate de **"Calidad mínima exigida"** verificado.
-- `rules-auditor` y `qa-access` **no editan código**: auditan y reportan a `docs/qa/`.
-  `nextjs-builder` es la mano que escribe en `app/`.
+### Working roles
+- The agents and their permissions are defined in `opencode.json` + `.opencode/agent/`.
+- `rules-auditor` and `qa-access` do NOT edit code: they only audit and report to `docs/qa/`.
+- `nextjs-builder` is the only one that writes in `app/`. Recorded exception: D29
+  (`opencode-go` credits exhausted), where the orchestrator implemented directly.
+- Audit reports quote verbatim the contest rule that motivates each finding.
+- **Working mode (historical):** during the design iteration we worked in **fast mode**
+  (D56) —3 roles: orchestrator, `design-ux` and `nextjs-builder`— to avoid slowing progress.
+  **When review was reactivated (D124)** the full pass of `rules-auditor`,
+  `seo-perf` and `qa-access` ran over the final state; findings and fixes in
+  `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md` (D125–D139). The deliverable
+  closes with the **"Minimum required quality"** gate verified.
+- `rules-auditor` and `qa-access` **do not edit code**: they audit and report to `docs/qa/`.
+  `nextjs-builder` is the hand that writes in `app/`.
 
-### Modelos de los agentes (arquitectura dual)
-- **Primario: `opencode-go`**, con el modelo afinado de cada agente (kimi-k3 para el builder,
-  glm-5.3 para diseño, qwen3.8-flash para spec/QA/auditoría/SEO).
-- **Reserva: `deepseek/deepseek-flash`**, solo mientras los créditos de `opencode-go` estén
-  agotados. Es reserva de **disponibilidad**, no de calidad: los agentes conservan su prompt,
-  permisos y temperatura.
-- Interruptor: `node scripts/set-agent-models.mjs opencode-go|deepseek|status [--dry-run]`.
-- opencode **no recarga la config en caliente**: tras cambiar de modo hay que reiniciar opencode.
-- La evidencia de `docs/qa/` debe indicar con qué modelo se generó.
+### Agent models (dual architecture)
+- **Primary: `opencode-go`**, with each agent's fine-tuned model (kimi-k3 for the builder,
+  glm-5.3 for design, qwen3.8-flash for spec/QA/audit/SEO).
+- **Fallback: `deepseek/deepseek-flash`**, only while `opencode-go` credits are
+  exhausted. It is a fallback of **availability**, not quality: agents keep their prompt,
+  permissions and temperature.
+- Switch: `node scripts/set-agent-models.mjs opencode-go|deepseek|status [--dry-run]`.
+- opencode **does not hot-reload the config**: after changing mode you must restart opencode.
+- The evidence in `docs/qa/` must state which model it was generated with.
 
-## Estructura del repositorio
+## Repository structure
 
 ```
 techtojob-concurso/
-├── AGENTS.md                 ← reglas generales (este archivo)
-├── GUIA.md                   ← mapa vivo: estado, fases, checklist Discord
-├── opencode.json             ← agentes + MCPs
+├── AGENTS.md                 ← general rules (this file)
+├── GUIA.md                   ← living map: status, phases, Discord checklist
+├── opencode.json             ← agents + MCPs
 ├── .opencode/
-│   ├── agent/                ← prompts de los 6 agentes
-│   └── skills/               ← skills de proyecto
-├── material-concurso/        ← 🚫 FUERA DE GIT: Lorena deposita aquí el Discord
-│   ├── bases/                ←   reglas, requisitos, fechas (txt/pdf/screenshots)
-│   ├── criterios/            ←   ponderación de evaluación
-│   ├── marca/                ←   logos, paletas, tipografías
-│   └── capturas/             ←   screenshots de posts del canal
-├── specs/                    ← FASE 2: especificaciones verificables
-├── docs/                     ← decisiones, design system, evidencia QA
+│   ├── agent/                ← prompts for the 6 agents
+│   └── skills/               ← project skills
+├── material-concurso/        ← 🚫 OUT OF GIT: Lorena deposits the Discord here
+│   ├── bases/                ←   rules, requirements, dates (txt/pdf/screenshots)
+│   ├── criterios/            ←   evaluation weighting
+│   ├── marca/                ←   logos, palettes, typography
+│   └── capturas/             ←   screenshots of channel posts
+├── specs/                    ← PHASE 2: verifiable specifications
+├── docs/                     ← decisions, design system, QA evidence
 │   └── qa/
-└── app/                      ← FASE 3-4: proyecto Next.js (create-next-app)
+└── app/                      ← PHASE 3-4: Next.js project (create-next-app)
 ```
 
-## Estado actual
+## Current status
 
-**FASES 1–5 completadas (23/09/2026):** specs con 61 reglas trazadas, sistema de diseño con tokens
-(`docs/design-system.md`), landing completa en `app/` (Next.js App Router + TS estricto + Tailwind,
-11 secciones + SEO técnico) y **entrega publicada**: repo público
-(`github.com/lesm23031990/techtojob-concurso`) + deploy en
+**PHASES 1–5 completed (23/09/2026):** specs with 61 traced rules, design system with tokens
+(`docs/design-system.md`), full landing page in `app/` (Next.js App Router + strict TS + Tailwind,
+11 sections + technical SEO) and **published deliverable**: public repo
+(`github.com/lesm23031990/techtojob-concurso`) + deploy at
 **https://techtojob-concurso.vercel.app**.
 
-**Verificación final (sobre el deploy):** `tsc --noEmit`, ESLint y `next build` en verde; Lighthouse
-**móvil** con **SEO 100 · Accesibilidad 100 · Best Practices 100**. Evidencia de capturas
-(360/768/1024/1440) y reportes en `docs/qa/2026-09-23/`.
+**Final verification (on the deploy):** `tsc --noEmit`, ESLint and `next build` in green; Lighthouse
+**mobile** with **SEO 100 · Accessibility 100 · Best Practices 100**. Screenshot evidence
+(360/768/1024/1440) and reports in `docs/qa/2026-09-23/`.
 
-**Modo de trabajo:** el "modo rápido" (D56) sirvió para iterar el diseño con 3 roles; al reactivarse
-la revisión (D124) se ejecutaron `rules-auditor`, `seo-perf` y `qa-access` sobre el estado final, con
-los hallazgos y fixes en `docs/qa/2026-09-23-auditoria-revision.md` y `docs/DECISIONES.md` (D125–D139).
+**Working mode:** "fast mode" (D56) served to iterate the design with 3 roles; when
+review was reactivated (D124), `rules-auditor`, `seo-perf` and `qa-access` ran over the final state, with
+findings and fixes in `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md` (D125–D139).

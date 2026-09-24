@@ -1,31 +1,31 @@
-# Design System — TechToJob · Landing Torneo #2
+# Design System — TechToJob · Torneo #2 Landing
 
-> Autor: `design-ux` · 22/09/2026 · Ejecutor: `nextjs-builder` (este doc NO contiene código de componentes, solo tokens y decisiones).
-> Fuentes: `specs/00-checklist-reglas.md` (R24–R28, R34–R36, R59), `specs/10-landing-spec.md`, `specs/11-contenido.md`, `material-concurso/bases/brief.md`, logos inspeccionados en `material-concurso/marca/TechToJob/`.
-> Regla de nomenclatura (R35): TODO token, variable, clase y comentario en inglés. El contenido visible en español vive en `messages/es.json` (R36) — este doc referencia secciones, nunca strings.
+> Author: `design-ux` · 22/09/2026 · Executor: `nextjs-builder` (this doc does NOT contain component code, only tokens and decisions).
+> Sources: `specs/00-checklist-reglas.md` (R24–R28, R34–R36, R59), `specs/10-landing-spec.md`, `specs/11-contenido.md`, `material-concurso/bases/brief.md`, logos inspected in `material-concurso/marca/TechToJob/`.
+> Naming rule (R35): EVERY token, variable, class and comment in English. The visible Spanish content lives in `messages/es.json` (R36) — this doc references sections, never strings.
 
 ---
 
-## 0. Lectura de la marca (qué vimos en los logos)
+## 0. Brand reading (what we saw in the logos)
 
-Inspección visual real de los 12 PNG + medidas:
+Real visual inspection of the 12 PNGs + measurements:
 
-| Familia | Qué es | Proporción | Variantes cromáticas (verificadas) |
+| Family | What it is | Ratio | Chromatic variants (verified) |
 |---|---|---|---|
-| `v1` | Isotipo + wordmark **horizontal** en una línea | 4619×684 ≈ **6.75:1** (muy apaisado) | Positivo = carbón `#2f3436` · Negro = negro puro · Negativo = **verde `#84c0bf` sólido** (para fondo oscuro) · Degradado = carbón→verde diagonal |
-| `v2` | Isotipo a la izquierda + wordmark **apilado** "Tech / to / Job" en 3 líneas | 2558×1418 ≈ **1.8:1** (casi cuadrado) | mismas 4 variantes |
-| `Símbolo` | **solo isotipo** (nodo/red de 4 brazos redondeados con hueco de conexión central — lee como "conexión entre personas", coherente con el posicionamiento de comunidad) | 1151×1151 = 1:1 | mismas 4 variantes |
+| `v1` | Icon + **horizontal** wordmark on one line | 4619×684 ≈ **6.75:1** (very wide) | Positive = charcoal `#2f3436` · Black = pure black · Negative = **solid green `#84c0bf`** (for dark background) · Gradient = charcoal→green diagonal |
+| `v2` | Icon on the left + **stacked** "Tech / to / Job" wordmark in 3 lines | 2558×1418 ≈ **1.8:1** (almost square) | same 4 variants |
+| `Símbolo` | **icon only** (node/network of 4 rounded arms with a central connection gap — reads as "connection between people", consistent with the community positioning) | 1151×1151 = 1:1 | same 4 variants |
 
-Hallazgos que condicionan las decisiones:
+Findings that condition the decisions:
 
-1. **"Negativo" NO es blanco**: es la versión en verde `#84c0bf`. Sobre fondo oscuro `#2f3436` el verde da **6.17:1** → es la variante correcta para secciones oscuras. No existe versión blanca del logo: si algún día hiciera falta sobre negro puro, se usa filtro CSS `brightness-0 invert` (no esperado en esta landing).
-2. **v1 es demasiado ancho para móvil**: a 32px de alto mide ~216px de ancho. En 360px deja ~100px para el resto del nav → en móvil se usa el `Símbolo` (ver tabla §2).
-3. **v2 es el lockup natural para formatos casi cuadrados** (OG 1200×630, hero con espacio vertical).
-4. **Problema de nombres de archivo**: `Símbolo*` lleva acento (`í` → `%C3%AD` en URLs, fricción con git/scripts/herramientas de deploy) y **`SVG/SímboloBlack .svg` tiene un espacio antes de la extensión**. Además "Positivo/Negativo/Black/Degradado" son en español y describen el fondo, no el uso → poco legibles en código inglés (R35).
+1. **"Negative" is NOT white**: it is the green `#84c0bf` version. On a dark `#2f3436` background the green gives **6.17:1** → it is the correct variant for dark sections. There is no white version of the logo: if one were ever needed on pure black, a CSS `brightness-0 invert` filter is used (not expected on this landing).
+2. **v1 is too wide for mobile**: at 32px tall it measures ~216px wide. At 360px that leaves ~100px for the rest of the nav → on mobile the `Símbolo` is used (see table §2).
+3. **v2 is the natural lockup for almost-square formats** (OG 1200×630, hero with vertical space).
+4. **Filename problem**: `Símbolo*` carries an accent (`í` → `%C3%AD` in URLs, friction with git/scripts/deploy tools) and **`SVG/SímboloBlack .svg` has a space before the extension**. Also "Positivo/Negativo/Black/Degradado" are in Spanish and describe the background, not the use → hard to read in English code (R35).
 
-### 2.1 Renombrado ASCII recomendado (builder al copiar a `app/public/`)
+### 2.1 Recommended ASCII rename (builder when copying to `app/public/`)
 
-| Origen (`material-concurso/marca/TechToJob/SVG/`) | Destino `app/public/brand/` |
+| Source (`material-concurso/marca/TechToJob/SVG/`) | Destination `app/public/brand/` |
 |---|---|
 | `v1Positivo.svg` | `logo-horizontal.svg` |
 | `v1Negativo.svg` | `logo-horizontal-light.svg` |
@@ -37,53 +37,53 @@ Hallazgos que condicionan las decisiones:
 | `v2Degradado.svg` | `logo-stacked-gradient.svg` |
 | `SímboloPositivo.svg` | `logo-symbol.svg` |
 | `SímboloNegativo.svg` | `logo-symbol-light.svg` |
-| `SímboloBlack .svg` ⚠️ (espacio) | `logo-symbol-black.svg` |
+| `SímboloBlack .svg` ⚠️ (space) | `logo-symbol-black.svg` |
 | `SímboloDegradado.svg` | `logo-symbol-gradient.svg` |
 
-Regla: `-light` = para fondo oscuro (la variante verde). SVG siempre en runtime; PNG/PDF solo como archivo muerto del repo del concurso, NO entran a `app/`.
+Rule: `-light` = for dark background (the green variant). SVG always at runtime; PNG/PDF only as dead files in the contest repo, they do NOT enter `app/`.
 
-### 2.2 Composite del header — medidas y clases exactas (revisión del estado claro, D47)
+### 2.2 Header composite — exact measurements and classes (light-state review, D47)
 
-El header es el único punto donde el logo NO es un asset único: es un composite de dos piezas
-(tile + wordmark) para que ambas polaridades tengan el mismo peso visual. Las medidas son
-idénticas en `dark` y `light`; solo cambian el `src` del isotipo y los tokens de color:
+The header is the only place where the logo is NOT a single asset: it is a composite of two pieces
+(tile + wordmark) so that both polarities have the same visual weight. The measurements are
+identical in `dark` and `light`; only the icon's `src` and the color tokens change:
 
-| Pieza | Clases comunes | Superficie `ink` (dark) | Superficie `paper` (light) |
+| Piece | Common classes | Surface `ink` (dark) | Surface `paper` (light) |
 |---|---|---|---|
-| Contenedor | `flex items-center gap-2.5` | — | — |
+| Container | `flex items-center gap-2.5` | — | — |
 | Tile | `grid h-10 w-10 shrink-0 place-items-center rounded-none` | `border border-brand/40 bg-white/5` | `border border-brand bg-ink/5` |
-| Isotipo (`priority`, `alt=""`) | `h-6 w-6` (24px) | `brand/logo-symbol-light.svg` (verde `#84c0bf`) | `brand/logo-symbol.svg` (carbón `#303436`) |
-| Wordmark (`priority`, `alt=""`) | `h-5 w-auto sm:h-6`, `width=178 height=24` | `brand/wordmark-duo.svg` (`paper` + `brand`) | `brand/wordmark-ink-duo.svg` (ink `#303436` + `brand`, con contorno ink fino en las letras verdes — D97) |
+| Icon (`priority`, `alt=""`) | `h-6 w-6` (24px) | `brand/logo-symbol-light.svg` (green `#84c0bf`) | `brand/logo-symbol.svg` (charcoal `#303436`) |
+| Wordmark (`priority`, `alt=""`) | `h-5 w-auto sm:h-6`, `width=178 height=24` | `brand/wordmark-duo.svg` (`paper` + `brand`) | `brand/wordmark-ink-duo.svg` (ink `#303436` + `brand`, with a thin ink outline on the green letters — D97) |
 
-Ratios medidos (WCAG 2.1): isotipo carbón sobre `paper` **12.58:1** ✅ · wordmark carbón sobre
-`paper` **12.58:1** ✅ · borde `brand` sólido sobre `paper` **2.04:1** (decorativo: el tile no
-transmite información; el nombre accesible es el `aria-label` del enlace). El borde del tile
-oscuro (`brand/40` sobre `ink`) mide **2.23:1**; por eso en claro el borde va **sin alpha** — el
-mismo `brand/40` diluido sobre blanco caería a 1.31:1 y el marco desaparecería. Es el único
-ajuste asimétrico, y es por paridad percibida, no por capricho.
+Measured ratios (WCAG 2.1): charcoal icon on `paper` **12.58:1** ✅ · charcoal wordmark on
+`paper` **12.58:1** ✅ · solid `brand` border on `paper` **2.04:1** (decorative: the tile conveys no
+information; the accessible name is the link's `aria-label`). The dark tile's border
+(`brand/40` on `ink`) measures **2.23:1**; that is why in light mode the border goes **without alpha** — the
+same `brand/40` diluted on white would fall to 1.31:1 and the frame would disappear. It is the only
+asymmetric adjustment, and it is for perceived parity, not caprice.
 
-`wordmark-ink.svg` es un **derivado documentado** (mismo criterio que `wordmark-duo.svg`, D31):
-idénticos contornos y `viewBox` (`176 26 934 126`), los `fill` a carbón `#303436`. Ningún archivo
-oficial se altera. Se anota en el README (§Fuentes y créditos, R9).
+`wordmark-ink.svg` is a **documented derivative** (same criterion as `wordmark-duo.svg`, D31):
+identical outlines and `viewBox` (`176 26 934 126`), the `fill`s set to charcoal `#303436`. No official
+file is altered. It is noted in the README (§Sources and credits, R9).
 
 ---
 
-## 2. Tabla de uso de logos por ubicación
+## 2. Logo usage table by location
 
-| # | Ubicación | Archivo exacto (destino) | Fondo | Justificación |
+| # | Location | Exact file (destination) | Background | Justification |
 |---|---|---|---|---|
-| a | **Navbar** | **Adaptativo (D47), composite simétrico**: `data-header-surface="dark"` → isotipo `brand/logo-symbol-light.svg` (SímboloNegativo verde) en tile `h-10 w-10 rounded-none border-brand/40 bg-white/5` + `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`). `data-header-surface="light"` → **la MISMA composición en polaridad clara** (revisión de D47 pedida por Lorena): isotipo oficial `brand/logo-symbol.svg` (Positivo carbón) en tile `h-10 w-10 rounded-none border-brand bg-ink/5` + `brand/wordmark-ink.svg` (derivado monocromo carbón). Medidas y ratios exactos en §2.2 | `ink`/`paper` según la sección | Cada superficie usa la variante OFICIAL correcta: Positivo en claro, Negativo en oscuro (el mark no se recolorea, se elige). `wordmark-duo.svg` **no sirve en claro**: su mitad "Tech" es `#ffffff` → **1.00:1** sobre `paper` (invisible), no es una simple excepción de logotipo; y "ToJob" verde daría 2.04:1, prohibido por R26 (§3.1 #10). En claro el verde queda **solo en el borde del tile** (detalle decorativo, permitido por R26). Ambas polaridades comparten tile `h-10 w-10`, wordmark `h-5 sm:h-6` y `gap-2.5` → idéntico peso (228px a `sm`). Nombre accesible por `aria-label` del enlace; imágenes `alt=""` |
-| b | **Hero** | `brand/logo-symbol-light.svg` (símbolo verde) como marca de agua decorativa al 6% (D90, igual que Audiencias y el Cierre) + CTA dominante. **NO se repite el lockup**: el wordmark ya vive en el nav y el H1 es texto real (R39, R40) | `ink` oscuro | Duplicar logo en hero competiría con el CTA único (R11). La marca de agua en la esquina da identidad sin robar jerarquía |
-| c | **Footer** | **El mismo composite del header en su polaridad oscura (D58)**: isotipo oficial `brand/logo-symbol-light.svg` (Negativo verde) en tile `h-10 w-10 rounded-none border-brand/40 bg-white/5` + `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`), `gap-2.5`, wordmark `h-5 sm:h-6` | `ink` oscuro | Verde sobre carbón = 6.17:1 ✅. Antes usaba `logo-horizontal-light.svg` (32px) y se leía como una marca distinta a la del nav; el composite iguala peso y lectura de marca con la cabecera (pedido de la autora, D58). Decorativo: wrapper `aria-hidden="true"`, imágenes `alt=""` y `loading="lazy"` (R56, bajo el pliegue — **no** `priority` como el header). `logo-horizontal-light.svg` queda en el kit oficial, ya sin uso en la web |
-| d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); fallback PNG: `logo-symbol.svg` exportado a 180×180 sobre fondo blanco para `apple-touch-icon.png` y a 512×512 con fondo `brand` y símbolo carbón para `icon-512.png` (maskable) | — | El símbolo cuadrado es la única variante legible a 16–32px. Carbón sobre blanco del navegador ✅; nunca Degradado en favicon (las bandas oscuras desaparecen a tamaño miniatura) |
-| e | **Open Graph 1200×630** | Composición estática nueva `app/opengraph-image.png` (builder la exporta, <200 KB): fondo `ink`; `brand/logo-stacked-light.svg` (v2Negativo) a la izquierda ocupando ~45% del alto; a la derecha el H1 del hero en Sora 700 blanco + línea de apoyo; `logo-symbol-gradient.svg` semitransparente como textura en la esquina inferior derecha | `ink` oscuro | v2 (1.8:1) es el único lockup que llena bien el formato OG sin quedar enana; verde sobre carbón legible en miniatura de Facebook/X; verificar en opengraph.xyz (R51) |
-| f | **Marca de agua / fondo** | `brand/logo-symbol-light.svg` (verde sólido) al **6% de opacidad** en Hero, Audiencias y Cierre (D90; antes era el `logo-symbol-gradient` al 10%), `aria-hidden`, `pointer-events-none`, `loading="lazy"`, decorativo. **Torneos y Testimonios NO la llevan** (superficies claras, D87) | `ink` oscuro | Refuerza identidad sin texto en imagen (R39) ni coste de LCP (decorativo, no `priority`). Sobre `ink` el gradiente carbón→verde dejaba media marca invisible; el símbolo verde al 6% se lee sutil (D90). En secciones claras NO va marca de agua (compite con el texto) |
+| a | **Navbar** | **Adaptive (D47), symmetric composite**: `data-header-surface="dark"` → icon `brand/logo-symbol-light.svg` (green SímboloNegativo) in tile `h-10 w-10 rounded-none border-brand/40 bg-white/5` + `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`). `data-header-surface="light"` → **the SAME composition in light polarity** (D47 review requested by Lorena): official icon `brand/logo-symbol.svg` (charcoal Positive) in tile `h-10 w-10 rounded-none border-brand bg-ink/5` + `brand/wordmark-ink.svg` (charcoal monochrome derivative). Exact measurements and ratios in §2.2 | `ink`/`paper` depending on the section | Each surface uses the correct OFFICIAL variant: Positive on light, Negative on dark (the mark is not recolored, it is chosen). `wordmark-duo.svg` **does not work on light**: its "Tech" half is `#ffffff` → **1.00:1** on `paper` (invisible), it is not a simple logo exception; and the green "ToJob" would give 2.04:1, forbidden by R26 (§3.1 #10). On light, the green stays **only on the tile border** (decorative detail, allowed by R26). Both polarities share tile `h-10 w-10`, wordmark `h-5 sm:h-6` and `gap-2.5` → identical weight (228px at `sm`). Accessible name via the link's `aria-label`; images `alt=""` |
+| b | **Hero** | `brand/logo-symbol-light.svg` (green symbol) as a decorative watermark at 6% (D90, same as Audiences and Closing) + dominant CTA. **The lockup is NOT repeated**: the wordmark already lives in the nav and the H1 is real text (R39, R40) | dark `ink` | Duplicating the logo in the hero would compete with the single CTA (R11). The corner watermark gives identity without stealing hierarchy |
+| c | **Footer** | **The same header composite in its dark polarity (D58)**: official icon `brand/logo-symbol-light.svg` (green Negative) in tile `h-10 w-10 rounded-none border-brand/40 bg-white/5` + `brand/wordmark-duo.svg` ("Tech" `paper`, "ToJob" `brand`), `gap-2.5`, wordmark `h-5 sm:h-6` | dark `ink` | Green on charcoal = 6.17:1 ✅. It previously used `logo-horizontal-light.svg` (32px) and read as a different brand from the nav one; the composite matches weight and brand reading with the header (author's request, D58). Decorative: wrapper `aria-hidden="true"`, images `alt=""` and `loading="lazy"` (R56, below the fold — **not** `priority` like the header). `logo-horizontal-light.svg` stays in the official kit, now unused on the web |
+| d | **Favicon** | `brand/logo-symbol.svg` → `icon.svg` (Next `app/icon.svg`); PNG fallback: `logo-symbol.svg` exported to 180×180 on white background for `apple-touch-icon.png` and to 512×512 with `brand` background and charcoal symbol for `icon-512.png` (maskable) | — | The square symbol is the only variant legible at 16–32px. Charcoal on the browser's white ✅; never Gradient in the favicon (the dark bands disappear at thumbnail size) |
+| e | **Open Graph 1200×630** | New static composition `app/opengraph-image.png` (builder exports it, <200 KB): `ink` background; `brand/logo-stacked-light.svg` (v2Negative) on the left occupying ~45% of the height; on the right the hero H1 in white Sora 700 + a support line; `logo-symbol-gradient.svg` semi-transparent as texture in the bottom-right corner | dark `ink` | v2 (1.8:1) is the only lockup that fills the OG format well without looking tiny; green on charcoal readable at Facebook/X thumbnail; verify on opengraph.xyz (R51) |
+| f | **Watermark / background** | `brand/logo-symbol-light.svg` (solid green) at **6% opacity** in Hero, Audiences and Closing (D90; it was previously the `logo-symbol-gradient` at 10%), `aria-hidden`, `pointer-events-none`, `loading="lazy"`, decorative. **Tournaments and Testimonials do NOT carry it** (light surfaces, D87) | dark `ink` | Reinforces identity without text in an image (R39) or LCP cost (decorative, not `priority`). On `ink` the charcoal→green gradient left half the mark invisible; the green symbol at 6% reads subtly (D90). On light sections there is NO watermark (it competes with the text) |
 
 ---
 
-## 3. Tokens de color (Tailwind v4 `@theme`)
+## 3. Color tokens (Tailwind v4 `@theme`)
 
-Paleta base obligatoria (R24) + grises intermedios y UN acento (R25). Nombres en inglés (R35).
+Mandatory base palette (R24) + intermediate grays and ONE accent (R25). Names in English (R35).
 
 ```css
 @theme {
@@ -115,386 +115,385 @@ Paleta base obligatoria (R24) + grises intermedios y UN acento (R25). Nombres en
 }
 ```
 
-**Rol del acento `ember` (criterio propio + R25):** calienta el diseño y da un tercer plano de lectura (categorías de noticias, subrayados de datos, el "hueco" visual del avatar). **Nunca como color de texto sobre `paper`** (ratio 2.06:1 ❌) ni como único indicador de estado. Sus dos usos permitidos: (1) fondo de chip/etiqueta pequeña con texto `ink` encima (6.12:1 ✅), (2) detalle decorativo no informativo (punto de categoría, trazo de icono junto a texto ink). **D78:** también aparece como punto decorativo en la marginalia y el ticker del hero (sobre `ink`), como punto antes de los eyebrows de Audiencias y como fondo del badge `2` de Empresas (`ink`: 6.12:1).
+**Role of the `ember` accent (own criterion + R25):** it warms the design and gives a third reading plane (news categories, data underlines, the avatar's visual "gap"). **Never as a text color on `paper`** (ratio 2.06:1 ❌) nor as the sole state indicator. Its two allowed uses: (1) chip/small-label background with `ink` text on top (6.12:1 ✅), (2) non-informative decorative detail (category dot, icon stroke next to ink text). **D78:** it also appears as a decorative dot in the marginalia and the hero ticker (on `ink`), as a dot before the Audiences eyebrows and as the background of the Companies `2` badge (`ink`: 6.12:1).
 
-**Tinte `brand-soft` (D85 → RETIRADO en D87):** se añadió como superficie "azul clarita" de Torneos,
-pero Lorena confirmó que el azul correcto es **`mist` (#f4f7f7)**, el que Testimonios tenía. Desde
-**D87** ni Torneos ni Testimonios lo usan (ambos en `mist`, §7). El token queda **reservado** (mismo
-tono que `brand` aclarado; R24/R25) sin ninguna sección que lo referencie.
+**`brand-soft` tint (D85 → RETIRED in D87):** it was added as the "light blue" surface of Tournaments,
+but Lorena confirmed that the correct blue is **`mist` (#f4f7f7)**, the one Testimonials had. Since
+**D87** neither Tournaments nor Testimonials use it (both on `mist`, §7). The token remains **reserved** (same
+hue as `brand` lightened; R24/R25) with no section referencing it.
 
-### 3.1 Tabla de combinaciones texto/fondo (ratios calculados, WCAG 2.1)
+### 3.1 Text/background combination table (calculated ratios, WCAG 2.1)
 
-| # | Foreground | Background | Ratio | AA normal (≥4.5) | AA grande/UI (≥3.0) | Veredicto de uso |
+| # | Foreground | Background | Ratio | AA normal (≥4.5) | AA large/UI (≥3.0) | Usage verdict |
 |---|---|---|---|---|---|---|
-| 1 | `ink` | `paper` | **12.62** | ✅ | ✅ | Texto de lectura estándar en secciones claras |
-| 2 | `ink` | `mist` | **11.71** | ✅ | ✅ | Texto en secciones tintadas |
-| 3 | `ink` | `brand` | **6.17** | ✅ | ✅ | **Texto sobre botones verdes** (y sobre la franja `brand` mientras existió; desde D100 el verde ya no es superficie de sección). Recálculo D85: antes decía 6.77 — es el mismo par que la fila 9, que ya marcaba 6.17 |
-| 4 | `ink` | `ember` | **6.12** | ✅ | ✅ | Texto sobre chips de categoría |
-| 5 | `slate` | `paper` | **5.57** | ✅ | ✅ | Texto secundario, roles, fechas |
-| 6 | `slate` | `mist` | **5.17** | ✅ | ✅ | Secundario en secciones tintadas |
-| 7 | `paper` | `ink` | **12.62** | ✅ | ✅ | Texto en secciones oscuras |
-| 8 | `cloud` | `ink` | **7.77** | ✅ | ✅ | Secundario en oscuro (no usar blanco puro en párrafos: deslumbra) |
-| 9 | `brand` | `ink` | **6.17** | ✅ | ✅ | **ÚNICO destino del verde como texto**: enlaces/énfasis en secciones oscuras. También UI components ≥3:1 ✅ |
-| 10 | `brand` | `paper` | **2.04** | ❌ | ❌ | **PROHIBIDO**: verde como texto o como único color de un control interactivo sobre fondo claro, a CUALQUIER tamaño (falla incluso grande 3:1). Cita literal de las bases (R26): "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" |
-| 11 | `paper` | `brand` | **2.04** | ❌ | ❌ | **PROHIBIDO**: texto blanco sobre botón/franja verde. El texto sobre verde es SIEMPRE `ink` |
-| 12 | `ember` | `paper` | **2.06** | ❌ | ❌ | Acento nunca como texto; solo fondo o adorno (§3) |
-| 13 | `ink` | `brand-deep` | **5.01** | ✅ | ✅ | Hover de botones primarios (recálculo D85; antes 5.06) |
-| 14 | `paper` | `coal` | **10.40** | ✅ | ✅ | Tarjetas elevadas sobre secciones oscuras (recálculo D85; antes 10.9). `cloud` sobre `coal`: **6.40**; `brand` sobre `coal`: **5.09** |
-| 15 | `ink` | `brand-soft` | **10.58** | ✅ | ✅ | Texto de lectura en **Torneos** (sustituye a `paper`/`cloud` del esquema oscuro) |
-| 16 | `slate` | `brand-soft` | **4.68** | ✅ | ✅ | Secundario en **Torneos**. Pasa el 4.5 justo: para párrafos largos preferir `ink` |
-| 17 | `brand` | `brand-soft` | **1.72** | ❌ | ❌ | **PROHIBIDO**: verde como texto sobre su propio tinte claro (R26). El h2 de Torneos va en `ink` |
-| 18 | `brand-deep` | `brand-soft` | **2.11** | ❌ | ❌ | Ni el shade sirve como texto sobre el tinte |
-| 19 | `ember` | `brand-soft` | **1.73** | ❌ | ❌ | El acento sigue sin poder ser texto (§3); en Torneos solo como **fondo** de chip con `ink` (6.12) |
-| 20 | `line` | `brand-soft` | **1.06** | — | — | `line` desaparece sobre `brand-soft`: **NO usarlo como divisor**. Raíl base `slate` sobre `brand-soft` = 4.68 ✅ |
-| 21 | `cloud` | `coal` | **6.40** | ✅ | ✅ | Secundario y copy del newsletter sobre la tarjeta (D100) |
-| 22 | `cloud/80` | `coal` | **4.73** | ✅ | ✅ | Nota de confianza bajo el input (D100) |
-| 23 | `cloud/70` | `ink` | **4.64** | ✅ | ✅ | Placeholder del input del newsletter (D100) |
-| 24 | `white/40` (**borde**) | `ink` | **3.37** | — | ✅ | Límite del control de formulario (input del newsletter, D100): cumple WCAG **1.4.11** (≥3:1). El mismo borde a `white/25` caería a 2.19:1 ❌ |
+| 1 | `ink` | `paper` | **12.62** | ✅ | ✅ | Standard reading text on light sections |
+| 2 | `ink` | `mist` | **11.71** | ✅ | ✅ | Text on tinted sections |
+| 3 | `ink` | `brand` | **6.17** | ✅ | ✅ | **Text on green buttons** (and on the `brand` strip while it existed; since D100 the green is no longer a section surface). D85 recalculation: it used to say 6.77 — it is the same pair as row 9, which already marked 6.17 |
+| 4 | `ink` | `ember` | **6.12** | ✅ | ✅ | Text on category chips |
+| 5 | `slate` | `paper` | **5.57** | ✅ | ✅ | Secondary text, roles, dates |
+| 6 | `slate` | `mist` | **5.17** | ✅ | ✅ | Secondary on tinted sections |
+| 7 | `paper` | `ink` | **12.62** | ✅ | ✅ | Text on dark sections |
+| 8 | `cloud` | `ink` | **7.77** | ✅ | ✅ | Secondary on dark (do not use pure white in paragraphs: it glares) |
+| 9 | `brand` | `ink` | **6.17** | ✅ | ✅ | **ONLY destination of green as text**: links/emphasis on dark sections. Also UI components ≥3:1 ✅ |
+| 10 | `brand` | `paper` | **2.04** | ❌ | ❌ | **FORBIDDEN**: green as text or as the only color of an interactive control on a light background, at ANY size (fails even large 3:1). Literal quote from the rules (R26): "el verde sobre blanco no llega al mínimo para texto pequeño. Úsalo en fondos, botones y detalles, no en párrafos" |
+| 11 | `paper` | `brand` | **2.04** | ❌ | ❌ | **FORBIDDEN**: white text on a green button/strip. Text on green is ALWAYS `ink` |
+| 12 | `ember` | `paper` | **2.06** | ❌ | ❌ | Accent never as text; only background or ornament (§3) |
+| 13 | `ink` | `brand-deep` | **5.01** | ✅ | ✅ | Hover of primary buttons (D85 recalculation; previously 5.06) |
+| 14 | `paper` | `coal` | **10.40** | ✅ | ✅ | Raised cards on dark sections (D85 recalculation; previously 10.9). `cloud` on `coal`: **6.40**; `brand` on `coal`: **5.09** |
+| 15 | `ink` | `brand-soft` | **10.58** | ✅ | ✅ | Reading text in **Tournaments** (replaces `paper`/`cloud` from the dark scheme) |
+| 16 | `slate` | `brand-soft` | **4.68** | ✅ | ✅ | Secondary in **Tournaments**. Just passes 4.5: for long paragraphs prefer `ink` |
+| 17 | `brand` | `brand-soft` | **1.72** | ❌ | ❌ | **FORBIDDEN**: green as text on its own light tint (R26). The Tournaments h2 goes in `ink` |
+| 18 | `brand-deep` | `brand-soft` | **2.11** | ❌ | ❌ | Not even the shade works as text on the tint |
+| 19 | `ember` | `brand-soft` | **1.73** | ❌ | ❌ | The accent still cannot be text (§3); in Tournaments only as a chip **background** with `ink` (6.12) |
+| 20 | `line` | `brand-soft` | **1.06** | — | — | `line` disappears on `brand-soft`: **do NOT use it as a divider**. Base rail `slate` on `brand-soft` = 4.68 ✅ |
+| 21 | `cloud` | `coal` | **6.40** | ✅ | ✅ | Secondary and newsletter copy on the card (D100) |
+| 22 | `cloud/80` | `coal` | **4.73** | ✅ | ✅ | Trust note under the input (D100) |
+| 23 | `cloud/70` | `ink` | **4.64** | ✅ | ✅ | Newsletter input placeholder (D100) |
+| 24 | `white/40` (**border**) | `ink` | **3.37** | — | ✅ | Form control boundary (newsletter input, D100): meets WCAG **1.4.11** (≥3:1). The same border at `white/25` would fall to 2.19:1 ❌ |
 
-> **D87:** las filas 15–20 documentan ratios del token **`brand-soft`, hoy SIN USO** (Torneos y
-> Testimonios van en `mist`, filas 2 y 6). Se conservan como referencia por si se retoma el tinte.
+> **D87:** rows 15–20 document ratios of the **`brand-soft` token, currently UNUSED** (Tournaments and
+> Testimonials run on `mist`, rows 2 and 6). They are kept as reference in case the tint is revisited.
 
-> **Nota de recálculo (D85):** ratios recomputados con la fórmula WCAG 2.1 (sRGB). Se corrigen
-> las filas 3, 13 y 14, que estaban ligeramente altas. Los comentarios de código que aún citan
-> `6.77`/`5.06` deben alinearse a `6.17`/`5.01` en la próxima pasada de `nextjs-builder`.
+> **Recalculation note (D85):** ratios recomputed with the WCAG 2.1 formula (sRGB). Rows 3, 13 and 14
+> are corrected, which were slightly high. Code comments that still cite
+> `6.77`/`5.06` must be aligned to `6.17`/`5.01` in the next `nextjs-builder` pass.
 
-### 3.2 Veredicto explícito del verde (resumen para rules-auditor)
+### 3.2 Explicit verdict of green (summary for rules-auditor)
 
-`#84c0bf` entra a la página solo de tres formas, todas AA:
-1. **Como fondo** (botón primario con texto `ink` 6.77:1; círculos de pasos numerados; botón del newsletter desde D100).
-2. **Como texto/énfasis ÚNICAMENTE sobre `ink`** (6.17:1 — enlaces, números grandes, subrayados activos en secciones oscuras).
-3. **Como detalle decorativo** sobre cualquier fondo (trazos, marca de agua, borde de avatar), donde no transmite información por sí solo.
-Sobre `paper`: el verde jamás es texto, jamás es el único estado de un control (focus-ring en claro es `ink`, en oscuro es `brand`).
+`#84c0bf` enters the page in only three ways, all AA:
+1. **As a background** (primary button with `ink` text 6.77:1; numbered step circles; newsletter button since D100).
+2. **As text/emphasis ONLY on `ink`** (6.17:1 — links, large numbers, active underlines in dark sections).
+3. **As a decorative detail** on any background (strokes, watermark, avatar border), where it does not convey information by itself.
+On `paper`: green is never text, never the sole state of a control (focus ring on light is `ink`, on dark is `brand`).
 
 ---
 
-## 4. Tipografía — Sora (fija, R28/R58/R59)
+## 4. Typography — Sora (fixed, R28/R58/R59)
 
-`next/font/google` → `Sora({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap' })`. **Una familia, tres pesos, ni uno más** (R59). Variable `--font-sora` → clases `font-sans` (mapear Sora como sans por defecto).
+`next/font/google` → `Sora({ subsets: ['latin'], weight: ['400','600','700'], display: 'swap' })`. **One family, three weights, not one more** (R59). Variable `--font-sora` → `font-sans` classes (map Sora as the default sans).
 
-| Peso | Rol (inglés en código) |
+| Weight | Role (English in code) |
 |---|---|
-| **400** | `body` — párrafos, quotes de testimonios, textos de pasos |
-| **600** | `ui` — nav, botones, labels, roles de testimonio, metadatos de noticia, h3 |
-| **700** | `display` — h1, h2, números grandes de pasos, headlines de tarjeta |
+| **400** | `body` — paragraphs, testimonial quotes, step texts |
+| **600** | `ui` — nav, buttons, labels, testimonial roles, news metadata, h3 |
+| **700** | `display` — h1, h2, large step numbers, card headlines |
 
-### Escala mobile-first (móvil por defecto → `md:`/`lg:` desktop)
+### Mobile-first scale (mobile by default → `md:`/`lg:` desktop)
 
-| Token | Móvil (≥360) | Desktop (≥1024) | Line-height | Tracking | Uso |
+| Token | Mobile (≥360) | Desktop (≥1024) | Line-height | Tracking | Usage |
 |---|---|---|---|---|---|
-| `display` (h1, único en la página, R40) | 3rem / 48px | 4.5rem / 72px | 1.05 (móvil) · 1.0 (desktop) | −0.04em | Hero. `text-balance` |
-| `h2` | 1.75rem / 28px | 2.5rem / 40px | 1.15 | −0.015em | Título de sección. `text-balance` |
-| `h3` | 1.25rem / 20px | 1.5rem / 24px | 1.3 | −0.01em | Tarjetas, pasos, noticias |
-| `lead` | 1.125rem / 18px | 1.25rem / 20px | 1.55 | 0 | Sub del hero, intros |
-| `body` | 1rem / 16px | 1rem / 16px | 1.65 | 0 | Párrafos; measure máx. 65ch |
-| `small` | 0.875rem / 14px | 0.875rem / 14px | 1.5 | 0 | Notas, footer, roles |
-| `label` (overline) | 0.75rem / 12px | 0.75rem / 12px | 1.4 | +0.08em, `uppercase`, peso 600 | Categorías de noticia, eyebrows de sección |
+| `display` (h1, unique on the page, R40) | 3rem / 48px | 4.5rem / 72px | 1.05 (mobile) · 1.0 (desktop) | −0.04em | Hero. `text-balance` |
+| `h2` | 1.75rem / 28px | 2.5rem / 40px | 1.15 | −0.015em | Section title. `text-balance` |
+| `h3` | 1.25rem / 20px | 1.5rem / 24px | 1.3 | −0.01em | Cards, steps, news |
+| `lead` | 1.125rem / 18px | 1.25rem / 20px | 1.55 | 0 | Hero sub, intros |
+| `body` | 1rem / 16px | 1rem / 16px | 1.65 | 0 | Paragraphs; max measure 65ch |
+| `small` | 0.875rem / 14px | 0.875rem / 14px | 1.5 | 0 | Notes, footer, roles |
+| `label` (overline) | 0.75rem / 12px | 0.75rem / 12px | 1.4 | +0.08em, `uppercase`, weight 600 | News categories, section eyebrows |
 
-Nota de rendimiento: 3 pesos = 3 archivos woff2 por subset vía `next/font` (latin); nada de `italic` (no lo usa el contenido) → no pedirlo.
+Performance note: 3 weights = 3 woff2 files per subset via `next/font` (latin); no `italic` (the content does not use it) → do not request it.
 
-Nota de escala: la fila `display` se reescaló el 22/09 para el rediseño del hero (minimalismo premium, D27 en `docs/DECISIONES.md`): el H1 pasa a ser el centro de gravedad visual de la primera pantalla.
+Scale note: the `display` row was rescaled on 22/09 for the hero redesign (premium minimalism, D27 in `docs/DECISIONES.md`): the H1 becomes the visual center of gravity of the first screen.
 
-Nota de escala global (D99): la raíz pasa a `font-size: 94%`, así que **toda** la escala de arriba se reduce ~6% de forma uniforme (Tailwind v4 es `rem`). Es la forma elegida de acercar el diseño al "90% de zoom" que Lorena prefirió, sin bajar `body` de 15px ni los overlines de ~11px. Efecto en los tokens: `display` desktop ≈67.7px, `h2` ≈37.6px, `body` ≈15px, `small` ≈13.2px, `label` ≈11.3px; los targets de 44px quedan en ≈41px (sobre el mínimo AA de 24px). Sora y sus 3 pesos no se tocan (R24/R28/R58/R59).
+Global scale note (D99): the root becomes `font-size: 94%`, so **the entire** scale above shrinks ~6% uniformly (Tailwind v4 is `rem`). It is the chosen way to bring the design closer to the "90% zoom" that Lorena preferred, without dropping `body` below 15px or the overlines below ~11px. Effect on tokens: `display` desktop ≈67.7px, `h2` ≈37.6px, `body` ≈15px, `small` ≈13.2px, `label` ≈11.3px; the 44px targets end up at ≈41px (above the AA minimum of 24px). Sora and its 3 weights are untouched (R24/R28/R58/R59).
 
 ---
 
-## 5. Espaciado, layout, radius y sombras
+## 5. Spacing, layout, radius and shadows
 
-### Grid y contenedor
-- **Container máximo:** `72rem` (1152px), centrado (`mx-auto`).
-- **Gutters:** móvil `1.25rem` (20px) · `md:` `2rem` · `lg:` `2.5rem`. En 360px el contenido nunca toca el borde.
-- **Breakpoints de verificación (J3):** 360 / 768 / 1024 / 1440 — defaults de Tailwind (`sm 640, md 768, lg 1024, xl 1280`).
-- **Grids por sección (sync D38 "Bento Signature" + D66):** "cómo funciona" → **stepper vertical de una columna** (D66; el bento se retiró solo aquí) · testimonios → **marquee horizontal full-bleed** en banda `brand-soft` con tarjetas de ancho fijo, sin bento (D89/D90) · noticias `7 (row-span 2) + 5 + 5` desde `lg` (destacada a ancho completo en `sm`) · footer `1 → sm:2 → lg:4` bloques. El sub-timeline de "cómo funciona" (D32) queda retirado: su raíl se reutiliza como track del stepper.
-- **Raíl de la línea de tiempo (D32 · D65 · D67):** eje en el borde izquierdo del `page-container` (mismas métricas de gutter), **3px** (`w-[3px]`) y base `slate` (**5.57:1** sobre `paper`; el `line` #dfe6e6 original a 1px daba 1.27:1 y era invisible), `inset-y-0` por sección para que la línea sea continua. Sobre `ink` la base es `white/25` y en la franja `brand`, `ink/30`; el relleno de progreso sigue siendo `brand`. En `brand-soft` (Torneos, D85) la base también es `slate` (**4.68:1**) y el hueco del nodo usa `bg-brand-soft` para fundirse con la superficie. El **nodo de sección** es un **círculo doble** con disco `brand` de **44px móvil / 56px `lg`** (mayor que los nodos de paso `1.x` del stepper, 36/48px, D67). El contenido se indenta para dejarlo pasar: `pl-7 md:pl-14 lg:pl-20 xl:pl-24` (en 360px quedan ~288px útiles). Raíl y nodos son decorativos (`aria-hidden`). **Excepción (D59):** el Cierre ya **no** dibuja raíl — el pedido de la autora fue quitar la línea y el nodo de esa sección, así que el raíl recorre de "Cómo funciona" a "Newsletter" y el bloque del Cierre va centrado, sin indentación. **D100:** la variante `brand` (raíl `ink/30`, relleno/nodo `ink`, creada solo para la franja verde) queda **sin uso**: Newsletter pasa a `ink` y usa la variante oscura estándar (`white/25` + `brand`).
+### Grid and container
+- **Maximum container:** `72rem` (1152px), centered (`mx-auto`).
+- **Gutters:** mobile `1.25rem` (20px) · `md:` `2rem` · `lg:` `2.5rem`. At 360px the content never touches the edge.
+- **Verification breakpoints (J3):** 360 / 768 / 1024 / 1440 — Tailwind defaults (`sm 640, md 768, lg 1024, xl 1280`).
+- **Grids per section (sync D38 "Bento Signature" + D66):** "how it works" → **single-column vertical stepper** (D66; the bento was retired only here) · testimonials → **full-bleed horizontal marquee** on a `brand-soft` band with fixed-width cards, no bento (D89/D90) · news `7 (row-span 2) + 5 + 5` from `lg` (featured full width on `sm`) · footer `1 → sm:2 → lg:4` blocks. The "how it works" sub-timeline (D32) is retired: its rail is reused as the stepper track.
+- **Timeline rail (D32 · D65 · D67):** axis at the left edge of the `page-container` (same gutter metrics), **3px** (`w-[3px]`) and `slate` base (**5.57:1** on `paper`; the original 1px `line` #dfe6e6 gave 1.27:1 and was invisible), `inset-y-0` per section so the line is continuous. On `ink` the base is `white/25` and on the `brand` strip, `ink/30`; the progress fill remains `brand`. On `brand-soft` (Tournaments, D85) the base is also `slate` (**4.68:1**) and the node gap uses `bg-brand-soft` to blend with the surface. The **section node** is a **double circle** with a `brand` disc of **44px mobile / 56px `lg`** (larger than the stepper's `1.x` step nodes, 36/48px, D67). The content is indented to let it pass: `pl-7 md:pl-14 lg:pl-20 xl:pl-24` (at 360px ~288px remain usable). Rail and nodes are decorative (`aria-hidden`). **Exception (D59):** the Closing **no longer** draws a rail — the author's request was to remove the line and node from that section, so the rail runs from "How it works" to "Newsletter" and the Closing block is centered, without indentation. **D100:** the `brand` variant (rail `ink/30`, fill/node `ink`, created only for the green strip) is **unused**: Newsletter moves to `ink` and uses the standard dark variant (`white/25` + `brand`).
 
-### Escala vertical (ritmo entre secciones)
+### Vertical scale (rhythm between sections)
 ```css
 @theme {
-  --spacing-section-y: 5rem;    /* py de sección en móvil */
+  --spacing-section-y: 5rem;    /* section py on mobile */
 }
 ```
-Desktop (`lg:`): `8rem`. Nav sticky de `5rem` (80px, `header-veil`). Hero: `min-height: 100svh` con **todo el bloque centrado como una sola pieza** (H1 + sub + CTA + apoyo, `flex` centrado + `pt-20` que compensa el header y `pb-0` para que el centro sea el del área visible). Se probó fijar solo el H1 a la línea central con un grid `1fr/auto/1fr`: **se revirtió el mismo día** porque el bloque se lee como una unidad y quedaba descolgado (D33). No `100vh` fijo: `svh` evita el salto de la barra de URL en móvil → CLS. El hero sube con `-mt-20` para quedar **detrás** del header (transición sin costura).
+Desktop (`lg:`): `8rem`. Sticky nav of `5rem` (80px, `header-veil`). Hero: `min-height: 100svh` with **the whole block centered as a single piece** (H1 + sub + CTA + support, centered `flex` + `pt-20` that compensates the header and `pb-0` so the center is that of the visible area). We tried pinning only the H1 to the center line with a `1fr/auto/1fr` grid: **it was reverted the same day** because the block reads as a unit and it looked off (D33). No fixed `100vh`: `svh` avoids the mobile URL bar jump → CLS. The hero rises with `-mt-20` to sit **behind** the header (seamless transition).
 
 ### Radius
-| Elemento | Token | Valor |
+| Element | Token | Value |
 |---|---|---|
-| Botones (primario y secundario) | `rounded-none` | Esquinas rectas — lenguaje editorial cuadrado (D36/D42). La píldora se descartó: no quedan botones-píldora (solo son circulares el avatar, el nodo del raíl y los puntos del ticker). **D100 propuso `rounded-lg` para el botón del newsletter y D101 lo revirtió** al verlo en pantalla: era la única pieza redondeada del sitio. Hoy **todos** los botones son cuadrados |
-| Tarjetas (testimonio, noticia) | `--radius-card` | 1rem (16px) |
+| Buttons (primary and secondary) | `rounded-none` | Straight corners — square editorial language (D36/D42). The pill was discarded: there are no pill buttons left (only the avatar, the rail node and the ticker dots are round). **D100 proposed `rounded-lg` for the newsletter button and D101 reverted it** upon seeing it on screen: it was the only rounded piece on the site. Today **all** buttons are square |
+| Cards (testimonial, news) | `--radius-card` | 1rem (16px) |
 | Inputs | `--radius-input` | 0.625rem (10px) |
 | Chips / badges | `rounded-full` | pill |
-| Celdas bento (D38) | `rounded-none` | Esquinas rectas + borde hairline 1px, sin sombra — continuidad editorial con el CTA `rounded-none` (D36/D46). En testimonios, noticias y la sección de audiencias (dos celdas `coal` sobre `ink` desde D85); en "cómo funciona" el bento se retiró (D66) |
+| Bento cells (D38) | `rounded-none` | Straight corners + 1px hairline border, no shadow — editorial continuity with the `rounded-none` CTA (D36/D46). In testimonials, news and the audiences section (two `coal` cells on `ink` since D85); in "how it works" the bento was retired (D66) |
 
-### Sombras (sutiles — R34 "que no estorben")
+### Shadows (subtle — R34 "must not get in the way")
 ```css
 @theme {
   --shadow-card: 0 1px 2px rgb(47 52 54 / 0.05), 0 8px 24px -12px rgb(47 52 54 / 0.12);
   --shadow-raised: 0 2px 4px rgb(47 52 54 / 0.06), 0 16px 32px -12px rgb(47 52 54 / 0.18);
 }
 ```
-- `card` por defecto en tarjetas sobre `paper`/`mist`; `raised` SOLO en hover de tarjeta con enlace.
-- **En superficies `ink`: cero sombras** (no se ven); separar con `--color-coal` de superficie + borde `hairline-dark`.
-- **CTA (D42/D43/D46):** un único estilo en todo el sitio — cuadrado relleno `brand`, texto `ink`, barrido especular de borde duro (`-skew-x-12 bg-white/30`) + micro-elevación `-translate-y-0.5` en hover. Sin sombra proyectada; desde **D76** el hover añade un **glow sutil** de color `brand` (`--shadow-glow-cta`, una sombra de color de bajo alfa, **sin `blur`**) — revierte el "nunca glow" de D43.
-- El botón primario NO lleva sombra (el color ya domina la jerarquía).
+- `card` by default on cards over `paper`/`mist`; `raised` ONLY on hover of a card with a link.
+- **On `ink` surfaces: zero shadows** (invisible); separate with surface `--color-coal` + `hairline-dark` border.
+- **CTA (D42/D43/D46):** a single style across the site — filled square `brand`, `ink` text, hard-edge specular sweep (`-skew-x-12 bg-white/30`) + micro-elevation `-translate-y-0.5` on hover. No projected shadow; since **D76** the hover adds a **subtle glow** of `brand` color (`--shadow-glow-cta`, a low-alpha colored shadow, **without `blur`**) — reverts D43's "never glow".
+- The primary button does NOT carry a shadow (the color already dominates the hierarchy).
 
 ---
 
-## 6. Componentes base (patrones, sin código)
+## 6. Base components (patterns, no code)
 
-### 6.1 `ButtonPrimary` — CTA "Entrar al Discord de TechToJob" (hero, cierre, nav)
-- Fondo `brand` · texto `ink` peso 700 · rectangular (`rounded-none`, D42) · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
-- **Hover/focus:** fondo `brand-deep` (texto `ink` sigue AA: 5.06:1) + barrido especular de borde duro (`-skew-x-12 bg-white/25`, 500ms) y micro-elevación `-translate-y-0.5` (D43). Sin cambio de tamaño del layout; el glow (D76) no reflowea.
-- **Un solo estilo de CTA (D46):** hero, header, menú móvil y cierre comparten exactamente las mismas clases salvo el tamaño (`nav`/`hero`/`block`). La antigua variante `line` (rectángulo hairline) se retiró. El hero mantiene UN solo botón (R11). Focus ring: `brand` sobre superficies oscuras, `ink` en el panel móvil (`paper`), por R26.
-- **Focus-visible:** anillo `outline: 3px solid` — `ink` con `outline-offset: 3px` sobre superficies claras; `brand` sobre superficies oscuras (6.17 ≥3:1 ✅). Nunca `outline-none`.
-- **On ink background (hero/cierre):** es el elemento más llamativo de la pantalla: tamaño de texto `lead`, icono Lucide `ArrowUpRight` 20px, `target="_blank" rel="noopener noreferrer"` + hint sr-only de "se abre en pestaña nueva" (texto en `messages/es.json`, R36).
-- Contraste verificado: 6.77:1 ✅ AA normal y AAA grande.
+### 6.1 `ButtonPrimary` — CTA "Join the TechToJob Discord" (hero, closing, nav)
+- `brand` background · `ink` 700 text · rectangular (`rounded-none`, D42) · `min-height: 48px` (hero) / `44px` (nav) · padding `0.75rem 1.75rem`.
+- **Hover/focus:** `brand-deep` background (`ink` text still AA: 5.06:1) + hard-edge specular sweep (`-skew-x-12 bg-white/25`, 500ms) and micro-elevation `-translate-y-0.5` (D43). No layout size change; the glow (D76) does not reflow.
+- **A single CTA style (D46):** hero, header, mobile menu and closing share exactly the same classes except size (`nav`/`hero`/`block`). The old `line` variant (hairline rectangle) was retired. The hero keeps ONE single button (R11). Focus ring: `brand` on dark surfaces, `ink` in the mobile panel (`paper`), per R26.
+- **Focus-visible:** `outline: 3px solid` ring — `ink` with `outline-offset: 3px` on light surfaces; `brand` on dark surfaces (6.17 ≥3:1 ✅). Never `outline-none`.
+- **On ink background (hero/closing):** it is the most eye-catching element on screen: text size `lead`, Lucide `ArrowUpRight` icon 20px, `target="_blank" rel="noopener noreferrer"` + sr-only hint "opens in a new tab" (text in `messages/es.json`, R36).
+- Verified contrast: 6.77:1 ✅ AA normal and AAA large.
 
 ### 6.2 `ButtonSecondary` — `AudienceCta` outline (D76/D85)
-- **Único uso hoy:** CTA "Buscar talento real" del bloque Empresas de "Audiencias" (D75/D76). Desde **D85** esa sección es **`ink`**, así que el outline se define en su **polaridad oscura**.
-- Superficie `ink`: borde 2px **`paper/60`** (**5.66:1** ≥3:1, WCAG 1.4.11), texto `paper` 600, **rectangular** (`rounded-none`, D42), `min-height` de 56px (mismo alto que el CTA relleno `hero`). Hover: borde `brand` **y** fondo `white/5` a la vez — dos pistas, para que el verde nunca sea el ÚNICO indicador de estado (R26). Sin barrido especular. **Focus ring `brand`** (6.17:1 sobre `ink`).
-- La polaridad clara (borde `ink/60`, texto `ink`, hover borde `brand` + fondo `mist`, focus ring `ink`) queda en el catálogo para futuros usos sobre `paper`/`mist`, pero **hoy no se instancia**. La clase la conmuta el prop `surface` de `AudienceCta`/`DiscordCta` (`light` | `ink`).
-- **Destino honesto:** es un ancla **in-page a `#unete`** (el bloque del CTA real al Discord), no un enlace externo ni un botón muerto (R43). La flecha es hacia abajo, nunca la de "abre fuera".
-- El CTA relleno `brand` sigue siendo el único estilo de conversión del sitio (D46); el outline no compite como primario.
-- **En el hero no existe un segundo botón** (R11: un solo botón). Anteriormente esta variante (hairline/pill) había sido retirada en D46; se reintroduce, ya sin píldora, solo para el bloque de empresas.
+- **Only use today:** "Find real talent" CTA of the Companies block in "Audiences" (D75/D76). Since **D85** that section is **`ink`**, so the outline is defined in its **dark polarity**.
+- Surface `ink`: 2px border **`paper/60`** (**5.66:1** ≥3:1, WCAG 1.4.11), `paper` 600 text, **rectangular** (`rounded-none`, D42), `min-height` of 56px (same height as the filled `hero` CTA). Hover: border `brand` **and** background `white/5` at the same time — two cues, so the green is never the ONLY state indicator (R26). No specular sweep. **Focus ring `brand`** (6.17:1 on `ink`).
+- The light polarity (border `ink/60`, `ink` text, hover border `brand` + `mist` background, focus ring `ink`) remains in the catalog for future uses on `paper`/`mist`, but **is not instantiated today**. The class is switched by the `surface` prop of `AudienceCta`/`DiscordCta` (`light` | `ink`).
+- **Honest destination:** it is an **in-page anchor to `#unete`** (the real CTA block to Discord), not an external link or a dead button (R43). The arrow points down, never the "opens outside" one.
+- The filled `brand` CTA remains the only conversion style on the site (D46); the outline does not compete as primary.
+- **In the hero there is no second button** (R11: a single button). This variant (hairline/pill) had previously been retired in D46; it is reintroduced, no longer as a pill, only for the companies block.
 
 ### 6.3 `TextLink`
-- Sobre claro: `ink` 600 + `underline decoration-brand decoration-2 underline-offset-4` (el verde aquí es adorno de subrayado, el texto legible es `ink` → cumple R26). Hover: `decoration-thickness 3px`.
-- Sobre oscuro: texto `brand` + subrayado a 2px.
-- Siempre texto descriptivo, jamás "clic aquí" (R44).
+- On light: `ink` 600 + `underline decoration-brand decoration-2 underline-offset-4` (the green here is underline ornament, the legible text is `ink` → complies with R26). Hover: `decoration-thickness 3px`.
+- On dark: `brand` text + 2px underline.
+- Always descriptive text, never "click here" (R44).
 
-### 6.4 `TestimonialCard` (×4, sección 7 — marquee D89/D90)
-- Fondo `paper` sobre la **banda `brand-soft`** · esquinas rectas · borde hairline `ink/10` · padding `p-5`.
-  Ancho fijo (`18rem` en `sm`, `20rem` en `lg`) porque cada tarjeta es un ítem del track del marquee.
-- Fila superior → **comilla fantasma** `text-ink/15` (ya sin `.bento-index`: dentro de un track con
-  `transform` continuo su `animation-timeline: view()` no dispara).
-- Pie → **avatar circular 36px** (`brand` con iniciales `ink` 700 — hueco honesto de la foto de la
-  maqueta, listo para sustituir por `next/image`) + nombre (`ink` 600, `small`) y rol (`slate`, `small`).
-- **Hueco LinkedIn futuro (R17):** icono `Linkedin` en la esquina inferior derecha con `aria-disabled`,
-  `tabindex="-1"` y tooltip/sr-only "perfil próximo" — el slot existe y se ve, pero no finge un enlace
-  muerto (R43).
-- Hover: `scale-[1.02]` + `border-brand` + barrido `.sheen-sweep`; `.card-idle` respira el borde.
-- Nota de maqueta: la `sub` de la sección declara que son testimonios de muestra; el track repetido es
-  `aria-hidden` y el contenido se sirve una sola vez en una lista `sr-only`.
+### 6.4 `TestimonialCard` (×4, section 7 — marquee D89/D90)
+- `paper` background on the **`brand-soft` band** · straight corners · `ink/10` hairline border · `p-5` padding.
+  Fixed width (`18rem` at `sm`, `20rem` at `lg`) because each card is an item of the marquee track.
+- Top row → **ghost quote mark** `text-ink/15` (no longer `.bento-index`: inside a track with a
+  continuous `transform`, its `animation-timeline: view()` does not fire).
+- Footer → **36px circular avatar** (`brand` with `ink` 700 initials — an honest gap for the mock's
+  photo, ready to be replaced with `next/image`) + name (`ink` 600, `small`) and role (`slate`, `small`).
+- **Future LinkedIn slot (R17):** `Linkedin` icon in the bottom-right corner with `aria-disabled`,
+  `tabindex="-1"` and tooltip/sr-only "profile coming soon" — the slot exists and is visible, but does not fake a dead
+  link (R43).
+- Hover: `scale-[1.02]` + `border-brand` + `.sheen-sweep` sweep; `.card-idle` breathes the border.
+- Mock note: the section's `sub` states they are sample testimonials; the repeated track is
+  `aria-hidden` and the content is served only once in an `sr-only` list.
 
-### 6.5 `NewsletterForm` — panel Bento sobre `ink` (D100/D101/D104)
-- **Superficie (D100):** la sección es **`ink`** y todo el bloque (eyebrow + h2 + copy + formulario)
-  vive en **UN panel** `bg-coal` + `border-hairline-dark` 1px, esquinas rectas, sin sombra,
-  `p-6 lg:p-10`, con `.panel-in` (entrada del panel, D103) + `.bento-lit-ink` (borde que se ilumina
-  al entrar). **D104:** se retiraron `.card-idle` y el `line-idle` del borde superior del panel —
-  repetían la información del hilo de sección y del propio encendido del borde.
-- **Rejilla (D101):** `lg:grid-cols-12` — texto en `lg:col-span-7` y formulario en `lg:col-span-5`,
-  separados por hairline vertical (`lg:border-l border-hairline-dark lg:pl-12`); en móvil se apila.
-- **Eyebrow (D101):** overline `text-label uppercase text-brand` con punto `brand`, reutilizando la
-  etiqueta ya existente `nav.links.newsletter` — cero copy nuevo (R36).
-- **Copy sobre `coal`:** h2 en `paper` (12.62 ✅), párrafo en `cloud` (6.40 ✅) y nota en `cloud/80`
-  (4.73 ✅) — §3.1 filas 21–22.
-- **Label:** overline visible sobre el campo (`text-label uppercase text-cloud`) — nunca solo
-  placeholder (J6 "etiquetas en el formulario").
-- **Input:** fondo **`ink`** (hundido dentro del panel `coal`), borde **1px `white/40`**
-  (**3.37:1**, WCAG 1.4.11 — el `white/25` de los divisores no alcanza para un control),
-  `radius-input` (10px), `min-h-12`, **ancho completo**, texto `paper` (12.62 ✅), placeholder
-  `cloud/70` (4.64 ✅). **Foco:** `focus:border-brand` (6.17 ✅) con transición de color de 200ms +
-  `outline 3px brand` con offset para teclado. (El `focus:border-cyan-500` del brief se descartó:
-  el cyan viola R24/R25.)
-- `type="email" required` (validación HTML5, Q8) + `aria-describedby="newsletter-note
-  newsletter-status"`; el estado vive en un `<p role="status" aria-live="polite">` **sin altura
-  reservada** (el mensaje aparece tras una acción del usuario → fuera del CLS). Mensajes en
+### 6.5 `NewsletterForm` — Bento panel on `ink` (D100/D101/D104)
+- **Surface (D100):** the section is **`ink`** and the whole block (eyebrow + h2 + copy + form)
+  lives in **ONE panel** `bg-coal` + 1px `border-hairline-dark`, straight corners, no shadow,
+  `p-6 lg:p-10`, with `.panel-in` (panel entry, D103) + `.bento-lit-ink` (border that lights up
+  on entry). **D104:** `.card-idle` and the `line-idle` of the panel's top border were removed —
+  they repeated the information of the section thread and of the border lighting itself.
+- **Grid (D101):** `lg:grid-cols-12` — text in `lg:col-span-7` and form in `lg:col-span-5`,
+  separated by a vertical hairline (`lg:border-l border-hairline-dark lg:pl-12`); on mobile it stacks.
+- **Eyebrow (D101):** overline `text-label uppercase text-brand` with a `brand` dot, reusing the
+  already existing `nav.links.newsletter` label — zero new copy (R36).
+- **Copy on `coal`:** h2 in `paper` (12.62 ✅), paragraph in `cloud` (6.40 ✅) and note in `cloud/80`
+  (4.73 ✅) — §3.1 rows 21–22.
+- **Label:** overline visible above the field (`text-label uppercase text-cloud`) — never only a
+  placeholder (J6 "form labels").
+- **Input:** **`ink`** background (sunken inside the `coal` panel), **1px `white/40`** border
+  (**3.37:1**, WCAG 1.4.11 — the `white/25` of the dividers is not enough for a control),
+  `radius-input` (10px), `min-h-12`, **full width**, `paper` text (12.62 ✅), `cloud/70` placeholder
+  (4.64 ✅). **Focus:** `focus:border-brand` (6.17 ✅) with a 200ms color transition +
+  `outline 3px brand` with offset for keyboard. (The `focus:border-cyan-500` of the brief was discarded:
+  cyan violates R24/R25.)
+- `type="email" required` (HTML5 validation, Q8) + `aria-describedby="newsletter-note
+  newsletter-status"`; the state lives in a `<p role="status" aria-live="polite">` **without reserved
+  height** (the message appears after a user action → outside CLS). Messages in
   `messages/es.json`.
-- **Botón (D101):** relleno `brand`, texto `ink` (6.17 ✅, R26), `font-bold`, **`rounded-none`**
-  (el `rounded-lg` de D100 se retiró: era la única pieza redondeada del sitio), `min-h-12` y **ancho
-  completo bajo el campo** (así el input deja de ir estrangulado). Hover **vivo**: `bg-brand-deep`
-  (5.01 ✅) + `-translate-y-0.5` + `shadow-glow-cta` + barrido especular; foco `outline-3 brand`.
-  **Sin** flecha y **sin** destello idle (`cta-glint` es solo del CTA del Discord, R11).
-- **Nota de confianza:** `Solo un correo a la semana. Nada más.` justo debajo del campo, con punto
-  `brand` y separador `.line-idle` — el único destello de línea de la sección (D104).
-- **Entrada (D101/D102/D103):** el panel entra con `.panel-in` y **cada** elemento del formulario
-  (label, input, botón, hairline, nota y región de estado) entra y sale con `.reveal`; eyebrow/h2/copy
-  lo hacen con `.reveal-left` desde el raíl.
+- **Button (D101):** filled `brand`, `ink` text (6.17 ✅, R26), `font-bold`, **`rounded-none`**
+  (the `rounded-lg` of D100 was retired: it was the only rounded piece on the site), `min-h-12` and **full
+  width under the field** (so the input stops being squeezed). Lively hover: `bg-brand-deep`
+  (5.01 ✅) + `-translate-y-0.5` + `shadow-glow-cta` + specular sweep; focus `outline-3 brand`.
+  **No** arrow and **no** idle glint (`cta-glint` is only for the Discord CTA, R11).
+- **Trust note:** `Solo un correo a la semana. Nada más.` ("Only one email a week. Nothing more.") right below the field, with a `brand`
+  dot and a `.line-idle` separator — the only line glint in the section (D104).
+- **Entry (D101/D102/D103):** the panel enters with `.panel-in` and **each** form element
+  (label, input, button, hairline, note and status region) enters and leaves with `.reveal`; eyebrow/h2/copy
+  do so with `.reveal-left` from the rail.
 
 ### 6.6 `Nav` / `SiteHeader`
-- `position: sticky; top: 0` · alto 80px (5rem, en sincronía con el `-mt-20` del hero y el `scroll-padding-top: 6rem`). **Barra SÓLIDA al 100%** que adopta la polaridad de la sección que tiene detrás (`data-header-surface` en `<html>`, publicado por la isla `HeaderSurface`, D47). El "sombreado amplio" que la disuelve es una **franja de gradiente por DEBAJO de la barra** (`.header-fade-*`, `top: 100%`, 2.5rem) — así el CTA nunca asoma por una zona translúcida (D47b). Crossfade `ink`↔`paper` de 250ms por `opacity` (CLS 0). Sin JS el header queda `ink` (progressive enhancement). **D92:** sobre las superficies azules (`mist`, expuestas vía `data-header-tint`) el header claro **no** proyecta la sombra inferior ni la franja de disolución `paper→transparent` (se veían como una mancha gris/blanca sobre azul); blanco y oscuro conservan el tratamiento. **D94:** además, las franjas de disolución usan paradas con **alfa explícito** (nada de `transparent`, que dejaba una banda gris) en una rampa de 5 paradas.
-- Desktop (≥1024): composición de logo (§2a) · enlaces a anclas (`#como-funciona`… R45) en 600 `paper` sobre `ink` (≥8:1), `whitespace-nowrap`, hover subrayado `brand` 2px, targets ≥44px de alto · anclas en tiers: `lg` (`#como-funciona`, `#torneos`, `#talento`/`#talento`), `xl` (`#networking`, `#testimonios`, `#newsletter`) y `2xl` (`#noticias`) (D53/D90/D95) · CTA `ButtonPrimary` compacto con `whitespace-nowrap` — **jamás en 2 líneas** (el nav recorta enlaces, no el botón). **Sin recuadro** alrededor de las anclas (D45: se retiró el marco hairline); es una fila de enlaces desnuda.
-- El contenedor del header es `page-container` (**72rem, D49**): el MISMO eje que el contenido, para que el logo, el nav y el CTA alineen con la página. Existe un **scrollspy** (`aria-current="location"` en el enlace activo, D49) y una **hairline de progreso** (`.header-progress`, 2px `brand`, `scaleX` con `animation-timeline: scroll(root)`, D49).
-- Estado activo del nav (AA): en superficie oscura el enlace activo es `brand` (6.17:1); en clara el texto sigue `ink` y el `brand` va **solo como subrayado** (R26 prohíbe el verde como texto sobre `paper`).
-- 640–1023: logo + CTA + hamburguesa · <640: logo + hamburguesa (el CTA vive en el panel).
-- Menú desplegable (<1024): panel `paper` a ancho completo, enlaces en pila de 48px + CTA Discord full-width. `<details>` nativo: Enter/Space de serie, cero JS.
-- Enlaces de salto de foco: primer elemento del `body` = "Saltar al contenido" sr-only que se revela al focus (criterio propio de accesibilidad; no es texto oculto con keywords, no viola R60).
+- `position: sticky; top: 0` · height 80px (5rem, in sync with the hero's `-mt-20` and the `scroll-padding-top: 6rem`). **SOLID 100% bar** that adopts the polarity of the section behind it (`data-header-surface` on `<html>`, published by the `HeaderSurface` island, D47). The "broad shading" that dissolves it is a **gradient strip BELOW the bar** (`.header-fade-*`, `top: 100%`, 2.5rem) — so the CTA never peeks through a translucent area (D47b). `ink`↔`paper` crossfade of 250ms by `opacity` (CLS 0). Without JS the header stays `ink` (progressive enhancement). **D92:** on the blue surfaces (`mist`, exposed via `data-header-tint`) the light header does **not** project the bottom shadow or the `paper→transparent` dissolution strip (they looked like a gray/white smudge on blue); white and dark keep the treatment. **D94:** additionally, the dissolution strips use stops with **explicit alpha** (no `transparent`, which left a gray band) in a 5-stop ramp.
+- Desktop (≥1024): logo composition (§2a) · anchor links (`#como-funciona`… R45) in 600 `paper` on `ink` (≥8:1), `whitespace-nowrap`, hover underline `brand` 2px, targets ≥44px tall · anchors in tiers: `lg` (`#como-funciona`, `#torneos`, `#talento`/`#talento`), `xl` (`#networking`, `#testimonios`, `#newsletter`) and `2xl` (`#noticias`) (D53/D90/D95) · compact `ButtonPrimary` CTA with `whitespace-nowrap` — **never on 2 lines** (the nav clips links, not the button). **No box** around the anchors (D45: the hairline frame was retired); it is a bare row of links.
+- The header container is `page-container` (**72rem, D49**): the SAME axis as the content, so the logo, nav and CTA align with the page. There is a **scrollspy** (`aria-current="location"` on the active link, D49) and a **progress hairline** (`.header-progress`, 2px `brand`, `scaleX` with `animation-timeline: scroll(root)`, D49).
+- Active nav state (AA): on a dark surface the active link is `brand` (6.17:1); on light the text stays `ink` and `brand` goes **only as an underline** (R26 forbids green as text on `paper`).
+- 640–1023: logo + CTA + hamburger · <640: logo + hamburger (the CTA lives in the panel).
+- Dropdown menu (<1024): full-width `paper` panel, links in a 48px stack + full-width Discord CTA. Native `<details>`: Enter/Space by default, zero JS.
+- Focus-skip links: first `body` element = sr-only "Skip to content" revealed on focus (own accessibility criterion; not hidden text with keywords, does not violate R60).
 
-### 6.7 `NewsCard` (×3, sección 8)
-- `paper`, borde 1px `line`, esquinas rectas (`rounded-none`), padding `1.5rem` (destacada `1.5rem` / `2.5rem` en `lg`), hover `scale-[1.02]` + borde `brand` + `bg-mist` + `shadow-glow` y barrido `.sheen-sweep` (D76/D98).
-- Anillo `.card-idle` (D86); entrada/salida `.reveal-left` en el wrapper de cada celda + iluminación `.bento-lit` en la tarjeta (D61/D98), igual que las secciones de arriba.
-- Chip de categoría: fondo `ember`, texto `ink` `label` pill (6.12 ✅) · fecha `slate` `small` · título `h3` 700 `ink` · resumen `body` · enlace descriptivo como `TextLink`.
-- **Placa editorial de la destacada (D98):** banner a sangre dentro de la celda (borde inferior `line`, fondo `mist` + retícula `.news-field` al 4%) con el **símbolo oficial** `logo-symbol-gradient.svg` (~80/96px) y un punto `ember` con pulso `.animate-activity`. Es **decorativa** (`aria-hidden` + `alt=""`), `loading="lazy"` y `width`/`height` explícitos (R55/R56); no afirma nada sobre la noticia de maqueta (R18/J2). La sección usa el hilo ambiental `ember` (`Section idleAccent="ember"`) y un divisor `.line-idle-ember`.
-- El `ember` aparece solo como decoración (punto del `mockNote`, punto pulsante de la placa, chip, hilo y divisor), nunca como texto sobre `paper` (R26).
+### 6.7 `NewsCard` (×3, section 8)
+- `paper`, 1px `line` border, straight corners (`rounded-none`), `1.5rem` padding (featured `1.5rem` / `2.5rem` at `lg`), hover `scale-[1.02]` + `brand` border + `bg-mist` + `shadow-glow` and `.sheen-sweep` sweep (D76/D98).
+- `.card-idle` ring (D86); `.reveal-left` entry/exit on each cell wrapper + `.bento-lit` lighting on the card (D61/D98), like the sections above.
+- Category chip: `ember` background, `ink` `label` pill text (6.12 ✅) · `slate` `small` date · `h3` 700 `ink` title · `body` summary · descriptive link as `TextLink`.
+- **Featured editorial plate (D98):** full-bleed banner inside the cell (bottom border `line`, `mist` background + `.news-field` grid at 4%) with the **official symbol** `logo-symbol-gradient.svg` (~80/96px) and an `ember` dot with `.animate-activity` pulse. It is **decorative** (`aria-hidden` + `alt=""`), `loading="lazy"` and explicit `width`/`height` (R55/R56); it asserts nothing about the mock news (R18/J2). The section uses the `ember` ambient thread (`Section idleAccent="ember"`) and a `.line-idle-ember` divider.
+- The `ember` appears only as decoration (dot of the `mockNote`, pulsing dot of the plate, chip, thread and divider), never as text on `paper` (R26).
 
-### 6.8 Stepper de "Cómo funciona" (D66/D67/D69/D70)
-- **Sustituye al bento D38 solo en esta sección** (y al antiguo `StepCard` circular). Es un `<ol>` de
-  una columna que **reutiliza el raíl de página como track**: no se dibuja ninguna línea nueva.
-- Cada `<li>` es un paso: **nodo doble círculo** sobre el raíl (anillo + disco con separación),
-  `1.1`–`1.4`, **36px móvil / 48px `lg`**, en el acento **`ember`** (R25) con numeral `ink`
-  (6.12:1 ✅ R26); luego `h3` + descripción + **línea de resultado** con barra `brand` (`border-l-2`).
-- **Jerarquía y rejilla (D70):** el texto pasa a `lg:col-span-8` (título 4 col · texto 8 col,
-  `lg:gap-x-12`) para cerrar el carril vacío; la descripción baja a `text-slate` y el **resultado**
-  sube a `text-lead font-semibold text-ink` con barra `border-l-[3px] border-brand` — la promesa
-  manda sobre la explicación.
-- **Conector (D70):** se propuso una hairline nodo→título que se encendía al scrollear; **Lorena la
-  rechazó** (*"la línea entre los steppers y el título no me gustan para nada"*) y se retiró el mismo
-  día. No existe: el raíl no se une a los títulos.
-- **Motion (D69):** todo el texto entra con `.reveal-left` (`translateX(-2.5rem) → 0`, desde el raíl);
-  el nodo se enciende con `.step-node-fill` (`cover` + `--i`). CSS puro, sin islas.
-- **El lenguaje de celda bento D38/D61 (`.bento-reveal`/`.bento-lit`/`.bento-index`, con hover
-  `scale-[1.02]` y sin `cursor-pointer`) sigue vivo en Noticias (7+5/5).** **Testimonios lo abandonó en
-  D89** al pasar a marquee: allí se retiraron `.bento-reveal`/`.bento-lit`/`.bento-index` de las
-  tarjetas y solo se conserva `.card-idle`.
+### 6.8 "How it works" stepper (D66/D67/D69/D70)
+- **Replaces the D38 bento only in this section** (and the old circular `StepCard`). It is an `<ol>` of
+  one column that **reuses the page rail as the track**: no new line is drawn.
+- Each `<li>` is a step: **double-circle node** on the rail (ring + disc with a gap),
+  `1.1`–`1.4`, **36px mobile / 48px `lg`**, in the **`ember`** accent (R25) with an `ink` numeral
+  (6.12:1 ✅ R26); then `h3` + description + **result line** with a `brand` bar (`border-l-2`).
+- **Hierarchy and grid (D70):** the text moves to `lg:col-span-8` (title 4 cols · text 8 cols,
+  `lg:gap-x-12`) to close the empty lane; the description drops to `text-slate` and the **result**
+  rises to `text-lead font-semibold text-ink` with a `border-l-[3px] border-brand` bar — the promise
+  rules over the explanation.
+- **Connector (D70):** a node→title hairline that lit up on scroll was proposed; **Lorena
+  rejected it** (*"la línea entre los steppers y el título no me gustan para nada"*) and it was retired the same
+  day. It does not exist: the rail does not join the titles.
+- **Motion (D69):** all the text enters with `.reveal-left` (`translateX(-2.5rem) → 0`, from the rail);
+  the node lights up with `.step-node-fill` (`cover` + `--i`). Pure CSS, no islands.
+- **The D38/D61 bento-cell language (`.bento-reveal`/`.bento-lit`/`.bento-index`, with hover
+  `scale-[1.02]` and no `cursor-pointer`) is still alive in News (7+5/5).** **Testimonials abandoned it in
+  D89** when moving to marquee: there `.bento-reveal`/`.bento-lit`/`.bento-index` were removed from the
+  cards and only `.card-idle` is kept.
 
 ---
 
-## 7. Ritmo claro/oscuro + jerarquía visual por sección
+## 7. Light/dark rhythm + visual hierarchy by section
 
-Objetivo: que la página "entre por los ojos" (J1 25%) con alternancia controlada — **momentos oscuros que enmarcan (Hero, Audiencias, Newsletter + Cierre)**, lectura en claro en el cuerpo y los tramos claros largos separados por **tintes distintos** (`paper`/`mist`/`brand-soft`) para que se lean como bloques, no como una masa. El verde luce DONDE BRILLA: sobre `ink`.
+Goal: for the page to "catch the eye" (J1 25%) with controlled alternation — **dark moments that frame (Hero, Audiences, Newsletter + Closing)**, light reading in the body and long light stretches separated by **distinct tints** (`paper`/`mist`/`brand-soft`) so they read as blocks, not a mass. Green shines WHERE IT SHINES: on `ink`.
 
-La página se lee como **una línea de tiempo vertical** (D32): el Hero es la puerta (sin raíl) y el raíl dibuja los pasos 1–8, de "Cómo funciona" a "Newsletter". El Cierre es la meta narrativa pero **ya no dibuja el nodo final** (D59). El orden de esta tabla es el narrativo vigente (`content.ts → timelineOrder`) y el reorden se declara en el README (R10).
+The page reads as **a vertical timeline** (D32): the Hero is the door (no rail) and the rail draws steps 1–8, from "How it works" to "Newsletter". The Closing is the narrative goal but **no longer draws the final node** (D59). The order of this table is the current narrative one (`content.ts → timelineOrder`) and the reorder is declared in the README (R10).
 
-| # | Sección | Fondo | Énfasis y rol del verde |
+| # | Section | Background | Emphasis and role of green |
 |---|---|---|---|
-| 0 | Nav | **Adaptativo (D47/D49)**: `ink` sobre secciones oscuras y `paper` sobre claras (barra sólida + franja de disolución debajo) | Barra que **se funde con la sección que tiene detrás** (crossfade 250ms) y, al scrollear, suma una hairline de progreso `brand`. Enlaces `paper`/`ink` según superficie, el MISMO composite tile+wordmark en ambas polaridades (§2a/§2.2), scrollspy activo y CTA verde compacto siempre visible. Eje full-bleed con gutters del sistema (D53) |
-| 1 | **Hero (puerta)** | **`ink`** | **D36 "Vacío Editorial" V5**: grid asimétrico de 12 col, H1 en dos líneas editoriales (pregunta en `cloud` 7.77:1, respuesta en `paper` con la palabra final en `brand` 6.17:1), fondo `ink` plano (sin glows ni tiles ni canvas de grafos), metadatos reales en marginalia, marca de agua del símbolo (`logo-symbol-light` al 6%, D90) y CTA relleno `brand` (`DiscordCta size="hero"`, estilo único D46) como ÚNICO botón (R11). Cierra una **franja ticker** (D38, marquee CSS puro, `aria-hidden`) con tokens reales ya publicados. Sin raíl |
-| 2 | Cómo funciona (**paso 1**) | `paper` | **D66 stepper vertical** que reutiliza el raíl como track: nodos dobles `1.1`–`1.4` en `ember`, título + descripción + **línea de resultado**; el raíl de página la cruza igual que al resto (sin sub-timeline). **D70:** texto a 8 col y resultado como ancla de jerarquía |
-| 3 | **Torneos (paso 2)** | **`mist`** (D87; vuelve al tinte claro neutro) | Sección "juego" y **prueba de que la comunidad está viva**, ahora en **claro**: rompe el tramo de claras sin recaer en oscuro. Headline en **`ink` 700** (10.58 ✅; en claro el verde no puede ser texto, R26) y **sin marca de agua** (§2f: en claro no va). **D71–D74:** torneo en curso (7 col) + botín / salón de la fama apilados con **chip `Ejemplo`** (5 col, `ember`+`ink` 6.12 ✅) y **cierre real a todo el ancho** con tabla de husos (Sora `tabular-nums`); esquinas rectas y sin sombras. **D80:** contador en vivo (`Countdown`, 2.ª isla cliente) en `ink`. **D86:** sus 4 separadores llevan brillo **`.line-idle-ember`** (naranja, tamaño fijo 8rem) y sus 4 labels un **punto `ember`** (el de "Torneo en curso" con pulso `.animate-activity`) |
-| 4 | **Audiencias (paso 3)** | **`ink`** | Sección **split (D75/D76)**, ahora **oscura**: es el contrapunto que separa los tramos claros (Cómo funciona+Torneos / Networking+Testimonios+Noticias). Un único H2 (con "empleo", SEO) + intro en `cloud` + **dos celdas `coal` elevadas** (borde `hairline-dark`, §3.1 #14) lado a lado (dev / empresa), cada una con **badge numerado** (1/2, eco del nodo D67), **icono `brand`** y **lista escaneable** de 3 ítems. Hace leer las dos audiencias como caminos paralelos, no como un flujo lineal. CTA dev relleno `brand`; CTA empresa outline en polaridad oscura (§6.2); **ambos anclan a `#unete`** (no hay backend) |
-| 5 | Networking (paso 4) | `paper` | **D81 composición asimétrica**: el párrafo monolítico pasa a título + intro en columna izquierda `lg:sticky` y **tres bloques a la derecha** separados por hairlines `line` de 1px — canales por área (píldoras `rounded-full` que emulan canales de Discord), respuestas en minutos (línea `text-h3 text-ink` + punto `brand` decorativo) y el mercado oculto (ancla `lead` con barra `brand` 3px). Hovers **solo por opacidad** (sin color nuevo, sin `cursor-pointer`); el verde queda como borde y relleno del punto, nunca como texto (R26). Sigue sin bento (D38). **D83:** las píldoras son las **8 áreas reales del Discord** (`#Development`, `#Data & AI`, `#Infrastructure & Operations`, `#Cybersecurity`, `#Product & Design`, `#Quality`, `#IT & Support`, `#Business & Leadership`) + nota de acceso a canales/roles. **D82:** punto `ember` en cada eyebrow, isotipo oficial bajo el título y `.reveal-enter` (entrada sin salida) en la columna sticky. **D85:** la columna derecha entra con `.reveal-left`. **D86:** los dos bloques con línea llevan `.line-idle` (no el primero, sin borde por `first:border-t-0`) |
-| 6 | Testimonios (paso 5) | **`mist`** (D87/D90) | El tinte claro neutro que Lorena aprueba (mismo que Torneos). **D89/D90: marquee horizontal CSS puro full-bleed** dentro de una **banda `brand-soft`** con hairlines `brand`, sombra elevada y relieve interior; **D123:** la banda y el desvanecido de las tarjetas **arrancan difuminados hacia el RAÍL** (a la izquierda del eje no queda campo, hairline ni sombra) y **el raíl pasa por encima** del slider (`z-20`, prop `className` de `TimelineRail`, solo aquí); el borde derecho sigue full-bleed. Track duplicado `−50%` con `REPEAT=3` (sin huecos en ningún viewport) y pausa por `hover`/`focus-within` + control CSS-only; tarjetas `paper` (borde `ink/10`), `.card-idle` y `.sheen-sweep` al hover; avatar `brand`, comilla fantasma y slot LinkedIn deshabilitado (R17/R43). El track repetido va `aria-hidden` y el contenido se sirve en lista `sr-only` |
-| 7 | Noticias (paso 6) | `paper` | **D38 bento 1 destacada + 2** (hairline); el acento `ember` aparece aquí por primera vez (chips de categoría) — novedad controlada |
-| 8 | **Newsletter (paso 7)** | **`ink`** (D100; antes franja `brand`) | Se retira el bloque verde macizo y el contenido vive en **UNA tarjeta Bento** `coal` + hairline `white/12` (§6.5): texto a la izquierda (`paper`/`cloud`) y formulario a la derecha. El verde vuelve a su rol AA: relleno del **botón**, relleno del raíl, **nodo 7** y anillo de foco. Sigue siendo el bloque pre-footer (R19) y no compite con el CTA Discord (R11) |
-| 9 | **Cierre (meta)** | **`ink`** | Espejo del hero (D35): H2 en dos líneas (`cloud` + `paper`) + el mismo botón verde dominante. Marca de agua `logo-symbol-light` al 6% (D90). Último impacto = misma acción que el primer impacto (R20). **Sin raíl ni nodo (D59)** y bloque centrado. **D121:** sección de **100vh** (`min-h-svh` + contenido centrado) con **las MISMAS luces facetadas del hero** de fondo, el gesto **"la puerta"** (dos hojas `ink` que se abren con el scroll) y un **remate de marca** bajo el CTA: el lockup oficial (isotipo en tile cuadrado + `wordmark-duo`) dentro de un anillo de luz que gira; el copy y el CTA quedan por encima y no se tocan (R34/R42) |
-| 10 | Footer | `ink` (continuo, separado por `hairline-dark`) | Jerarquía baja: `small` `cloud`, enlaces hover `brand`. Logo: el composite del header en polaridad oscura (D58, §2c). Legal con la nota honesta de specs/11 |
+| 0 | Nav | **Adaptive (D47/D49)**: `ink` on dark sections and `paper` on light ones (solid bar + dissolution strip below) | Bar that **blends with the section behind it** (250ms crossfade) and, on scroll, adds a `brand` progress hairline. `paper`/`ink` links depending on surface, the SAME tile+wordmark composite in both polarities (§2a/§2.2), active scrollspy and a compact green CTA always visible. Full-bleed axis with the system gutters (D53) |
+| 1 | **Hero (door)** | **`ink`** | **D36 "Editorial Void" V5**: asymmetric 12-col grid, H1 in two editorial lines (question in `cloud` 7.77:1, answer in `paper` with the final word in `brand` 6.17:1), flat `ink` background (no glows or tiles or graph canvas), real metadata in the marginalia, symbol watermark (`logo-symbol-light` at 6%, D90) and filled `brand` CTA (`DiscordCta size="hero"`, single style D46) as the ONLY button (R11). It closes with a **ticker strip** (D38, pure CSS marquee, `aria-hidden`) with real tokens already published. No rail |
+| 2 | How it works (**step 1**) | `paper` | **D66 vertical stepper** that reuses the rail as track: double nodes `1.1`–`1.4` in `ember`, title + description + **result line**; the page rail crosses it like the rest (no sub-timeline). **D70:** text at 8 cols and result as hierarchy anchor |
+| 3 | **Tournaments (step 2)** | **`mist`** (D87; back to the neutral light tint) | "Game" section and **proof that the community is alive**, now in **light**: it breaks the light stretch without falling back to dark. Headline in **`ink` 700** (10.58 ✅; on light green cannot be text, R26) and **no watermark** (§2f: it does not go on light). **D71–D74:** ongoing tournament (7 cols) + loot / hall of fame stacked with an **`Ejemplo` chip** (5 cols, `ember`+`ink` 6.12 ✅) and a **real full-width closing** with a timezone table (Sora `tabular-nums`); straight corners and no shadows. **D80:** live counter (`Countdown`, 2nd client island) in `ink`. **D86:** its 4 separators carry a **`.line-idle-ember`** glow (orange, fixed size 8rem) and its 4 labels an **`ember` dot** (the "Tournament ongoing" one with `.animate-activity` pulse) |
+| 4 | **Audiences (step 3)** | **`ink`** | **Split section (D75/D76)**, now **dark**: it is the counterpoint that separates the light stretches (How it works+Tournaments / Networking+Testimonials+News). A single H2 (with "empleo", SEO) + intro in `cloud` + **two raised `coal` cells** (`hairline-dark` border, §3.1 #14) side by side (dev / company), each with a **numbered badge** (1/2, echo of the D67 node), **`brand` icon** and a **scannable list** of 3 items. It makes the two audiences read as parallel paths, not a linear flow. Dev CTA filled `brand`; company CTA outline in dark polarity (§6.2); **both anchor to `#unete`** (there is no backend) |
+| 5 | Networking (step 4) | `paper` | **D81 asymmetric composition**: the monolithic paragraph becomes a title + intro in the left column `lg:sticky` and **three blocks on the right** separated by 1px `line` hairlines — channels by area (`rounded-full` pills that emulate Discord channels), replies in minutes (`text-h3 text-ink` line + decorative `brand` dot) and the hidden market (`lead` anchor with a 3px `brand` bar). Hovers **only by opacity** (no new color, no `cursor-pointer`); green stays as border and dot fill, never as text (R26). Still no bento (D38). **D83:** the pills are the **8 real Discord areas** (`#Development`, `#Data & AI`, `#Infrastructure & Operations`, `#Cybersecurity`, `#Product & Design`, `#Quality`, `#IT & Support`, `#Business & Leadership`) + a note on channel/role access. **D82:** `ember` dot in each eyebrow, official icon under the title and `.reveal-enter` (entry without exit) in the sticky column. **D85:** the right column enters with `.reveal-left`. **D86:** the two blocks with a line carry `.line-idle` (not the first, borderless by `first:border-t-0`) |
+| 6 | Testimonials (step 5) | **`mist`** (D87/D90) | The neutral light tint that Lorena approves (same as Tournaments). **D89/D90: pure CSS full-bleed horizontal marquee** inside a **`brand-soft` band** with `brand` hairlines, raised shadow and inner relief; **D123:** the band and the cards' fade **start blurred toward the RAIL** (to the left of the axis there is no field, hairline or shadow) and **the rail passes over** the slider (`z-20`, `className` prop of `TimelineRail`, only here); the right edge remains full-bleed. Duplicated track `−50%` with `REPEAT=3` (no gaps on any viewport) and pause by `hover`/`focus-within` + CSS-only control; `paper` cards (`ink/10` border), `.card-idle` and `.sheen-sweep` on hover; `brand` avatar, ghost quote and disabled LinkedIn slot (R17/R43). The repeated track is `aria-hidden` and the content is served in an `sr-only` list |
+| 7 | News (step 6) | `paper` | **D38 bento 1 featured + 2** (hairline); the `ember` accent appears here for the first time (category chips) — controlled novelty |
+| 8 | **Newsletter (step 7)** | **`ink`** (D100; previously a `brand` strip) | The solid green block is removed and the content lives in **ONE Bento card** `coal` + `white/12` hairline (§6.5): text on the left (`paper`/`cloud`) and form on the right. Green returns to its AA role: **button** fill, rail fill, **node 7** and focus ring. It is still the pre-footer block (R19) and does not compete with the Discord CTA (R11) |
+| 9 | **Closing (goal)** | **`ink`** | Mirror of the hero (D35): H2 in two lines (`cloud` + `paper`) + the same dominant green button. `logo-symbol-light` watermark at 6% (D90). Last impact = same action as the first impact (R20). **No rail or node (D59)** and centered block. **D121:** **100vh** section (`min-h-svh` + centered content) with **the SAME faceted lights of the hero** in the background, the **"door"** gesture (two `ink` leaves that open with the scroll) and a **brand finish** under the CTA: the official lockup (icon in a square tile + `wordmark-duo`) inside a rotating ring of light; the copy and CTA stay above and are not touched (R34/R42) |
+| 10 | Footer | `ink` (continuous, separated by `hairline-dark`) | Low hierarchy: `small` `cloud`, hover links `brand`. Logo: the header composite in dark polarity (D58, §2c). Legal with the honest note of specs/11 |
 
-Regla anti-deriva (actualizada D85/D100): **nunca dos secciones oscuras seguidas salvo los bloques de cierre** — `Newsletter ink → Cierre ink → Footer ink` (D100) y `Cierre → Footer` (siempre) se leen como un único bloque visual; **nunca más de 3 secciones claras seguidas y, si son contiguas, alternar el tinte** (`paper` ↔ `mist`/`brand-soft`) para que la costura se lea como cambio de bloque. Las secciones de lectura larga (copy > 3 líneas) siempre en claro.
+Anti-drift rule (updated D85/D100): **never two dark sections in a row except the closing blocks** — `Newsletter ink → Closing ink → Footer ink` (D100) and `Closing → Footer` (always) read as a single visual block; **never more than 3 light sections in a row and, if they are contiguous, alternate the tint** (`paper` ↔ `mist`/`brand-soft`) so the seam reads as a block change. Long-reading sections (copy > 3 lines) always on light.
 
-**Ritmo vigente (D87/D100):** Hero `ink` → Cómo funciona `paper` → **Torneos `mist`** → **Audiencias `ink`** → Networking `paper` → Testimonios `mist` (con banda `brand-soft`, D89/D90) → Noticias `paper` → **Newsletter `ink`** → Cierre `ink` → Footer `ink`. Tramo claro más largo: 3 (Networking+Testimonios+Noticias), atenuado por alternancia `paper`→`mist`→`paper`. **D100:** el sitio deja de tener una franja `brand` maciza — el verde queda como **color de acción** (botones, foco), **progreso** (raíl) y **detalle** (nodos, puntos, hilos), exactamente el rol que R26 permite. Los tokens `--color-brand-soft` y la variante `brand` del raíl quedan **sin uso**.
+**Current rhythm (D87/D100):** Hero `ink` → How it works `paper` → **Tournaments `mist`** → **Audiences `ink`** → Networking `paper` → Testimonials `mist` (with `brand-soft` band, D89/D90) → News `paper` → **Newsletter `ink`** → Closing `ink` → Footer `ink`. Longest light stretch: 3 (Networking+Testimonials+News), softened by the `paper`→`mist`→`paper` alternation. **D100:** the site no longer has a solid `brand` strip — green remains as an **action color** (buttons, focus), **progress** (rail) and **detail** (nodes, dots, threads), exactly the role R26 allows. The `--color-brand-soft` token and the `brand` variant of the rail remain **unused**.
 
-**Capa viva de las secciones (D84, §9 #17/#18):** además del ritmo cromático, la página lleva dos
-efectos ambientales de alcance fijo — la **deriva de texto** ligada al scroll (`±0.375rem` sobre el
-contenedor de contenido) y la **luz de sección** que recorre la hairline superior (paso ~5s, pausa
-larga, bucle 9s). Se aplican a los pasos **2–8** (Cómo funciona, Torneos, Audiencias, Networking,
-Testimonios, Noticias y Newsletter) y se **excluyen** el nav/header (0), el hero (1), el cierre (9)
-y el footer (10): el hero conserva su `section-sheen` estático para no añadir movimiento al primer
-impacto y el footer no lleva decoración (cierra la página). **D121:** el **cierre deja de ser un
-fondo plano** y estrena su propio movimiento (las **luces del hero + "la puerta" + el remate de
-marca**, §9 #25), en
-una sección de **100vh** — sin `.text-drift` ni `.section-idle` (esos dos
-siguen sin aplicarse ahí), y con el guard `prefers-reduced-motion` apagándolo todo. La
-deriva de **Networking** se limita a la columna derecha: la izquierda es `sticky` y un `transform`
-en un ancestro rompería el pin (por eso esa sección no recibe `.text-drift` en el wrapper común).
-
----
-
-## 8. Accesibilidad y estados (gate J6, 10%)
-
-- **Foco visible:** todos los interactivos con `focus-visible` de 3px (colores por superficie, §6.1). Prohibido `outline-none` sin reemplazo. Verificación: tab completo por la página en orden DOM lógico.
-- **Targets táctiles:** ≥44×44px en botones, nav móvil, hamburguesa, icono LinkedIn (aunque esté disabled) y cada enlace del footer (padding en el `<a>`, no solo en el texto).
-- **Contraste:** tabla §3.1 como fuente de verdad; cualquier combinación no listada requiere recalcular antes de usarse.
-- **Semántica:** un solo `h1` (R40); `h2` por sección sin saltos (R41); `header/nav/main/section/article/footer/button` (R42); formulario con `label` visible (§6.5); logos decorativos de agua con `aria-hidden="true"`, logos funcionales con nombre accesible "TechToJob".
-- **`prefers-reduced-motion: reduce`:** desactiva transforms y transiciones (§9); los estados hover/focus siguen siendo visibles por color.
-- **Teclado:** menú móvil operable con Enter/Escape; el skip-link es el primer tabbable.
+**Living section layer (D84, §9 #17/#18):** besides the chromatic rhythm, the page carries two
+fixed-scope ambient effects — the **text drift** tied to scroll (`±0.375rem` on the content
+container) and the **section light** that travels along the top hairline (step ~5s, long pause, 9s loop). They apply
+to steps **2–8** (How it works, Tournaments, Audiences, Networking, Testimonials, News and Newsletter) and are **excluded**
+the nav/header (0), the hero (1), the closing (9)
+and the footer (10): the hero keeps its static `section-sheen` to avoid adding movement to the first
+impact and the footer carries no decoration (it closes the page). **D121:** the **closing is no longer a flat
+background** and debuts its own movement (the **hero lights + "the door" + the brand finish**, §9 #25), in
+a **100vh** section — without `.text-drift` or `.section-idle` (those two
+still do not apply there), and with the `prefers-reduced-motion` guard turning it all off. The
+**Networking** drift is limited to the right column: the left is `sticky` and a `transform`
+on an ancestor would break the pin (that is why that section does not receive `.text-drift` on the common wrapper).
 
 ---
 
-## 9. Movimiento — catálogo vigente (R34: "que no estorben")
+## 8. Accessibility and states (J6 gate, 10%)
 
-> **Nota de revisión (22/09, D30 → D38):** el criterio original de "máximo 3 microanimaciones"
-> era propio, no de las bases. Lo que R34 exige —que no estorben— se mantiene por diseño: los
-> bucles son lentos (≥3.5s), solo animan `transform`/`opacity`/`box-shadow`, ninguno cambia el
-> layout (CLS 0), ninguno toca el copy ni el CTA, y el guard global `prefers-reduced-motion` los
-> apaga todos. **D36 retiró** el campo de grafos (isla cliente), los glows y el muro de tiles
-> flotantes del hero; **D38** añadió el ticker del hero y la numeración de las celdas bento.
-> **D76 reincorpora un glow muy sutil y de borde duro** (sombras de color, sin `blur`) — ver #14.
-> **D84** añade la deriva de texto ligada al scroll (#17) y la luz ambiental de sección (#18),
-> y limita su alcance a las 7 secciones centrales (ni nav, ni hero, ni cierre, ni footer).
-> **D85** cambia el ritmo cromático (Torneos `brand-soft`, Audiencias `ink`) y **D86** añade la
-> vida idle de líneas separadoras (#19) y de bordes de tarjeta (#20); **D87** devuelve Torneos y
-> Testimonios a `mist`. **D89/D90** convierten Testimonios en un **marquee CSS puro** sobre `mist`
-> con banda `brand-soft` (#21) y bajan las marcas de agua de las superficies oscuras a
-> `logo-symbol-light` al 6%.
-> **D100–D107** (sesión de newsletter): la franja `brand` desaparece y el newsletter pasa a `ink` con
-> panel `coal` (D100); el formulario se rediseña en columna "consola" con botón cuadrado (D101); la
-> escala tipográfica de "Cómo funciona"/"Torneos" baja con `.section-tight` y las entradas/salidas se
-> ralentizan (D102); aparecen el destello idle del CTA (#22), el halo de los nodos (#23) y la entrada
-> propia del panel (#24) (D103); se poda ornamento del panel (D104); el raíl estrena halo (D105); y la
-> salida se acorta (D106, meseta 84% → 92%). Todo es CSS puro: cero islas cliente nuevas.
-> **D121** abre el **cierre** (`#unete`), que hasta ahora era un fondo `ink` plano (§9 #25): la
-> sección pasa a **100vh** con **las luces facetadas del hero** reutilizadas tal cual
-> (`.hero-facet*`, sin duplicar CSS), estrena **"la puerta"** (dos hojas `ink` que se abren con el
-> scroll, solo `translate`) y cierra con el **lockup oficial** dentro de un anillo de luz que gira.
-> El guard `prefers-reduced-motion` lo apaga todo. (Las exploraciones descartadas
-> D108–D120 —globo reticulado, red y constelación— quedan solo en el log de decisiones.)
+- **Visible focus:** all interactive elements with 3px `focus-visible` (colors per surface, §6.1). `outline-none` without a replacement is forbidden. Verification: full tab through the page in logical DOM order.
+- **Touch targets:** ≥44×44px on buttons, mobile nav, hamburger, LinkedIn icon (even disabled) and each footer link (padding on the `<a>`, not just on the text).
+- **Contrast:** table §3.1 as the source of truth; any combination not listed requires recalculation before use.
+- **Semantics:** a single `h1` (R40); `h2` per section without jumps (R41); `header/nav/main/section/article/footer/button` (R42); form with a visible `label` (§6.5); decorative watermark logos with `aria-hidden="true"`, functional logos with the accessible name "TechToJob".
+- **`prefers-reduced-motion: reduce`:** disables transforms and transitions (§9); hover/focus states remain visible by color.
+- **Keyboard:** mobile menu operable with Enter/Escape; the skip-link is the first tabbable.
 
-| # | Qué | Spec | Fallback `reduced-motion` |
+---
+
+## 9. Motion — current catalog (R34: "must not get in the way")
+
+> **Review note (22/09, D30 → D38):** the original "maximum 3 micro-animations" criterion
+> was our own, not the rules'. What R34 requires —that they do not get in the way— is maintained by design: the
+> loops are slow (≥3.5s), they only animate `transform`/`opacity`/`box-shadow`, none changes the
+> layout (CLS 0), none touches the copy or the CTA, and the global `prefers-reduced-motion` guard turns them all
+> off. **D36 retired** the graph field (client island), the glows and the floating tile wall
+> of the hero; **D38** added the hero ticker and the numbering of the bento cells.
+> **D76 reincorporates a very subtle, hard-edge glow** (colored shadows, no `blur`) — see #14.
+> **D84** adds the scroll-linked text drift (#17) and the section ambient light (#18),
+> and limits their scope to the 7 central sections (neither nav, nor hero, nor closing, nor footer).
+> **D85** changes the chromatic rhythm (Tournaments `brand-soft`, Audiences `ink`) and **D86** adds the
+> idle life of separator lines (#19) and card borders (#20); **D87** returns Tournaments and
+> Testimonials to `mist`. **D89/D90** turn Testimonials into a **pure CSS marquee** on `mist`
+> with a `brand-soft` band (#21) and lower the watermarks of the dark surfaces to
+> `logo-symbol-light` at 6%.
+> **D100–D107** (newsletter session): the `brand` strip disappears and the newsletter moves to `ink` with a
+> `coal` panel (D100); the form is redesigned in a "console" column with a square button (D101); the
+> typographic scale of "How it works"/"Tournaments" drops with `.section-tight` and the entries/exits are
+> slowed down (D102); the CTA idle glint (#22), the node halo (#23) and the panel's own
+> entry (#24) appear (D103); ornament is pruned from the panel (D104); the rail debuts a halo (D105); and the
+> exit is shortened (D106, plateau 84% → 92%). Everything is pure CSS: zero new client islands.
+> **D121** opens the **closing** (`#unete`), which until now was a flat `ink` background (§9 #25): the
+> section becomes **100vh** with **the hero's faceted lights** reused as is
+> (`.hero-facet*`, without duplicating CSS), debuts **"the door"** (two `ink` leaves that open with the
+> scroll, `translate` only) and closes with the **official lockup** inside a rotating ring of light.
+> The `prefers-reduced-motion` guard turns it all off. (The discarded explorations
+> D108–D120 —reticulated balloon, net and constellation— remain only in the decision log.)
+
+| # | What | Spec | `reduced-motion` fallback |
 |---|---|---|---|
-| 1 | **Entrada del header** (`animate-header-in`, 500ms): baja `-0.75rem` + fundido | Primer beat de la cascada (`transform`/`opacity` → CLS 0). El H1 es el elemento LCP, no el header | Header visible de inmediato |
-| 2 | **Entrada del hero** (H1, sub, CTA, apoyo, meta, nav: escalonado 100→700ms) | El **H1 anima solo `transform`** (`animate-lift-in`), nunca `opacity`: el elemento LCP se pinta opaco en el primer frame | Todo el contenido visible de entrada, en su estado final |
-| 3 | **Línea de tiempo vertical** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | El relleno `brand` crece con el scroll y cada nodo se enciende al entrar en vista. Un segmento por sección → la línea se ve continua de "Cómo funciona" a "Newsletter" (el Cierre queda fuera, D59) | Línea dibujada completa y nodos activos |
-| 4 | **Entrada + salida por elemento** (`.reveal`, D62/D63/D64/**D77**/**D102**/**D106**): cada "beat" de sección (h2, intro, tarjetas, CTA) entra con fade-in + `translate(0, 2.5rem) → 0` (0→**38%** del rango, D102: antes 22%) y **sale por arriba** (**92→100%**, D106: la meseta opaca sube de 84% a 92%, así la despedida dura la mitad), con `animation-timeline: view()` y easing `cubic-bezier(0.2,0.9,0.2,1)`. Al ir atado al scroll, **se invierte al subir**: las secciones también "cobran vida" hacia arriba | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas; el hero NO lo usa en su H1 (jamás hace fade: es el LCP) | Contenido estático visible en su estado final |
-| 4b | **Regla anti-bug de `view()`** (D63): el rango usa la fase **`cover`** (relativa al viewport), nunca `entry` (relativa al alto del elemento: un h2 de 40px terminaba el fade en ~11px de scroll); y **ningún ancestro** de un elemento con `view()` puede llevar `overflow: hidden` (crea scroll container y congela el timeline) → se usa `overflow-clip` | **D77:** rango `cover` COMPLETO con meseta opaca 16%–90%; a 90% el elemento ya entra bajo la barra fija (~96px), así que el contenido nunca se lee a media tinta (verificado en navegador: opacidad 1.0 en el aterrizaje del ancla) | — |
-| 5 | **Ticker del hero** (`.animate-marquee`, D38/**D96**): track duplicado, `translateX(0 → −50%)`, `--marquee-duration:102s` lineal infinito; cada mitad repite el set ×3 (`TICKER_REPEAT`) para superar cualquier viewport y no dejar hueco al reiniciar | `transform` only; el bloque es `aria-hidden` y no interactivo (R11/R34) | `animation: none` + `transform: none`: el track se estaciona en el origen y se lee solo la primera copia |
-| 6 | **Marcador fantasma bento** (`.bento-index`, D38, `animation-timeline: view()`) | Tras D66 queda **solo en Testimonios** (la comilla editorial sobredimensionada): `opacity`/`transform` en un `<span>` interno, decorativo (`aria-hidden`) | Marcador visible en su estado final |
-| 7 | **Hover del CTA** (todas las instancias de `DiscordCta`/`AudienceCta`, D42/D43/D46/D76): estilo único relleno `brand` con barrido especular de borde duro (`-skew-x-12 bg-white/30`, 500ms, en reposo fuera del recorte) + micro-elevación `-translate-y-0.5` + flecha 2px + glow suave (`--shadow-glow-cta`) | Feedback de asequibilidad del botón, no decorativo. Sin `blur` | Sin barrido ni translate (`motion-reduce:`); el cambio de color se mantiene |
-| 8 | **Subrayado de enlaces de nav** (150ms) + hover de enlaces del nav rápido | Header y nav del hero: hover `decoration-brand` 2px | Subrayado presente en hover |
-| 9 | **Grid del hero vivo** (D44): `.hero-field` panea una celda con el scroll (`animation-timeline: scroll()`) y `.hero-field-drift` añade un drift continuo de una celda (4rem en X e Y) en 28s | Capas anidadas para que ambos `transform` convivan; loop sin costura por la periodicidad del patrón; solo `transform` | Grid quieto y completo (el guard global colapsa ambos) |
-| 10 | **Header adaptativo** (D47/D49): crossfade de la barra `ink`↔`paper` (250ms por `opacity`) + hairline de progreso `.header-progress` (`scaleX` con `animation-timeline: scroll(root)`) + scrollspy `aria-current` | Solo color/opacidad/transform, CLS 0; la hairline es CSS puro | Header `ink` fijo (sin JS) y sin hairline; ningún enlace marcado activo |
-| 11 | **Entrada + salida de celda bento** (`.bento-reveal`, D61/D63/D64/**D77**): comparte el keyframe `step-in-out` de `.reveal` (entra por abajo 0→16%, meseta 16→90%, sale por arriba 90→100%) con `animation-timeline: view()` y rango `cover` completo | Solo `opacity`/`transform` → CLS 0; CSS puro, sin islas | Celda estática visible en su estado final |
-| 12 | **Iluminación de celda bento** (`.bento-lit`, D61): borde `line → brand` conforme la celda entra en el viewport, escalonado por `--i`; hover `scale-[1.02]` + `border-brand` (+ `bg-mist` en secciones `paper`) con `duration-300 ease-in-out` | Borde **duro, sin blur ni halo** (D43); `brand` sobre `paper` es decorativo (2.04:1), nunca texto (R26) | Borde en reposo (`line`); el hover conserva el cambio de color (sin escala) |
-| 13 | **Entrada desde el raíl + salida** (`.reveal-left`, D69/D72/D76/**D77**/**D85**/**D90**/**D98**; `#como-funciona`, `#torneos`, `#talento`, **el h2/sub/control de `#testimonios`**, **la columna derecha de `#networking`** y **`#noticias`** — h2, nota y el wrapper de cada celda): entra `translate(-4.5rem, 0) → 0` (0→**38%**, D102) y **sale por arriba** (**92→100%**, D106), con `view()` y rango `cover` completo — cada bloque parece salir de la línea de tiempo y se despide al subir. En Networking **solo la columna derecha** cambia a `.reveal-left` (D85); la izquierda conserva `.reveal-enter` (entrada sin salida, sticky-safe, D82 — su rango `cover 0% cover 40%` **no se alarga a propósito**: con la columna pinada, un rango mayor dejaría la entrada a medias) | Solo `transform`/`opacity` (CLS 0); no genera overflow horizontal | Contenido estático visible en su estado final |
-| 15 | **Hero al volver** (`.hero-soft`, D77): el bloque de contenido del hero (sin tocar el H1) se mueve con `animation-timeline: scroll(root)`, `animation-range: 0 80vh`: opacidad 1→0.9 y −0.75rem | Muy sutil y posicional (CSS no distingue la dirección del scroll); a scroll 0 arranca en su estado final, así que **no toca el LCP** | Hero estático en su estado final |
-| 14 | **Brillo sutil** (D76): `.sheen-sweep` (barrido diagonal `brand` de borde duro al hover de las celdas de Audiencias) + `--shadow-glow`/`--shadow-glow-cta` (glow suave en hover de tarjetas y CTA) + `.section-sheen` (hairline luminosa estática en el borde superior de cada sección) | Solo `brand`/`ink` (R24/R25); son **sombras de color y gradientes**, sin `filter: blur` ni blobs (D37.1); el `.sheen-sweep` reposa fuera del recorte (`-translate-x-full`) | El barrido no corre (`motion-reduce: hidden`); el glow se queda en su valor base |
-| 16 | **Punto de actividad** (`.animate-activity`, D81/D82): un halo **`ember`** de 12px que crece (`scale 1 → 2.2`) y se desvanece (`opacity 0.6 → 0`) en **3.6s infinito**, tras un punto `ember` estático. Marca "respuestas en minutos" (Networking) y "Torneo en curso" (Torneos) | `transform`/`opacity` only (CLS 0); bucle **≥3.5s** (catálogo §9); decorativo → el wrapper va `aria-hidden`, el dato real es la línea de texto | El guard global (`0.01ms`, 1 iteración) lo congela como **punto estático** visible |
-| 17 | **Deriva de TEXTO con el scroll** (`.text-drift`, D84): el *wrapper de contenido* de la sección se desplaza `±0.375rem` (0.75rem totales, va y vuelve) siguiendo su propio paso por el viewport — `animation-timeline: view()`, `animation-range: cover`, `linear`, `both`. Sin salida ni fundido: NUNCA toca `opacity`, solo acompaña al scroll (al subir, se invierte). Va en un elemento propio (el contenedor) para no pisar el `transform` de `.reveal`/`.reveal-left` de los hijos | `transform` only (CLS 0); recorrido ≤0.75rem; **solo texto** → jamás en `<Image>` ni marcas de agua; CSS puro, sin islas. Alcance: pasos 2–8; **no** en hero/cierre/footer | Texto quieto en su posición natural (`.text-drift` no declara `transform` base; sin el bloque `@supports` no hay animación) |
-| 18 | **Luz ambiental de sección** (`.section-idle`, D84/D86): un hilo de 1px (16% de ancho) recorre la hairline superior (`::after`, `translateX(-100% → 525%)` + respiro de `opacity`) con **bucle corto de 6s** (pausa mínima) y halo. Color por superficie: `brand` por defecto, `ink` en la franja `brand` (`.section-idle-ink`) y **`ember` en Torneos, Testimonios y Noticias** (`.section-idle-ember`; en Noticias vía `Section idleAccent="ember"`, D98). Da vida a la sección al detenerse, sin tocar copy, CTA ni jerarquía | `transform`/`opacity` only (CLS 0); bucle **6s ≥3.5s** (R34); decorativo (`aria-hidden` + `pointer-events-none`); `overflow: clip` (no crea scroll container, D63); CSS puro | La hairline queda como hoy (`.section-sheen` estático): el guard deja el hilo fuera de pantalla — decoración invisible, nunca oculta contenido |
-| 19 | **Línea separadora viva** (`.line-idle`, D86): un brillo de **tamaño fijo** (`--idle-size`, 8rem; 4rem con `.line-idle-sm` en Cómo funciona) recorre la hairline superior de un bloque con hairline **más claro** que la narración, **uniforme** entre bloques de anchos distintos. Viaja con `background-position` (`-100% → 100%`, 6s) y lleva halo (`drop-shadow` sobre el alpha del degradado). Color: `brand` por defecto, **`ember` en Torneos y en el divisor de Noticias** (`.line-idle-ember`, D98). En Networking se omite en el primer bloque (`first:border-t-0`) | `opacity` + `background-position` (CLS 0; pintado de una línea de 1px) y `drop-shadow` de 3px sobre el brillo; bucle **6s ≥3.5s**; `pointer-events-none`; nunca desborda (el fondo se recorta al elemento) | Brillo invisible (estado base `opacity: 0`): la hairline queda exactamente igual |
-| 20 | **Borde de tarjeta que respira** (`.card-idle`, D86): un anillo `brand` de 1px en una capa `::after` (inset -1px) se enciende y se apaga (`opacity 0 → 0.4`) en **9s**, escalonado por `--i`. No toca el borde real ni `.bento-lit` (que sigue iluminando al entrar en vista). En las tarjetas de Audiencias, Testimonios y Noticias | `opacity` only (CLS 0); bucle **9s ≥3.5s**; decorativo (`pointer-events-none`); CSS puro | Anillo invisible (estado base `opacity: 0`): el borde queda como está |
-| 21 | **Marquee de Testimonios + banda** (`.animate-marquee` con `--marquee-duration:180s`, D89/D90): track duplicado `translateX(0 → −50%)`; cada mitad repite el set ×3 (`REPEAT`) para superar cualquier ancho de viewport y no dejar hueco al reiniciar; **pausa** por `hover`/`focus-within` y control CSS-only (checkbox oculto + `<label>`); la **banda `brand-soft`** full-bleed lleva hairlines, sombra y relieve, y la máscara de borde se aplica SOLO a las tarjetas. **D123:** el desvanecido IZQUIERDO se alinea con la **x del raíl** de la línea de tiempo (`--fade-x` con `max(…, calc(50% − 36rem + …))`), no con el canto de la página; el borde derecho sigue igual | `transform` only (CLS 0); bucle ≥180s (R34); el track es `aria-hidden` y el contenido va en lista `sr-only`; CSS puro, sin islas | `animation: none` + `transform: none`: el track se estaciona en el origen y se lee la primera copia; la banda y el control quedan estáticos |
-| 22 | **Destello idle del CTA principal** (`.cta-glint`, D103): un barrido especular en `::after` cruza el botón cada **9s** (cruce ~1,3s, blanco al 22% — más suave que el 30% del hover) para que el botón principal respire sin pedir clic. Solo en la variante `solid` (`cta-styles.ts`): header, hero, Torneos, Audiencias y Cierre; el outline y el botón del newsletter se quedan quietos (R11) | `transform` only (CLS 0); bucle 9s ≥3.5s (R34); decorativo (`pointer-events: none`); mismo color de la paleta que el barrido de hover | `display: none` (regla explícita en el guard global: no debe quedar congelado a medio cruce) |
-| 23 | **Destello de los nodos del raíl** (`.node-flash`, D105): un halo suave con `radial-gradient` de **centro transparente** respira sobre cada nodo (7s), con el acento propio de cada familia — `brand` en los nodos de sección (`1`–`8`) y `ember` en los de paso (`1.1`–`1.4`) — sin teñir disco ni numeral. El `--i` (posición en el raíl / índice del paso) **escalona la fase** para que el destello recorra la página en oleada | `opacity`/`transform` only (CLS 0); bucle 7s ≥3.5s (R34); decorativo (`pointer-events: none`); cero colores nuevos (R24/R25) | Halo en su estado base (`opacity: 0`): el nodo se ve exactamente como antes |
-| 24 | **Entrada del panel de newsletter** (`.panel-in`, D103): el cuadro entra con recorrido corto (`1rem`) y **ventana propia del 26%** del `cover` en lugar del 38% de `.reveal`. El motivo es geométrico: en `view()` el rango dura (viewport + alto del elemento), así que un panel de ~650px con el 38% quedaría a media tinta hasta tener el borde a ~190px del viewport | `opacity`/`transform` only (CLS 0); CSS puro | Panel visible completo y estático |
-| 25 | **Cierre: luces del hero, "la puerta" y remate de marca** (D121, `.hero-facet*` / `.closing-door*` / `.closing-seal*`): la sección es **100vh** (`min-h-svh` + contenido centrado) y reutiliza las **mismas luces facetadas del hero** (cuñas `conic-gradient` que rotan **64s/88s**, sin duplicar CSS); al entrar, dos hojas `ink` —**"la puerta"**— se abren y dejan salir la luz hacia el CTA; bajo el CTA, el lockup oficial (isotipo en tile + `wordmark-duo`) vive dentro de un anillo de luz que gira y respira; el texto entra/sale con `.reveal` | Solo `opacity`/`transform` (CLS 0); puerta con rango corto `cover 0% → 35%` y `pointer-events: none` (nunca tapa el CTA ni bloquea el clic); puerta y luces en 64s/88s y el anillo 64s + respiración 9s (todos ≥3.5s, R34); cero islas cliente (D37.2); `aria-hidden`; paleta fija `brand`/`brand-40`/`white-5`/`ember` al 22%, sin `filter: blur` (D37.1/D86); el isotipo no se rota (R27/R39) | **Estado por defecto = final**: sin `animation-timeline` o con `prefers-reduced-motion` no hay puerta y las luces quedan quietas; el contenido se ve entero y estático |
+| 1 | **Header entry** (`animate-header-in`, 500ms): drops `-0.75rem` + fade | First beat of the cascade (`transform`/`opacity` → CLS 0). The H1 is the LCP element, not the header | Header visible immediately |
+| 2 | **Hero entry** (H1, sub, CTA, support, meta, nav: staggered 100→700ms) | The **H1 animates only `transform`** (`animate-lift-in`), never `opacity`: the LCP element is painted opaque on the first frame | All content visible on entry, in its final state |
+| 3 | **Vertical timeline** (`timeline-fill` + `timeline-marker`, `animation-timeline: view()`) | The `brand` fill grows with scroll and each node lights up when entering view. One segment per section → the line looks continuous from "How it works" to "Newsletter" (the Closing is outside, D59) | Fully drawn line and active nodes |
+| 4 | **Entry + exit per element** (`.reveal`, D62/D63/D64/**D77**/**D102**/**D106**): each section "beat" (h2, intro, cards, CTA) enters with fade-in + `translate(0, 2.5rem) → 0` (0→**38%** of the range, D102: previously 22%) and **exits upward** (**92→100%**, D106: the opaque plateau rises from 84% to 92%, so the farewell lasts half as long), with `animation-timeline: view()` and `cubic-bezier(0.2,0.9,0.2,1)` easing. Since it is tied to scroll, **it reverses on scroll up**: sections also "come alive" upward | Only `opacity`/`transform` → CLS 0; pure CSS, no islands; the hero does NOT use it on its H1 (it never fades: it is the LCP) | Static content visible in its final state |
+| 4b | **`view()` anti-bug rule** (D63): the range uses the **`cover`** phase (relative to the viewport), never `entry` (relative to the element's height: a 40px h2 finished the fade in ~11px of scroll); and **no ancestor** of an element with `view()` may carry `overflow: hidden` (it creates a scroll container and freezes the timeline) → `overflow-clip` is used | **D77:** COMPLETE `cover` range with 16%–90% opaque plateau; at 90% the element is already entering under the fixed bar (~96px), so the content is never read half-faded (verified in browser: opacity 1.0 at the anchor landing) | — |
+| 5 | **Hero ticker** (`.animate-marquee`, D38/**D96**): duplicated track, `translateX(0 → −50%)`, `--marquee-duration:102s` linear infinite; each half repeats the set ×3 (`TICKER_REPEAT`) to exceed any viewport and leave no gap on restart | `transform` only; the block is `aria-hidden` and non-interactive (R11/R34) | `animation: none` + `transform: none`: the track parks at the origin and only the first copy is read |
+| 6 | **Bento ghost marker** (`.bento-index`, D38, `animation-timeline: view()`) | After D66 it remains **only in Testimonials** (the oversized editorial quote): `opacity`/`transform` on an inner `<span>`, decorative (`aria-hidden`) | Marker visible in its final state |
+| 7 | **CTA hover** (all `DiscordCta`/`AudienceCta` instances, D42/D43/D46/D76): single filled `brand` style with hard-edge specular sweep (`-skew-x-12 bg-white/30`, 500ms, at rest outside the clip) + micro-elevation `-translate-y-0.5` + 2px arrow + soft glow (`--shadow-glow-cta`) | Button affordance feedback, not decorative. No `blur` | No sweep or translate (`motion-reduce:`); the color change is kept |
+| 8 | **Nav link underline** (150ms) + hover of the quick nav links | Header and hero nav: hover `decoration-brand` 2px | Underline present on hover |
+| 9 | **Living hero grid** (D44): `.hero-field` pans one cell with scroll (`animation-timeline: scroll()`) and `.hero-field-drift` adds a continuous drift of one cell (4rem in X and Y) over 28s | Nested layers so both `transform`s coexist; seamless loop thanks to the pattern's periodicity; `transform` only | Grid still and complete (the global guard collapses both) |
+| 10 | **Adaptive header** (D47/D49): `ink`↔`paper` bar crossfade (250ms by `opacity`) + `.header-progress` hairline (`scaleX` with `animation-timeline: scroll(root)`) + `aria-current` scrollspy | Color/opacity/transform only, CLS 0; the hairline is pure CSS | Fixed `ink` header (no JS) and no hairline; no link marked active |
+| 11 | **Bento cell entry + exit** (`.bento-reveal`, D61/D63/D64/**D77**): shares the `step-in-out` keyframe of `.reveal` (enters from below 0→16%, plateau 16→90%, exits upward 90→100%) with `animation-timeline: view()` and full `cover` range | Only `opacity`/`transform` → CLS 0; pure CSS, no islands | Static cell visible in its final state |
+| 12 | **Bento cell lighting** (`.bento-lit`, D61): border `line → brand` as the cell enters the viewport, staggered by `--i`; hover `scale-[1.02]` + `border-brand` (+ `bg-mist` on `paper` sections) with `duration-300 ease-in-out` | **Hard border, no blur or halo** (D43); `brand` on `paper` is decorative (2.04:1), never text (R26) | Border at rest (`line`); hover keeps the color change (no scale) |
+| 13 | **Entry from the rail + exit** (`.reveal-left`, D69/D72/D76/**D77**/**D85**/**D90**/**D98**; `#como-funciona`, `#torneos`, `#talento`, **the h2/sub/control of `#testimonios`**, **the right column of `#networking`** and **`#noticias`** — h2, note and the wrapper of each cell): enters `translate(-4.5rem, 0) → 0` (0→**38%**, D102) and **exits upward** (**92→100%**, D106), with `view()` and full `cover` range — each block seems to come out of the timeline and says goodbye on scroll up. In Networking **only the right column** changes to `.reveal-left` (D85); the left keeps `.reveal-enter` (entry without exit, sticky-safe, D82 — its `cover 0% cover 40%` range is **deliberately not lengthened**: with the column pinned, a larger range would leave the entry half-finished) | Only `transform`/`opacity` (CLS 0); does not generate horizontal overflow | Static content visible in its final state |
+| 15 | **Hero on return** (`.hero-soft`, D77): the hero content block (without touching the H1) moves with `animation-timeline: scroll(root)`, `animation-range: 0 80vh`: opacity 1→0.9 and −0.75rem | Very subtle and positional (CSS does not distinguish scroll direction); at scroll 0 it starts in its final state, so **it does not touch the LCP** | Static hero in its final state |
+| 14 | **Subtle glow** (D76): `.sheen-sweep` (diagonal `brand` hard-edge sweep on hover of the Audiences cells) + `--shadow-glow`/`--shadow-glow-cta` (soft glow on hover of cards and CTA) + `.section-sheen` (static luminous hairline on the top edge of each section) | Only `brand`/`ink` (R24/R25); they are **colored shadows and gradients**, no `filter: blur` or blobs (D37.1); the `.sheen-sweep` rests outside the clip (`-translate-x-full`) | The sweep does not run (`motion-reduce: hidden`); the glow stays at its base value |
+| 16 | **Activity dot** (`.animate-activity`, D81/D82): an **`ember`** halo of 12px that grows (`scale 1 → 2.2`) and fades (`opacity 0.6 → 0`) over **3.6s infinite**, behind a static `ember` dot. Marks "replies in minutes" (Networking) and "Tournament ongoing" (Tournaments) | `transform`/`opacity` only (CLS 0); loop **≥3.5s** (catalog §9); decorative → the wrapper is `aria-hidden`, the real datum is the text line | The global guard (`0.01ms`, 1 iteration) freezes it as a visible **static dot** |
+| 17 | **TEXT drift with scroll** (`.text-drift`, D84): the section's *content wrapper* shifts `±0.375rem` (0.75rem total, back and forth) following its own pass through the viewport — `animation-timeline: view()`, `animation-range: cover`, `linear`, `both`. No exit or fade: it NEVER touches `opacity`, it only accompanies the scroll (on scroll up, it reverses). It goes on its own element (the container) so as not to override the `transform` of the children's `.reveal`/`.reveal-left` | `transform` only (CLS 0); travel ≤0.75rem; **text only** → never on `<Image>` or watermarks; pure CSS, no islands. Scope: steps 2–8; **not** on hero/closing/footer | Text still in its natural position (`.text-drift` declares no base `transform`; without the `@supports` block there is no animation) |
+| 18 | **Section ambient light** (`.section-idle`, D84/D86): a 1px thread (16% width) travels the top hairline (`::after`, `translateX(-100% → 525%)` + an `opacity` breath) with a **short 6s loop** (minimal pause) and a halo. Color per surface: `brand` by default, `ink` on the `brand` strip (`.section-idle-ink`) and **`ember` in Tournaments, Testimonials and News** (`.section-idle-ember`; in News via `Section idleAccent="ember"`, D98). It gives the section life when stopping, without touching copy, CTA or hierarchy | `transform`/`opacity` only (CLS 0); loop **6s ≥3.5s** (R34); decorative (`aria-hidden` + `pointer-events-none`); `overflow: clip` (does not create a scroll container, D63); pure CSS | The hairline stays as today (static `.section-sheen`): the guard leaves the thread off-screen — invisible decoration, never hiding content |
+| 19 | **Living separator line** (`.line-idle`, D86): a **fixed-size** glow (`--idle-size`, 8rem; 4rem with `.line-idle-sm` in How it works) travels the top hairline of a block with a hairline **lighter** than the narration, **uniform** between blocks of different widths. It travels with `background-position` (`-100% → 100%`, 6s) and carries a halo (`drop-shadow` on the gradient's alpha). Color: `brand` by default, **`ember` in Tournaments and in the News divider** (`.line-idle-ember`, D98). In Networking it is omitted on the first block (`first:border-t-0`) | `opacity` + `background-position` (CLS 0; painting of a 1px line) and a 3px `drop-shadow` on the glow; loop **6s ≥3.5s**; `pointer-events-none`; never overflows (the background is clipped to the element) | Invisible glow (base state `opacity: 0`): the hairline stays exactly the same |
+| 20 | **Breathing card border** (`.card-idle`, D86): a 1px `brand` ring on a `::after` layer (inset -1px) turns on and off (`opacity 0 → 0.4`) over **9s**, staggered by `--i`. It does not touch the real border or `.bento-lit` (which still lights up on entering view). On the Audiences, Testimonials and News cards | `opacity` only (CLS 0); loop **9s ≥3.5s**; decorative (`pointer-events-none`); pure CSS | Invisible ring (base state `opacity: 0`): the border stays as is |
+| 21 | **Testimonials marquee + band** (`.animate-marquee` with `--marquee-duration:180s`, D89/D90): duplicated track `translateX(0 → −50%)`; each half repeats the set ×3 (`REPEAT`) to exceed any viewport width and leave no gap on restart; **pause** by `hover`/`focus-within` and a CSS-only control (hidden checkbox + `<label>`); the full-bleed **`brand-soft` band** carries hairlines, shadow and relief, and the edge mask is applied ONLY to the cards. **D123:** the LEFT fade aligns with the **rail x** of the timeline (`--fade-x` with `max(…, calc(50% − 36rem + …))`), not with the page edge; the right edge stays the same | `transform` only (CLS 0); loop ≥180s (R34); the track is `aria-hidden` and the content goes in an `sr-only` list; pure CSS, no islands | `animation: none` + `transform: none`: the track parks at the origin and the first copy is read; the band and the control become static |
+| 22 | **Idle glint of the main CTA** (`.cta-glint`, D103): a specular sweep on `::after` crosses the button every **9s** (crossing ~1.3s, white at 22% — softer than the 30% of hover) so the main button breathes without asking for a click. Only in the `solid` variant (`cta-styles.ts`): header, hero, Tournaments, Audiences and Closing; the outline and the newsletter button stay still (R11) | `transform` only (CLS 0); loop 9s ≥3.5s (R34); decorative (`pointer-events: none`); same palette color as the hover sweep | `display: none` (explicit rule in the global guard: it must not be left frozen mid-crossing) |
+| 23 | **Rail node glint** (`.node-flash`, D105): a soft halo with a **transparent-center** `radial-gradient` breathes over each node (7s), with the accent of each family — `brand` on the section nodes (`1`–`8`) and `ember` on the step ones (`1.1`–`1.4`) — without tinting the disc or numeral. The `--i` (position on the rail / step index) **staggers the phase** so the glint sweeps the page in a wave | `opacity`/`transform` only (CLS 0); loop 7s ≥3.5s (R34); decorative (`pointer-events: none`); zero new colors (R24/R25) | Halo in its base state (`opacity: 0`): the node looks exactly as before |
+| 24 | **Newsletter panel entry** (`.panel-in`, D103): the box enters with a short travel (`1rem`) and its **own 26% window** of the `cover` instead of `.reveal`'s 38%. The reason is geometric: in `view()` the range lasts (viewport + element height), so a ~650px panel with 38% would stay half-faded until its edge is ~190px from the viewport | `opacity`/`transform` only (CLS 0); pure CSS | Panel fully visible and static |
+| 25 | **Closing: hero lights, "the door" and brand finish** (D121, `.hero-facet*` / `.closing-door*` / `.closing-seal*`): the section is **100vh** (`min-h-svh` + centered content) and reuses the **same faceted lights of the hero** (`conic-gradient` wedges that rotate **64s/88s**, without duplicating CSS); on entry, two `ink` leaves —**"the door"**— open and let the light out toward the CTA; under the CTA, the official lockup (icon in a tile + `wordmark-duo`) lives inside a ring of light that rotates and breathes; the text enters/exits with `.reveal` | Only `opacity`/`transform` (CLS 0); door with a short range `cover 0% → 35%` and `pointer-events: none` (never covers the CTA or blocks the click); door and lights at 64s/88s and the ring 64s + 9s breathing (all ≥3.5s, R34); zero client islands (D37.2); `aria-hidden`; fixed palette `brand`/`brand-40`/`white-5`/`ember` at 22%, no `filter: blur` (D37.1/D86); the icon is not rotated (R27/R39) | **Default state = final**: without `animation-timeline` or with `prefers-reduced-motion` there is no door and the lights stay still; the content is fully visible and static |
 
-**Tokens por superficie de la luz ambiental (#18)** — el hilo debe leerse sobre las cuatro
-superficies; sobre `brand` el verde desaparecería, así que invierte a `ink` (mismo criterio que
+**Ambient light tokens per surface (#18)** — the thread must read on the four
+surfaces; on `brand` the green would disappear, so it inverts to `ink` (same criterion as
 `.section-sheen-ink`):
 
-| Superficie (secciones) | Hilo `.section-idle::after` | Glow estático del hilo |
+| Surface (sections) | Thread `.section-idle::after` | Static glow of the thread |
 |---|---|---|
-| `paper` / `mist` / `brand-soft` (#como-funciona, #torneos, #networking, #testimonios, #noticias) | gradiente `brand` `rgb(132 192 191 / 0.9)` | `rgb(132 192 191 / 0.45)` |
-| `ink` (#talento y #newsletter, desde D85/D100) | gradiente `brand` `rgb(132 192 191 / 0.9)` | `rgb(132 192 191 / 0.45)` |
-| `brand` (**sin uso desde D100**) → clase `section-idle-ink` | gradiente `ink` `rgb(47 52 54 / 0.4)` | `rgb(47 52 54 / 0.22)` |
+| `paper` / `mist` / `brand-soft` (#como-funciona, #torneos, #networking, #testimonios, #noticias) | `brand` gradient `rgb(132 192 191 / 0.9)` | `rgb(132 192 191 / 0.45)` |
+| `ink` (#talento and #newsletter, since D85/D100) | `brand` gradient `rgb(132 192 191 / 0.9)` | `rgb(132 192 191 / 0.45)` |
+| `brand` (**unused since D100**) → class `section-idle-ink` | `ink` gradient `rgb(47 52 54 / 0.4)` | `rgb(47 52 54 / 0.22)` |
 
-El hilo reposa **fuera de pantalla** (`translateX(-100%)`) como estado base: sin animación se ve
-la hairline de siempre, nunca un hilo congelado a mitad.
+The thread rests **off-screen** (`translateX(-100%)`) as its base state: without animation the
+usual hairline is seen, never a thread frozen halfway.
 
-**Prohibido explícitamente** (criterio propio + R34): scroll-jacking (secuestrar la navegación),
-**parallax de CAPAS** (mover fondos, imágenes o el hero a distinta velocidad que el flujo) y
-cualquier animación que retrase el LCP (por eso el H1 no hace fade).
+**Explicitly forbidden** (own criterion + R34): scroll-jacking (hijacking navigation),
+**LAYER parallax** (moving backgrounds, images or the hero at a different speed than the flow) and
+any animation that delays the LCP (that is why the H1 does not fade).
 
-**Excepción acotada y documentada (D84) — deriva de texto con el scroll:** se permite
-`.text-drift` (#17) pese a estar atada al scroll, porque **no es parallax de capas**: no hay capas
-a distinta velocidad, no mueve fondos ni imágenes, no secuestra la navegación y su recorrido es
-mínimo (0.75rem totales, ±0.375rem) sobre el contenedor de contenido. Ese orden de magnitud no
-altera la lectura: no cambia el orden visual, no cruza el CTA y responde en ambos sentidos del
-scroll. Los reveals con `animation-timeline: view()` y la luz ambiental `.section-idle` (#18)
-tampoco son parallax: no desplazan contenido respecto del scroll y su estado por defecto (sin
-soporte) es el final.
-
----
-
-## 10. Iconografía e imágenes
-
-- **Lucide** como librería única (R33: no es un kit de componentes, son iconos; declarar en README con la fuente, R9). Trazo 2, tamaños 20/24px, siempre `aria-hidden` cuando acompañan texto visible.
-- Fotografía/illustración: **no se usa fotografía** en esta landing (decisiones de sección arriba). La única pieza gráfica de sección es la **placa decorativa de la noticia destacada** (D98), construida con el **símbolo oficial del propio kit** (`logo-symbol-gradient.svg`) sobre la retícula `.news-field`: no introduce assets de terceros ni licencias nuevas, respeta R24/R25 y es `aria-hidden` + `alt=""` (no es un `alt` cosmético: no transmite información). Si en el futuro se añadiera apoyo visual extra: solo `next/image` con WebP/AVIF, `width`/`height` explícitos (R55), lazy bajo el primer pantallazo y jamás en el hero (R56), alt descriptivo real (R57).
-- Los logos SVG del repo pesan poco; el builder los optimiza con `svgo` antes de commitear y anota la fuente en README.
+**Scoped and documented exception (D84) — text drift with scroll:** `.text-drift` (#17) is
+allowed despite being tied to scroll, because **it is not layer parallax**: there are no layers
+at different speeds, it does not move backgrounds or images, it does not hijack navigation and its travel is
+minimal (0.75rem total, ±0.375rem) on the content container. That order of magnitude does not
+alter the reading: it does not change the visual order, it does not cross the CTA and it responds in both
+scroll directions. The reveals with `animation-timeline: view()` and the ambient light `.section-idle` (#18)
+are not parallax either: they do not shift content relative to the scroll and their default state (without
+support) is the final one.
 
 ---
 
-## 11. Pendientes que tocan a Lorena (⚠️ aprobación humana)
+## 10. Iconography and images
 
-1. **Visto bueno del copy de `specs/11-contenido.md`** antes del build (es su voz ante el jurado — ya marcado allí).
-2. **Créditos del footer**: nombre/handle para la línea final (pendiente en specs/11 §11).
-3. Confirmar el acento `ember #f4a261` (es criterio propio de esta propuesta, no exigencia del concurso; R25 lo permite como "un color de acento de apoyo" — si Lorena prefiere cero acento, los chips de categoría pasan a fondo `mist` con borde `line` y texto `ink`, sin más cambios).
+- **Lucide** as the single library (R33: it is not a component kit, they are icons; declare it in the README with the source, R9). Stroke 2, sizes 20/24px, always `aria-hidden` when accompanying visible text.
+- Photography/illustration: **no photography is used** in this landing (section decisions above). The only section graphic piece is the **decorative plate of the featured news** (D98), built with the **official symbol of the kit itself** (`logo-symbol-gradient.svg`) on the `.news-field` grid: it introduces no third-party assets or new licenses, respects R24/R25 and is `aria-hidden` + `alt=""` (it is not a cosmetic `alt`: it conveys no information). If extra visual support were added in the future: only `next/image` with WebP/AVIF, explicit `width`/`height` (R55), lazy below the first viewport and never in the hero (R56), real descriptive alt (R57).
+- The repo's SVG logos are light; the builder optimizes them with `svgo` before committing and notes the source in the README.
+
+---
+
+## 11. Pending items that touch Lorena (⚠️ human approval)
+
+1. **Sign-off on the copy of `specs/11-contenido.md`** before the build (it is her voice before the jury — already flagged there).
+2. **Footer credits**: name/handle for the final line (pending in specs/11 §11).
+3. Confirm the `ember #f4a261` accent (it is our own criterion for this proposal, not a contest requirement; R25 allows it as "a supporting accent color" — if Lorena prefers zero accent, the category chips switch to a `mist` background with a `line` border and `ink` text, with no further changes).

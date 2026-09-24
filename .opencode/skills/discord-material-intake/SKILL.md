@@ -1,42 +1,42 @@
 ---
 name: discord-material-intake
-description: Procesa el material crudo del concurso TechToJob depositado en material-concurso/ (txt pegados de Discord, capturas, PDFs) y genera las specs y el checklist de reglas. Usar cuando Lorena reporte que ya subio material nuevo al Discord o pide "procesa el material".
+description: Processes the raw contest material from TechToJob deposited in material-concurso/ (pasted Discord txt, screenshots, PDFs) and generates the specs and the rules checklist. Use when Lorena reports that she has uploaded new material to Discord or asks to "process the material".
 ---
 
-# Ingesta de material del Discord
+# Discord material intake
 
-Convierte material crudo de Discord en especificaciones verificables. El material
-CRUDO nunca se copia literal a `specs/` mas alla de citas puntuales de reglas
-(sin usernames ni identificadores de terceros — parafrasear contexto, citar solo
-el texto normativo del concurso).
+Turn raw Discord material into verifiable specifications. RAW material is never
+copied literally into `specs/` beyond specific rule quotes
+(no usernames or third-party identifiers — paraphrase context, quote only
+the normative contest text).
 
-## Procedimiento
+## Procedure
 
-1. **Inventario**: listar todo en `material-concurso/` (bases/, criterios/, marca/,
-   capturas/). Notar fechas y versiones: si dos versiones de una regla contradicen,
-   la mas reciente gana y se documenta el cambio.
+1. **Inventory**: list everything in `material-concurso/` (bases/, criterios/, marca/,
+   capturas/). Note dates and versions: if two versions of a rule contradict,
+   the most recent wins and the change is documented.
 
-2. **Checklist de reglas** → `specs/00-checklist-reglas.md`. Formato tabla:
-   `| # | regla (cita textual corta) | tipo: obligatoria/evaluable/negativa/meta | fuente | estado |`
-   - tipo META = requisitos del entregable (repo, deploy, formato, fecha).
-   - todo vacio informational va a "Preguntas abiertas" al final del archivo.
+2. **Rules checklist** → `specs/00-checklist-reglas.md`. Table format:
+   `| # | rule (short verbatim quote) | type: mandatory/evaluable/negative/meta | source | state |`
+   - META type = deliverable requirements (repo, deploy, format, date).
+   - any informational empty item goes to "Open questions" at the end of the file.
 
-3. **Spec de la landing** → `specs/10-landing-spec.md`:
-   objetivo de conversion, publico, idioma, secciones propuestas (con justificacion
-   "regla #N del checklist lo exige" o "criterio UX, NO requerido"), copy disponible
-   vs copy a escribir, assets de marca disponibles.
+3. **Landing spec** → `specs/10-landing-spec.md`:
+   conversion goal, audience, language, proposed sections (with justification
+   "rule #N of the checklist requires it" or "UX criterion, NOT required"), copy available
+   vs copy to write, brand assets available.
 
-4. **Requisitos tecnicos** → `specs/20-requisitos-tecnicos.md`:
-   transcribir umbrales/stack/tests/limites que las bases exijan textualmente.
-   Lo que las bases NO dicen NO se inventa: va a preguntas abiertas.
+4. **Technical requirements** → `specs/20-requisitos-tecnicos.md`:
+   transcribe thresholds/stack/tests/limits that the rules require verbatim.
+   What the rules do NOT say is NOT invented: it goes to open questions.
 
-5. **Criterios de evaluacion** → si existe material en criterios/, cruzar:
-   cada criterio con peso → que agente del sistema lo cubre y donde queda la evidencia.
+5. **Evaluation criteria** → if material exists in criterios/, cross-reference:
+   each criterion with weight → which agent in the system covers it and where the evidence lives.
 
-6. **Cierre**: actualizar tabla de fases de GUIA.md y escribir en
-   `docs/DECISIONES.md` las ambiguedades detectadas como lista de preguntas
-   priorizadas para el organizador (si el concurso admite preguntas publicas).
+6. **Closing**: update the phase table in GUIA.md and write in
+   `docs/DECISIONES.md` the ambiguities detected as a prioritized list of questions
+   for the organizer (if the contest allows public questions).
 
-## Regla anti-alucinacion
-Toda afirmacion en una spec que no trace a una linea del material o a una decision
-en docs/DECISIONES.md, se borra o se marca `[SUPUESTO - CONFIRMAR]`.
+## Anti-hallucination rule
+Any statement in a spec that does not trace back to a line of the material or a decision
+in docs/DECISIONES.md is deleted or marked `[ASSUMPTION - CONFIRM]`.

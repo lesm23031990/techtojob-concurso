@@ -1,43 +1,43 @@
 ---
 name: evidence-qa
-description: Genera y organiza la evidencia de calidad para el entregable del concurso (reportes Lighthouse/axe/Playwright en docs/qa y README del repo). Usar al cerrar cada fase, seccion o release.
+description: Generates and organizes quality evidence for the contest deliverable (Lighthouse/axe/Playwright reports in docs/qa and the repo README). Use when closing each phase, section or release.
 ---
 
-# Evidencia QA para el entregable
+# QA evidence for the deliverable
 
-El jurado no ve nuestras sesiones de trabajo: ve el repo. La evidencia en `docs/qa/`
-y el README ES el informe de calidad. Si no esta documentado, no existe.
+The jury does not see our work sessions: it sees the repo. The evidence in `docs/qa/`
+and the README IS the quality report. If it is not documented, it does not exist.
 
-## Convencion de carpetas
+## Folder convention
 ```
 docs/qa/YYYY-MM-DD/
-├── REPORTE.md              # ver estructura abajo
-├── lighthouse-<view>.json  # o md resumido si pesa mucho
+├── REPORTE.md              # see structure below
+├── lighthouse-<view>.json  # or summary md if too heavy
 ├── 360.png / 768.png / 1024.png / 1440.png
 ├── axe.md
-└── AUDITORIA-REGLAS.md     # salida de rules-auditor
+└── AUDITORIA-REGLAS.md     # rules-auditor output
 ```
 
-## REPORTE.md minimo
-- Commit audita do (`git rev-parse --short HEAD`) y comando de build.
-- Tabla Lighthouse: categoria | movil | desktop (objetivo ≥95 AGENTS.md).
-- Tabla axe: regla | impact | estado.
-- Errores de consola: ninguno = decirlo explicitamente.
-- Capturas adjuntas con ruta relativa (renderizan en GitHub).
-- Veredicto: PASA / NO PASA + hallazgos priorizados.
+## Minimum REPORTE.md
+- Commit audited (`git rev-parse --short HEAD`) and build command.
+- Lighthouse table: category | mobile | desktop (target ≥95 AGENTS.md).
+- axe table: rule | impact | state.
+- Console errors: none = state it explicitly.
+- Captures attached with relative path (they render on GitHub).
+- Verdict: PASS / FAIL + prioritized findings.
 
-## README.md del repo (caras al jurado, se pule en FASE 5)
-Estructura objetivo: contexto concurso → stack → capturas (la tabla
-"como se ve" con las imagenes de docs/qa) → decisiones tecnicas destacadas
-(¿por que SSG, ¿por que content-as-data) → SEO implemented (metadata,
-JSON-LD, sitemap: lo que un jurado tech quisiera leer) → a11y y perf con
-numeros → como correr local (npm i && npm run dev) → estructura de carpetas.
-El README es una pagina de venta del propio trabajo: mismo rigor de copy
-que la landing.
+## Repo README.md (jury-facing, polished in PHASE 5)
+Target structure: contest context → stack → captures (the table
+"how it looks" with the images from docs/qa) → highlighted technical decisions
+(why SSG, why content-as-data) → SEO implemented (metadata,
+JSON-LD, sitemap: what a tech jury would want to read) → a11y and perf with
+numbers → how to run locally (npm i && npm run dev) → folder structure.
+The README is a sales page for the work itself: the same copy rigor
+as the landing page.
 
-## Reglas
-- Nunca reemplazar reportes viejos: solo agregar carpeta con nueva fecha
-  (el historial de mejora TAMBIEN es evidencia).
-- Los numeros sin fecha/commit no valen como prueba.
-- Antes de declarar cualquier fase completada: verificar que la evidencia
-  de esa fase existe y enlaza desde REPORTE.md.
+## Rules
+- Never replace old reports: only add a folder with the new date
+  (the improvement history is ALSO evidence).
+- Numbers without a date/commit do not count as proof.
+- Before declaring any phase complete: verify that the evidence
+  for that phase exists and is linked from REPORTE.md.

@@ -1,51 +1,51 @@
 ---
 name: nextjs-landing-patterns
-description: Patrones de implementacion de la landing Next.js + TS + Tailwind del concurso (App Router, metadata, content-as-data, secciones). Usar al disenar o escribir cualquier componente o archivo de app/.
+description: Implementation patterns for the contest's Next.js + TS + Tailwind landing page (App Router, metadata, content-as-data, sections). Use when designing or writing any component or file under app/.
 ---
 
-# Patrones de la landing TechToJob
+# TechToJob landing patterns
 
-Proyecto SOLO frontend: SSG por defecto, cero APIs propias. Next.js App Router +
+Frontend-ONLY project: SSG by default, zero APIs of our own. Next.js App Router +
 TypeScript strict + Tailwind v4 (`@theme` tokens).
 
-## Estructura de referencia
+## Reference structure
 ```
 app/
-├── app/(landing)/page.tsx      # unica pagina si las bases no piden mas
+├── app/(landing)/page.tsx      # single page if the rules do not ask for more
 ├── app/content/
-│   ├── site.ts                 # nombre, descripcion, url, og — una fuente de verdad
-│   └── sections/*.ts           # contenido tipado de cada seccion
+│   ├── site.ts                 # name, description, url, og — a single source of truth
+│   └── sections/*.ts           # typed content for each section
 ├── app/components/
 │   ├── sections/               # Hero, Programa, ComoParticipar, FAQ, CTA, Footer...
-│   └── ui/                     # Button, Badge, Card... (primitivas del design system)
-├── app/layout.tsx              # metadata global + fonts + skip-link
+│   └── ui/                     # Button, Badge, Card... (design system primitives)
+├── app/layout.tsx              # global metadata + fonts + skip-link
 ├── app/sitemap.ts
 ├── app/robots.ts
-└── app/opengraph-image.tsx     # o estatica en public/ si las bases lo simplifican
+└── app/opengraph-image.tsx     # or static in public/ if the rules simplify it
 ```
 
-## Reglas de patron
-1. **Content-as-data**: ningun texto del jurado-visible hardcodeado en JSX.
-   Cada seccion lee de `app/content/sections/`. El tipado (interfaces o zod si
-   se aprueba) hace que faltar contenido sea error de build.
-2. **Server components puros**: props serializables; interactividad minima
-   (menus moviles, acordeones FAQ nativos con <details> antes que useState).
-3. **Metadata centralizada**: un layout de ruta define title template
-   (`%s | TechToJob`) y description desde site.ts.
-4. **Tokens, no literales**: colores/espaciados/fuentes del design system
-   (`bg-brand`, `text-ink-900`...). Los unicos valores crudos permitidos: utilidades
-   Tailwind estandar de layout.
-5. **Secciones = componentes + spec**: cada archivo en sections/ commence (solo si
-   el porque no es obvio) con referencia a la regla del checklist que la justifica.
-6. **Imágenes**: next/image con dimensions fijas o aspect-ratio container (CLS=0).
-7. **FAQ**: usar <details>/<summary> estilizado — a11y gratis y menos JS. Si las
-   bases piden SEO de contenido, el JSON-LD FAQPage solo es valido si el contenido
-   es efectivamente visible.
-8. **El footer del jurado**: credito/branding que las bases exijan va en content/site.ts
-   y se audita literal contra el checklist.
+## Pattern rules
+1. **Content-as-data**: no jury-visible text hardcoded in JSX.
+   Each section reads from `app/content/sections/`. The typing (interfaces or zod if
+   approved) makes missing content a build error.
+2. **Pure server components**: serializable props; minimal interactivity
+   (mobile menus, FAQ accordions native with <details> before useState).
+3. **Centralized metadata**: a route layout defines the title template
+   (`%s | TechToJob`) and description from site.ts.
+4. **Tokens, not literals**: colors/spacing/fonts from the design system
+   (`bg-brand`, `text-ink-900`...). The only raw values allowed: standard
+   Tailwind layout utilities.
+5. **Sections = components + spec**: each file in sections/ starts (only if
+   the why is not obvious) with a reference to the checklist rule that justifies it.
+6. **Images**: next/image with fixed dimensions or aspect-ratio container (CLS=0).
+7. **FAQ**: use styled <details>/<summary> — free a11y and less JS. If the
+   rules require content SEO, the FAQPage JSON-LD is only valid if the content
+   is actually visible.
+8. **The jury footer**: credit/branding that the rules require goes in content/site.ts
+   and is audited literally against the checklist.
 
-## Anti-patrones especficos de este proyecto
-- useState para algo que resuelve CSS o <details>.
-- librerias de animacion si CSS keyframes + IntersectionObserver basta.
-- "use client" en el layout raiz (mata el SSG del arbol).
-- OG tags fuera de la Metadata API (duplicacion que diverge).
+## Project-specific anti-patterns
+- useState for something CSS or <details> solves.
+- animation libraries if CSS keyframes + IntersectionObserver suffice.
+- "use client" in the root layout (kills SSG for the tree).
+- OG tags outside the Metadata API (duplication that diverges).
