@@ -78,6 +78,12 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 |---|---|---|---|
 | ![Móvil 360](docs/qa/2026-09-23/deploy-mobile-360.png) | ![Tablet 768](docs/qa/2026-09-23/deploy-tablet-768.png) | ![Escritorio 1024](docs/qa/2026-09-23/deploy-desktop-1024.png) | ![Escritorio 1440](docs/qa/2026-09-23/deploy-desktop-1440.png) |
 
+**Detalle de las secciones fuertes (1440):**
+
+| Torneos (torneo en vivo + contador) | Testimonios (slider sobre la línea de tiempo) | Cierre ("la puerta" + sello) |
+|---|---|---|
+| ![Torneos](docs/qa/2026-09-23/detail-torneos-1440.png) | ![Testimonios](docs/qa/2026-09-23/detail-testimonios-1440.png) | ![Cierre](docs/qa/2026-09-23/detail-cierre-1440.png) |
+
 > Reportes completos (JSON/HTML) y decisiones en `docs/qa/` y `docs/DECISIONES.md`.
 
 ## Mapa del repo
