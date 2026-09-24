@@ -20,7 +20,7 @@ The code, the repo and the commit history ARE part of the jury's evaluation.
 2. `specs/` — derived and approved specifications
 3. `AGENTS.md` — this file (process rules)
 
-If two sources conflict: **the rules win**, and the conflict is recorded in `docs/DECISIONES.md`.
+If two sources conflict: **the rules win**, and the conflict is recorded in `docs/DECISIONS.md`.
 
 ## Non-negotiable rules
 
@@ -73,7 +73,7 @@ If two sources conflict: **the rules win**, and the conflict is recorded in `doc
   (D56) —3 roles: orchestrator, `design-ux` and `nextjs-builder`— to avoid slowing progress.
   **When review was reactivated (D124)** the full pass of `rules-auditor`,
   `seo-perf` and `qa-access` ran over the final state; findings and fixes in
-  `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md` (D125–D139). The deliverable
+  `docs/qa/2026-09-23-review-audit.md` and `docs/DECISIONS.md` (D125–D139). The deliverable
   closes with the **"Minimum required quality"** gate verified.
 - `rules-auditor` and `qa-access` **do not edit code**: they audit and report to `docs/qa/`.
   `nextjs-builder` is the hand that writes in `app/`.
@@ -93,7 +93,7 @@ If two sources conflict: **the rules win**, and the conflict is recorded in `doc
 ```
 techtojob-concurso/
 ├── AGENTS.md                 ← general rules (this file)
-├── GUIA.md                   ← living map: status, phases, Discord checklist
+├── GUIDE.md                   ← living map: status, phases, Discord checklist
 ├── opencode.json             ← agents + MCPs
 ├── .opencode/
 │   ├── agent/                ← prompts for the 6 agents
@@ -123,4 +123,4 @@ techtojob-concurso/
 
 **Working mode:** "fast mode" (D56) served to iterate the design with 3 roles; when
 review was reactivated (D124), `rules-auditor`, `seo-perf` and `qa-access` ran over the final state, with
-findings and fixes in `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md` (D125–D139).
+findings and fixes in `docs/qa/2026-09-23-review-audit.md` and `docs/DECISIONS.md` (D125–D139).

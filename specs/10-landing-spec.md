@@ -1,6 +1,6 @@
 # 10 · Spec de la landing — TechToJob Torneo #2
 
-> Fuentes: `discord.txt`→`bases/bases-concurso.txt` (citas D+línea), checklist `00-checklist-reglas.md` (R#)
+> Fuentes: `discord.txt`→`bases/bases-concurso.txt` (citas D+línea), checklist `00-rules-checklist.md` (R#)
 > y **`bases/brief.md`** (recibido 22/09 — posicionamiento y reglas de tono vinculantes).
 > Posicionamiento oficial: "TechToJob no es un tablón de anuncios, es una comunidad" +
 > "Comunidad de desarrolladores y empresas tech en español" (D120).
@@ -35,7 +35,7 @@ Orden orientativo salvo hero primero y footer último (R22: *"El orden es orient
 hero y el footer"*). **Decisión (22/09, D32):** se reordena respecto del orden propuesto del
 brief para que la página se lea como una línea de tiempo — explicación → prueba → qué ganás →
 qué gana la empresa → comunidad → confirmación → actualidad → CTA final. El reorden se declara
-en el README y la declaración queda redactada en `docs/DECISIONES.md` (D32) hasta que el README
+en el README y la declaración queda redactada en `docs/DECISIONS.md` (D32) hasta que el README
 exista (Fase 5), según exige R10.
 
 | # | Sección | Ancla | Qué comunica (brief disponible) | Regla |
@@ -68,7 +68,7 @@ como **meta**. Orden narrativo de arriba. Especificación:
 | **Anchos** | Raíl completo desde `xl` (1280+); compacto (mismo raíl, contenido con `pl-7`) entre 360 y 1279. Verificar que las rejillas de 4 y 3 columnas no se aprieten | R38 (responsive 360/768/1024/1440) |
 
 > **Pendiente de auditoría:** el reorden deja obsoleta la línea previa de R22 en
-> `specs/00-checklist-reglas.md` ("orden del brief sin cambios") → debe re-auditarse cuando se
+> `specs/00-rules-checklist.md` ("orden del brief sin cambios") → debe re-auditarse cuando se
 > reactive el QA (D28).
 
 ## Bento grid y motion (D38 — "Bento Signature")
@@ -249,8 +249,8 @@ aprobado (#2 cristal facetado + #4 red que se dibuja) y rebalancear la altura.
 ## Copy
 
 - **NO existe copy oficial** — es parte de lo que se compite (D7-D9). Redacción en
-  `specs/11-contenido.md` siguiendo el brief: tuteo, frases cortas, cero palabras de folleto,
-  hablar de la persona no de nosotros (D21 en DECISIONES).
+  `specs/11-content.md` siguiendo el brief: tuteo, frases cortas, cero palabras de folleto,
+  hablar de la persona no de nosotros (D21 en DECISIONS).
 - **Prohibido copiar el ejemplo orientativo del brief** ("penaliza en el criterio de contenido", D248).
 - **Prohibido inventar**: cifras de miembros/empresas, garantías de empleo, plazos, "gratis" como titular (brief).
 - Palabras clave semilla del propio material: "comunidad de desarrolladores", "empresas tech",

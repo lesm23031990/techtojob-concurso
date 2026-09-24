@@ -1,4 +1,4 @@
-# GUIA — TechToJob Landing project map
+# GUIDE — TechToJob Landing project map
 
 > Process document: how this deliverable was planned, built and audited.
 > Updated: 23/09/2026.
@@ -81,7 +81,7 @@ commit history and this documentation are part of the jury's evaluation: we prio
   **Audiencias `ink`** (CTA with `surface`), **Testimonios `mist`** (the same light blue as Torneos:
   `mist` `#f4f7f7`, NOT `brand-soft`, which stays reserved and unused — D87) and idle glows of lines and
   borders (`.line-idle`/`.card-idle`) with **`ember`** accent in Torneos (glints + dots + pulse on
-  "Torneo en curso"). Details in `design-system.md` §3/§3.1/§7/§9 and `DECISIONES.md` D82–D87.
+  "Torneo en curso"). Details in `design-system.md` §3/§3.1/§7/§9 and `DECISIONS.md` D82–D87.
 - **Testimonios: marquee + band + watermarks + nav (D89/D90, 23/09)** — the section leaves the bento
   7/5/5/7 and becomes a **pure-CSS full-bleed horizontal slider** over `mist`, inside a **`brand-soft`
   band** (hairlines, shadow and relief; the edge fade applies only to the cards).
@@ -89,7 +89,7 @@ commit history and this documentation are part of the jury's evaluation: we prio
   + CSS-only control, `paper` cards (`ink/10` border), `.reveal`/`.reveal-left`, two `ember` dots
   and a closing link to Discord (text, R11). The **watermarks** of Hero, Audiencias (new) and
   Cierre go from `logo-symbol-gradient` to `logo-symbol-light` at **6%**. `#newsletter` joins the
-  **desktop nav** (`xl` tier). Details in `DECISIONES.md` D89/D90 and `design-system.md`
+  **desktop nav** (`xl` tier). Details in `DECISIONS.md` D89/D90 and `design-system.md`
   §6.4/§7/§9. `tsc` + ESLint + `next build` in green.
 - **Newsletter redesigned end to end (D100–D107, 23/09) — section CLOSED, only your
   visual sign-off pending.** At Lorena's request the solid `brand` strip is removed: the section becomes
@@ -131,7 +131,7 @@ commit history and this documentation are part of the jury's evaluation: we prio
   2. **PART 0 · Traceability with the RULES and the BRIEF** (Lorena's express request): re-read
      `material-concurso/bases-concurso.txt` and `material-concurso/brief.md` (local material, outside
      git) and check, **requirement by requirement**, that (a) **all** the rules of the rules are
-     captured in `specs/00-checklist-reglas.md` (R01–R61) and that their **verbatim quotes are faithful**,
+     captured in `specs/00-rules-checklist.md` (R01–R61) and that their **verbatim quotes are faithful**,
      (b) no **requirement of the brief** is left uncovered in `specs/10`/`specs/20`, (c) what is delivered
      meets the **delivery format** of the rules (what is sent, where and with what AI disclosure,
      R07), and (d) **there are no invented requirements** (nothing in `specs/` without a source in the rules or the brief).
@@ -148,7 +148,7 @@ commit history and this documentation are part of the jury's evaluation: we prio
      on the deploy → message to the ENTREGAS channel with the AI disclosure (R07).
   **Rule for changes (D124):** any finding is presented to Lorena **with design-equivalent
   options** and is only executed with her OK. Code starting point:
-  `Closing.tsx` + `Ticker.tsx` + `globals.css` (D121–D123 blocks) and `docs/DECISIONES.md` D121–D124.
+  `Closing.tsx` + `Ticker.tsx` + `globals.css` (D121–D123 blocks) and `docs/DECISIONS.md` D121–D124.
 - **Current freeze:** **Hero → Networking closed** (D88); not touched without a new decision. Recorded
   exception: **Audiencias** received the watermark in D90 at express request (decoration only).
   **Noticias** (D98) and **Newsletter** (D100–D107) are also closed. The **Cierre (D121/D122/D123)**
@@ -413,7 +413,7 @@ supersedes D56** (the "fast mode" of 3 agents remains as history).
 2. `specs/` — rewritten and verifiable requirements, each with a citation of the rule (R01–R61).
 3. `AGENTS.md` — process rules and quality gates.
 
-Information gaps were recorded as questions in `docs/DECISIONES.md` (D1–D60);
+Information gaps were recorded as questions in `docs/DECISIONS.md` (D1–D60);
 nothing built was assumed without a source.
 
 ## 4. Method: spec-driven + multi-agent
@@ -433,7 +433,8 @@ disclosed in the README, as the rules require.
 | Claim | Proof |
 |---|---|
 | "It meets the 61 rules" | `docs/qa/2026-09-22-rules-audit-1.md` (rule → status → evidence → action) |
-| "Quality measured, not promised" | `docs/qa/2026-09-22/` (Lighthouse JSON/HTML, Playwright screenshots) |
-| "Why X was decided" | `docs/DECISIONES.md` (60 dated decisions, D1–D60) |
+| "Quality measured, not promised" | `docs/qa/2026-09-23/` — PageSpeed capture (`lighthouse-mobile-pagespeed.png`), responsive 360/768/1024/1440 and design-detail screenshots; consolidated in `docs/qa/2026-09-23-review-audit.md` |
+| "That measurement is honest" | `docs/qa/2026-09-23-review-audit.md` §*Measurement caveat* — the local Lighthouse CLI artifacts are excluded from the repo (D145) |
+| "Why X was decided" | `docs/DECISIONS.md` (dated decision log, D1–D145) |
 | "The design system is real" | `docs/design-system.md` + tokens in `app/app/globals.css` |
 | "The texts live apart from the code" | `app/messages/es.json` (single source of visible copy) |

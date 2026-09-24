@@ -3,7 +3,7 @@
 > **Mode:** review (D124). Agents: `rules-auditor` + `seo-perf` + `qa-access`, in **read-only**
 > on the frozen state. Model: `deepseek/deepseek-flash` (fallback, `opencode-go` credits
 > exhausted). This document is the consolidated summary; the fixes applied are in D125/D126 of
-> `docs/DECISIONES.md`.
+> `docs/DECISIONS.md`.
 
 ## Verdict
 
@@ -15,7 +15,7 @@ High-level code, **incomplete delivery package**. Blocker: **there is no deploy 
 | `tsc --noEmit` / ESLint / `next build` | ✅ green | build of 23/09 |
 | SEO (code) | ✅ after fixes | metadata/OG/JSON-LD/sitemap reviewed |
 | Accessibility (code) | ✅ 100 in the last measurement (22/09) | `docs/qa/2026-09-22/` |
-| Performance | ❌ **Perf 76** (< 90 base / < 95 gate) in the only measurement (localhost, 22/09, pre-redesign) | `docs/qa/2026-09-22/lighthouse/mobile-01.report.json` |
+| Performance | ❌ **Perf 76** (< 90 base / < 95 gate) in the only measurement (localhost, 22/09, pre-redesign; the raw CLI report was removed from the repo — see the caveat below) | `docs/qa/2026-09-22-rules-audit-1.md` |
 | Deliverables R02/R03/R04 | ❌ pending | no real URL, no screenshots, no Lighthouse on deploy |
 
 ## Critical findings and their status
@@ -79,13 +79,13 @@ The measurements below close findings 2, 3 and 5 of the table above:
   (FCP 1.0 s · LCP 2.1 s · TBT 60 ms · CLS 0). Evidence:
   `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png`. This meets R61 (SEO 100, a11y+performance > 90)
   and the stricter AGENTS.md gate (≥95).
-- **Measurement caveat (important):** the **local** Lighthouse CLI runs kept in this folder
-  (`lighthouse-mobile.json` 42, `lighthouse-mobile.report.json` 67, `lighthouse-desktop.json` 97,
-  `lighthouse-desktop.report.json` 55) are **not representative and must not be used as the deliverable
-  capture**: the tool itself reports *"the tested device appears to have a slower CPU than Lighthouse
-  expects. This can negatively affect your performance score"*. The variance matches the TBT noise
-  already recorded in D137. The CLI JSON/HTML are kept as raw evidence only; the **authoritative figure
-  is the PageSpeed one**.
+- **Measurement caveat (important):** the **local** Lighthouse CLI runs measured Performance 42 and 67
+  (mobile) and 97 and 55 (desktop). They are **not representative and must not be used as the
+  deliverable capture**: the tool itself reports *"the tested device appears to have a slower CPU than
+  Lighthouse expects. This can negatively affect your performance score"*, and the variance matches the
+  TBT noise already recorded in D137. **Those raw CLI JSON/HTML files were removed from the repository**
+  (D145) so that nobody reads an unrepresentative number as if it were the site's; the **authoritative
+  figure is the PageSpeed one** in this section.
 - The `Performance ❌` row in the *Verdict* table above reflects the state **during** the audit
   (22/09 localhost, pre-redesign). The final state is the one in this section and in
-  `specs/00-checklist-reglas.md`.
+  `specs/00-rules-checklist.md`.

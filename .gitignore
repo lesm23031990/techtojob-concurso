@@ -1,29 +1,61 @@
-# Node / Next.js
+# ============================================================
+# TechToJob — landing page · ignored paths
+# Rule of thumb: whatever does not help the jury read, run or
+# verify the project stays out of the repo. Nothing listed here
+# is part of the delivery.
+# ============================================================
+
+# ── Dependencies ─────────────────────────────────────────────
 node_modules/
+.opencode/node_modules/
+
+# ── Next.js build output ─────────────────────────────────────
 .next/
 out/
+dist/
 build/
-*.tsbuildinfo
 next-env.d.ts
+*.tsbuildinfo
 
-# Entornos y secretos
+# ── Environment and secrets (NEVER commit) ───────────────────
 .env
 .env.*
 !.env.example
 .vercel
 
-# Sistema / temporales
+# ── OS and editor noise ──────────────────────────────────────
 .DS_Store
 Thumbs.db
+desktop.ini
+.idea/
+.vscode/
 *.log
 
-# Herramientales locales
-.opencode/node_modules/
+# ── Local agent / tooling state (not reproducible, not relevant) ──
 .claude/
 .playwright-mcp/
+.eslintcache
+
+# ── Test and coverage output ─────────────────────────────────
+coverage/
+test-results/
+playwright-report/
+
+# ── Local Lighthouse CLI artifacts ───────────────────────────
+# Measured on this machine. The tool itself warns that the tested
+# device has a slower CPU than Lighthouse expects, so these numbers
+# are NOT representative of the site (see DECISIONS D137/D145).
+# The delivered evidence is the PageSpeed capture, which IS
+# versioned: docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png
+docs/qa/**/lighthouse-*.json
+docs/qa/**/lighthouse*.report.*
+docs/qa/**/lighthouse-mobile-capture.png
+docs/qa/**/mobile-01.report.*
 
 # ============================================================
-# MATERIAL DEL CONCURSO — NUNCA COMMIT (capturas Discord con
-# datos personales de terceros y material de marca ajeno)
+# Contest material — NEVER commit
+# Discord screenshots with third-party personal data and
+# third-party brand assets. The rules are rewritten into specs/
+# with no personal data and no third-party graphic material.
 # ============================================================
 material-concurso/

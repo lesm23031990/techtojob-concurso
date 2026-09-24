@@ -28,5 +28,5 @@
 - Capturas: `docs/qa/2026-09-23/deploy-desktop-1440.png`, `deploy-desktop-1024.png`,
   `deploy-mobile-360.png`, `deploy-tablet-768.png`
 - Lighthouse: `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png` (PageSpeed Insights, m├│vil, 99/100/100/100)
-- Auditor├¡a: `docs/qa/2026-09-23-auditoria-revision.md` ┬╖ `docs/qa/2026-09-22-rules-audit-1.md`
-- Decisiones: `docs/DECISIONES.md`
+- Auditor├¡a: `docs/qa/2026-09-23-review-audit.md` ┬╖ `docs/qa/2026-09-22-rules-audit-1.md`
+- Decisiones: `docs/DECISIONS.md`

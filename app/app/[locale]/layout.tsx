@@ -26,7 +26,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// Title/description are the exact strings from specs/11-contenido.md per locale
+// Title/description are the exact strings from specs/11-content.md per locale
 // (ES title 56 chars, description 155 chars — R47/R48). metadataBase is the
 // Vercel deploy placeholder (Q4): it makes every OG/canonical URL absolute.
 export async function generateMetadata({

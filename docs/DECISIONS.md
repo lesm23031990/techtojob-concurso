@@ -32,7 +32,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
 
 ### 2026-09-22 (post-ingesta)
 - **D13.** Stack: **Next.js App Router + TS estricto + Tailwind** (vía recomendada D84). Justificado
-  en `specs/20-requisitos-tecnicos.md`. La regla "usar Next no suma puntos" se acepta: se elige
+  en `specs/20-technical-requirements.md`. La regla "usar Next no suma puntos" se acepta: se elige
   porque las bases piden expresivamente funciones de Next (Metadata API, next/font, next/image).
 - **D14.** **No se entrega la versión bilingüe opcional** (D281-289). Coste/beneficio con 1 día de
   plazo: next-intl + 2 locales + hreflang no compensa el 10% de SEO parcial que podría sumar.
@@ -56,7 +56,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
 ## Preguntas abiertas — RESUELTAS (2ª tanda, 22/09 tarde)
 
 - [x] QA-P8. Brief → **recibido completo** en `material-concurso/bases/brief.md` (posicionamiento,
-      reglas de tono, datos oficiales, ejemplo orientativo NO copiable). Alimenta `specs/11-contenido.md`.
+      reglas de tono, datos oficiales, ejemplo orientativo NO copiable). Alimenta `specs/11-content.md`.
 - [x] QA-P9. Logo → **recibido kit completo** en `material-concurso/marca/TechToJob/` (SVG/PNG/PDF ×
       v1/v2/Símbolo × Positivo/Negro/Blanco/Degradado). Al copiar a `app/public/`: nombres ASCII.
 - [x] QA-P10. Discord → **usar el oficial del brief: https://discord.gg/h9FFgKdkRd** ("Datos que no se
@@ -99,10 +99,10 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       Los 3 comentarios en español en componentes se mantienen: la regla literal enumera
       "variables, funciones, componentes y commits" — los comentarios no están (veredicto rules-auditor).
 - **D24.** Publicación: `AGENTS.md`, `.opencode/` y `docs/` SÍ van al repo público (proceso
-      multiagente honesto y defendible, refuerza J4 y la declaración de IA). `GUIA.md` se reescribió
+      multiagente honesto y defendible, refuerza J4 y la declaración de IA). `GUIDE.md` se reescribió
       como doc público de proceso, sin el checklist interno de Discord. `material-concurso/` sigue
       excluido por `.gitignore`.
-- **D25.** Invite no oficial de Discord retirado de `docs/DECISIONES.md` antes del push (R52: el repo
+- **D25.** Invite no oficial de Discord retirado de `docs/DECISIONS.md` antes del push (R52: el repo
       no debe exhibir invites ajenos). El único enlace que queda es el oficial del brief (D18).
 - **D26.** `package.json` name `app` → `techtojob-landing`. Footer `<nav>` con `aria-label` propio
       ("Navegación del pie de página") para desambiguar los 3 landmarks (J6).
@@ -620,7 +620,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       modelo intactos; solo quedan dormidos.
       **Supersede D28 y D39** (que pausaban QA solo mientras el diseño no estuviera congelado y
       reactivaban el gate al congelarlo; D39 queda reemplazada como "modo diseño").
-      **Registrado en:** `AGENTS.md` (sección *Modo rápido* + notas en gate y roles) y `GUIA.md`
+      **Registrado en:** `AGENTS.md` (sección *Modo rápido* + notas en gate y roles) y `GUIDE.md`
       (§2.1). **Riesgo asumido y declarado:** la entrega se cierra sin medición de Lighthouse ni
       evidencia Playwright nuevas; quedan como evidencia previa las de `docs/qa/` (22/09).
 
@@ -811,7 +811,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Actualizado en:** `app/content.ts` (`Step.result`, `HowItWorks.cta`), `messages/es.json` y
       `messages/en.json`, `sections/HowItWorks.tsx`, `app/globals.css` (`.step-node-fill`, `node-lit`,
       `.word-rise-view`), `specs/10-landing-spec.md` (§D66), `docs/design-system.md` (§6.8, §7, §9) y
-      `GUIA.md`.
+      `GUIDE.md`.
 
 - **D67.** 23/09, Lorena: *"hacé más gruesa la línea de tiempo y los números principales 1,2,3,4
       deben ser más grandes que los que tienes, doble círculo"*.
@@ -823,7 +823,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `ink` (6.77:1 ✅ R26); `MARKER_COLOR` deja de llevar color de texto.
       **Verificado en navegador (`lg`):** raíl 3px, nodo de sección 56px, nodo de paso 48px.
       **Actualizado en:** `app/components/TimelineRail.tsx`, `specs/10-landing-spec.md` (§Raíl),
-      `docs/design-system.md` (§5, §9) y `GUIA.md`.
+      `docs/design-system.md` (§5, §9) y `GUIDE.md`.
 
 - **D68.** 23/09, Lorena: *"los textos de la sección cómo funciona hacelos aparecer desde arriba
       hacia abajo, por eso casi no se ve la animación"*. **Diagnóstico:** el slide-up movía los
@@ -837,7 +837,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificado en navegador:** el párrafo pasa de `yShift −40 → 0` con opacidad 0→1, y cada
       palabra de `−41 → 0`.
       **Actualizado en:** `app/app/globals.css`, `sections/HowItWorks.tsx`,
-      `specs/10-landing-spec.md` (§D66/D68), `docs/design-system.md` (§9) y `GUIA.md`.
+      `specs/10-landing-spec.md` (§D66/D68), `docs/design-system.md` (§9) y `GUIDE.md`.
 
 - **D69.** 23/09, Lorena: *"no me gusta esa animación"* (la caída de D68) y, tras ver el catálogo
       de opciones, elige la **Opción A: deslizar desde el raíl (izquierda → derecha)**.
@@ -851,7 +851,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificado en navegador:** H3 de paso con `translateX −40 → 0` + opacidad 0→1, **sin overflow
       horizontal**; `tsc`, ESLint y `next build` en verde.
       **Actualizado en:** `app/app/globals.css`, `sections/HowItWorks.tsx`,
-      `specs/10-landing-spec.md` (§D66/D67/D69), `docs/design-system.md` (§9) y `GUIA.md`.
+      `specs/10-landing-spec.md` (§D66/D67/D69), `docs/design-system.md` (§9) y `GUIDE.md`.
 
 - **D70.** 23/09, Lorena reabre `#como-funciona` (pregunta "¿qué le falta para ganar?") y aprueba
       ajustes propuestos por el orquestador como jurado. **Reabre D66–D69** (que daban la
@@ -869,7 +869,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       nueva.
       **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde (modo rápido D56).
       **Actualizado en:** `app/components/sections/HowItWorks.tsx`, `app/app/globals.css`,
-      `specs/10-landing-spec.md` (§Stepper), `docs/design-system.md` (§6.8, §9) y `GUIA.md`.
+      `specs/10-landing-spec.md` (§Stepper), `docs/design-system.md` (§6.8, §9) y `GUIDE.md`.
       **Pendiente (revisión):** puntos 5 (ritmo `lg`) y 6 (detalle de firma) quedan para el gate
       de "vamos a revisar".
 
@@ -890,7 +890,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Cero islas nuevas:** todo es Server Component y CSS. `tsc`, ESLint y `next build` en verde.
       **Actualizado en:** `app/content.ts` (interfaz `Tournaments`), `app/messages/{es,en}.json`,
       `app/components/sections/Tournaments.tsx`, `specs/10`, `specs/11`, `docs/design-system.md` (§7)
-      y `GUIA.md`.
+      y `GUIDE.md`.
 
 - **D72.** 23/09, Lorena aporta el anuncio REAL de cierre/entrega del Torneo #2 y pide usarlo en
       `#torneos` ("básate en esto para rellenar ese espacio"). **Decisión (opción A aprobada):**
@@ -909,7 +909,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       animación que la sección de arriba (`#como-funciona`, D69) — cada bloque desliza desde el raíl.
       **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
       **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
-      `specs/00` (fecha/husos), `specs/10`, `specs/11`, `docs/design-system.md` (§7, §9) y `GUIA.md`.
+      `specs/00` (fecha/husos), `specs/10`, `specs/11`, `docs/design-system.md` (§7, §9) y `GUIDE.md`.
 
 - **D73.** 23/09, tras la crítica de jurado sobre `#torneos`, Lorena aprueba **A + B + D** (C y E se
       difieren). **Decisión:**
@@ -925,7 +925,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       borde `line→brand` en los bloques).
       **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
       **Actualizado en:** `app/content.ts`, `app/messages/{es,en}.json`, `sections/Tournaments.tsx`,
-      `specs/10`, `specs/11`, `docs/design-system.md` (§7) y `GUIA.md`.
+      `specs/10`, `specs/11`, `docs/design-system.md` (§7) y `GUIDE.md`.
 
 - **D74.** 23/09, crítica visual de la captura de `#torneos`. **Defectos detectados:** (a) la tabla de
       husos partía el **tiempo en dos líneas** (`jue 24 ·` / `01:00`) y las regiones largas también;
@@ -941,7 +941,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Diferido al gate "vamos a revisar":** C (numeral de edición `02`), E (hover de borde) y
       F (framing "cierre de la edición #2").
       **Verificación:** `tsc --noEmit`, ESLint y `next build` en verde.
-      **Actualizado en:** `sections/Tournaments.tsx`, `specs/10`, `docs/design-system.md` (§7) y `GUIA.md`.
+      **Actualizado en:** `sections/Tournaments.tsx`, `specs/10`, `docs/design-system.md` (§7) y `GUIDE.md`.
 
 - **D75.** 23/09, Lorena pide rediseñar las audiencias: *"los pasos 'Ofrécete como talento' y
       'Publica como empresa' estaban uno debajo del otro de forma lineal. Esto confunde al usuario"*.
@@ -1125,7 +1125,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       auditorías).
       **Actualizado en:** `components/sections/Networking.tsx`, `app/content.ts`,
       `app/messages/{es,en}.json`, `app/app/globals.css`, `specs/10`, `specs/11`,
-      `docs/design-system.md`, `GUIA.md`.
+      `docs/design-system.md`, `GUIDE.md`.
 
 - **D82.** 23/09, Lorena (continúa D81 sobre Networking): *"agrégale el punto o destello naranja… faltan
       las animaciones de entrada… una pequeña imagen debajo del título que no afecte la animación"*.
@@ -1225,7 +1225,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Verificación:** `tsc`/ESLint/`next build` en verde + HTML emitido con `bg-mist` en ambas
       secciones y 0 `bg-brand-soft`.
       **Actualizado en:** `components/sections/{Tournaments,Testimonials}.tsx`, `docs/design-system.md`,
-      `specs/10`, `GUIA.md`.
+      `specs/10`, `GUIDE.md`.
 
 - **D88.** 23/09, Lorena: *"ya las vi… con esto podemos dar por cerrado el diseño de todas las
       secciones desde hero hasta networking"*.
@@ -1236,7 +1236,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `ink`, y el movimiento global + idle). **Sigue abierto:** Testimonios, Noticias, Newsletter y
       Cierre (revisión de Lorena), la **Fase 5** y, al decir *"vamos a revisar"*, el gate de auditoría
       (D56).
-      **Actualizado en:** `GUIA.md`, `docs/DECISIONES.md` (este registro).
+      **Actualizado en:** `GUIDE.md`, `docs/DECISIONS.md` (este registro).
 
 - **D89.** 23/09, Lorena: *"rediseña la sección de testimonios (…) en un slider horizontal de
       movimiento infinito"*, después *"el slider debe ser full width"*, *"las tarjetas un poco más
@@ -1292,7 +1292,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       Se mantienen la `sub` honesta ("Testimonios de muestra...") y los slots de foto (avatar con
       iniciales) y LinkedIn (deshabilitado, R17/R43). **No hay corrección de cumplimiento pendiente en
       esta sección.** **Verificación:** `tsc`/ESLint/`next build` en verde.
-      **Actualizado en:** `app/messages/{es,en}.json`, `specs/11-contenido.md`.
+      **Actualizado en:** `app/messages/{es,en}.json`, `specs/11-content.md`.
 
 - **D92.** 23/09, Lorena: *"no me gusta cómo se ve el sombreado inferior en los fondos azules; mejor
       removerlo solo en los fondos azules, mantenerlo para secciones oscuras y blancas"*.
@@ -1421,7 +1421,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       (sin Lighthouse/Playwright: modo rápido D56). **Actualizado en:**
       `components/sections/Newsletter.tsx`, `components/NewsletterForm.tsx`,
       `specs/10-landing-spec.md` (sección D100), `docs/design-system.md` (§3.1/§5/§6.5/§7),
-      `specs/00-checklist-reglas.md` (R19).
+      `specs/00-rules-checklist.md` (R19).
 
 - **D101.** 23/09, Lorena: *"no me gusta el formulario de newsletter"* (con captura: el input salía
       estrangulado — `tu@correc` cortado — y el botón comía casi toda la fila). **Decisión:** el
@@ -1508,7 +1508,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **interfaz escrita a mano en `content.ts`** (`interface Newsletter`); se añaden `items: string[]`
       y `seal: string` con su JSDoc para mantener la paridad tipo ↔ catálogo. **Verificación:**
       `tsc`/ESLint/`next build` en verde. **Actualizado en:** `messages/{es,en}.json`,
-      `content.ts`, `components/sections/Newsletter.tsx`, `specs/11-contenido.md` (§8).
+      `content.ts`, `components/sections/Newsletter.tsx`, `specs/11-content.md` (§8).
 
 - **D108.** 23/09, **cierre `#unete`: "constelación viva"**. Lorena pide rediseñar por completo el
       fondo del Cierre (CTA final de Discord): *"un fondo inmersivo de Red Global Interconectada"*,
@@ -1545,7 +1545,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `next build` en verde. **Saneamiento pendiente:** capturas 360/768/1024/1440 y contraste en el
       gate "vamos a revisar". **Actualizado en:** `components/sections/Closing.tsx`,
       `components/sections/ClosingNetwork.tsx`, `app/app/globals.css`, `docs/design-system.md`
-      (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+      (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIDE.md`.
       **Revisado el mismo día por D109**: el visual deja de ser un fondo `-z-10` detrás del copy
       (Lorena: *"esta imagen no puede quedar por debajo del texto"*) y pasa a ser un **bloque propio
       justo debajo del texto**; además el "mundo" pasa de constelación a **globo reticulado**.
@@ -1581,7 +1581,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y contraste del conjunto.
       **Actualizado en:** `components/sections/ClosingNetwork.tsx`, `components/sections/Closing.tsx`,
       `app/app/globals.css` (comentario D109), `docs/design-system.md` (§7/§9),
-      `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+      `specs/10-landing-spec.md` (§Cierre), `GUIDE.md`.
 
 - **D121.** 23/09, **cierre `#unete`: 100vh, "la puerta", luces del hero y remate de marca**.
       Sesión de iteración con Lorena sobre la sección que "debe enamorar". Recorrido y decisión final:
@@ -1622,7 +1622,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       confirmación de que la sección no supera una pantalla en viewports bajos.
       **Actualizado en:** `components/sections/Closing.tsx`, `app/app/globals.css` (bloque D121),
       `docs/design-system.md` (§7/§9), `specs/10-landing-spec.md` (§Cierre),
-      `specs/00-checklist-reglas.md` (R34), `GUIA.md`.
+      `specs/00-rules-checklist.md` (R34), `GUIDE.md`.
 
 - **D122.** 23/09, **el ticker del hero pasa a ser compartido y cierra también el Cierre**.
       Lorena preguntó si quedaría bien añadir "el slider del hero" al pie del Cierre; el orquestador
@@ -1647,7 +1647,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       **Pendiente del gate "vamos a revisar":** capturas 360/768/1024/1440 y confirmar que la sección
       no supera una pantalla. **Actualizado en:** `components/Ticker.tsx` (nuevo),
       `components/sections/Hero.tsx` (refactor), `components/sections/Closing.tsx`,
-      `docs/design-system.md` (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIA.md`.
+      `docs/design-system.md` (§7/§9), `specs/10-landing-spec.md` (§Cierre), `GUIDE.md`.
 
 - **D123.** 23/09, **el slider de Testimonios arranca en el raíl, no en el canto de la página**.
       Lorena: *"este slider en vez de desaparecer en el extremo izquierdo de la página debe desaparecer
@@ -1707,7 +1707,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
          trazabilidad con las BASES y el BRIEF** (petición expresa de Lorena: *"hay que también revisar
          si el proyecto se ajusta a las bases y al brief"*): re-leer `material-concurso/bases-concurso.txt`
          y `material-concurso/brief.md` y comprobar **requisito por requisito** que todas las reglas
-         están capturadas en `specs/00-checklist-reglas.md` (R01–R61) con **citas fieles**, que ningún
+         están capturadas en `specs/00-rules-checklist.md` (R01–R61) con **citas fieles**, que ningún
          requisito del brief queda sin cubrir en `specs/10`/`specs/20`, que se cumple el **formato de
          entrega** de las bases (incluida la declaración de IA, R07) y que **no hay requisitos
          inventados**; salida: matriz **bases/brief → spec → implementación → evidencia** con los huecos
@@ -1722,7 +1722,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       5. **Estado de partida:** working tree con los cambios de esta sesión **sin commitear**
          (Hero/Closing/Ticker/Testimonials/TimelineRail, `globals.css`, docs, specs). Antes de auditar
          conviene **un commit de congelado** para que el veredicto apunte a un SHA concreto.
-      **Actualizado en:** `docs/DECISIONES.md` (esta entrada), `GUIA.md` (§2 tabla de fases, §2.0 handoff
+      **Actualizado en:** `docs/DECISIONS.md` (esta entrada), `GUIDE.md` (§2 tabla de fases, §2.0 handoff
       y §2.1 modo de trabajo).
 
 - **D125.** 23/09, **modo revisión activado por Lorena** ("hazme una auditoría estricta"): se
@@ -1800,7 +1800,7 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       a `loading="eager"`, que evita el preload sin volverlos `lazy` sobre el pliegue.
       `tsc --noEmit`, ESLint y `next build` en verde; `canonical`/`og:url` verificados en el HTML.
       **Actualizado en:** `app/content.ts`, `README.md`, `app/components/SiteHeader.tsx`,
-      `specs/00-checklist-reglas.md` (R02 → cumplida).
+      `specs/00-rules-checklist.md` (R02 → cumplida).
 
 - **D130.** 23/09, requerimiento responsive de Lorena: *"en celulares reduce el tamaño de los
       steppers y de la letra de los enlaces"*. **Decisión (solo móvil; `lg` intacto):**
@@ -1973,6 +1973,51 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `hidden … sm:flex` (D142) ni la rejilla de 2 columnas móvil (D141). `tsc`/ESLint/`next build`
       en verde.
       **Actualizado en:** `components/SiteFooter.tsx`.
+
+- **D144.** 23/09, Lorena: *"y los nombres de los archivos .md que estan en espanol...?"* → *"todo... a
+      ingles"*. **Decisión:** renombrar **todos** los `.md` con nombre en español a inglés, con
+      `git mv` (historial preservado) y actualizar **todas** las referencias (38 ocurrencias en 17
+      archivos, reemplazo a nivel de bytes para no tocar la codificación; el único archivo con BOM,
+      `delivery-message.md`, lo conserva). Mapa aplicado:
+      `GUIA.md → GUIDE.md` · `docs/DECISIONES.md → docs/DECISIONS.md` ·
+      `docs/qa/2026-09-23/auditoria-revision.md → review-audit.md` ·
+      `docs/qa/2026-09-23/mensaje-entregas.md → delivery-message.md` ·
+      `specs/00-checklist-reglas.md → 00-rules-checklist.md` · `specs/11-contenido.md → 11-content.md` ·
+      `specs/20-requisitos-tecnicos.md → 20-technical-requirements.md` ·
+      `specs/30-criterios-evaluacion.md → 30-evaluation-criteria.md`.
+      **Nota honesta:** R35 ("variables, funciones, componentes y commits, todo en inglés") **no** cubre
+      nombres de ficheros `.md`; esto es **coherencia de repositorio** (J4 · Código y estructura) y evita
+      el idioma mezclado en un repo público cuyo README/AGENTS ya están en inglés.
+      **Efecto:** `AGENTS.md` y `.opencode/agent/spec-architect.md` quedan alineados con los nuevos
+      nombres (la excepción que se había planteado para `GUIA.md`/`DECISIONES.md` queda descartada).
+      ⚠️ **Pendiente humana:** el *system prompt* del orquestador todavía cita `GUIA.md` y
+      `docs/DECISIONES.md`; hay que actualizarlo a `GUIDE.md` y `docs/DECISIONS.md` o las próximas
+      sesiones arrancarán con rutas rotas. **No incluido aquí:** el **contenido** de `specs/` y
+      `DECISIONS.md` sigue en español (decisión aparte). `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** los 8 archivos renombrados + sus 17 referenciadores.
+
+- **D145.** 23/09, Lorena: *"agrega al .gitignore todo lo que consideres que de verdad no tiene
+      relevancia para el jurado y lo que va quedar en el repo bien respaldado y en inglés"*.
+      **Decisión, en cuatro partes:**
+      (a) **`.gitignore` reescrito en inglés y ampliado**: dependencias, salida de Next, entorno y
+      secretos, ruido de SO/editor, estado local de agentes/herramientas, salida de test/cobertura,
+      artefactos del CLI local de Lighthouse y `material-concurso/` (sección propia, nunca commit).
+      (b) **Se desvinculan del repo 9 artefactos del CLI local de Lighthouse (~5,5 MB):**
+      `lighthouse-{mobile,desktop}{,.report}.{json,html}`, `lighthouse-mobile-capture.png` y
+      `docs/qa/2026-09-22/lighthouse/mobile-01.report.*`. Motivo: no son representativos (la propia
+      herramienta avisa de CPU lenta; ver D137) y un jurado podría leer *Perf 42/67* como si fuera el
+      sitio. **No se pierden** (siguen en disco e ignorados). La evidencia entregada sigue siendo
+      `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png` (PageSpeed, 99/100/100/100).
+      (c) **Citas corregidas** para que ningún documento apunte a lo eliminado: `README.md`, `GUIDE.md`
+      (§5) y `docs/qa/2026-09-23-review-audit.md`. Además se reparan **3 rutas muertas** en
+      `specs/30-evaluation-criteria.md` (`docs/qa/screens/`, `docs/qa/responsive/`, `docs/qa/lighthouse/`
+      → rutas reales en `docs/qa/2026-09-23/`).
+      (d) **Nada queda huérfano:** las capturas de diseño que no estaban referenciadas (`header-1280`,
+      `header-light-section`, `hero-360`, `newsletter-360-view`, `newsletter-768-view`) quedan
+      **enlazadas desde el README**, de modo que todo lo versionado tiene respaldo escrito.
+      Sin cambios de código: `tsc`/ESLint/`next build` no se ven afectados (solo `.gitignore` y `.md`).
+      **Actualizado en:** `.gitignore`, `README.md`, `GUIDE.md`, `docs/qa/2026-09-23-review-audit.md`,
+      `specs/30-evaluation-criteria.md`; índice de git (9 archivos desvinculados).
 
 ## Preguntas abiertas (antiguas, contexto histórico)
 

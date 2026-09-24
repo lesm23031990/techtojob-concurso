@@ -35,7 +35,7 @@ with link blocks.
 footer last. It was reordered on purpose so the page reads as a **vertical timeline**: first *how it
 works*, then the live proof (the running tournament), then what each side gains (talent / companies),
 the community, the validation, the news and the closing. The real order lives in
-`app/app/[locale]/page.tsx` and the rationale is recorded in `docs/DECISIONES.md` (D32, D38).
+`app/app/[locale]/page.tsx` and the rationale is recorded in `docs/DECISIONS.md` (D32, D38).
 
 ## Internationalization (ES / EN)
 
@@ -57,8 +57,8 @@ the community, the validation, the news and the closing. The real order lives in
 | Gate | Status |
 |---|---|
 | `next build` + `tsc --noEmit` + ESLint | ✅ 0 errors |
-| Contest's 61 rules audit | ✅ initial (22/09) + review (23/09) — `docs/qa/2026-09-22-rules-audit-1.md`, `docs/qa/2026-09-23-auditoria-revision.md` |
-| `rules-auditor` + `seo-perf` + `qa-access` | ✅ run in review mode (`docs/qa/2026-09-23-auditoria-revision.md`) |
+| Contest's 61 rules audit | ✅ initial (22/09) + review (23/09) — `docs/qa/2026-09-22-rules-audit-1.md`, `docs/qa/2026-09-23-review-audit.md` |
+| `rules-auditor` + `seo-perf` + `qa-access` | ✅ run in review mode (`docs/qa/2026-09-23-review-audit.md`) |
 | Mobile Lighthouse on the deploy | ✅ PageSpeed Insights: **Perf 99 · SEO 100 · Accessibility 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
 | Responsive 360 / 768 / 1024 / 1440 | ✅ captures on the deploy in `docs/qa/2026-09-23/` |
 | Technical SEO: Metadata API + canonical/viewport (R49–R50), Open Graph + Twitter Card 1200×630 (R51), JSON-LD Organization (R52), sitemap + robots | ✅ verified on the deploy (`<head>`, `/sitemap.xml`, `/robots.txt`) |
@@ -82,7 +82,14 @@ the community, the validation, the news and the closing. The real order lives in
 |---|---|---|
 | ![Tournaments](docs/qa/2026-09-23/detail-torneos-1440.png) | ![Testimonials](docs/qa/2026-09-23/detail-testimonios-1440.png) | ![Closing](docs/qa/2026-09-23/detail-cierre-1440.png) |
 
-> Full reports (JSON/HTML) and decisions in `docs/qa/` and `docs/DECISIONES.md`.
+> The delivered evidence is the PageSpeed capture above plus the responsive screenshots; the audit
+> reports and the full decision log live in `docs/qa/` and `docs/DECISIONS.md`.
+
+**Additional design evidence:** [`header-1280.png`](docs/qa/2026-09-23/header-1280.png) ·
+[`header-light-section.png`](docs/qa/2026-09-23/header-light-section.png) (adaptive header over a light
+section, D47) · [`hero-360.png`](docs/qa/2026-09-23/hero-360.png) ·
+[`newsletter-360-view.png`](docs/qa/2026-09-23/newsletter-360-view.png) ·
+[`newsletter-768-view.png`](docs/qa/2026-09-23/newsletter-768-view.png).
 
 ## Repo map
 
@@ -90,8 +97,8 @@ the community, the validation, the news and the closing. The real order lives in
 |---|---|
 | `app/` | The Next.js site (all the code) |
 | `specs/` | Specs derived from the rules: 61-rule checklist, landing spec, content, technical requirements, rubric |
-| `docs/` | Decisions (`DECISIONES.md`), design system, dated QA evidence |
-| `AGENTS.md` · `GUIA.md` · `.opencode/` | The multi-agent system used to build and audit this repo |
+| `docs/` | Decisions (`DECISIONS.md`), design system, dated QA evidence |
+| `AGENTS.md` · `GUIDE.md` · `.opencode/` | The multi-agent system used to build and audit this repo |
 
 ## AI usage disclosure (required by the rules)
 
@@ -102,7 +109,7 @@ the final review are human. The whole process is auditable in the commit history
 
 > **Final verification:** before submitting, a review pass was run with `rules-auditor`, `seo-perf`
 > and `qa-access` over the frozen state; its findings and fixes are in
-> `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md`.
+> `docs/qa/2026-09-23-review-audit.md` and `docs/DECISIONS.md`.
 
 ## Sources and credits
 

@@ -1,7 +1,7 @@
 # Design System — TechToJob · Torneo #2 Landing
 
 > Author: `design-ux` · 22/09/2026 · Executor: `nextjs-builder` (this doc does NOT contain component code, only tokens and decisions).
-> Sources: `specs/00-checklist-reglas.md` (R24–R28, R34–R36, R59), `specs/10-landing-spec.md`, `specs/11-contenido.md`, `material-concurso/bases/brief.md`, logos inspected in `material-concurso/marca/TechToJob/`.
+> Sources: `specs/00-rules-checklist.md` (R24–R28, R34–R36, R59), `specs/10-landing-spec.md`, `specs/11-content.md`, `material-concurso/bases/brief.md`, logos inspected in `material-concurso/marca/TechToJob/`.
 > Naming rule (R35): EVERY token, variable, class and comment in English. The visible Spanish content lives in `messages/es.json` (R36) — this doc references sections, never strings.
 
 ---
@@ -192,7 +192,7 @@ On `paper`: green is never text, never the sole state of a control (focus ring o
 
 Performance note: 3 weights = 3 woff2 files per subset via `next/font` (latin); no `italic` (the content does not use it) → do not request it.
 
-Scale note: the `display` row was rescaled on 22/09 for the hero redesign (premium minimalism, D27 in `docs/DECISIONES.md`): the H1 becomes the visual center of gravity of the first screen.
+Scale note: the `display` row was rescaled on 22/09 for the hero redesign (premium minimalism, D27 in `docs/DECISIONS.md`): the H1 becomes the visual center of gravity of the first screen.
 
 Global scale note (D99): the root becomes `font-size: 94%`, so **the entire** scale above shrinks ~6% uniformly (Tailwind v4 is `rem`). It is the chosen way to bring the design closer to the "90% zoom" that Lorena preferred, without dropping `body` below 15px or the overlines below ~11px. Effect on tokens: `display` desktop ≈67.7px, `h2` ≈37.6px, `body` ≈15px, `small` ≈13.2px, `label` ≈11.3px; the 44px targets end up at ≈41px (above the AA minimum of 24px). Sora and its 3 weights are untouched (R24/R28/R58/R59).
 
@@ -494,6 +494,6 @@ support) is the final one.
 
 ## 11. Pending items that touch Lorena (⚠️ human approval)
 
-1. **Sign-off on the copy of `specs/11-contenido.md`** before the build (it is her voice before the jury — already flagged there).
+1. **Sign-off on the copy of `specs/11-content.md`** before the build (it is her voice before the jury — already flagged there).
 2. **Footer credits**: name/handle for the final line (pending in specs/11 §11).
 3. Confirm the `ember #f4a261` accent (it is our own criterion for this proposal, not a contest requirement; R25 allows it as "a supporting accent color" — if Lorena prefers zero accent, the category chips switch to a `mist` background with a `line` border and `ink` text, with no further changes).

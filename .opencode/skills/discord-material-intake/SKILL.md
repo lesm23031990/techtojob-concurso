@@ -16,7 +16,7 @@ the normative contest text).
    capturas/). Note dates and versions: if two versions of a rule contradict,
    the most recent wins and the change is documented.
 
-2. **Rules checklist** → `specs/00-checklist-reglas.md`. Table format:
+2. **Rules checklist** → `specs/00-rules-checklist.md`. Table format:
    `| # | rule (short verbatim quote) | type: mandatory/evaluable/negative/meta | source | state |`
    - META type = deliverable requirements (repo, deploy, format, date).
    - any informational empty item goes to "Open questions" at the end of the file.
@@ -26,17 +26,17 @@ the normative contest text).
    "rule #N of the checklist requires it" or "UX criterion, NOT required"), copy available
    vs copy to write, brand assets available.
 
-4. **Technical requirements** → `specs/20-requisitos-tecnicos.md`:
+4. **Technical requirements** → `specs/20-technical-requirements.md`:
    transcribe thresholds/stack/tests/limits that the rules require verbatim.
    What the rules do NOT say is NOT invented: it goes to open questions.
 
 5. **Evaluation criteria** → if material exists in criterios/, cross-reference:
    each criterion with weight → which agent in the system covers it and where the evidence lives.
 
-6. **Closing**: update the phase table in GUIA.md and write in
-   `docs/DECISIONES.md` the ambiguities detected as a prioritized list of questions
+6. **Closing**: update the phase table in GUIDE.md and write in
+   `docs/DECISIONS.md` the ambiguities detected as a prioritized list of questions
    for the organizer (if the contest allows public questions).
 
 ## Anti-hallucination rule
 Any statement in a spec that does not trace back to a line of the material or a decision
-in docs/DECISIONES.md is deleted or marked `[ASSUMPTION - CONFIRM]`.
+in docs/DECISIONS.md is deleted or marked `[ASSUMPTION - CONFIRM]`.

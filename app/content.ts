@@ -2,7 +2,7 @@
  * Typed access to the message catalogs (contest rule R36 / i18n I6: all visible
  * text lives in `messages/*.json`, zero strings embedded in components).
  *
- * The `Messages` interfaces below mirror `specs/11-contenido.md` §"Estructura
+ * The `Messages` interfaces below mirror `specs/11-content.md` §"Estructura
  * messages/es.json". Typing BOTH catalogs against the same interface
  * (`messagesByLocale: Record<Locale, Messages>`) makes a missing or renamed key
  * in either file a compile-time error — no `as` casts, no runtime cost.
