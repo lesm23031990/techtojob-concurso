@@ -1833,6 +1833,49 @@ Las preguntas abiertas bloquean la Fase 2 y NO se responden asumiendo.
       `tsc --noEmit`, ESLint y `next build` en verde.
       **Actualizado en:** `app/app/globals.css` (tokens), `components/sections/Hero.tsx`.
 
+- **D132.** 23/09, Lorena: *"pule los sombreados bajo el header… que sean mínimos"* y luego *"el
+      degradado ese como se ve mal es mejor quitarlo"*. **Decisión:** bajo la barra **no queda nada**
+      — se elimina la franja de disolución de 2.5rem, su hairline de 1px y la `box-shadow` de scroll,
+      más los elementos `.header-fade-layer` y el flag `data-header-tint` (con su lógica en
+      `HeaderSurface`/`Section` y sus usos en Torneos/Testimonios). El header **solo cambia de
+      polaridad** (crossfade `ink`↔`paper` de 250 ms, que sigue vivo); en el top se funde con el hero
+      y al scrollear el borde es limpio, sin sombra ni banda. `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `components/SiteHeader.tsx`, `components/HeaderSurface.tsx`,
+      `components/Section.tsx`, `components/sections/{Tournaments,Testimonials}.tsx`.
+
+- **D133.** 23/09, Lorena: *"necesito que todos los textos se vean nítidos… veo textos medios
+      borrosos"* y *"quita el degradado del slider de testimonios"*. **Causas reales de borrosidad y su
+      fix:**
+      (1) **`.text-drift`** — una deriva continua con `transform` fraccional dejaba el texto en una capa
+      compuesta y lo veía blando: **se elimina** (también el prop `textDrift` de `Section` y sus usos).
+      (2) **`antialiased`** — el suavizado en escala de grises adelgaza/embota el texto claro sobre
+      oscuro en Windows: **se quita** de `<html>` y de `body` (vuelve el subpíxel/ClearType).
+      (3) **Hovers con `transform`** — `hover:scale-[1.02]` en las tarjetas y `hover:-translate-y-0.5`
+      en los botones movían el texto en fracciones de píxel: **se eliminan**; el hover queda por
+      borde/fondo/sombra, que no toca la tipografía.
+      (4) **Texto con opacidad** — `text-cloud/80`, `placeholder:text-cloud/70` y píldoras con
+      `opacity-70` se ven lavados: se solidifican (sin alfa).
+      (5) **Máscara del slider de Testimonios** (`.marquee-fade` y los `--fade-x`): el degradado lateral
+      no gustaba → **se elimina**; las tarjetas ya no se difuminan en los cantos.
+      `tsc`/ESLint/`next build` en verde.
+      **Actualizado en:** `app/app/globals.css`, `components/{Section,NewsletterForm}.tsx`,
+      `components/{cta-styles,SiteFooter}.tsx`, `components/sections/{Testimonials,News,Audiences,Networking,Tournaments,HowItWorks}.tsx`.
+
+- **D134.** 23/09, Lorena (con captura de Torneos): *"no coloques letras en verde, usa solo grises…
+      limítate a fuentes negras, blancas y grises oscuras; azules y grises claros solo para las letras
+      gigantes"*. **Decisión (política de color de texto):**
+      (1) **Nada de verde como texto**: se retiran todos los `text-brand` de texto (hero highlight,
+      overline de Newsletter, estado del formulario, dígitos del Countdown, activo del scrollspy, hover
+      del footer). El verde sigue SOLO como relleno/borde/underline (decoración).
+      (2) **Superficies claras:** secundario en **gris oscuro neutro** (`--color-slate` de
+      `#5f6a6d` → **`#474d4f`**, ~8:1 sobre `paper`); primario en `ink`.
+      (3) **Superficies oscuras:** el cuerpo pasa de `cloud` (gris claro azulado) a **`paper`** (blanco).
+      (4) **`cloud` queda reservado** a las letras gigantes: línea 1 del hero, su palabra de acento y
+      la línea 1 del cierre. Verificado por estilos computados: Torneos renderiza `rgb(71,77,79)` en
+      secundarios y `rgb(47,52,54)` en primarios; la etiqueta de Newsletter, `rgb(255,255,255)`.
+      **Actualizado en:** `app/app/globals.css`, `components/sections/{Hero,Closing,Audiences,Newsletter,Tournaments}.tsx`,
+      `components/{NewsletterForm,SiteFooter,Ticker,Countdown}.tsx`.
+
 ## Preguntas abiertas (antiguas, contexto histórico)
 
 - [ ] QA-P2. ¿Propiedad del código tras el concurso? (define LICENSE y restricción de plantilla)
