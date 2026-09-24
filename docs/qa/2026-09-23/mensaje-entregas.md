@@ -1,31 +1,32 @@
-# Delivery message — Torneo #2 TechToJob
+﻿# Mensaje de entrega ΓÇö Torneo #2 TechToJob
 
-> Paste in the 📦│ENTREGAS channel (only while the date is still open). Attach the screenshots + the Lighthouse one.
+> Pegar en el canal ≡ƒôªΓöéENTREGAS (solo con la fecha a├║n abierta). Adjuntar las capturas + la de Lighthouse.
 
 ---
 
-**Final delivery — Torneo #2 (solo, individual participation)**
+**Entrega final ΓÇö Torneo #2 (solo, participaci├│n individual)**
 
 - **Repo:** https://github.com/lesm23031990/techtojob-concurso
 - **Web:** https://techtojob-concurso.vercel.app
-- **Screenshots:** attached desktop (1440×900 and 1024×800) and mobile (360×800 + tablet 768×1024).
-- **Lighthouse (mobile mode):** attached screenshot from **PageSpeed Insights** (Lighthouse running on
-  Google servers): **Performance 99 · SEO 100 · Accessibility 100 · Best Practices 100**
-  (FCP 1.0 s · LCP 2.1 s · TBT 60 ms · CLS 0).
-- **Stack:** Next.js (App Router) + strict TypeScript + Tailwind.
-- **AI:** **yes, I used it.** The project was built with a custom multi-agent system (specification,
-  design, construction, SEO and QA roles) that wrote and audited the code under specifications derived
-  from the rules; product direction, copy and final review are human. It is also declared in the README.
-- **Icons:** SVG drawn by hand following the geometry of **Lucide** (ISC); source credited in the README.
-- **Extra:** the bilingual ES/EN architecture is delivered (`/` in Spanish, `/en` prepared for translation;
-  EN stays `noindex` until the translation exists). Sitemap, robots, Open Graph 1200×630 and JSON-LD included.
+- **Capturas:** adjunto escritorio (1440├ù900 y 1024├ù800) y m├│vil (360├ù800 + tablet 768├ù1024).
+- **Lighthouse (modo m├│vil):** adjunto captura de **PageSpeed Insights** (Lighthouse corriendo en
+  servidores de Google): **Performance 99 ┬╖ SEO 100 ┬╖ Accesibilidad 100 ┬╖ Best Practices 100**
+  (FCP 1.0 s ┬╖ LCP 2.1 s ┬╖ TBT 60 ms ┬╖ CLS 0).
+- **Stack:** Next.js (App Router) + TypeScript estricto + Tailwind.
+- **IA:** **s├¡, la us├⌐.** El proyecto se construy├│ con un sistema multiagente propio (roles de
+  especificaci├│n, dise├▒o, construcci├│n, SEO y QA) que escribi├│ y audit├│ el c├│digo bajo
+  especificaciones derivadas de las bases; la direcci├│n de producto, el copy y la revisi├│n final son
+  humanos. Est├í declarado tambi├⌐n en el README.
+- **Iconos:** SVG dibujados a mano siguiendo la geometr├¡a de **Lucide** (ISC); fuente acreditada en el README.
+- **Extra:** se entrega la arquitectura biling├╝e ES/EN (`/` en espa├▒ol, `/en` preparado para traducir;
+  EN queda `noindex` hasta que exista la traducci├│n). Sitemap, robots, Open Graph 1200├ù630 y JSON-LD incluidos.
 
 ---
 
-### Evidence (repo paths)
+### Evidencia (rutas del repo)
 
-- Screenshots: `docs/qa/2026-09-23/deploy-desktop-1440.png`, `deploy-desktop-1024.png`,
+- Capturas: `docs/qa/2026-09-23/deploy-desktop-1440.png`, `deploy-desktop-1024.png`,
   `deploy-mobile-360.png`, `deploy-tablet-768.png`
-- Lighthouse: `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png` (PageSpeed Insights, mobile, 99/100/100/100)
-- Audit: `docs/qa/2026-09-23-auditoria-revision.md` · `docs/qa/2026-09-22-rules-audit-1.md`
-- Decisions: `docs/DECISIONES.md`
+- Lighthouse: `docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png` (PageSpeed Insights, m├│vil, 99/100/100/100)
+- Auditor├¡a: `docs/qa/2026-09-23-auditoria-revision.md` ┬╖ `docs/qa/2026-09-22-rules-audit-1.md`
+- Decisiones: `docs/DECISIONES.md`
