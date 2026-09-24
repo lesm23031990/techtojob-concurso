@@ -1,123 +1,120 @@
-# TechToJob — Landing del Torneo #2
+# TechToJob — Tournament #2 Landing Page
 
-Landing page de **TechToJob**, comunidad de desarrolladores y empresas tech en español.
-Este sitio es la entrega de Lorena Salas al **Torneo #2** de la comunidad: el premio es una
-oferta de empleo y la prueba técnica es la propia web.
+Landing page for **TechToJob**, a community of Spanish-speaking developers and tech companies.
+This site is **Lorena Salas**'s entry to the community's **Tournament #2**: the prize is a job
+offer and the technical challenge is the website itself.
 
-> **No es un portal de empleo. Es una comunidad.**
-> [Entra al Discord](https://discord.gg/h9FFgKdkRd) · Web desplegada: [techtojob-concurso.vercel.app](https://techtojob-concurso.vercel.app)
+> **It is not a job board. It is a community.**
+> [Join the Discord](https://discord.gg/h9FFgKdkRd) · Live site: [techtojob-concurso.vercel.app](https://techtojob-concurso.vercel.app)
 
 ## Stack
 
-- **Next.js 16** (App Router) · Server Components por defecto, solo 3 client components justificados (header adaptativo, countdown y formulario)
-- **TypeScript estricto** · sin `any`, `tsc --noEmit` limpio
-- **Tailwind CSS v4** · design tokens en `@theme`, cero CSS a mano, cero UI kits
-- Frontend puro + SEO técnico: sin backend, sin APIs propias, sin trackers de terceros
+- **Next.js 16** (App Router) · Server Components by default, only 3 justified client components (adaptive header, countdown and newsletter form)
+- **Strict TypeScript** · no `any`, clean `tsc --noEmit`
+- **Tailwind CSS v4** · design tokens in `@theme`, no hand-written CSS, no UI kits
+- Pure frontend + technical SEO: no backend, no server APIs, no third-party trackers
 
-## Cómo correr en local
+## Run locally
 
 ```bash
 cd app
 npm install
-npm run build && npm start   # http://localhost:3000 (producción local)
-# o en desarrollo:
+npm run build && npm start   # http://localhost:3000 (local production build)
+# or in development:
 npm run dev
 ```
 
-## Qué contiene la landing
+## What the landing contains
 
-Hero con un único CTA (entrar al Discord) → Cómo funciona (4 pasos) → Torneos (con contador de
-cierre) → Audiencias (talento y empresas, como dos caminos paralelos) → Networking → Testimonios
-(de muestra, con slot honesto para LinkedIn) → Noticias (maqueta declarada) → Newsletter → Cierre →
-Footer por bloques.
+Hero with a single CTA (join the Discord) → How it works (4 steps) → Tournaments (with a closing
+countdown) → Audiences (talent and companies as two parallel paths) → Networking → Testimonials
+(samples, with an honest LinkedIn slot) → News (declared mockup) → Newsletter → Closing → Footer
+with link blocks.
 
-**Sobre el orden (R10):** las bases dejan el orden del cuerpo como orientativo y solo fijan el hero
-al principio y el footer al final. Se reordenó a propósito para que la página se lea como una
-**línea de tiempo vertical**: primero *cómo funciona*, después la prueba viva (el torneo en curso),
-luego qué gana cada lado (talento / empresas), la comunidad, la validación, las noticias y el
-cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está registrado en
-`docs/DECISIONES.md` (D32, D38).
+**About the order (R10):** the rules leave the body order open and only fix the hero first and the
+footer last. It was reordered on purpose so the page reads as a **vertical timeline**: first *how it
+works*, then the live proof (the running tournament), then what each side gains (talent / companies),
+the community, the validation, the news and the closing. The real order lives in
+`app/app/[locale]/page.tsx` and the rationale is recorded in `docs/DECISIONES.md` (D32, D38).
 
-## Internacionalización (ES / EN)
+## Internationalization (ES / EN)
 
-- **Español en `/`** (idioma principal y canonical) y **`/en`** para la versión inglesa. Mientras el
-  catálogo EN sea un espejo del ES, `/en` queda accesible pero **`noindex`** y fuera del `sitemap`
-  (evita anunciar un `hreflang` cuyo idioma no coincide); el `lang` de cada ruta ya es correcto.
-- El selector de idioma del header es un **enlace real** (`<a href>`, sin JavaScript, sin estado),
-  como piden las bases.
-- Todo el texto visible vive en `app/messages/es.json` y `app/messages/en.json`, nunca incrustado
-  en los componentes; el tipado comprueba que ambos catálogos tengan exactamente las mismas claves.
+- **Spanish at `/`** (main language and canonical) and **`/en`** for the English version. While the
+  EN catalog is a mirror of ES, `/en` stays reachable but **`noindex`** and out of the `sitemap`
+  (this avoids advertising an `hreflang` whose language does not match); each route's `lang` is correct.
+- The header language selector is a **real link** (`<a href>`, no JavaScript, no state), as the rules ask.
+- All visible text lives in `app/messages/es.json` and `app/messages/en.json`, never inline in the
+  components; the types check that both catalogs have exactly the same keys.
 
-> **Estado de la traducción:** `/en` sirve hoy **el mismo contenido en español** (el catálogo EN es
-> un espejo del ES, *placeholder declarado*). La infraestructura bilingüe está completa y probada;
-> la traducción es un trabajo de copy pendiente que **no requiere tocar código**. Para publicarlo
-> basta traducir `en.json` y revertir el `noindex` + la entrada de `sitemap` (un cambio de 2 líneas,
-> documentado en `specs/12-i18n.md` → *Handoff de traducción*).
+> **Translation status:** `/en` currently serves **the same Spanish content** (the EN catalog is a
+> mirror of ES, a *declared placeholder*). The bilingual infrastructure is complete and tested; the
+> translation is a pending copy task that **needs no code changes**. To ship it, translate `en.json`
+> and revert the `noindex` + the `sitemap` entry (a 2-line change, documented in `specs/12-i18n.md`
+> → *Translation handoff*).
 
-## Calidad verificada
+## Verified quality
 
-| Gate | Estado |
+| Gate | Status |
 |---|---|
-| `next build` + `tsc --noEmit` + ESLint | ✅ 0 errores |
-| Auditoría de las 61 reglas del concurso | ✅ inicial (22/09) + revisión (23/09) — `docs/qa/2026-09-22-rules-audit-1.md`, `docs/qa/2026-09-23-auditoria-revision.md` |
-| `rules-auditor` + `seo-perf` + `qa-access` | ✅ ejecutados en modo revisión (`docs/qa/2026-09-23-auditoria-revision.md`) |
-| Lighthouse móvil sobre el deploy | ✅ PageSpeed Insights: **Perf 99 · SEO 100 · Accesibilidad 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
-| Responsive 360 / 768 / 1024 / 1440 | ✅ capturas sobre el deploy en `docs/qa/2026-09-23/` |
-| SEO técnico: Metadata API + canonical/viewport (R49–R50), Open Graph + Twitter Card 1200×630 (R51), JSON-LD Organization (R52), sitemap + robots | ✅ verificados en el deploy (`<head>`, `/sitemap.xml`, `/robots.txt`) |
-| WCAG 2.1 AA: semántica, H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ (Lighthouse Accessibility 100) |
+| `next build` + `tsc --noEmit` + ESLint | ✅ 0 errors |
+| Contest's 61 rules audit | ✅ initial (22/09) + review (23/09) — `docs/qa/2026-09-22-rules-audit-1.md`, `docs/qa/2026-09-23-auditoria-revision.md` |
+| `rules-auditor` + `seo-perf` + `qa-access` | ✅ run in review mode (`docs/qa/2026-09-23-auditoria-revision.md`) |
+| Mobile Lighthouse on the deploy | ✅ PageSpeed Insights: **Perf 99 · SEO 100 · Accessibility 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
+| Responsive 360 / 768 / 1024 / 1440 | ✅ captures on the deploy in `docs/qa/2026-09-23/` |
+| Technical SEO: Metadata API + canonical/viewport (R49–R50), Open Graph + Twitter Card 1200×630 (R51), JSON-LD Organization (R52), sitemap + robots | ✅ verified on the deploy (`<head>`, `/sitemap.xml`, `/robots.txt`) |
+| WCAG 2.1 AA: semantics, single H1, contrast, keyboard, `prefers-reduced-motion` | ✅ (Lighthouse Accessibility 100) |
 
-## Evidencia (sobre el deploy)
+## Evidence (on the deploy)
 
-**Lighthouse móvil — PageSpeed Insights (Lighthouse en servidores de Google): Performance 99 · Accesibilidad 100 · Best Practices 100 · SEO 100**
+**Mobile Lighthouse — PageSpeed Insights (Lighthouse running on Google servers): Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100**
 
-![PageSpeed Insights móvil — 99/100/100/100](docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png)
+![PageSpeed Insights mobile — 99/100/100/100](docs/qa/2026-09-23/lighthouse-mobile-pagespeed.png)
 
-**Capturas responsive (360 / 768 / 1024 / 1440):**
+**Responsive captures (360 / 768 / 1024 / 1440):**
 
-| Móvil 360 | Tablet 768 | Escritorio 1024 | Escritorio 1440 |
+| Mobile 360 | Tablet 768 | Desktop 1024 | Desktop 1440 |
 |---|---|---|---|
-| ![Móvil 360](docs/qa/2026-09-23/deploy-mobile-360.png) | ![Tablet 768](docs/qa/2026-09-23/deploy-tablet-768.png) | ![Escritorio 1024](docs/qa/2026-09-23/deploy-desktop-1024.png) | ![Escritorio 1440](docs/qa/2026-09-23/deploy-desktop-1440.png) |
+| ![Mobile 360](docs/qa/2026-09-23/deploy-mobile-360.png) | ![Tablet 768](docs/qa/2026-09-23/deploy-tablet-768.png) | ![Desktop 1024](docs/qa/2026-09-23/deploy-desktop-1024.png) | ![Desktop 1440](docs/qa/2026-09-23/deploy-desktop-1440.png) |
 
-**Detalle de las secciones fuertes (1440):**
+**Detail of the strongest sections (1440):**
 
-| Torneos (torneo en vivo + contador) | Testimonios (slider sobre la línea de tiempo) | Cierre ("la puerta" + sello) |
+| Tournaments (live tournament + countdown) | Testimonials (slider over the timeline) | Closing ("the door" + seal) |
 |---|---|---|
-| ![Torneos](docs/qa/2026-09-23/detail-torneos-1440.png) | ![Testimonios](docs/qa/2026-09-23/detail-testimonios-1440.png) | ![Cierre](docs/qa/2026-09-23/detail-cierre-1440.png) |
+| ![Tournaments](docs/qa/2026-09-23/detail-torneos-1440.png) | ![Testimonials](docs/qa/2026-09-23/detail-testimonios-1440.png) | ![Closing](docs/qa/2026-09-23/detail-cierre-1440.png) |
 
-> Reportes completos (JSON/HTML) y decisiones en `docs/qa/` y `docs/DECISIONES.md`.
+> Full reports (JSON/HTML) and decisions in `docs/qa/` and `docs/DECISIONES.md`.
 
-## Mapa del repo
+## Repo map
 
-| Carpeta | Contenido |
+| Folder | Contents |
 |---|---|
-| `app/` | El sitio Next.js (todo el código) |
-| `specs/` | Especificaciones derivadas de las bases: checklist de 61 reglas, landing spec, contenido, requisitos técnicos, rúbrica |
-| `docs/` | Decisiones (`DECISIONES.md`), design system, evidencia de QA fechada |
-| `AGENTS.md` · `GUIA.md` · `.opencode/` | El sistema multiagente con el que se construyó y auditó este repo |
+| `app/` | The Next.js site (all the code) |
+| `specs/` | Specs derived from the rules: 61-rule checklist, landing spec, content, technical requirements, rubric |
+| `docs/` | Decisions (`DECISIONES.md`), design system, dated QA evidence |
+| `AGENTS.md` · `GUIA.md` · `.opencode/` | The multi-agent system used to build and audit this repo |
 
-## Declaración de uso de IA (requerido por las bases)
+## AI usage disclosure (required by the rules)
 
-Este proyecto se construyó con un sistema multiagente propio (6 roles orquestados: spec, diseño,
-construcción, SEO, QA de accesibilidad y auditor de reglas — definidos en `.opencode/agent/`).
-Los agentes escribieron y auditaron código bajo especificaciones derivadas de las bases del
-concurso; la dirección de producto, las decisiones de copy y la revisión final son humanas.
-El proceso completo es auditable en el historial de commits y en `docs/`.
+This project was built with a purpose-made multi-agent system (6 orchestrated roles: spec, design,
+build, SEO, accessibility QA and rules auditor — defined in `.opencode/agent/`). The agents wrote
+and audited code against specs derived from the contest rules; product direction, copy decisions and
+the final review are human. The whole process is auditable in the commit history and in `docs/`.
 
-> **Verificación final:** antes de entregar se corrió una pasada de revisión con `rules-auditor`,
-> `seo-perf` y `qa-access` (acciones de revisión y control de calidad) sobre el estado congelado;
-> sus hallazgos y fixes están en `docs/qa/2026-09-23-auditoria-revision.md` y en `docs/DECISIONES.md`.
+> **Final verification:** before submitting, a review pass was run with `rules-auditor`, `seo-perf`
+> and `qa-access` over the frozen state; its findings and fixes are in
+> `docs/qa/2026-09-23-auditoria-revision.md` and `docs/DECISIONES.md`.
 
-## Fuentes y créditos
+## Sources and credits
 
-- **Logo**: kit oficial de marca proporcionado por TechToJob (`app/public/brand/`). El resto de
-  variantes se sirven **sin modificar**. Tres archivos son **derivados documentados** sobre los
-  contornos oficiales (mismo `viewBox`, solo cambian los rellenos), usados en el composite del
-  header: `wordmark-duo.svg` (D31), `wordmark-ink.svg` (D55) y `wordmark-ink-duo.svg` (D97).
-- **Tipografía**: Sora (Google Fonts, OFL) cargada con `next/font`; pesos 400/600/700.
-- **Iconos**: SVG dibujados a mano en `app/components/icons.tsx` (sin librerías).
-- **Paleta**: carbón `#2f3436`, verde `#84c0bf`, blanco `#ffffff` + grises y un acento, según el brief.
-- **Copy**: 100 % original, agrupado en `app/messages/es.json` y `app/messages/en.json` (regla de
-  textos separados del código; el catálogo EN está pendiente de traducción, ver arriba).
-- **Testimonios y noticias**: maquetas honestamente rotuladas como tales (el brief pide maqueta, no datos inventados).
+- **Logo**: official brand kit provided by TechToJob (`app/public/brand/`). Variants are served
+  **unmodified**. Three files are **documented derivatives** over the official outlines (same
+  `viewBox`, only fills change), used in the header composite: `wordmark-duo.svg` (D31),
+  `wordmark-ink.svg` (D55) and `wordmark-ink-duo.svg` (D97).
+- **Typeface**: Sora (Google Fonts, OFL) loaded with `next/font`; weights 400/600/700.
+- **Icons**: hand-written SVGs in `app/components/icons.tsx` (no libraries).
+- **Palette**: carbon `#2f3436`, green `#84c0bf`, white `#ffffff` + grays and one accent, per the brief.
+- **Copy**: 100% original, grouped in `app/messages/es.json` and `app/messages/en.json` (texts kept
+  separate from code; the EN catalog is pending translation, see above).
+- **Testimonials and news**: mockups honestly labeled as such (the brief asks for a mockup, not invented data).
 
-Diseño y contenido por **Lorena Salas** · Web del Torneo #2 de TechToJob.
+Design and content by **Lorena Salas** · Tournament #2 website for TechToJob.
