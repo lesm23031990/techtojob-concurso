@@ -63,7 +63,7 @@ cierre. El orden real vive en `app/app/[locale]/page.tsx` y el criterio está re
 | `rules-auditor` + `seo-perf` + `qa-access` | ✅ ejecutados en modo revisión (`docs/qa/2026-09-23-auditoria-revision.md`) |
 | Lighthouse móvil sobre el deploy | ✅ PageSpeed Insights: **Perf 99 · SEO 100 · Accesibilidad 100 · Best Practices 100** (`docs/qa/2026-09-23/`) |
 | Responsive 360 / 768 / 1024 / 1440 | ✅ capturas sobre el deploy en `docs/qa/2026-09-23/` |
-| Metadata API + OG 1200×630 + Twitter Card + JSON-LD (Organization + WebSite) + sitemap + robots | ✅ |
+| SEO técnico: Metadata API + canonical/viewport (R49–R50), Open Graph + Twitter Card 1200×630 (R51), JSON-LD Organization (R52), sitemap + robots | ✅ verificados en el deploy (`<head>`, `/sitemap.xml`, `/robots.txt`) |
 | WCAG 2.1 AA: semántica, H1×1, contraste, teclado, `prefers-reduced-motion` | ✅ (Lighthouse Accessibility 100) |
 
 ## Evidencia (sobre el deploy)
